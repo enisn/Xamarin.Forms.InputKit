@@ -1,0 +1,117 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard1.0;netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;</TargetFrameworks>
+    <AssemblyName>Plugin.InputKit</AssemblyName>
+    <RootNamespace>Plugin.InputKit</RootNamespace>
+    <PackageId>Plugin.InputKit</PackageId>
+    
+    <Product>$(AssemblyName) ($(TargetFramework))</Product>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+    <Version>1.0.0.0</Version>
+    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackOnBuild>true</PackOnBuild>
+    <NeutralLanguage>en</NeutralLanguage>
+    <LangVersion>default</LangVersion>
+    <DefineConstants>$(DefineConstants);</DefineConstants>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
+    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    
+    <!--TODO: Fill these in-->
+    <PackageLicenseUrl>LINK TO LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>LINK TO PROJECT</PackageProjectUrl>
+    <RepositoryUrl>LINK TO PROJECT</RepositoryUrl>
+    <PackageReleaseNotes>RELEASE NOTES</PackageReleaseNotes>
+    <PackageIconUrl>ICON URL</PackageIconUrl>
+    <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit</PackageTags>
+    
+    <Title>InputKit Plugin for Xamarin and Windows</Title>
+    <Summary>Summary of nuget</Summary>
+    <Description>Plugin Description</Description>
+
+    <Owners>YOU</Owners>
+    <Authors>YOU</Authors>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>loadingButton.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\Plugin.InputKit.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.0" PrivateAssets="All" />
+    <!--<PackageReference Include="Xamarin.Forms" Version="2.5.1.444934" PrivateAssets="All" />-->
+    <PackageReference Include="Xamarin.Forms" Version="2.4.0.282" PrivateAssets="All" />
+    <Compile Include="Shared\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' ">
+    <Compile Include="Platforms\Android\**\*.cs" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
+    <Compile Include="Platforms\iOS\**\*.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.TVOS10' ">
+    <Compile Include="Platforms\TVOS\**\*.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.WatchOS10' ">
+    <Compile Include="Platforms\WatchOS\**\*.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
+    <Compile Include="Platforms\macOS\**\*.cs" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Remove="Shared\Abstraction\ISelection.cs" />
+    <None Remove="Shared\Controls\AdvancedSlider.cs" />
+    <None Remove="Shared\Controls\CheckBox.cs" />
+    <None Remove="Shared\Controls\Dropdown.cs" />
+    <None Remove="Shared\Controls\IconView.cs" />
+    <None Remove="Shared\Controls\RadioButton.cs" />
+    <None Remove="Shared\Controls\SelectionView.cs" />
+  </ItemGroup>
+
+  <!--
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+    <Compile Include="Platforms\DotNet\**\*.cs" />
+  </ItemGroup>
+  -->
+
+
+  <!--
+  <ItemGroup Condition=" '$(TargetFramework)' == 'Tizen40' ">
+    <Compile Include="Platforms\Tizen\**\*.cs" />
+    <PackageReference Include="Tizen.NET" Version="4.0.0" />
+  </ItemGroup>
+  -->
+  
+  <!--
+    <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
+    <Compile Include="Platforms\DotNet\**\*.cs" />
+  </ItemGroup>
+  -->
+
+
+
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+</Project>
