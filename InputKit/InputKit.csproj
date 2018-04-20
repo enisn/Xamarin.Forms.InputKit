@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;</TargetFrameworks>
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
-    <PackageId>Plugin.InputKit</PackageId>
+    <PackageId>Xamarin.Forms.InputKit</PackageId>
     
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>1.0.0.0</Version>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>0.9.5.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -21,19 +21,19 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
     
     <!--TODO: Fill these in-->
-    <PackageLicenseUrl>LINK TO LICENSE</PackageLicenseUrl>
-    <PackageProjectUrl>LINK TO PROJECT</PackageProjectUrl>
-    <RepositoryUrl>LINK TO PROJECT</RepositoryUrl>
-    <PackageReleaseNotes>RELEASE NOTES</PackageReleaseNotes>
-    <PackageIconUrl>ICON URL</PackageIconUrl>
-    <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit</PackageTags>
+    <PackageLicenseUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
+    <PackageReleaseNotes>Released</PackageReleaseNotes>
+    <PackageIconUrl>http://enisnecipoglu.com/Plugins/inputkit.png</PackageIconUrl>
+    <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</PackageTags>
     
-    <Title>InputKit Plugin for Xamarin and Windows</Title>
-    <Summary>Summary of nuget</Summary>
-    <Description>Plugin Description</Description>
+    <Title>Common controls mostly required</Title>
+    <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
+    <Description>Controls in this package are fully bindable and ready to use.</Description>
 
-    <Owners>YOU</Owners>
-    <Authors>YOU</Authors>
+    <Owners>Enis Necipoglu</Owners>
+    <Authors>Enis Necipoglu</Authors>
     <Copyright>Copyright 2018</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>true</SignAssembly>
@@ -51,8 +51,6 @@
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.0' ">
-  </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
   </ItemGroup>

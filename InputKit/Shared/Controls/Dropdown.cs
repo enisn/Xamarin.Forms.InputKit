@@ -12,8 +12,11 @@ namespace Plugin.InputKit.Shared.Controls
         IconView imgIcon = new IconView { FillColor = Color.Accent,Margin=10, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.End, Source= "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-512.png" };
         public Dropdown()
         {
+            this.Padding = 0;
+            this.CornerRadius = 20;
             this.Content = new Grid
             {
+                
                 Children =
                 {
                     picker,
