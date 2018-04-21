@@ -18,6 +18,7 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
 <p>As you know ther is no CheckBox in Xamarin Forms Library. You can use a custom renderer to use Native Checkbox in portable layer. This CheckBox is not a native one, It's created in Xamarin Forms Portable layer.</p>
 
 <h4>SAMPLE:</h4>
+
 ```xaml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
@@ -33,6 +34,7 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
         </StackLayout>
 </ContentPage>
 ```
+<br />
 <img src="http://enisnecipoglu.com/wp-content/uploads/2018/04/XamarinFormsCheckbox-169x300.png" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
 <h4>PROPERTIES:</h4>
 <ul>
@@ -51,13 +53,14 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
 <h2>RadioButon</h2>
 <p>Radio Buttons should use inside a <strong>RadioButtonGroupView</strong>. If you want this view will return you selected radio button. But you can handle it one by one too. </p>
 <h4>SAMPLE:</h4>
+
 ```xaml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Sample.InputKit"
-             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="Sample.InputKit.MainPage">
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:local="clr-namespace:Sample.InputKit"
+            xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+            x:Class="Sample.InputKit.MainPage">
 
         <StackLayout Spacing="12" Padding="30,0">
 
@@ -72,6 +75,7 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
 
 </ContentPage>
 ```
+
 <img src="http://enisnecipoglu.com/wp-content/uploads/2018/04/XamarinFormsRadioButton-169x300.png" alt="Xamarin Forms Radio Button Input Kit Enis Necipoğlu" width="270" height="480" class="aligncenter size-medium wp-image-1001" />
 <h4>PROPERTIES:</h4>
 <h5>RadioButtonGroupView</h5>
@@ -96,7 +100,7 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
 <p>Xamarin Forms Slider works a Sticky label on it. Wonderful experience for your users.</p>
 <h4>SAMPLE:</h4>
 
-```xml
+```xaml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -131,7 +135,8 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
 <h2>SelectionView</h2>
 <p>Presents options to user to choose. This view didn't created to static usage. You should Bind a model List as ItemSource, or if you don't use MVVM you can set in page's cs file like below. (You can override ToString method to fix display value or I'll add displayMember property soon.)</p>
 <h4>SAMPLE:</h4>
-```xml
+
+```xaml
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
