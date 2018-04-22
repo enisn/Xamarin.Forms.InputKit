@@ -14,6 +14,8 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblSelected = new Label { Text = "✓", FontSize = 19, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = Color.Accent, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 14 };
         private CheckType _type = CheckType.Box;
+        private bool _isEnabled;
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -27,7 +29,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.Children.Add(lblOption);
             this.GestureRecognizers.Add(new TapGestureRecognizer
             {
-                Command = new Command(() => { IsChecked = !IsChecked; CheckChanged?.Invoke(this, new EventArgs()); CheckChangedCommand?.Execute(this.IsChecked); }),
+                Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; CheckChanged?.Invoke(this, new EventArgs()); CheckChangedCommand?.Execute(this.IsChecked); }),
             });
         }
         /// <summary>
@@ -67,6 +69,10 @@ namespace Plugin.InputKit.Shared.Controls
                 SetValue(IsCheckedProperty, value);
             }
         }
+        /// <summary>
+        /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
+        /// </summary>
+        public bool IsDisabled { get => _isEnabled; set { _isEnabled = value; this.Opacity = value ? 0.6 : 1; } }
         public Color Color { get => boxSelected.BackgroundColor; set { boxSelected.BackgroundColor = value; lblSelected.TextColor = value; } }
         public Color TextColor { get => lblOption.TextColor; set => lblOption.TextColor = value; }
         public CheckType Type { get => _type; set { _type = value; UpdateType(value); } }
@@ -74,6 +80,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Color = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsChecked = (bool)nv);
+        public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CheckBox), "", propertyChanged: (bo, ov, nv) => (bo as CheckBox).Text = (string)nv);
         public static readonly BindableProperty CheckChangedCommandProperty = BindableProperty.Create(nameof(CheckChangedCommand), typeof(ICommand), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).CheckChangedCommand = (ICommand)nv);

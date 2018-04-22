@@ -111,6 +111,8 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblEmpty = new Label { TextColor = Color.Gray, Text = "◯", HorizontalTextAlignment = TextAlignment.Center };
         Label lblFilled = new Label { TextColor = Color.Accent, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center };
         Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        private bool _isDisabled;
+
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -170,6 +172,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public object Value { get; set; }
         public bool IsChecked { get => lblFilled.IsVisible; set => lblFilled.IsVisible = value; }
+        public bool IsDisabled { get => _isDisabled; set { _isDisabled = value; this.Opacity = value ? 0.6 : 1; } }
         /// <summary>
         /// Text Description of Radio Button. It will be displayed right of Radio Button
         /// </summary>
@@ -194,6 +197,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         void Tapped()
         {
+            if (IsDisabled) return;
             IsChecked = !IsChecked;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(this);

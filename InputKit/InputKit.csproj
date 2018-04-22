@@ -10,7 +10,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>1.0.0.0</Version>
-    <PackageVersion>0.9.5.0</PackageVersion>
+    <PackageVersion>0.9.8.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -24,7 +24,7 @@
     <PackageLicenseUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
-    <PackageReleaseNotes>Released</PackageReleaseNotes>
+    <PackageReleaseNotes>IsDisabled properties added. SelectionView RadioButons added</PackageReleaseNotes>
     <PackageIconUrl>http://enisnecipoglu.com/Plugins/inputkit.png</PackageIconUrl>
     <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</PackageTags>
     

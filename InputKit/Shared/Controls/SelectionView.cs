@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -20,11 +21,30 @@ namespace Plugin.InputKit.Shared.Controls
         {
             this.RowSpacing = 0;
             this.ColumnSpacing = 0;
-            //this.Children.Add(new StackLayout());
-            //this.Children.Add(new StackLayout(), 1, 0);
+            //this.ChildAdded += SelectionView_ChildAdded;
+            //this.ChildRemoved += SelectionView_ChildRemoved;
         }
+
+        //private void SelectionView_ChildRemoved(object sender, ElementEventArgs e)
+        //{
+        //    UpdateView();
+        //}
+
+  
+
+        /// <summary>
+        /// Selection Type, More types will be added later
+        /// </summary>
         public SelectionType SelectionType { get => _selectionType; set { _selectionType = value; UpdateView(); } }
+        ///----------------------------------------------------------
+        /// <summary>
+        /// Added later
+        /// </summary>
         public string IsDisabledPropertyName { get; set; }
+        ///----------------------------------------------------------
+        /// <summary>
+        /// Column of this view
+        /// </summary>
         public int ColumnNumber { get => _columnNumber; set { _columnNumber = value; UpdateView(); } }
         public IList DisabledSource { get => _disabledSource; set { _disabledSource = value; UpdateView(); } }
         public IList ItemSource
@@ -109,6 +129,8 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 case SelectionType.Button:
                     return new SelectableButton(obj);
+                case SelectionType.RadioButton:
+                    return new SelectableRadioButton(obj);
      
             }
             return null;
@@ -125,6 +147,7 @@ namespace Plugin.InputKit.Shared.Controls
     public enum SelectionType
     {
         Button,
+        RadioButton
     }
 
 
@@ -167,5 +190,20 @@ namespace Plugin.InputKit.Shared.Controls
         }
         public object Value { get => _value; set { _value = value; this.Text = value?.ToString(); } }
         public bool IsDisabled { get; set; } = false;
+    }
+    public class SelectableRadioButton : RadioButton, ISelection
+    {
+        private bool _isDisabled;
+        public SelectableRadioButton()
+        {
+
+        }
+        public SelectableRadioButton(object value)
+        {
+            this.Value = value;
+            this.Text = value?.ToString();
+        }
+        public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
+        public bool IsDisabled { get => _isDisabled; set { _isDisabled = value; this.Opacity = value ? 0.6 : 1; } }
     }
 }
