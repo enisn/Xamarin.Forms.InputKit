@@ -61,19 +61,46 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateView();
             UpdateMinMaxValueText();
         }
+        /// <summary>
+        /// Value of slider which user selected
+        /// </summary>
         public double Value { get => slider.Value; set => slider.Value = value; }
+        /// <summary>
+        /// Title of slider, It'll be shown tp of slider
+        /// </summary>
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
+        /// <summary>
+        /// It will be displayed start of value 
+        /// </summary>
         public string ValueSuffix { get => _valueSuffix; set { _valueSuffix = value; UpdateValueText(); } }
+        /// <summary>
+        /// It'll be displayed end of value
+        /// </summary>
         public string ValuePrefix { get => _valuePrefix; set { _valuePrefix = value; UpdateValueText(); } }
+        /// <summary>
+        /// Minimum value, user can slide
+        /// </summary>
         public double MinValue { get => slider.Minimum; set { slider.Minimum = value; UpdateMinMaxValueText(); } }
+        /// <summary>
+        /// Maximum value, user can slide
+        /// </summary>
         public double MaxValue { get => slider.Maximum; set { slider.Maximum = value; UpdateMinMaxValueText(); } }
+        /// <summary>
+        /// Slider Increase number
+        /// </summary>
         public double StepValue { get => _stepValue; set { _stepValue = value; UpdateValueText(); UpdateView(); } }
+        /// <summary>
+        /// Visibility of Min value and Max value at right and left
+        /// </summary>
         public bool DisplayMinMaxValue
         {
             get => lblMinValue.IsVisible && lblMaxValue.IsVisible;
 
             set { lblMaxValue.IsVisible = value; lblMinValue.IsVisible = value; }
         }
+        /// <summary>
+        /// Text color of labels
+        /// </summary>
         public Color TextColor
         {
             get => _textColor; set
