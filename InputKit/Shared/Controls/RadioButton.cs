@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Plugin.InputKit.Shared.Abstraction;
+using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
 
 namespace Plugin.InputKit.Shared.Controls
 {
-    public class RadioButtonGroupView : StackLayout
+    public class RadioButtonGroupView : StackLayout, IValidatable
     {
         public RadioButtonGroupView()
         {
@@ -102,6 +103,12 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
+
+        public bool IsRequired { get; set; }
+
+        public bool IsValidated;
+
+        public string ValidationMessage { get; set; }
     }
     /// <summary>
     /// Radio Button with Text
