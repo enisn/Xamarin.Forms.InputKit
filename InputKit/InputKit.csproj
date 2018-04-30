@@ -83,7 +83,6 @@
     <None Remove="Shared\Abstraction\ISelection.cs" />
     <None Remove="Shared\Controls\AdvancedSlider.cs" />
     <None Remove="Shared\Controls\CheckBox.cs" />
-    <None Remove="Shared\Controls\Dropdown.cs" />
     <None Remove="Shared\Controls\IconView.cs" />
     <None Remove="Shared\Controls\RadioButton.cs" />
     <None Remove="Shared\Controls\SelectionView.cs" />

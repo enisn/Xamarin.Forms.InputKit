@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     public class AdvancedSlider : StackLayout
     {
-        Slider slider = new Slider { /*HorizontalOptions = LayoutOptions.FillAndExpand*/ };
+        Slider slider = new Slider();
         Label lblTitle = new Label { Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
         Label lblValue = new Label { InputTransparent = true, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
         Label lblMinValue = new Label { TextColor = (Color) Label.TextColorProperty.DefaultValue, };
@@ -61,34 +59,42 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateView();
             UpdateMinMaxValueText();
         }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Value of slider which user selected
         /// </summary>
         public double Value { get => slider.Value; set => slider.Value = value; }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Title of slider, It'll be shown tp of slider
         /// </summary>
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// It will be displayed start of value 
         /// </summary>
         public string ValueSuffix { get => _valueSuffix; set { _valueSuffix = value; UpdateValueText(); } }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// It'll be displayed end of value
         /// </summary>
         public string ValuePrefix { get => _valuePrefix; set { _valuePrefix = value; UpdateValueText(); } }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Minimum value, user can slide
         /// </summary>
         public double MinValue { get => slider.Minimum; set { slider.Minimum = value; UpdateMinMaxValueText(); } }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Maximum value, user can slide
         /// </summary>
         public double MaxValue { get => slider.Maximum; set { slider.Maximum = value; UpdateMinMaxValueText(); } }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Slider Increase number
         /// </summary>
         public double StepValue { get => _stepValue; set { _stepValue = value; UpdateValueText(); UpdateView(); } }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Visibility of Min value and Max value at right and left
         /// </summary>
@@ -98,6 +104,7 @@ namespace Plugin.InputKit.Shared.Controls
 
             set { lblMaxValue.IsVisible = value; lblMinValue.IsVisible = value; }
         }
+        ///---------------------------------------------------------------------
         /// <summary>
         /// Text color of labels
         /// </summary>
@@ -116,7 +123,6 @@ namespace Plugin.InputKit.Shared.Controls
         #region BindableProperties
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.OneWayToSource, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).Value = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Color.Gray, BindingMode.OneWayToSource, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
-
         #endregion
 
         void UpdateMinMaxValueText()
