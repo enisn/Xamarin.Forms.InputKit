@@ -10,7 +10,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>1.0.0.0</Version>
-    <PackageVersion>0.9.8.0</PackageVersion>
+    <PackageVersion>1.0.0.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
@@ -30,7 +30,12 @@
     
     <Title>Common controls mostly required</Title>
     <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
-    <Description>Controls in this package are fully bindable and ready to use.</Description>
+    <Description>
+    FormView was added!
+    It helps to gel validation from multiple elements inside from its at once.
+    You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
+    
+    Controls in this package are fully bindable and ready to use.</Description>
 
     <Owners>Enis Necipoglu</Owners>
     <Authors>Enis Necipoglu</Authors>
