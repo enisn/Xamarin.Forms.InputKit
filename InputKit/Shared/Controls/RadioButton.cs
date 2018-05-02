@@ -1,5 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -47,6 +48,14 @@ namespace Plugin.InputKit.Shared.Controls
                     (item as RadioButton).IsChecked = item == selected;
             }
         }
+
+        public async void DisplayValidation()
+        {
+            this.BackgroundColor = Color.Red;
+            await Task.Delay(500);
+            this.BackgroundColor = Color.Transparent;
+        }
+
         /// <summary>
         /// Returns selected radio button's index from inside of this.
         /// </summary>
@@ -106,9 +115,11 @@ namespace Plugin.InputKit.Shared.Controls
 
         public bool IsRequired { get; set; }
 
-        public bool IsValidated;
+        public bool IsValidated { get => this.IsRequired && this.SelectedItem != null; }
 
         public string ValidationMessage { get; set; }
+
+        
     }
     /// <summary>
     /// Radio Button with Text

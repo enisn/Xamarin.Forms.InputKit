@@ -13,6 +13,8 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public class AdvancedEntry : Entry, IValidatable
     {
+        private bool _isRequired;
+
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -47,12 +49,21 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
+        /// <summary>
+        /// The message to be shown when that entry is not validated!
+        /// That will be added later!
+        /// </summary>
         public string ValidationMessage { get; set; }
+        /// <summary>
+        /// Maximum character length of this entry
+        /// </summary>
         public short MaxLength { get; set; }
-
+        /// <summary>
+        /// Returns if entry is validated or not
+        /// </summary>
         public bool IsValidated
         {
+            
             get
             {
                 switch (Validation)
@@ -65,9 +76,9 @@ namespace Plugin.InputKit.Shared.Controls
                         return !this.Text.Any(a => Char.IsSeparator(a) || Char.IsSymbol(a) || Char.IsSurrogate(a) || Char.IsControl(a) || Char.IsPunctuation(a));
                     case AnnotationType.Number:
                     case AnnotationType.Money:
-                        return !this.Text.Any(a=>!Char.IsNumber(a));
+                        return !this.Text.Any(a => !Char.IsNumber(a));
                     case AnnotationType.Email:
-                        return this.Text.Contains("@") && this.Text.Contains(".") && this.Text.Substring(this.Text.IndexOf('@'),this.Text.Length - this.Text.IndexOf('@')-1).Length >=2;
+                        return this.Text.Contains("@") && this.Text.Contains(".") && this.Text.Substring(this.Text.IndexOf('@'), this.Text.Length - this.Text.IndexOf('@') - 1).Length >= 2;
                     case AnnotationType.Password:
                         //Will be added
                         return true;
@@ -75,7 +86,13 @@ namespace Plugin.InputKit.Shared.Controls
                 return true;
             }
         }
-        public bool IsRequired { get; set; }
+        /// <summary>
+        /// IsRequired or not. It effects to IsValidated too!
+        /// </summary>
+        public bool IsRequired { get => _isRequired; set { _isRequired = value; if (value) this.Placeholder = "* " + this.Placeholder; else this.Placeholder = this.Placeholder.Replace("* ", string.Empty); } }
+        /// <summary>
+        /// Valitadion type of this entry
+        /// </summary>
         public AnnotationType Validation { get; set; }
 
         void UpdateKeyboard(AnnotationType annotation)
@@ -104,6 +121,20 @@ namespace Plugin.InputKit.Shared.Controls
                 default:
                     this.Keyboard = Keyboard.Default;
                     break;
+            }
+        }
+        /// <summary>
+        /// Shows this is validated or not
+        /// </summary>
+        public void DisplayValidation()
+        {
+            if (this.IsValidated || !this.IsRequired)
+            {
+                this.TextColor = Color.ForestGreen;
+            }
+            else
+            {
+                this.TextColor = Color.Red;
             }
         }
 

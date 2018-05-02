@@ -85,6 +85,7 @@
     <None Remove="Shared\Controls\AdvancedEntry.cs" />
     <None Remove="Shared\Controls\AdvancedSlider.cs" />
     <None Remove="Shared\Controls\CheckBox.cs" />
+    <None Remove="Shared\Controls\FormView.cs" />
     <None Remove="Shared\Controls\IconView.cs" />
     <None Remove="Shared\Controls\RadioButton.cs" />
     <None Remove="Shared\Controls\SelectionView.cs" />
