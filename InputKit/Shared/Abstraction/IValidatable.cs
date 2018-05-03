@@ -2,7 +2,7 @@
 
 namespace Plugin.InputKit.Shared.Abstraction
 {
-    interface IValidatable
+    public interface IValidatable
     {
         bool IsRequired { get; set; }
         bool IsValidated { get; }
