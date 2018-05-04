@@ -18,11 +18,17 @@ namespace Plugin.InputKit.Shared.Controls
                 foreach (var item in this.Children)
                 {
                     if (item is IValidatable && (item as IValidatable).IsRequired && !(item as IValidatable).IsValidated)
+                    {
+                        SetValue(IsValidatedProperty, false);
                         return false;
+                    }
                 }
+                SetValue(IsValidatedProperty, true);
                 return true;
             }
         }
+
+        public static readonly BindableProperty IsValidatedProperty = BindableProperty.Create(nameof(IsValidated), typeof(bool), typeof(FormView), false, BindingMode.OneWayToSource);
         public void ShowValidation()
         {
             foreach (var item in this.Children)
