@@ -8,6 +8,9 @@
     <ScrollView>
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
 
+            <input:CheckBox Text="New Checkbox Hello There !" Type="Check" BoxBackgroundColor="Blue" Color="White"/>
+            
+            
             <input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />
             <input:CheckBox Text="Hello World I'm Option 2" Type="Check" IsEnabled="False"/>
             <input:CheckBox Text="Consetetur eum kasd eos dolore Option 3" Type="Cross"/>

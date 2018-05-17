@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>1.0.2</version>
+    <version>1.0.3</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -30,19 +30,26 @@
 
     <title>Common controls mostly required</title>
     <summary>
-      Checkbox, Radio Button, Advanced Slider included this package 
+      Checkbox, Radio Button, Advanced Slider included this package
     </summary>
 
     <description>
+      Controls in this package are fully bindable and ready to use.
+
+      ChangeLog:
+
+      v.1.0.3
+      BoxBackgroundColor added to Checkbox. 
+
+      v.1.0.2
       FormView was added!
-    It helps to gel validation from multiple elements inside from its at once.
-    You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
-    
-    Controls in this package are fully bindable and ready to use.
+      It helps to gel validation from multiple elements inside from its at once.
+      You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
+
     </description>
 
     <!-- Copyright information -->
-    <copyright>Copyright ©2018 Enis Necipoglu</copyright>
+    <copyright>Copyright Â©2018 Enis Necipoglu</copyright>
 
     <!-- Tags appear in the gallery and can be used for tag searches -->
     <tags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</tags>
@@ -58,22 +65,22 @@
     <!-- Cross-platform reference assemblies -->
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.xml" target="lib\netstandard2.0\Plugin.InputKit.xml" />
-	
+
     <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.dll" target="lib\monoandroid80\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.xml" target="lib\monoandroid80\Plugin.InputKit.xml" />
-	
+
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.dll" target="lib\xamarin.ios10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.xml" target="lib\xamarin.ios10\Plugin.InputKit.xml" />
-	
+
     <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.dll" target="lib\xamarin.mac20\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.xml" target="lib\xamarin.mac20\Plugin.InputKit.xml" />
 
-		
+
     <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.dll" target="lib\xamarin.tvos10\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.xml" target="lib\xamarin.tvos10\Plugin.InputKit.xml" />	
-		
+    <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.xml" target="lib\xamarin.tvos10\Plugin.InputKit.xml" />
+
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.dll" target="lib\xamarin.watchos10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.xml" target="lib\xamarin.watchos10\Plugin.InputKit.xml" />
-	
+
   </files>
 </package>
