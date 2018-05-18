@@ -25,7 +25,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.Margin = new Thickness(10, 0);
             this.Padding = new Thickness(10);
             this.Spacing = 10;
-            this.Children.Add(new Grid { Children = { boxBackground, boxSelected } });
+            this.Children.Add(new Grid { Children = { boxBackground, boxSelected }, MinimumWidthRequest = 35 });
             this.Children.Add(lblOption);
             this.GestureRecognizers.Add(new TapGestureRecognizer
             {

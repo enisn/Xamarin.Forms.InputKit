@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>1.0.3</version>
+    <version>1.0.5</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -37,6 +37,9 @@
       Controls in this package are fully bindable and ready to use.
 
       ChangeLog:
+      
+      v.1.0.5 - v.1.0.4
+      Checkbox Sizing problem on Multiline Text Solved.
 
       v.1.0.3
       BoxBackgroundColor added to Checkbox. 

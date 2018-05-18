@@ -8,6 +8,13 @@
     <ScrollView>
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
 
+
+            <input:CheckBox Text="Et iusto ea kasd at in et duis aliquyam dolor clita dolor amet at quis exerci nonummy velit ea sadipscing" />
+            <input:CheckBox Text="Test 1" Type="Check" />
+            <input:CheckBox Text="Option 235" />
+
+            <input:CheckBox Text="Et iusto ea kasd at in et duis aliquyam dolor clita dolor amet at quis exerci nonummy velit ea sadipscing" BoxBackgroundColor="Orange" Color="White" />
+
             <input:CheckBox Text="New Checkbox Hello There !" Type="Check" BoxBackgroundColor="Blue" Color="White"/>
             
             
