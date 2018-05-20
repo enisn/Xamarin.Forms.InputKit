@@ -148,7 +148,8 @@ namespace Plugin.InputKit.Shared.Controls
                 {
                     lblEmpty,
                     lblFilled
-                }
+                },
+                MinimumWidthRequest = 35,
             });
             this.Children.Add(lblText);
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
