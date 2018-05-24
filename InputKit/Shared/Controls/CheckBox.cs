@@ -63,13 +63,13 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public bool IsChecked
         {
-            get => ((this.Children[0] as Grid).Children[1]).IsVisible; set
+            get => ((this.Children[0] as Grid).Children[1]).IsVisible;
+            set
             {
                 (this.Children[0] as Grid).Children[1].IsVisible = value;
                 SetValue(IsCheckedProperty, value);
             }
         }
-
         public Color BoxBackgroundColor { get => boxBackground.BackgroundColor; set => boxBackground.BackgroundColor = value; }
         /// <summary>
         /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
@@ -78,6 +78,10 @@ namespace Plugin.InputKit.Shared.Controls
         public Color Color { get => boxSelected.BackgroundColor; set { boxSelected.BackgroundColor = value; lblSelected.TextColor = value; } }
         public Color TextColor { get => lblOption.TextColor; set => lblOption.TextColor = value; }
         public CheckType Type { get => _type; set { _type = value; UpdateType(value); } }
+        public double BoxSize { get => boxBackground.Width; }
+        public double BoxSizeRequest { get => boxBackground.WidthRequest; set => SetBoxSize(value); }
+        public double TextFontSize { get => lblOption.FontSize; set => lblOption.FontSize = value; }
+
 
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Color = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
@@ -87,8 +91,16 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CheckBox), "", propertyChanged: (bo, ov, nv) => (bo as CheckBox).Text = (string)nv);
         public static readonly BindableProperty CheckChangedCommandProperty = BindableProperty.Create(nameof(CheckChangedCommand), typeof(ICommand), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).CheckChangedCommand = (ICommand)nv);
         public static readonly BindableProperty BoxBackgroundColorProperty = BindableProperty.Create(nameof(BoxBackgroundColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).BoxBackgroundColor = (Color)nv);
+        public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), 14.0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
 
-
+        void SetBoxSize(double value)
+        {
+            boxBackground.WidthRequest = value;
+            boxBackground.HeightRequest = value;
+            boxSelected.WidthRequest = value * 0.72;
+            boxSelected.HeightRequest = value * 0.72;
+            lblSelected.FontSize = value * 0.76;
+        }
 
         void UpdateType(CheckType _Type)
         {
