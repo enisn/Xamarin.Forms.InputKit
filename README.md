@@ -2,6 +2,8 @@
 CheckBox, Radio Button, Labeled Slider, Dropdows etc. 
 
 <hr />
+
+[![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
 <p>
 <b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
 </p>
@@ -11,6 +13,8 @@ CheckBox, Radio Button, Labeled Slider, Dropdows etc.
 <p>
 <b>Source Codes Available Too: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit/tree/master/InputKit">Plugin.InputKit on GitHub</a>
 </p>
+
+
 <hr />
 
 
