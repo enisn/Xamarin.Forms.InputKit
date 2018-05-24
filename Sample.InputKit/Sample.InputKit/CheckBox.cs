@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Plugin.InputKit.Shared.Controls
+namespace Sample.InputKit
 {
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside

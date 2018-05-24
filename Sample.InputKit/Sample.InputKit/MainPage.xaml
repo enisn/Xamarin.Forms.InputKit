@@ -9,8 +9,8 @@
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
 
 
-            <input:CheckBox Text="Duo sanctus gubergren eos" TextFontSize="25"/>
-            <input:CheckBox BoxSizeRequest="100" TextFontSize="30" Text="No voluptua"/>
+            <local:CheckBox Text="Duo sanctus gubergren eos" TextFontSize="25"/>
+            <local:CheckBox BoxSizeRequest="100" TextFontSize="30" Text="No ipsum aliquyam ipsum vero diam nonummy ut"/>
 
            
             <input:CheckBox Text="Et iusto ea kasd at in et duis aliquyam dolor clita dolor amet at quis exerci nonummy velit ea sadipscing" />
