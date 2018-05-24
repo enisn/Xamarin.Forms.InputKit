@@ -70,16 +70,37 @@ namespace Plugin.InputKit.Shared.Controls
                 SetValue(IsCheckedProperty, value);
             }
         }
+        /// <summary>
+        /// Checkbox box background color. Default is LightGray
+        /// </summary>
         public Color BoxBackgroundColor { get => boxBackground.BackgroundColor; set => boxBackground.BackgroundColor = value; }
         /// <summary>
         /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
         /// </summary>
         public bool IsDisabled { get => _isEnabled; set { _isEnabled = value; this.Opacity = value ? 0.6 : 1; } }
+        /// <summary>
+        /// Color of Checkbox checked
+        /// </summary>
         public Color Color { get => boxSelected.BackgroundColor; set { boxSelected.BackgroundColor = value; lblSelected.TextColor = value; } }
+        /// <summary>
+        /// Color of text
+        /// </summary>
         public Color TextColor { get => lblOption.TextColor; set => lblOption.TextColor = value; }
+        /// <summary>
+        /// Which icon will be shown when checkbox is checked
+        /// </summary>
         public CheckType Type { get => _type; set { _type = value; UpdateType(value); } }
+        /// <summary>
+        /// Size of Checkbox
+        /// </summary>
         public double BoxSize { get => boxBackground.Width; }
+        /// <summary>
+        /// SizeRequest of CheckBox
+        /// </summary>
         public double BoxSizeRequest { get => boxBackground.WidthRequest; set => SetBoxSize(value); }
+        /// <summary>
+        /// Fontsize of Checkbox text
+        /// </summary>
         public double TextFontSize { get => lblOption.FontSize; set => lblOption.FontSize = value; }
 
 
