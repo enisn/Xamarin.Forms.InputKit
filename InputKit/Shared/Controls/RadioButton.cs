@@ -199,7 +199,16 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Fontsize of Description Text
         /// </summary>
-        public double FontSize { get => lblText.FontSize; set { lblText.FontSize = value; lblFilled.FontSize = value * 1.3; lblEmpty.FontSize = value * 1.3; } }
+        [Obsolete("This attribute is obsolete, use TextFontSize instead")]
+        public double FontSize { get => lblText.FontSize; set { lblText.FontSize = value; } }
+        /// <summary>
+        /// Fontsize of Description Text
+        /// </summary>
+        public double TextFontSize { get => lblText.FontSize; set { lblText.FontSize = value; } }
+        /// <summary>
+        /// Size of Radio Button
+        /// </summary>
+        public double CircleSize { get => lblEmpty.FontSize; set => SetCircleSize(value); }
         /// <summary>
         /// Color of Radio Button's checked.
         /// </summary>
@@ -220,6 +229,13 @@ namespace Plugin.InputKit.Shared.Controls
             IsChecked = !IsChecked;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(this);
+        }
+        void SetCircleSize(double value)
+        {
+            lblEmpty.FontSize = value;
+            lblFilled.FontSize = value * .92;
+            if (this.Children.Count > 0)
+                this.Children[0].MinimumWidthRequest = value * 1.66;
         }
     }
 }
