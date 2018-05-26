@@ -9,12 +9,16 @@ namespace Plugin.InputKit.Shared.Controls
 {
     public class RadioButtonGroupView : StackLayout, IValidatable
     {
+        /// <summary>
+        /// Default contructor of RadioButtonGroupView
+        /// </summary>
         public RadioButtonGroupView()
         {
             this.ChildAdded += RadioButtonGroupView_ChildAdded;
             this.ChildrenReordered += RadioButtonGroupView_ChildrenReordered;
         }
-
+        public event EventHandler SelectedItemChanged;
+        public ICommand SelectedItemChangedCommand { get; set; }
         private void RadioButtonGroupView_ChildrenReordered(object sender, EventArgs e)
         {
             UpdateAllEvent();
@@ -47,8 +51,17 @@ namespace Plugin.InputKit.Shared.Controls
                 if (item is RadioButton)
                     (item as RadioButton).IsChecked = item == selected;
             }
-        }
 
+            SetValue(SelectedItemProperty, this.SelectedItem);
+            OnPropertyChanged(nameof(SelectedItem));
+            SetValue(SelectedIndexProperty, this.SelectedIndex);
+            OnPropertyChanged(nameof(SelectedIndex));
+            SelectedItemChanged?.Invoke(this, new EventArgs());
+            SelectedItemChangedCommand?.Execute(this);
+        }
+        /// <summary>
+        /// this will be added later
+        /// </summary>
         public async void DisplayValidation()
         {
             this.BackgroundColor = Color.Red;
@@ -112,14 +125,24 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
+        /// <summary>
+        /// It will be added later
+        /// </summary>
         public bool IsRequired { get; set; }
-
+        /// <summary>
+        /// It will be added later
+        /// </summary>
         public bool IsValidated { get => this.IsRequired && this.SelectedItem != null; }
-
+        /// <summary>
+        /// It will be added later
+        /// </summary>
         public string ValidationMessage { get; set; }
+        #region BindableProperties
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItem = nv);
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedIndex = (int)nv);
+        public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
+        #endregion
 
-        
     }
     /// <summary>
     /// Radio Button with Text

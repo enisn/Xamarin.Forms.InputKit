@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>1.0.8</version>
+    <version>1.0.9</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>IsDisabled properties added. SelectionView RadioButons added</releaseNotes>
+    <releaseNotes>RadioButtonGroupView, BindableProperty, Event and Command added for SelectedItem</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -37,6 +37,8 @@
       Controls in this package are fully bindable and ready to use.
 
       ChangeLog:
+      v.1.0.9
+      RadioButtonGroupView, BindableProperty, Event and Command added for SelectedItem
       
       v.1.0.8
       RadioButton sizing problem with Multiline text solved and CircleSize added
