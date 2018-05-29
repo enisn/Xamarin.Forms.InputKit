@@ -1,5 +1,15 @@
-# Xamarin.Forms.InputKit
-CheckBox, Radio Button, Labeled Slider, Dropdows etc. 
+<table>
+<tr>
+	<td> <img src="http://enisnecipoglu.com/Plugins/inputkit.png" width="120" /></td>
+	<td> 
+		<h1> Xamarin.Forms.InputKit </h1>
+		<p>CheckBox, Radio Button, Labeled Slider, Dropdows etc.  </p> 
+	</td>
+</tr>
+</table>
+
+
+
 
 <hr />
 
