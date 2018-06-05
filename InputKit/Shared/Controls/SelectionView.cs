@@ -18,6 +18,7 @@ namespace Plugin.InputKit.Shared.Controls
         private int _columnNumber = 2;
         private Color _color;
 
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -28,6 +29,7 @@ namespace Plugin.InputKit.Shared.Controls
             //this.ChildAdded += SelectionView_ChildAdded;
             //this.ChildRemoved += SelectionView_ChildRemoved;
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Selection Type, More types will be added later
         /// </summary>
@@ -42,21 +44,25 @@ namespace Plugin.InputKit.Shared.Controls
         /// Column of this view
         /// </summary>
         public int ColumnNumber { get => _columnNumber; set { _columnNumber = value; UpdateView(); } }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Disables these options. They can not be choosen
         /// </summary>
         public IList DisabledSource { get => _disabledSource; set { _disabledSource = value; UpdateView(); } }
+
         [Obsolete("Use ItemsSource instead")]
         public IList ItemSource
         {
             get => ItemsSource;
             set => ItemsSource = value;
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of selections
         /// </summary>
         public Color Color { get => _color; set { _color = value; UpdateColor(); OnPropertyChanged(); } }
 
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Items Source of selections
         /// </summary>
@@ -70,6 +76,9 @@ namespace Plugin.InputKit.Shared.Controls
                 UpdateView();
             }
         }
+        /// <summary>
+        /// Sets or Gets SelectedItem of SelectionView
+        /// </summary>
         public object SelectedItem
         {
             get
@@ -144,14 +153,14 @@ namespace Plugin.InputKit.Shared.Controls
             switch (SelectionType)
             {
                 case SelectionType.Button:
-                    return new SelectableButton(obj,this.Color);
+                    return new SelectableButton(obj, this.Color);
                 case SelectionType.RadioButton:
                     return new SelectableRadioButton(obj);
 
             }
             return null;
         }
-        private void SetInstanceColor(View view,Color color)
+        private void SetInstanceColor(View view, Color color)
         {
             switch (SelectionType)
             {
@@ -172,9 +181,13 @@ namespace Plugin.InputKit.Shared.Controls
 
 
         #region BindableProperties
-        public static readonly BindableProperty ItemSourceProperty = BindableProperty.Create(nameof(ItemSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemSource = (IList)nv);
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
+        [Obsolete("This is obsolete, use ItemSource instead")]
+        public static readonly BindableProperty ItemSourceProperty = BindableProperty.Create(nameof(ItemSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
         public static readonly BindableProperty DisabledSourceProperty = BindableProperty.Create(nameof(DisabledSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).DisabledSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItem = nv);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
 
@@ -216,7 +229,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         /// <param name="value"></param>
         /// <param name="backColor"></param>
-        public SelectableButton(object value,Color backColor) : this(value)
+        public SelectableButton(object value, Color backColor) : this(value)
         {
             this.BackgroundColor = backColor;
         }
@@ -243,7 +256,7 @@ namespace Plugin.InputKit.Shared.Controls
             else
             {
                 this.BackgroundColor = (Color)Button.BackgroundColorProperty.DefaultValue;
-                this.TextColor =(Color) Button.TextColorProperty.DefaultValue;
+                this.TextColor = (Color)Button.TextColorProperty.DefaultValue;
             }
         }
         ///-----------------------------------------------------------------------------
@@ -282,7 +295,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Colored Constructor
         /// </summary>
-        public SelectableRadioButton(object value,Color color) : this(value)
+        public SelectableRadioButton(object value, Color color) : this(value)
         {
             this.Color = color;
         }

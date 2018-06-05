@@ -9,6 +9,7 @@ namespace Plugin.InputKit.Shared.Controls
 {
     public class RadioButtonGroupView : StackLayout, IValidatable
     {
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Default contructor of RadioButtonGroupView
         /// </summary>
@@ -101,6 +102,7 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Returns selected radio button's Value from inside of this.
         /// You can change the selectedItem too by sending a Value which matches ones of radio button's value
@@ -125,14 +127,17 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// It will be added later
         /// </summary>
         public bool IsRequired { get; set; }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// It will be added later
         /// </summary>
         public bool IsValidated { get => this.IsRequired && this.SelectedItem != null; }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// It will be added later
         /// </summary>
@@ -144,6 +149,7 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
     }
+    ///-----------------------------------------------------------------------------
     /// <summary>
     /// Radio Button with Text
     /// </summary>
@@ -154,6 +160,7 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         private bool _isDisabled;
 
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -178,6 +185,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
         }
 
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Quick generating constructor.
         /// </summary>
@@ -195,6 +203,7 @@ namespace Plugin.InputKit.Shared.Controls
                 text = value.ToString();
             lblText.Text = text ?? " ";
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Quick generating constructor.
         /// </summary>
@@ -206,46 +215,76 @@ namespace Plugin.InputKit.Shared.Controls
             lblText.Text = text;
             this.IsChecked = isChecked;
         }
-
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Click event, triggered when clicked
+        /// </summary>
         public event EventHandler Clicked;
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Click command, executed when clicked
+        /// </summary>
         public ICommand ClickCommand { get; set; }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Value to keep inside of Radio Button
         /// </summary>
         public object Value { get; set; }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Gets or Sets, is that Radio Button selected/choosed/Checked
+        /// </summary>
         public bool IsChecked { get => lblFilled.IsVisible; set => lblFilled.IsVisible = value; }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// this control if is Disabled
+        /// </summary>
         public bool IsDisabled { get => _isDisabled; set { _isDisabled = value; this.Opacity = value ? 0.6 : 1; } }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Text Description of Radio Button. It will be displayed right of Radio Button
         /// </summary>
         public string Text { get => lblText.Text; set => lblText.Text = value; }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Fontsize of Description Text
         /// </summary>
         [Obsolete("This attribute is obsolete, use TextFontSize instead")]
         public double FontSize { get => lblText.FontSize; set { lblText.FontSize = value; } }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Fontsize of Description Text
         /// </summary>
         public double TextFontSize { get => lblText.FontSize; set { lblText.FontSize = value; } }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Size of Radio Button
         /// </summary>
         public double CircleSize { get => lblEmpty.FontSize; set => SetCircleSize(value); }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of Radio Button's checked.
         /// </summary>
         public Color Color { get => lblFilled.TextColor; set => lblFilled.TextColor = value; }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of description text of Radio Button
         /// </summary>
         public Color TextColor { get => lblText.TextColor; set => lblText.TextColor = value; }
+        #region BindableProperties
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsChecked = (bool)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
         public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontSize = (double)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).Color = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextColor = (Color)nv);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        #endregion
 
+
+        /// <summary>
+        /// That handles tapps and triggers event, commands etc.
+        /// </summary>
         void Tapped()
         {
             if (IsDisabled) return;
@@ -253,6 +292,10 @@ namespace Plugin.InputKit.Shared.Controls
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(this);
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Sets size of Circle
+        /// </summary>
         void SetCircleSize(double value)
         {
             lblEmpty.FontSize = value;
