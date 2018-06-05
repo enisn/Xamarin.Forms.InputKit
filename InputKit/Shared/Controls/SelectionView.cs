@@ -16,7 +16,11 @@ namespace Plugin.InputKit.Shared.Controls
         private SelectionType _selectionType = SelectionType.Button;
         private IList _disabledSource;
         private int _columnNumber = 2;
+        private Color _color;
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public SelectionView()
         {
             this.RowSpacing = 0;
@@ -24,14 +28,6 @@ namespace Plugin.InputKit.Shared.Controls
             //this.ChildAdded += SelectionView_ChildAdded;
             //this.ChildRemoved += SelectionView_ChildRemoved;
         }
-
-        //private void SelectionView_ChildRemoved(object sender, ElementEventArgs e)
-        //{
-        //    UpdateView();
-        //}
-
-  
-
         /// <summary>
         /// Selection Type, More types will be added later
         /// </summary>
@@ -46,8 +42,25 @@ namespace Plugin.InputKit.Shared.Controls
         /// Column of this view
         /// </summary>
         public int ColumnNumber { get => _columnNumber; set { _columnNumber = value; UpdateView(); } }
+        /// <summary>
+        /// Disables these options. They can not be choosen
+        /// </summary>
         public IList DisabledSource { get => _disabledSource; set { _disabledSource = value; UpdateView(); } }
+        [Obsolete("Use ItemsSource instead")]
         public IList ItemSource
+        {
+            get => ItemsSource;
+            set => ItemsSource = value;
+        }
+        /// <summary>
+        /// Color of selections
+        /// </summary>
+        public Color Color { get => _color; set { _color = value; UpdateColor(); OnPropertyChanged(); } }
+
+        /// <summary>
+        /// Items Source of selections
+        /// </summary>
+        public IList ItemsSource
         {
             get => _itemSource;
             set
@@ -93,7 +106,7 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 this.Children.Clear();
                 SetValue(SelectedItemProperty, null);
-                foreach (var item in ItemSource)
+                foreach (var item in ItemsSource)
                 {
                     var _View = GetInstance(item);
                     (_View as ISelection).Clicked -= Btn_Clicked;
@@ -103,12 +116,9 @@ namespace Plugin.InputKit.Shared.Controls
                         (_View as ISelection).IsDisabled = Convert.ToBoolean(item.GetType().GetProperty(IsDisabledPropertyName)?.GetValue(item) ?? false);
                     if (DisabledSource?.Contains(item) ?? false)
                         (_View as ISelection).IsDisabled = true;
-                    
+
 
                     this.Children.Add(_View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
-
-
-                    
                 }
             }
             catch (Exception ex)
@@ -116,7 +126,13 @@ namespace Plugin.InputKit.Shared.Controls
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
         }
-
+        private void UpdateColor()
+        {
+            foreach (var item in this.Children)
+            {
+                SetInstanceColor(item, this.Color);
+            }
+        }
         private void Btn_Clicked(object sender, EventArgs e)
         {
             SelectedItem = (sender as ISelection).Value;
@@ -128,12 +144,30 @@ namespace Plugin.InputKit.Shared.Controls
             switch (SelectionType)
             {
                 case SelectionType.Button:
-                    return new SelectableButton(obj);
+                    return new SelectableButton(obj,this.Color);
                 case SelectionType.RadioButton:
                     return new SelectableRadioButton(obj);
-     
+
             }
             return null;
+        }
+        private void SetInstanceColor(View view,Color color)
+        {
+            switch (SelectionType)
+            {
+                case SelectionType.Button:
+                    {
+                        if (view is Button)
+                            (view as Button).BackgroundColor = color;
+                    }
+                    break;
+                case SelectionType.RadioButton:
+                    {
+                        if (view is RadioButton)
+                            (view as RadioButton).Color = color;
+                    }
+                    break;
+            }
         }
 
 
@@ -157,24 +191,48 @@ namespace Plugin.InputKit.Shared.Controls
     {
         private bool _isSelected = false;
         private object _value;
-
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public SelectableButton()
         {
             this.BorderRadius = 20;
             this.Margin = new Thickness(20, 5);
             UpdateColors();
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Generates with its value
+        /// </summary>
+        /// <param name="value">Value to keep</param>
         public SelectableButton(object value) : this()
         {
             this.Value = value;
         }
-
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Colored Constructor
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="backColor"></param>
+        public SelectableButton(object value,Color backColor) : this(value)
+        {
+            this.BackgroundColor = backColor;
+        }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// This button is selected or not
+        /// </summary>
         public bool IsSelected
         {
             get => _isSelected;
             set { _isSelected = value; UpdateColors(); }
         }
-
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Updates colors, Triggered when color property changed
+        /// </summary>
         private void UpdateColors()
         {
             if (IsSelected)
@@ -188,22 +246,50 @@ namespace Plugin.InputKit.Shared.Controls
                 this.TextColor =(Color) Button.TextColorProperty.DefaultValue;
             }
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Value is stored on this control
+        /// </summary>
         public object Value { get => _value; set { _value = value; this.Text = value?.ToString(); } }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// This button is disabled or not. Disabled buttons(if it's true) can not be choosen.
+        /// </summary>
         public bool IsDisabled { get; set; } = false;
     }
     public class SelectableRadioButton : RadioButton, ISelection
     {
         private bool _isDisabled;
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public SelectableRadioButton()
         {
 
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Constructor with value
+        /// </summary>
+        /// <param name="value">Value to keep</param>
         public SelectableRadioButton(object value)
         {
             this.Value = value;
             this.Text = value?.ToString();
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Colored Constructor
+        /// </summary>
+        public SelectableRadioButton(object value,Color color) : this(value)
+        {
+            this.Color = color;
+        }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// ISelection interface property
+        /// </summary>
         public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
-        public bool IsDisabled { get => _isDisabled; set { _isDisabled = value; this.Opacity = value ? 0.6 : 1; } }
     }
 }

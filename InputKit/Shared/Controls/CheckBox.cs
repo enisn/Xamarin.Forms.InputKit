@@ -11,7 +11,7 @@ namespace Plugin.InputKit.Shared.Controls
     {
         BoxView boxBackground = new BoxView { HeightRequest = 25, WidthRequest = 25, BackgroundColor = Color.LightGray, VerticalOptions = LayoutOptions.CenterAndExpand };
         BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = 18, WidthRequest = 18, BackgroundColor = Color.Accent, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        Label lblSelected = new Label { Text = "✓", FontSize = 19, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = Color.Accent, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        Label lblSelected = new Label { Text = "✓", FontSize = 18, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = Color.Accent, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 14 };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
@@ -120,7 +120,7 @@ namespace Plugin.InputKit.Shared.Controls
             boxBackground.HeightRequest = value;
             boxSelected.WidthRequest = value * 0.72;
             boxSelected.HeightRequest = value * 0.72;
-            lblSelected.FontSize = value * 0.76;
+            lblSelected.FontSize = value * 0.72;       //old value 0.76
             this.Children[0].MinimumWidthRequest = value * 1.4;
         }
 
