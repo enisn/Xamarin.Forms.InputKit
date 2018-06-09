@@ -13,8 +13,9 @@
             <input:CheckBox Text="Et iusto ea kasd at in et duis aliquyam dolor clita dolor amet at quis exerci nonummy velit ea sadipscing" BoxBackgroundColor="Orange" Color="White" />
 
             <input:CheckBox Text="New Checkbox Hello There !" Type="Check" BoxBackgroundColor="Blue" Color="White"/>
+
             
-            
+
             <input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />
             <input:CheckBox Text="Hello World I'm Option 2" Type="Check" IsEnabled="False"/>
             <input:CheckBox Text="Consetetur eum kasd eos dolore Option 3" Type="Cross"/>

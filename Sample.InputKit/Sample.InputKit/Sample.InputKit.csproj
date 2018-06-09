@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="2.5.0.280555" />
+    <PackageReference Include="Xamarin.Forms.InputKit" Version="1.0.91" />
   </ItemGroup>
 
   <ItemGroup>

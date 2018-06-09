@@ -97,6 +97,22 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as ISelection).IsSelected = (item as ISelection).Value == value;
             }
         }
+        /// <summary>
+        ///Selected Items for the multiple selections, 
+        /// </summary>
+        public IList SelectedItems
+        {
+            get
+            {
+                return this.Children.Where(w => (w is ISelection) && (w as ISelection).IsSelected)?.ToList();
+            }
+            set
+            {
+                foreach (var item in this.Children)
+                    if (item is ISelection)
+                        (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
+            }
+        }
         private void UpdateEvents(IList value)
         {
             if (value is INotifyCollectionChanged)
@@ -155,7 +171,9 @@ namespace Plugin.InputKit.Shared.Controls
                 case SelectionType.Button:
                     return new SelectableButton(obj, this.Color);
                 case SelectionType.RadioButton:
-                    return new SelectableRadioButton(obj);
+                    return new SelectableRadioButton(obj, this.Color);
+                case SelectionType.CheckBox:
+                    return new SelectableCheckBox(obj, this.Color);
 
             }
             return null;
@@ -172,8 +190,14 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
                 case SelectionType.RadioButton:
                     {
-                        if (view is RadioButton)
-                            (view as RadioButton).Color = color;
+                        if (view is SelectableRadioButton)
+                            (view as SelectableRadioButton).Color = color;
+                    }
+                    break;
+                case SelectionType.CheckBox:
+                    {
+                        if (view is SelectableCheckBox)
+                            (view as SelectableCheckBox).Color = color;
                     }
                     break;
             }
@@ -190,11 +214,14 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
-
+    /// <summary>
+    /// Types of selectionlist
+    /// </summary>
     public enum SelectionType
     {
         Button,
-        RadioButton
+        RadioButton,
+        CheckBox,
     }
 
 
@@ -270,6 +297,9 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public bool IsDisabled { get; set; } = false;
     }
+    /// <summary>
+    /// A Radio Button which ISelection Implemented
+    /// </summary>
     public class SelectableRadioButton : RadioButton, ISelection
     {
         private bool _isDisabled;
@@ -277,10 +307,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public SelectableRadioButton()
-        {
-
-        }
+        public SelectableRadioButton(){}
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Constructor with value
@@ -304,5 +331,47 @@ namespace Plugin.InputKit.Shared.Controls
         /// ISelection interface property
         /// </summary>
         public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
+    }
+
+    /// <summary>
+    /// A CheckBox which ISelection Implemented
+    /// </summary>
+    public class SelectableCheckBox : CheckBox,ISelection
+    {
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
+        public SelectableCheckBox()
+        {
+            this.Type = CheckType.Check;
+            this.CheckChanged += (s, e) => this.Clicked?.Invoke(s, e);
+        }
+        /// <summary>
+        /// Constructor with Value
+        /// </summary>
+        /// <param name="value">Parameter too keep</param>
+        public SelectableCheckBox(object value) : this()
+        {
+            this.Value = value;
+            this.Text = value?.ToString();
+        }
+        /// <summary>
+        /// Constructor with Value
+        /// </summary>
+        /// <param name="value">Parameter too keep</param>
+        /// <param name="color">Color of control</param>
+        public SelectableCheckBox(object value,Color color) : this(value)
+        {
+            this.Color = color;
+        }
+        /// <summary>
+        /// Capsulated IsChecked
+        /// </summary>
+        public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
+        /// <summary>
+        /// Parameter to keep
+        /// </summary>
+        public object Value { get; set; }
+        public event EventHandler Clicked;
     }
 }
