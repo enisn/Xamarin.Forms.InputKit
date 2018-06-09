@@ -11,6 +11,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// This Entry contains validation and some stuffs inside
     /// </summary>
+    [Obsolete("This will be removed after newer versions.")]
     public class AdvancedEntry : Entry, IValidatable
     {
         private bool _isRequired;

@@ -10,6 +10,9 @@ using Xamarin.Forms.Internals;
 
 namespace Plugin.InputKit.Shared.Controls
 {
+    /// <summary>
+    /// a custom list for selections,
+    /// </summary>
     public class SelectionView : Grid
     {
         private IList _itemSource;
@@ -76,6 +79,7 @@ namespace Plugin.InputKit.Shared.Controls
                 UpdateView();
             }
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Sets or Gets SelectedItem of SelectionView
         /// </summary>
@@ -97,6 +101,7 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as ISelection).IsSelected = (item as ISelection).Value == value;
             }
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         ///Selected Items for the multiple selections, 
         /// </summary>
@@ -125,6 +130,10 @@ namespace Plugin.InputKit.Shared.Controls
         {
             UpdateView();
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Updates views when data changed
+        /// </summary>
         private void UpdateView()
         {
             try
@@ -134,8 +143,8 @@ namespace Plugin.InputKit.Shared.Controls
                 foreach (var item in ItemsSource)
                 {
                     var _View = GetInstance(item);
-                    (_View as ISelection).Clicked -= Btn_Clicked;
-                    (_View as ISelection).Clicked += Btn_Clicked;
+                    (_View as ISelection).Clicked -= Element_Clicked;
+                    (_View as ISelection).Clicked += Element_Clicked;
 
                     if (!String.IsNullOrEmpty(IsDisabledPropertyName)) //Sets if property Disabled
                         (_View as ISelection).IsDisabled = Convert.ToBoolean(item.GetType().GetProperty(IsDisabledPropertyName)?.GetValue(item) ?? false);
@@ -151,6 +160,10 @@ namespace Plugin.InputKit.Shared.Controls
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Updates colors of inside, when color property changed on runtime
+        /// </summary>
         private void UpdateColor()
         {
             foreach (var item in this.Children)
@@ -158,9 +171,12 @@ namespace Plugin.InputKit.Shared.Controls
                 SetInstanceColor(item, this.Color);
             }
         }
-        private void Btn_Clicked(object sender, EventArgs e)
+        private void Element_Clicked(object sender, EventArgs e)
         {
             SelectedItem = (sender as ISelection).Value;
+            if ((int)this.SelectionType % 2 == 0)
+                SetValue(SelectedItemProperty, SelectedItems);
+
             SetValue(SelectedItemProperty, SelectedItem);
         }
 
@@ -214,19 +230,22 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
+    ///-----------------------------------------------------------------------------
     /// <summary>
     /// Types of selectionlist
     /// </summary>
     public enum SelectionType
     {
-        Button,
-        RadioButton,
-        CheckBox,
+        Button = 1,
+        RadioButton = 3,
+        CheckBox = 2,
     }
 
 
 
-
+    /// <summary>
+    /// A Button which ISelection Implemented
+    /// </summary>
     public class SelectableButton : Button, ISelection
     {
         private bool _isSelected = false;
@@ -307,7 +326,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public SelectableRadioButton(){}
+        public SelectableRadioButton() { }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Constructor with value
@@ -336,8 +355,9 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A CheckBox which ISelection Implemented
     /// </summary>
-    public class SelectableCheckBox : CheckBox,ISelection
+    public class SelectableCheckBox : CheckBox, ISelection
     {
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -346,6 +366,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.Type = CheckType.Check;
             this.CheckChanged += (s, e) => this.Clicked?.Invoke(s, e);
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Constructor with Value
         /// </summary>
@@ -355,23 +376,30 @@ namespace Plugin.InputKit.Shared.Controls
             this.Value = value;
             this.Text = value?.ToString();
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Constructor with Value
         /// </summary>
         /// <param name="value">Parameter too keep</param>
         /// <param name="color">Color of control</param>
-        public SelectableCheckBox(object value,Color color) : this(value)
+        public SelectableCheckBox(object value, Color color) : this(value)
         {
             this.Color = color;
         }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Capsulated IsChecked
         /// </summary>
         public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
+        ///-----------------------------------------------------------------------------
         /// <summary>
         /// Parameter to keep
         /// </summary>
         public object Value { get; set; }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Triggers when CheckChanged
+        /// </summary>
         public event EventHandler Clicked;
     }
 }

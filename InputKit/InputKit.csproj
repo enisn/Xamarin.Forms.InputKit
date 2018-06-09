@@ -87,6 +87,7 @@
   <ItemGroup>
     <None Remove="Shared\Abstraction\ISelection.cs" />
     <None Remove="Shared\Abstraction\IValidatable.cs" />
+    <None Remove="Shared\Configuration\GlobalSetting.cs" />
     <None Remove="Shared\Controls\AdvancedEntry.cs" />
     <None Remove="Shared\Controls\AdvancedSlider.cs" />
     <None Remove="Shared\Controls\CheckBox.cs" />
