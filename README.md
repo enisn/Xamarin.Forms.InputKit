@@ -13,7 +13,9 @@
 
 <hr />
 
-[![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit) <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/1.1.0"><img src="https://img.shields.io/badge/NuGet-1.1.0-blue.svg" /></a>
+[![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
+[![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
+<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/1.1.0"><img src="https://img.shields.io/badge/NuGet-1.1.0-blue.svg" /></a>
 <p>
 <b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
 </p>
