@@ -15,7 +15,7 @@
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>default</LangVersion>
     <DefineConstants>$(DefineConstants);</DefineConstants>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
     <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>

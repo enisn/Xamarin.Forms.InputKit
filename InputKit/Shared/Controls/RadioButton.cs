@@ -10,7 +10,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Groups radiobuttons, Inherited StackLayout.
     /// </summary>
-    public class RadioButtonGroupView : StackLayout, IValidatable
+    public class RadioButtonGroupView : StackLayout
     {
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -166,7 +166,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public class RadioButton : StackLayout
     {
-        Label lblEmpty = new Label { TextColor = Color.Gray, Text = "◯", HorizontalTextAlignment = TextAlignment.Center };
+        Label lblEmpty = new Label { TextColor = Color.Gray, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center };
         Label lblFilled = new Label { TextColor = Color.Accent, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center };
         Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         private bool _isDisabled;

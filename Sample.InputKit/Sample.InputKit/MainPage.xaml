@@ -8,33 +8,37 @@
     <ScrollView>
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
 
-            <input:CheckBox Text="Et iusto ea kasd at in et duis aliquyam dolor clita dolor amet at quis exerci nonummy velit ea sadipscing" />
+            <local:RadioButtonGroupView>
+                <local:RadioButton Text="Lorem aliquam labore sanctus eu no erat takimata ullamcorper dolores duo clita sed ut exerci consequat eum blandit dolore duo"/>
+                <local:RadioButton  Text="Another Option"/>
+            </local:RadioButtonGroupView>
 
-            <input:CheckBox Text="Et iusto ea kasd at in et duis aliquyam dolor clita dolor amet at quis exerci nonummy velit ea sadipscing" BoxBackgroundColor="Orange" Color="White" />
 
-            <input:CheckBox Text="New Checkbox Hello There !" Type="Check" BoxBackgroundColor="Blue" Color="White"/>
-
-            
 
             <input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />
-            <input:CheckBox Text="Hello World I'm Option 2" Type="Check" IsEnabled="False"/>
+            <input:CheckBox Text="Option 1" Type="Box" IsChecked="True" IsDisabled="True"  />
+            
+            
+            <input:CheckBox Text="Option 1" Type="Box" />
+            
+            <input:CheckBox Text="Hello World I'm Option 2" Type="Check"/>
             <input:CheckBox Text="Consetetur eum kasd eos dolore Option 3" Type="Cross"/>
             <input:CheckBox Text="Sea sed justo" Type="Star"/>
 
+            
 
 
             <input:RadioButtonGroupView>
                 <input:RadioButton Text="Option 1 Amet dolor lorem aliquyam at amet aliquip velit" CircleSize="75" FontSize="24" />
                 <input:RadioButton Text="Option 2" FontSize="24" />
                 <input:RadioButton Text="Option 3" />
+                <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et" />
                 <input:RadioButton Text="Option 4" />
             </input:RadioButtonGroupView>
 
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
 
-            <input:SelectionView x:Name="selectionView" ColumnNumber="3" SelectionType="Button">
-                
-            </input:SelectionView>
+            <input:SelectionView x:Name="selectionView" ColumnNumber="3" SelectionType="Button"/>
 
         </StackLayout>
     </ScrollView>
