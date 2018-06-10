@@ -87,7 +87,6 @@ namespace Plugin.InputKit.Shared.Controls
         {
             get
             {
-
                 foreach (var item in this.Children)
                     if (item is ISelection && (item as ISelection).IsSelected)
                         return (item as ISelection).Value;
@@ -95,7 +94,6 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set
             {
-
                 foreach (var item in this.Children)
                     if (item is ISelection && !(item as ISelection).IsDisabled)
                         (item as ISelection).IsSelected = (item as ISelection).Value == value;
@@ -151,7 +149,6 @@ namespace Plugin.InputKit.Shared.Controls
                     if (DisabledSource?.Contains(item) ?? false)
                         (_View as ISelection).IsDisabled = true;
 
-
                     this.Children.Add(_View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
                 }
             }
@@ -190,7 +187,6 @@ namespace Plugin.InputKit.Shared.Controls
                     return new SelectableRadioButton(obj, this.Color);
                 case SelectionType.CheckBox:
                     return new SelectableCheckBox(obj, this.Color);
-
             }
             return null;
         }
@@ -218,8 +214,6 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
             }
         }
-
-
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
@@ -230,7 +224,7 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
-    ///-----------------------------------------------------------------------------
+
     /// <summary>
     /// Types of selectionlist
     /// </summary>
@@ -240,8 +234,6 @@ namespace Plugin.InputKit.Shared.Controls
         RadioButton = 3,
         CheckBox = 2,
     }
-
-
 
     /// <summary>
     /// A Button which ISelection Implemented
@@ -316,6 +308,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public bool IsDisabled { get; set; } = false;
     }
+
     /// <summary>
     /// A Radio Button which ISelection Implemented
     /// </summary>

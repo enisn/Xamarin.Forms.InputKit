@@ -15,7 +15,6 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = 14 };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
-
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -102,7 +101,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// Fontsize of Checkbox text
         /// </summary>
         public double TextFontSize { get => lblOption.FontSize; set => lblOption.FontSize = value; }
-
 
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Color = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);

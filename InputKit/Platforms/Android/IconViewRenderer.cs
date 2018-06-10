@@ -4,10 +4,7 @@ using Android.OS;
 using Android.Widget;
 using Plugin.InputKit.Platforms.Android;
 using Plugin.InputKit.Shared.Controls;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Text;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 using static Android.OS.Build;
@@ -22,10 +19,8 @@ namespace Plugin.InputKit.Platforms.Android
 
         //protected IconViewRenderer(Context context) : base(context)
         //{
-          
         //        base.AutoPackage = false;
         //        _context = context;
-            
         //}
 
         protected override void Dispose(bool disposing)
@@ -66,7 +61,6 @@ namespace Plugin.InputKit.Platforms.Android
                 //var d = _context?.GetDrawable(Element.Source)?.Mutate();
 
                 if (d == null) return;
-                
                 
                 if (VERSION.SdkInt >= BuildVersionCodes.Lollipop)
                     d.SetTint(Element.FillColor.ToAndroid());

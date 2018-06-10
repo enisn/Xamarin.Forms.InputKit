@@ -158,7 +158,6 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
-
     }
     ///-----------------------------------------------------------------------------
     /// <summary>
@@ -291,7 +290,6 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextColor = (Color)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
-
 
         ///-----------------------------------------------------------------------------
         /// <summary>
