@@ -18,11 +18,27 @@
 <b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
 </p>
 <p>
-<b>Sample Project Available: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit">Sample.InputKit on GitHub</a>
+<b>Sample Project Available: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit/tree/master/Sample.InputKit">Sample.InputKit on GitHub</a>
 </p>
 <p>
 <b>Source Codes Available Too: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit/tree/master/InputKit">Plugin.InputKit on GitHub</a>
 </p>
+
+<hr/>
+
+ ## Available Platforms
+
+
+| Platform | Version | Supported |
+| --- | --- | --- |
+| Android | MonoAndroid80 | YES |
+| iOS | Xamarin.iOS10 | YES |
+| UAP | - | **NO** |
+| MAC | Xamarin.Mac20 | YES |
+| WatchOS | Xamarin.WatchOS10 | YES |
+| .NET Standard | 2.0 | YES |
+| .NET Standard | 1.0 | **NO** |
+
 
 
 <hr />
