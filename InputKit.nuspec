@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>1.0.91</version>
+    <version>1.1.0</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -37,6 +37,12 @@
       Controls in this package are fully bindable and ready to use.
 
       ChangeLog:
+      
+      v.1.1.0
+      SelectionView has CheckBoxes now. 
+      RadioButton 2 Line checked problem solved.
+      Rest of Improvements...
+      
       v.1.0.91
       SelectionView color properties added, rest of some properties are updated. 
       'ItemSource' renamed to 'ItemsSource', old one marked as Obselete, It'll removed in later versions.
