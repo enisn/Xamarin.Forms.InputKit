@@ -12,11 +12,25 @@ namespace Sample.InputKit
 		public MainPage()
 		{
 			InitializeComponent();
-            
-            //selectionView.ItemSource = new[]
-            //{
-            //    "Option 1","Option 2","Option 3","Option 4","Option 5","Option 6","Option 7","Option 8"
-            //};
+
+            selectionView.ItemSource = new[]
+            {
+                new SampleClass{ Name = "Option 1", Id = 1 },
+                new SampleClass{ Name = "Option 2", Id = 2 },
+                new SampleClass{ Name = "Option 3", Id = 3 },
+                new SampleClass{ Name = "Option 4", Id = 4 },
+                new SampleClass{ Name = "Option 5", Id = 5 },
+                new SampleClass{ Name = "Option 6", Id = 6 },
+                new SampleClass{ Name = "Option 7", Id = 7 },
+                new SampleClass{ Name = "Option 8", Id = 8 },
+            };
         }
-	}
+    }
+
+    public class SampleClass
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public override string ToString() => Name;
+    }
 }

@@ -7,11 +7,10 @@
 
     <ScrollView>
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
-
-            <local:RadioButtonGroupView>
-                <local:RadioButton Text="Lorem aliquam labore sanctus eu no erat takimata ullamcorper dolores duo clita sed ut exerci consequat eum blandit dolore duo"/>
-                <local:RadioButton  Text="Another Option"/>
-            </local:RadioButtonGroupView>
+            <input:RadioButtonGroupView>
+                <input:RadioButton Text="Lorem aliquam labore sanctus eu no erat takimata ullamcorper dolores duo clita sed ut exerci consequat eum blandit dolore duo"/>
+                <input:RadioButton  Text="Another Option"/>
+            </input:RadioButtonGroupView>
 
 
 
