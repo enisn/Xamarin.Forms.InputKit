@@ -13,7 +13,9 @@
 
 <hr />
 
-[![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit) <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/1.1.0"><img src="https://img.shields.io/badge/NuGet-1.1.0-blue.svg" /></a>
+[![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
+[![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
+<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/1.1.0"><img src="https://img.shields.io/badge/NuGet-1.1.0-blue.svg" /></a>
 <p>
 <b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
 </p>
@@ -195,7 +197,48 @@ public partial class MainPage : ContentPage
 		}
 	}
 ```
+
 <a href="https://media.giphy.com/media/KXtC6oNnOgnJhvYecy/giphy.gif"><img src="https://media.giphy.com/media/KXtC6oNnOgnJhvYecy/giphy.gif" width="270" height="480" alt="Xamarin Forms SelectionView Enis Necipoglu" class="aligncenter size-medium" /></a>
+
+
+You may use a object list as ItemSource, You can make this. Don't forget override **ToString()** method in your object.
+
+sample object:
+
+```csharp
+  public class SampleClass
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public override string ToString() => Name;
+    }
+```
+
+Usage:
+
+```csharp
+public partial class MainPage : ContentPage
+	{
+		public MainPage()
+		{
+			InitializeComponent();
+           selectionView.ItemSource = new[]
+            {
+                new SampleClass{ Name = "Option 1", Id = 1 },
+                new SampleClass{ Name = "Option 2", Id = 2 },
+                new SampleClass{ Name = "Option 3", Id = 3 },
+                new SampleClass{ Name = "Option 4", Id = 4 },
+                new SampleClass{ Name = "Option 5", Id = 5 },
+                new SampleClass{ Name = "Option 6", Id = 6 },
+                new SampleClass{ Name = "Option 7", Id = 7 },
+                new SampleClass{ Name = "Option 8", Id = 8 },
+            };
+		}
+	}
+```
+
+
+
 <h4>PROPERTIES:</h4>
 <ul>
 <li><strong>ItemSource:</strong> <em>(IList)</em> List of options</li>
