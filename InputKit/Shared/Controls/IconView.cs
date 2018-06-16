@@ -2,6 +2,9 @@
 
 namespace Plugin.InputKit.Shared.Controls
 {
+    /// <summary>
+    /// Default Constructor
+    /// </summary>
     public class IconView : View
     {
         #region ForegroundProperty

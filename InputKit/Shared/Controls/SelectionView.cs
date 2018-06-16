@@ -29,8 +29,6 @@ namespace Plugin.InputKit.Shared.Controls
         {
             this.RowSpacing = 0;
             this.ColumnSpacing = 0;
-            //this.ChildAdded += SelectionView_ChildAdded;
-            //this.ChildRemoved += SelectionView_ChildRemoved;
         }
         ///-----------------------------------------------------------------------------
         /// <summary>

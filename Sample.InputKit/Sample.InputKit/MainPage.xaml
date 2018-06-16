@@ -12,8 +12,6 @@
                 <input:RadioButton  Text="Another Option"/>
             </input:RadioButtonGroupView>
 
-
-
             <input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />
             <input:CheckBox Text="Option 1" Type="Box" IsChecked="True" IsDisabled="True"  />
             
