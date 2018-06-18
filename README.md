@@ -35,7 +35,7 @@
 | --- | --- | --- |
 | Android | MonoAndroid80 | YES |
 | iOS | Xamarin.iOS10 | YES |
-| UAP | - | **NO** |
+| UWP | - | **NO** |
 | MAC | Xamarin.Mac20 | YES |
 | WatchOS | Xamarin.WatchOS10 | YES |
 | .NET Standard | 2.0 | YES |
