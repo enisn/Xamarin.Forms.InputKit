@@ -14,7 +14,7 @@ namespace Plugin.InputKit.Shared.Controls
     {
         ///-----------------------------------------------------------------------------
         /// <summary>
-        /// Default contructor of RadioButtonGroupView
+        /// Default constructor of RadioButtonGroupView
         /// </summary>
         public RadioButtonGroupView()
         {
@@ -278,6 +278,11 @@ namespace Plugin.InputKit.Shared.Controls
         public Color Color { get => lblFilled.TextColor; set => lblFilled.TextColor = value; }
         ///-----------------------------------------------------------------------------
         /// <summary>
+        /// Color of radio button's outline border 
+        /// </summary>
+        public Color CircleColor { get => lblEmpty.TextColor; set => lblEmpty.TextColor = value; }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
         /// Color of description text of Radio Button
         /// </summary>
         public Color TextColor { get => lblText.TextColor; set => lblText.TextColor = value; }
@@ -285,8 +290,10 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsChecked = (bool)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
-        public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontSize = (double)nv);
+        [Obsolete("This property is depreciated, use TextFontSize instead")]public static readonly BindableProperty FontSizeProperty = BindableProperty.Create(nameof(FontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontSize = (double)nv);
+        public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontSize = (double)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).Color = (Color)nv);
+        public static readonly BindableProperty CircleColorProperty = BindableProperty.Create(nameof(CircleColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).CircleColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextColor = (Color)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
