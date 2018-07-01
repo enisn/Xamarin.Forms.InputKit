@@ -45,8 +45,9 @@
 
 <hr />
 
-
+<a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">
 <h2>Checkbox</h2>
+</a>
 <p>As you know ther is no CheckBox in Xamarin Forms Library. You can use a custom renderer to use Native Checkbox in portable layer. This CheckBox is not a native one, It's created in Xamarin Forms Portable layer.</p>
 
 <h4>SAMPLE:</h4>
