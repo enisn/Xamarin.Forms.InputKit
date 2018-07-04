@@ -3,7 +3,7 @@
 	<td> <img src="http://enisnecipoglu.com/Plugins/inputkit.png" width="120" /></td>
 	<td> 
 		<h1> Xamarin.Forms.InputKit </h1>
-		<p>CheckBox, Radio Button, Labeled Slider, Dropdows etc.  </p> 
+		<p><a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">CheckBox</a>, Radio Button, Advanced Slider, Dropdows etc.  </p> 
 	</td>
 </tr>
 </table>
