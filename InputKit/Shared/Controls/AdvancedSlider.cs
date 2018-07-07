@@ -43,10 +43,12 @@ namespace Plugin.InputKit.Shared.Controls
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
+            OnPropertyChanging(nameof(Value));
+            SetValue(ValueProperty, slider.Value);
+
             if (e.NewValue % StepValue != 0)
             {
                 slider.Value = Math.Round(e.NewValue / StepValue) * StepValue;
-                SetValue(ValueProperty, slider.Value);
                 return;
             }
             UpdateValueText();
