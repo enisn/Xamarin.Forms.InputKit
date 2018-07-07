@@ -194,7 +194,6 @@ namespace Plugin.InputKit.Shared.Controls
             this.Children.Add(lblText);
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
         }
-
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Quick generating constructor.
@@ -295,6 +294,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).Color = (Color)nv);
         public static readonly BindableProperty CircleColorProperty = BindableProperty.Create(nameof(CircleColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).CircleColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextColor = (Color)nv);
+        public static readonly BindableProperty ClickCommandProperty = BindableProperty.Create(nameof(ClickCommand), typeof(ICommand), typeof(RadioButton), null, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ClickCommand = (ICommand)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 

@@ -8,8 +8,8 @@ namespace Plugin.InputKit.Shared.Controls
         Slider slider = new Slider();
         Label lblTitle = new Label { Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
         Label lblValue = new Label { InputTransparent = true, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
-        Label lblMinValue = new Label { TextColor = (Color) Label.TextColorProperty.DefaultValue, };
-        Label lblMaxValue = new Label { TextColor = (Color) Label.TextColorProperty.DefaultValue, };
+        Label lblMinValue = new Label { TextColor = (Color)Label.TextColorProperty.DefaultValue, };
+        Label lblMaxValue = new Label { TextColor = (Color)Label.TextColorProperty.DefaultValue, };
         private string _valueSuffix;
         private string _valuePrefix;
         private Color _textColor;
@@ -46,11 +46,11 @@ namespace Plugin.InputKit.Shared.Controls
             if (e.NewValue % StepValue != 0)
             {
                 slider.Value = Math.Round(e.NewValue / StepValue) * StepValue;
+                SetValue(ValueProperty, slider.Value);
                 return;
             }
             UpdateValueText();
             UpdateView();
-            SetValue(ValueProperty, slider.Value);
         }
         protected override void OnSizeAllocated(double width, double height)
         {
