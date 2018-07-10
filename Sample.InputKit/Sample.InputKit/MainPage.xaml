@@ -7,26 +7,28 @@
 
     <ScrollView>
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
-            <input:RadioButtonGroupView>
-                <input:RadioButton Text="Lorem aliquam labore sanctus eu no erat takimata ullamcorper dolores duo clita sed ut exerci consequat eum blandit dolore duo"/>
-                <input:RadioButton  Text="Another Option"/>
-            </input:RadioButtonGroupView>
+
+            
+            <local:CheckBox Text="Hello There ! I'm new checkbox"/>
+            <local:CheckBox Type="Check"  Text="Hello There ! I'm new checkbox" BoxBackgroundColor="DimGray" BorderColor="Accent"/>
+            <local:CheckBox Type="Cross" Text="Hello There ! I'm new checkbox"/>
+            <local:CheckBox Type="Star" Text="Hello There ! I'm new checkbox"/>
 
             <input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />
             <input:CheckBox Text="Option 1" Type="Box" IsChecked="True" IsDisabled="True"  />
             
             
-            <input:CheckBox Text="Option 1" Type="Box" />
+            <input:CheckBox Text="Option 1" Type="Check" />
             
             <input:CheckBox Text="Hello World I'm Option 2" Type="Check"/>
             <input:CheckBox Text="Consetetur eum kasd eos dolore Option 3" Type="Cross"/>
             <input:CheckBox Text="Sea sed justo" Type="Star"/>
 
-            
+
 
 
             <input:RadioButtonGroupView>
-                <input:RadioButton Text="Option 1 Amet dolor lorem aliquyam at amet aliquip velit" CircleSize="75" FontSize="24" />
+                <input:RadioButton Text="Option 1" CircleSize="75" FontSize="24" />
                 <input:RadioButton Text="Option 2" FontSize="24" />
                 <input:RadioButton Text="Option 3" />
                 <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et" />

@@ -14,6 +14,10 @@ namespace Sample.InputKit
             InitializeComponent();
 
             MainPage = new NavigationPage(new Sample.InputKit.MainPage());
+
+            CheckBox.GlobalSetting.BackgroundColor = Color.WhiteSmoke;
+            CheckBox.GlobalSetting.Color = Color.BlueViolet;
+            
         }
 
         protected override void OnStart()

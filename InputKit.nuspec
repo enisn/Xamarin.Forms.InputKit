@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>1.1.0</version>
+    <version>1.2.0</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>RadioButtonGroupView, BindableProperty, Event and Command added for SelectedItem</releaseNotes>
+    <releaseNotes>Xamarin Forms 3.0 support added. GlobalSettings added for default values of controls.</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -36,35 +36,51 @@
     <description>
       Controls in this package are fully bindable and ready to use.
 
+      WARNING!!! Stay v.1.1.X if you're using Xamarin Forms. 2.4.X - 2.5.X
+
+
       ChangeLog:
-      
+      v.1.2.0
+      CheckBox border added.
+      GlobalSettings added to CheckBox and RadioButton.
+      - You can set default values of these controls like:
+      CheckBox.GlobalSetting.Color = Color.Red;
+      RadioButton.GlobalSetting.Size = 36;
+      in App.cs
+
+
+
+      v.1.1.1
+      AdvancedSlider PropertyChanging addded.
+      RadioButton ClickCommand missing bindableproperty added.
+
       v.1.1.0
-      SelectionView has CheckBoxes now. 
+      SelectionView has CheckBoxes now.
       RadioButton 2 Line checked problem solved.
       Rest of Improvements...
-      
+
       v.1.0.91
-      SelectionView color properties added, rest of some properties are updated. 
+      SelectionView color properties added, rest of some properties are updated.
       'ItemSource' renamed to 'ItemsSource', old one marked as Obselete, It'll removed in later versions.
-     
-      
+
+
       v.1.0.9
       RadioButtonGroupView, BindableProperty, Event and Command added for SelectedItem
-      
+
       v.1.0.8
       RadioButton sizing problem with Multiline text solved and CircleSize added
-      
+
       v.1.0.7
       MultiLine text problem on Checkbox solved for bigger chexboxes
-      
+
       v.1.0.6
       Checkbox Size and Text FontSize can be set now.
-      
+
       v.1.0.5 - v.1.0.4
       Checkbox Sizing problem on Multiline Text Solved.
 
       v.1.0.3
-      BoxBackgroundColor added to Checkbox. 
+      BoxBackgroundColor added to Checkbox.
 
       v.1.0.2
       FormView was added!
@@ -81,12 +97,15 @@
 
     <!-- Dependencies are automatically installed when the package is installed -->
     <dependencies>
+      <dependency id="Xamarin.Forms" version="[3.0.0.482510)" />
     </dependencies>
   </metadata>
 
   <!-- A readme.txt to display when the package is installed -->
   <files>
-
+    <!--Readme to display after installaction-->
+    <file src="readme.txt" target="" />
+    
     <!-- Cross-platform reference assemblies -->
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.xml" target="lib\netstandard2.0\Plugin.InputKit.xml" />
@@ -99,7 +118,6 @@
 
     <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.dll" target="lib\xamarin.mac20\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.xml" target="lib\xamarin.mac20\Plugin.InputKit.xml" />
-
 
     <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.dll" target="lib\xamarin.tvos10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.xml" target="lib\xamarin.tvos10\Plugin.InputKit.xml" />

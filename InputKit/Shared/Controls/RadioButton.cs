@@ -1,4 +1,5 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
+using Plugin.InputKit.Shared.Configuration;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -154,7 +155,7 @@ namespace Plugin.InputKit.Shared.Controls
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItem = nv);
-        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedIndex = (int)nv);
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1,BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedIndex = (int)nv);
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
@@ -165,9 +166,24 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public class RadioButton : StackLayout
     {
-        Label lblEmpty = new Label { TextColor = Color.Gray, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center };
-        Label lblFilled = new Label { TextColor = Color.Accent, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center };
-        Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        /// <summary>
+        /// Default values of RadioButton
+        /// </summary>
+        public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
+        {
+            Color = Color.Accent, 
+            BorderColor = Color.Black, 
+            TextColor = Color.Black, 
+            Size = 25,
+            CornerRadius = -1,
+            FontSize = 14,
+        };
+        //.92
+        //1.66 minReq
+
+        Label lblEmpty = new Label { TextColor = GlobalSetting.BorderColor, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size, };
+        Label lblFilled = new Label { TextColor = GlobalSetting.Color, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size * .92 };
+        Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize };
         private bool _isDisabled;
 
         ///-----------------------------------------------------------------------------
@@ -189,7 +205,7 @@ namespace Plugin.InputKit.Shared.Controls
                     lblEmpty,
                     lblFilled
                 },
-                MinimumWidthRequest = 35,
+                MinimumWidthRequest = GlobalSetting.Size * 1.66,
             });
             this.Children.Add(lblText);
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
@@ -243,7 +259,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Gets or Sets, is that Radio Button selected/choosed/Checked
         /// </summary>
-        public bool IsChecked { get => lblFilled.IsVisible; set => lblFilled.IsVisible = value; }
+        public bool IsChecked { get => lblFilled.IsVisible; set { lblFilled.IsVisible = value; SetValue(IsCheckedProperty, value); } }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// this control if is Disabled

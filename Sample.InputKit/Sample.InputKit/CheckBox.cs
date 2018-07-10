@@ -3,7 +3,7 @@ using System;
 using System.Windows.Input;
 using Xamarin.Forms;
 
-namespace Plugin.InputKit.Shared.Controls
+namespace Sample.InputKit
 {
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
@@ -14,18 +14,17 @@ namespace Plugin.InputKit.Shared.Controls
         {
             BackgroundColor = Color.Transparent,
             Color = Color.Accent,
-            BorderColor = Color.Black,
-            TextColor = Color.Black,
+            //BorderColor = Color.Black,
             Size = 25,
             CornerRadius = -1,
             FontSize = 14,
         };
 
 
-        Frame boxBackground = new Frame { Padding = 0, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand };
-        BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .65, WidthRequest = GlobalSetting.Size *.65, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        Label lblSelected = new Label { Text = "✓", FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = Color.Accent, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
-        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor };
+        Frame boxBackground = new Frame { Padding = 0, InputTransparent = true, BackgroundColor = GlobalSetting.BackgroundColor, BorderColor = Color.Black, VerticalOptions = LayoutOptions.CenterAndExpand };
+        BoxView boxSelected = new BoxView { IsVisible = false, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
+        Label lblSelected = new Label { Text = "✓", FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = Color.Accent, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
         /// <summary>
