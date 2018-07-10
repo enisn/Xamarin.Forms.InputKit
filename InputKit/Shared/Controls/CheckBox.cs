@@ -24,7 +24,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         Frame boxBackground = new Frame { Padding = 0, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand };
         BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .65, WidthRequest = GlobalSetting.Size *.65, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        Label lblSelected = new Label { Text = "✓", FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = Color.Accent, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        Label lblSelected = new Label { Text = "✓", FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;

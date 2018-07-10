@@ -97,7 +97,7 @@
 
     <!-- Dependencies are automatically installed when the package is installed -->
     <dependencies>
-      <dependency id="Xamarin.Forms" version="[3.0.0.482510)" />
+      <dependency id="Xamarin.Forms" version="3.1.0.583944" />
     </dependencies>
   </metadata>
 
