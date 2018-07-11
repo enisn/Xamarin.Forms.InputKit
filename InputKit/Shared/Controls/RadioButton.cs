@@ -11,7 +11,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Groups radiobuttons, Inherited StackLayout.
     /// </summary>
-    public class RadioButtonGroupView : StackLayout
+    public class RadioButtonGroupView : StackLayout, IValidatable
     {
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -27,6 +27,11 @@ namespace Plugin.InputKit.Shared.Controls
         /// Invokes when tapped on RadioButon
         /// </summary>
         public event EventHandler SelectedItemChanged;
+        /// <summary>
+        /// Implementation of IValidatable, Triggered when value changed.
+        /// </summary>
+        public event EventHandler ValidationChanged;
+
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Executes when tapped on RadioButton

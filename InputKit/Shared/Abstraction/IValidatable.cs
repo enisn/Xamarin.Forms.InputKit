@@ -8,5 +8,6 @@ namespace Plugin.InputKit.Shared.Abstraction
         bool IsValidated { get; }
         string ValidationMessage { get; set; }
         void DisplayValidation();
+        event EventHandler ValidationChanged;
     }
 }
