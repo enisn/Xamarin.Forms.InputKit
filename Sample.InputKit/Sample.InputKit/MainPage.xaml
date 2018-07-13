@@ -12,6 +12,8 @@
         <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
 
 
+            <input:IconView Source="icon.png" FillColor="Accent" />
+
             <input:CheckBox Text="SUBSCRIBE TO OUR NEWSLETTER" Type="Check" BorderColor="Black" Color="Green"/>
             <input:CheckBox Text="Option 2" Type="Check" BorderColor="Black" Color="Green"/>
             <input:CheckBox Text="Option 3" Type="Check" BorderColor="Black" Color="Green"/>

@@ -9,7 +9,7 @@
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
     <AssemblyVersion>1.0.7.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>1.1.1.0</Version>
+    <Version>2.0.0.0</Version>
     <PackageVersion>1.0.1.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
@@ -50,8 +50,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.2.0" PrivateAssets="All" />
-    <PackageReference Include="Xamarin.Forms" Version="3.1.0.583944" PrivateAssets="All" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.5.4" PrivateAssets="All" />
+    <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 

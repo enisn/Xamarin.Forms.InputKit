@@ -8,8 +8,12 @@ using Xamarin.Forms.Platform.Android;
 [assembly:ExportRenderer(typeof(EmptyEntry),typeof(EmptyEntryRenderer))]
 namespace Plugin.InputKit.Platforms.Android
 {
-    internal class EmptyEntryRenderer : EntryRenderer
+    public class EmptyEntryRenderer : EntryRenderer
     {
+        public EmptyEntryRenderer()
+        {
+
+        }
         public EmptyEntryRenderer(Context context) : base(context)
         {
         }

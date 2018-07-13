@@ -1,4 +1,5 @@
-﻿using Plugin.InputKit.Shared.Configuration;
+﻿using Plugin.InputKit.Shared.Abstraction;
+using Plugin.InputKit.Shared.Configuration;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -8,7 +9,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
     /// </summary>
-    public class CheckBox : StackLayout
+    public class CheckBox : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
@@ -50,6 +51,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// Invoked when check changed
         /// </summary>
         public event EventHandler CheckChanged;
+        public event EventHandler ValidationChanged;
+
         /// <summary>
         /// Executed when check changed
         /// </summary>
@@ -120,6 +123,11 @@ namespace Plugin.InputKit.Shared.Controls
         /// Border color of around CheckBox
         /// </summary>
         public Color BorderColor { get => boxBackground.BorderColor; set => boxBackground.BorderColor = value; }
+        public bool IsRequired { get; set; }
+
+        public bool IsValidated => !this.IsRequired || this.IsChecked;
+
+        public string ValidationMessage { get; set; }
 
         #region BindableProperties
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Color = (Color)nv);
@@ -164,6 +172,12 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
             }
         }
+
+        public void DisplayValidation()
+        {
+
+        }
+
         public enum CheckType
         {
             Box,

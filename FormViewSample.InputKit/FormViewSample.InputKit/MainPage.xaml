@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:FormViewSample.InputKit"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             x:Class="FormViewSample.InputKit.MainPage">
+
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="You can see FormView Below:"/>
+            <input:FormView>
+
+                <input:AdvancedEntry 
+                    Title="Place your email below:"
+                    Annotation="Email"
+                    Placeholder="sample@domain.com"
+                    AnnotationColor="Accent"
+                    ValidationMessage="Please type a valid email address"
+                    IsRequired="True"
+                    IconImage="ic_email_black_24dp.png"
+                    MinLength="10"
+                    MaxLength="50"
+                    />
+
+                <input:AdvancedEntry 
+                    Title="Place your name below:"
+                    Annotation="NameSurname"
+                    Placeholder="John Doe"
+                    AnnotationColor="Accent"
+                    ValidationMessage="Please type your name correctly"
+                    IsRequired="True"
+                    IconImage="ic_account_circle_black_24dp.png"
+                    MinLength="5"
+                    MaxLength="30"
+                    />
+
+            </input:FormView>
+        </StackLayout>
+    </ContentPage.Content>
+
+</ContentPage>

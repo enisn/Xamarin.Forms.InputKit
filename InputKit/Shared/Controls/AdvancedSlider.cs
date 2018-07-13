@@ -1,9 +1,10 @@
-﻿using System;
+﻿using Plugin.InputKit.Shared.Abstraction;
+using System;
 using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
-    public class AdvancedSlider : StackLayout
+    public class AdvancedSlider : StackLayout, IValidatable
     {
         Slider slider = new Slider();
         Label lblTitle = new Label { Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
@@ -122,9 +123,17 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
+        public bool IsRequired { get; set; }
+
+        public bool IsValidated => true;
+
+        public string ValidationMessage { get; set; }
+
         #region BindableProperties
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).Value = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
+
+        public event EventHandler ValidationChanged;
         #endregion
 
         void UpdateMinMaxValueText()
@@ -147,6 +156,11 @@ namespace Plugin.InputKit.Shared.Controls
 
 
             //lblValue.LayoutTo(new Rectangle(new Point(pos, slider.Y + lblValue.Height * 0.8), new Size(lblValue.Width, lblValue.Height)));
+        }
+
+        public void DisplayValidation()
+        {
+
         }
     }
 }

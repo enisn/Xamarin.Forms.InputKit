@@ -17,6 +17,11 @@ namespace Plugin.InputKit.Platforms.Android
         private bool _isDisposed;
         Context _context;
 
+        public IconViewRenderer()
+        {
+
+        }
+
         protected IconViewRenderer(Context context) : base(context)
         {
 

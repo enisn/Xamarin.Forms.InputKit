@@ -151,7 +151,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// It will be added later
         /// </summary>
-        public bool IsValidated { get => this.IsRequired && this.SelectedItem != null; }
+        public bool IsValidated { get => !this.IsRequired || this.SelectedItem != null; }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// It will be added later

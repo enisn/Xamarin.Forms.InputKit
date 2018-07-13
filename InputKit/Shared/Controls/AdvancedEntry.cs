@@ -14,7 +14,6 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// This Entry contains validation and some stuffs inside
     /// </summary>
-    [Obsolete("This will be remove d after newer versions.")]
     public class AdvancedEntry : StackLayout, IValidatable
     {
         /// <summary>
@@ -123,6 +122,7 @@ namespace Plugin.InputKit.Shared.Controls
         public string Text { get => txtInput.Text; set => txtInput.Text = value; }
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
         public string IconImage { get => imgIcon.Source.ToString(); set => imgIcon.Source = value; }
+        public Color IconColor { get => imgIcon.FillColor; set => imgIcon.FillColor = value; }
         public string Placeholder { get => txtInput.Placeholder; set => txtInput.Placeholder = value; }
         public int MaxLength
         {
