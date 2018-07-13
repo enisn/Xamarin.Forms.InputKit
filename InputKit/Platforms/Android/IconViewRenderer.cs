@@ -17,11 +17,10 @@ namespace Plugin.InputKit.Platforms.Android
         private bool _isDisposed;
         Context _context;
 
-        //protected IconViewRenderer(Context context) : base(context)
-        //{
-        //        base.AutoPackage = false;
-        //        _context = context;
-        //}
+        protected IconViewRenderer(Context context) : base(context)
+        {
+
+        }
 
         protected override void Dispose(bool disposing)
         {
@@ -57,15 +56,14 @@ namespace Plugin.InputKit.Platforms.Android
         {
             if (!_isDisposed)
             {
-                var d = Resources.GetDrawable(Element.Source)?.Mutate();
-                //var d = _context?.GetDrawable(Element.Source)?.Mutate();
+                var d = _context?.GetDrawable(Element.Source)?.Mutate();
 
                 if (d == null) return;
                 
                 if (VERSION.SdkInt >= BuildVersionCodes.Lollipop)
                     d.SetTint(Element.FillColor.ToAndroid());
                 else
-                    d.SetColorFilter(new LightingColorFilter(Element.FillColor.ToAndroid(), Element.FillColor.ToAndroid()));
+                    d.SetColorFilter(new LightingColorFilter(Xamarin.Forms.Color.Black.ToAndroid(), Element.FillColor.ToAndroid()));
 
                 d.Alpha = Element.FillColor.ToAndroid().A;
                 Control.SetImageDrawable(d);

@@ -1,4 +1,5 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
+using Plugin.InputKit.Shared.Configuration;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,11 +16,25 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public class SelectionView : Grid
     {
+        /// <summary>
+        /// Manages default values of selectionview
+        /// </summary>
+        public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
+        {
+            Color = Color.Accent,
+            BackgroundColor = (Color) Button.BackgroundColorProperty.DefaultValue,
+            BorderColor = Color.Transparent,
+            CornerRadius = 20,
+            FontSize = Device.GetNamedSize(NamedSize.Default,typeof(Button)),
+            Size = -1,
+            TextColor = (Color) Button.TextColorProperty.DefaultValue,
+        };
+
         private IList _itemSource;
         private SelectionType _selectionType = SelectionType.Button;
         private IList _disabledSource;
         private int _columnNumber = 2;
-        private Color _color;
+        private Color _color = GlobalSetting.Color;
 
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -51,12 +66,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public IList DisabledSource { get => _disabledSource; set { _disabledSource = value; UpdateView(); } }
 
-        [Obsolete("Use ItemsSource instead")]
-        public IList ItemSource
-        {
-            get => ItemsSource;
-            set => ItemsSource = value;
-        }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of selections
@@ -215,8 +224,6 @@ namespace Plugin.InputKit.Shared.Controls
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
-        [Obsolete("This is obsolete, use ItemSource instead")]
-        public static readonly BindableProperty ItemSourceProperty = BindableProperty.Create(nameof(ItemSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
         public static readonly BindableProperty DisabledSourceProperty = BindableProperty.Create(nameof(DisabledSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).DisabledSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItem = nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -236,7 +243,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A Button which ISelection Implemented
     /// </summary>
-    public class SelectableButton : Button, ISelection
+    internal class SelectableButton : Button, ISelection
     {
         private bool _isSelected = false;
         private object _value;
@@ -258,6 +265,11 @@ namespace Plugin.InputKit.Shared.Controls
         public SelectableButton(object value) : this()
         {
             this.Value = value;
+            this.TextColor = SelectionView.GlobalSetting.TextColor;
+            this.FontSize = SelectionView.GlobalSetting.FontSize;
+            this.CornerRadius = (int)SelectionView.GlobalSetting.CornerRadius;
+            this.BorderColor = SelectionView.GlobalSetting.BorderColor;
+            this.BorderWidth = 2;
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -310,7 +322,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A Radio Button which ISelection Implemented
     /// </summary>
-    public class SelectableRadioButton : RadioButton, ISelection
+    internal class SelectableRadioButton : RadioButton, ISelection
     {
         private bool _isDisabled;
         ///-----------------------------------------------------------------------------
@@ -346,7 +358,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A CheckBox which ISelection Implemented
     /// </summary>
-    public class SelectableCheckBox : CheckBox, ISelection
+    internal class SelectableCheckBox : CheckBox, ISelection
     {
         ///-----------------------------------------------------------------------------
         /// <summary>

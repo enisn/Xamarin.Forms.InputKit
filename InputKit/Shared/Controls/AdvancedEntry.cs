@@ -1,100 +1,213 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
+using Plugin.InputKit.Shared.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     /// <summary>
     /// This Entry contains validation and some stuffs inside
     /// </summary>
-    [Obsolete("This will be removed after newer versions.")]
-    public class AdvancedEntry : Entry, IValidatable
+    [Obsolete("This will be remove d after newer versions.")]
+    public class AdvancedEntry : StackLayout, IValidatable
     {
-        private bool _isRequired;
-
         /// <summary>
-        /// Default constructor
+        /// This settings will be replaced default values of all AdvancedEntries
+        /// </summary>
+        public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
+        {
+            BackgroundColor = Color.White,
+            CornerRadius = 20,
+            BorderColor = Color.Transparent,
+            Color = Color.Accent,
+            FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
+            Size = -1,
+            TextColor = Color.Black,
+        };
+
+        Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, };
+        Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor };
+        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, Padding = 0 };
+        Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "https://github.com/google/material-design-icons/blob/master/alert/drawable-mdpi/ic_warning_black_24dp.png" };
+        IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
+        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center };
+        /// <summary>
+        /// Default Constructor
         /// </summary>
         public AdvancedEntry()
         {
-            this.TextChanged += AdvancedEntry_TextChanged;
+            this.Children.Add(lblTitle);
+            this.Children.Add(lblAnnotation);
+            this.Children.Add(frmBackground);
+            frmBackground.Content = new Grid
+            {
+                Children =
+                {
+                    new StackLayout { Orientation = StackOrientation.Horizontal,
+                    Children =
+                        {
+                            imgIcon,
+                            txtInput
+                        }
+                    },
+                    imgWarning
+                }
+            };
+
+            txtInput.TextChanged += TxtInput_TextChanged;
+            txtInput.Completed += (s, args) => { CompletedCommand?.Execute(s); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
+            imgWarning.IsVisible = this.IsRequired;
         }
 
-        private void AdvancedEntry_TextChanged(object sender, TextChangedEventArgs e)
+
+        #region Not Implemented
+        public event EventHandler Clicked;
+        public bool IsSelected { get => false; set { } }
+        public object Value { get; set; }
+        public bool IsValidated => IsAnnotated;
+        private Color _defaultAnnotationColor = Color.Gray;
+        #endregion
+
+
+
+        private AnnotationType _annotation;
+        private bool _isDisabled;
+        private bool _isRequired;
+        private int _minLength;
+
+        public event EventHandler Completed;
+        public event EventHandler ValidationChanged;
+        public new void Focus()
         {
-            if (this.Text.Length > this.MaxLength)
-                this.Text = this.Text.Substring(0, MaxLength);
+            txtInput.Focus();
+        }
+        public new void Unfocus()
+        {
+            txtInput.Unfocus();
+        }
+        public void FocusNext()
+        {
+            if (this.Parent is Layout<View> == false) return;
 
-            if (!IsValidated)
+            Layout<View> parent = this.Parent as Layout<View>;
+
+            int index = parent.Children.IndexOf(this);
+            for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
             {
-
-                switch (this.Validation)
+                if (parent.Children[i] is AdvancedEntry)
                 {
-                    case AnnotationType.Letter:
-                        this.Text = this.Text.Where(t => Char.IsLetter(t)).Aggregate("", (current, t) => current + t);
-                        break;
-                    case AnnotationType.Integer:
-                        this.Text = this.Text.Where(t => Char.IsNumber(t)).Aggregate("", (current, t) => current + t);
-                        break;
-                    case AnnotationType.Text:
-                        this.Text = this.Text.Where(t => !(Char.IsSeparator(t) || Char.IsSymbol(t) || Char.IsSurrogate(t) || Char.IsControl(t) || Char.IsPunctuation(t))).Aggregate("", (current, t) => current + t);
-                        break;
-                    case AnnotationType.Number:
-                    case AnnotationType.Money:
-                        this.Text = this.Text.Where(t => (Char.IsNumber(t) || t == '.')).Aggregate("", (current, t) => current + t);
-                        break;
+                    (parent.Children[i] as AdvancedEntry).Focus();
+                    break;
                 }
             }
         }
-        /// <summary>
-        /// The message to be shown when that entry is not validated!
-        /// That will be added later!
-        /// </summary>
-        public string ValidationMessage { get; set; }
-        /// <summary>
-        /// Maximum character length of this entry
-        /// </summary>
-        public short MaxLength { get; set; }
-        /// <summary>
-        /// Returns if entry is validated or not
-        /// </summary>
-        public bool IsValidated
+
+        private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
+            SetValue(TextProperty, txtInput.Text);
+            SetValue(IsAnnotatedProperty, IsAnnotated);
+            ValidationChanged?.Invoke(this, new EventArgs());
+
+            UpdateWarning();
+            if (!IgnoreValidationMessage)
+                DisplayValidation();
+        }
+
+        public string Text { get => txtInput.Text; set => txtInput.Text = value; }
+        public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
+        public string IconImage { get => imgIcon.Source.ToString(); set => imgIcon.Source = value; }
+        public string Placeholder { get => txtInput.Placeholder; set => txtInput.Placeholder = value; }
+        public int MaxLength
+        {
+            get => txtInput.MaxLength;
+            set => txtInput.MaxLength = value;
+        }
+        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); DisplayValidation(); } }
+        public string AnnotationMessage
+        {
+            get => lblAnnotation.Text;
+            set { lblAnnotation.Text = value; lblAnnotation.IsVisible = !String.IsNullOrEmpty(value); }
+        }
+        public Color AnnotationColor
+        {
+            get => lblAnnotation.TextColor;
+            set { lblAnnotation.TextColor = value; _defaultAnnotationColor = value; }
+        }
+        public AnnotationType Annotation { get => _annotation; set { _annotation = value; UpdateKeyboard(value); } }
+        public bool IsDisabled
+        {
+            get => _isDisabled; set
+            {
+                _isDisabled = value;
+                this.Opacity = value ? 0.6 : 1;
+                txtInput.IsEnabled = !value;
+            }
+        }
+        public bool IsAnnotated
+        {
             get
             {
-                switch (Validation)
+                if (!this.IsRequired)
+                    return true;
+                if (String.IsNullOrEmpty(Text))
+                    return false;
+                if (Text.Length < MinLength)
+                    return false;
+
+                switch (Annotation)
                 {
+                    case AnnotationType.NameSurname:
+                        return Text.Trim().Contains(" ");
                     case AnnotationType.Letter:
-                        return !this.Text.Any(a => !Char.IsLetter(a));
-                    case AnnotationType.Integer:
-                        return !this.Text.Any(a => !Char.IsNumber(a));
-                    case AnnotationType.Text:
-                        return !this.Text.Any(a => Char.IsSeparator(a) || Char.IsSymbol(a) || Char.IsSurrogate(a) || Char.IsControl(a) || Char.IsPunctuation(a));
+                        return Text.All(Char.IsLetter);
                     case AnnotationType.Number:
                     case AnnotationType.Money:
-                        return !this.Text.Any(a => !Char.IsNumber(a));
+                        return Text.All(c => Char.IsDigit(c) || c == ',');
+                    case AnnotationType.Integer:
+                        return Text.All(Char.IsDigit);
+                    case AnnotationType.Phone:
+                        return Text.All(Char.IsDigit) && this.Text.Length == this.MaxLength;
+                    case AnnotationType.Text:
+                        return Text.All(c => c == ' ' || !(Char.IsSymbol(c) || Char.IsSurrogate(c) || Char.IsControl(c) || Char.IsPunctuation(c)));
                     case AnnotationType.Email:
-                        return this.Text.Contains("@") && this.Text.Contains(".") && this.Text.Substring(this.Text.IndexOf('@'), this.Text.Length - this.Text.IndexOf('@') - 1).Length >= 2;
+                        var splitted = Text.Split('@');
+                        return Text.Contains("@") && splitted.Length == 2 && splitted.LastOrDefault().Length > 3 && splitted.LastOrDefault().Contains(".") && splitted.LastOrDefault().Split('.').LastOrDefault()?.Length >= 2;
                     case AnnotationType.Password:
-                        //Will be added
-                        return true;
+                        return Text.Any(Char.IsDigit) && Text.Any(Char.IsLetter);
                 }
                 return true;
             }
+
+            set { }
         }
-        /// <summary>
-        /// IsRequired or not. It effects to IsValidated too!
-        /// </summary>
-        public bool IsRequired { get => _isRequired; set { _isRequired = value; if (value) this.Placeholder = "* " + this.Placeholder; else this.Placeholder = this.Placeholder.Replace("* ", string.Empty); } }
-        /// <summary>
-        /// Valitadion type of this entry
-        /// </summary>
-        public AnnotationType Validation { get; set; }
+
+        public bool IsRequired { get => _isRequired; set { _isRequired = value; UpdateWarning(); } }
+        public string ValidationMessage { get; set; }
+        public bool IgnoreValidationMessage { get; set; }
+        public ICommand CompletedCommand { get; set; }
+
+
+        #region BindableProperties
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(AdvancedEntry), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Text = (string)nv);
+        public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Title = (string)nv);
+        public static readonly BindableProperty PlaceHolderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Placeholder = (string)nv);
+        public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).IconImage = (string)nv);
+        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
+        public static readonly BindableProperty IsAnnotatedProperty = BindableProperty.Create(nameof(IsAnnotated), typeof(bool), typeof(AdvancedEntry), false, BindingMode.OneWayToSource);
+        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), Color.Default, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
+        public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
+        public static readonly BindableProperty CompletedCommandProperty = BindableProperty.Create(nameof(CompletedCommand), typeof(ICommand), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CompletedCommand = (ICommand)nv);
+        public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AdvancedEntry.AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        #endregion
 
         void UpdateKeyboard(AnnotationType annotation)
         {
@@ -102,54 +215,70 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 case AnnotationType.Letter:
                 case AnnotationType.Text:
-                    this.Keyboard = Keyboard.Chat;
+                    txtInput.Keyboard = Keyboard.Chat;
                     break;
                 case AnnotationType.Integer:
                 case AnnotationType.Number:
                 case AnnotationType.Money:
-                    this.Keyboard = Keyboard.Numeric;
+                    txtInput.Keyboard = Keyboard.Numeric;
                     break;
                 case AnnotationType.Email:
-                    this.Keyboard = Keyboard.Email;
+                    txtInput.Keyboard = Keyboard.Email;
                     break;
                 case AnnotationType.Phone:
-                    this.Keyboard = Keyboard.Telephone;
+                    txtInput.Keyboard = Keyboard.Telephone;
                     break;
                 case AnnotationType.Password:
-                    this.Keyboard = Keyboard.Plain;
-                    this.IsPassword = true;
+                    txtInput.Keyboard = Keyboard.Plain;
+                    txtInput.IsPassword = true;
                     break;
                 default:
-                    this.Keyboard = Keyboard.Default;
+                    txtInput.Keyboard = Keyboard.Default;
                     break;
             }
         }
-        /// <summary>
-        /// Shows this is validated or not
-        /// </summary>
+
         public void DisplayValidation()
         {
-            if (this.IsValidated || !this.IsRequired)
+            if (!this.IsValidated)
             {
-                this.TextColor = Color.ForestGreen;
+                //txtInput.TextColor = Color.Red;
+                AnnotationMessage = ValidationMessage;
+                AnnotationColor = Color.Red;
             }
             else
             {
-                this.TextColor = Color.Red;
+                //if (!String.IsNullOrEmpty(ValidationMessage)) return;
+                AnnotationMessage = null;
+                AnnotationColor = _defaultAnnotationColor;
             }
+        }
+
+        void UpdateWarning()
+        {
+            imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
         }
 
         public enum AnnotationType
         {
-            None = 0,
-            Letter = 1 << 1,
-            Integer = 1 << 2,
-            Number = 1 << 3,
-            Text = 1 << 4,
-            Money = 1 << 16,
-            Email = 1 << 32,
-            Password = 99,
-            Phone = 100
+            None,
+            Letter,
+            Integer,
+            Number,
+            Text,
+            Money,
+            Email,
+            NameSurname,
+            Password,
+            Phone
         }
     }
+
+
+    internal class EmptyEntry : Entry
+    {
+
+    }
+
+
 }
