@@ -33,7 +33,7 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor };
         Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, Padding = 0 };
-        Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "https://github.com/google/material-design-icons/blob/master/alert/drawable-mdpi/ic_warning_black_24dp.png" };
+        Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center };
         /// <summary>
@@ -130,7 +130,7 @@ namespace Plugin.InputKit.Shared.Controls
             set => txtInput.MaxLength = value;
         }
         public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); DisplayValidation(); } }
-        public string AnnotationMessage
+        private string AnnotationMessage
         {
             get => lblAnnotation.Text;
             set { lblAnnotation.Text = value; lblAnnotation.IsVisible = !String.IsNullOrEmpty(value); }

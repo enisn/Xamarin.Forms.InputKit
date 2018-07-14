@@ -1,30 +1,24 @@
-﻿using Android.Content;
-using Android.Graphics;
-using Android.OS;
-using Android.Widget;
-using Plugin.InputKit.Platforms.Android;
+﻿using Plugin.InputKit.Platforms.Android;
 using Plugin.InputKit.Shared.Controls;
+using Android.Content;
+using Android.Graphics;
+using Android.Graphics.Drawables;
+using Android.Widget;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
-using static Android.OS.Build;
 
-[assembly: ExportRenderer(typeof(IconView), typeof(IconViewRenderer))]
+[assembly:ExportRenderer(typeof(IconView),typeof(NewIconViewRenderer))]
 namespace Plugin.InputKit.Platforms.Android
 {
-    public class IconViewRenderer : ViewRenderer<IconView, ImageView>
+    public class NewIconViewRenderer : ViewRenderer<IconView, ImageView>
     {
         private bool _isDisposed;
         Context _context;
-
-        public IconViewRenderer()
+        public NewIconViewRenderer(Context context) : base(context)
         {
-
-        }
-
-        protected IconViewRenderer(Context context) : base(context)
-        {
-
+            base.AutoPackage = false;
+            _context = context;
         }
 
         protected override void Dispose(bool disposing)
@@ -63,11 +57,11 @@ namespace Plugin.InputKit.Platforms.Android
             {
                 var d = _context?.GetDrawable(Element.Source)?.Mutate();
 
-                if (d == null) return;
                 
-                if (VERSION.SdkInt >= BuildVersionCodes.Lollipop)
-                    d.SetTint(Element.FillColor.ToAndroid());
-                else
+                if (d == null) return;
+                //if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+                //    d.SetTint(Element.FillColor.ToAndroid());
+                //else
                     d.SetColorFilter(new LightingColorFilter(Xamarin.Forms.Color.Black.ToAndroid(), Element.FillColor.ToAndroid()));
 
                 d.Alpha = Element.FillColor.ToAndroid().A;

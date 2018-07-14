@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:FormViewSample.InputKit"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="FormViewSample.InputKit.MainPage">
+             x:Class="FormViewSample.InputKit.MainPage"
+             BackgroundColor="WhiteSmoke">
 
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Padding="30">
             <Label Text="You can see FormView Below:"/>
             <input:FormView>
 

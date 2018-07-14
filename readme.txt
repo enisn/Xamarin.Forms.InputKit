@@ -13,6 +13,13 @@ Then you will be able to use controls easily inside your page like:
 ------------------------------------------------------------
 
 
+-------------------Advanced-Entry-Alert-Icon----------------------------------
+Your resources must contain alert.png to display validation warning on AdvancedEntry !
+If doesn't exits alert icon won't be displayed.
+------------------------------------------------------------------------------
+
+
+
 --------------EASY--DESIGNING----------------
 
 If you want to set all the controls in your app you can use GlobalSettings for this package.
