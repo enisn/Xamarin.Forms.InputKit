@@ -129,6 +129,68 @@
 </ul>
 <hr />
 
+<h2>Advanced Entry (COMING SOON!)</h2>
+<p>Easiest validation</p>
+<h4>SAMPLE:</h4>
+
+```xaml
+ <StackLayout Padding="30">
+            <Label Text="You can see FormView Below:"/>
+            <BoxView HeightRequest="1" Color="LightGray" />
+            <input:FormView IsValidated="{Binding IsValidated}">
+                
+                <input:AdvancedEntry 
+                    Text="{Binding Email}"
+                    IsRequired="True"
+                    Title="Place your email below:"
+                    Annotation="Email"
+                    Placeholder="sample@domain.com"
+                    AnnotationColor="Accent"
+                    ValidationMessage="Please type a valid email address"
+                    IconImage="ic_email_black_24dp.png"
+                    MinLength="10"
+                    MaxLength="50"
+                    />
+
+                <input:AdvancedEntry 
+                    Text="{Binding NameSurname}"
+                    IsRequired="True"
+                    Title="Place your name below:"
+                    Annotation="NameSurname"
+                    Placeholder="John Doe"
+                    AnnotationColor="Accent"
+                    ValidationMessage="Please type your name correctly"
+                    IconImage="ic_account_circle_black_24dp.png"
+                    MinLength="5"
+                    MaxLength="30"
+                    />
+
+                <input:AdvancedEntry 
+                    Text="{Binding Phone}"
+                    IsRequired="True"
+                    Title="Place your phone number below:"
+                    Annotation="Phone"
+                    Placeholder="5439998877"
+                    AnnotationColor="Accent"
+                    ValidationMessage="Please type your phone number correctly"
+                    IconImage="ic_account_circle_black_24dp.png"
+                    MaxLength="10"
+                    />
+
+                <Button Command="{Binding SubmitCommand}" Text="Submit" BackgroundColor="Accent" CornerRadius="20" TextColor="White" />
+            </input:FormView>
+        </StackLayout>
+```
+<a href="#"><img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p280x280/37062816_2009089342435502_2148195452929966080_n.png?_nc_cat=0&_nc_ad=z-m&_nc_cid=0&oh=d7de5e1104e3db6617fe49b9028ddb4d&oe=5BD0F285" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+
+<h4>PROPERTIES:</h4>
+<ul>
+<li><strong>Coming</strong> <em>(double)</em> Soon !</li>
+</ul>
+<hr />
+
+
+
 <h2>Advanced Slider</h2>
 <p>Xamarin Forms Slider works a Sticky label on it. Wonderful experience for your users.</p>
 <h4>SAMPLE:</h4>
