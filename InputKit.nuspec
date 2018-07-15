@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.0.0.2</version>
+    <version>2.0.0.6</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -125,5 +125,6 @@
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.dll" target="lib\xamarin.watchos10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.xml" target="lib\xamarin.watchos10\Plugin.InputKit.xml" />
 
+  
   </files>
 </package>

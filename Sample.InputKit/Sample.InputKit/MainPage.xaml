@@ -9,14 +9,13 @@
         <local:MainViewModel/>
     </ContentPage.BindingContext>
     <ScrollView>
-        <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
+        <StackLayout Spacing="12" Padding="10">
 
-
-            <input:IconView Source="icon.png" FillColor="Accent" />
-
-            <input:CheckBox Text="SUBSCRIBE TO OUR NEWSLETTER" Type="Check" BorderColor="Black" Color="Green"/>
-            <input:CheckBox Text="Option 2" Type="Check" BorderColor="Black" Color="Green"/>
-            <input:CheckBox Text="Option 3" Type="Check" BorderColor="Black" Color="Green"/>
+            <input:CheckBox Text="Option 0" Type="Box"/>
+            <input:CheckBox Text="Option 1" Type="Box"/>
+            <input:CheckBox Text="Option 2" Type="Check"/>
+            <input:CheckBox Text="Option 3" Type="Cross"/>
+            <input:CheckBox Text="Option 4" Type="Star"/>
 
 
             <!--<input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />

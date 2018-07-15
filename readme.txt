@@ -14,7 +14,7 @@ Then you will be able to use controls easily inside your page like:
 
 
 -------------------Advanced-Entry-Alert-Icon----------------------------------
-Your resources must contain alert.png to display validation warning on AdvancedEntry !
+Your resources must contain 24dp            alert.png           to display validation warning on AdvancedEntry !
 If doesn't exits alert icon won't be displayed.
 ------------------------------------------------------------------------------
 

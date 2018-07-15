@@ -31,7 +31,7 @@ namespace Plugin.InputKit.Shared.Configuration
         /// <summary>
         /// If control has a corner radius, this is it.
         /// </summary>
-        public double CornerRadius { get; set; }
+        public float CornerRadius { get; set; }
         ///------------------------------------------------------------------
         /// <summary>
         /// If control has fontsize, this is it.

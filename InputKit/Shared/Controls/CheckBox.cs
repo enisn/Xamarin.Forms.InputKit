@@ -23,8 +23,8 @@ namespace Plugin.InputKit.Shared.Controls
         };
 
 
-        Frame boxBackground = new Frame { Padding = 0, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand };
-        BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .65, WidthRequest = GlobalSetting.Size *.65, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
+        Frame boxBackground = new Frame { Padding = 0,CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand };
+        BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size *.60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
         Label lblSelected = new Label { Text = "✓", FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor };
         private CheckType _type = CheckType.Box;
@@ -44,7 +44,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.Children.Add(lblOption);
             this.GestureRecognizers.Add(new TapGestureRecognizer
             {
-                Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; CheckChanged?.Invoke(this, new EventArgs()); CheckChangedCommand?.Execute(this.IsChecked); }),
+                Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; CheckChanged?.Invoke(this, new EventArgs()); CheckChangedCommand?.Execute(this.IsChecked); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
         }
         /// <summary>
@@ -52,7 +52,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public event EventHandler CheckChanged;
         public event EventHandler ValidationChanged;
-
         /// <summary>
         /// Executed when check changed
         /// </summary>
@@ -123,13 +122,21 @@ namespace Plugin.InputKit.Shared.Controls
         /// Border color of around CheckBox
         /// </summary>
         public Color BorderColor { get => boxBackground.BorderColor; set => boxBackground.BorderColor = value; }
+        /// <summary>
+        /// WARNING! : If you set this as required, user must set checked this control to be validated!
+        /// </summary>
         public bool IsRequired { get; set; }
-
+        /// <summary>
+        /// Checks if entry required and checked
+        /// </summary>
         public bool IsValidated => !this.IsRequired || this.IsChecked;
-
+        /// <summary>
+        /// Not available for this control
+        /// </summary>
         public string ValidationMessage { get; set; }
 
         #region BindableProperties
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Color = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsChecked = (bool)nv);
@@ -139,13 +146,14 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CheckChangedCommandProperty = BindableProperty.Create(nameof(CheckChangedCommand), typeof(ICommand), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).CheckChangedCommand = (ICommand)nv);
         public static readonly BindableProperty BoxBackgroundColorProperty = BindableProperty.Create(nameof(BoxBackgroundColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).BoxBackgroundColor = (Color)nv);
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), 14.0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         void SetBoxSize(double value)
         {
             boxBackground.WidthRequest = value;
             boxBackground.HeightRequest = value;
-            boxSelected.WidthRequest = value * 0.65;  //old value 0.72
-            boxSelected.HeightRequest = value * 0.65;
+            boxSelected.WidthRequest = value * .6;  //old value 0.72
+            boxSelected.HeightRequest = value * 0.6;
             lblSelected.FontSize = value * 0.72;       //old value 0.76
             this.Children[0].MinimumWidthRequest = value * 1.4;
         }
@@ -172,7 +180,9 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
             }
         }
-
+        /// <summary>
+        /// Not available for this control
+        /// </summary>
         public void DisplayValidation()
         {
 

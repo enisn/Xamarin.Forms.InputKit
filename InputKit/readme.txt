@@ -7,10 +7,17 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
 Then you will be able to use controls easily inside your page like:
 
-            
-            <input:CheckBox Text="Option 1" Type="Check" />
+<input:CheckBox Text="Option 1" Type="Check" />
+
 
 ------------------------------------------------------------
+
+
+-------------------Advanced-Entry-Alert-Icon----------------------------------
+Your resources must contain 24dp             alert.png            to display validation warning on AdvancedEntry !
+If doesn't exits alert icon won't be displayed.
+------------------------------------------------------------------------------
+
 
 
 --------------EASY--DESIGNING----------------
@@ -29,4 +36,4 @@ Plugin.InputKit.Shared.Controls.RadioButton.GlobalSetting.Color = Color.Red;
 
 ...and you'll see all the controls default values changed in entire project.
 
-
+--------------------------------------------

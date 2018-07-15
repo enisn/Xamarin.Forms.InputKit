@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{12D598
 	ProjectSection(SolutionItems) = preProject
 		InputKit.nuspec = InputKit.nuspec
 		Pack.bat = Pack.bat
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.InputKit.Android", "Sample.InputKit\Sample.InputKit.Android\Sample.InputKit.Android.csproj", "{BB4B11C4-B014-4D02-A014-5A29F694A392}"
@@ -23,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit.And
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit.iOS", "FormViewSample.InputKit\FormViewSample.InputKit.iOS\FormViewSample.InputKit.iOS.csproj", "{7266B8FF-71CB-4EC5-9F2C-891BF323DA63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit", "FormViewSample.InputKit\FormViewSample.InputKit\FormViewSample.InputKit.csproj", "{15D16C2C-2F95-467B-B466-6CA34F6FCF70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormViewSample.InputKit", "FormViewSample.InputKit\FormViewSample.InputKit\FormViewSample.InputKit.csproj", "{15D16C2C-2F95-467B-B466-6CA34F6FCF70}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

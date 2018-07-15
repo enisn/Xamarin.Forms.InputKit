@@ -129,8 +129,10 @@
 </ul>
 <hr />
 
-<h2>Advanced Entry (COMING SOON!)</h2>
-<p>Easiest validation</p>
+<h2>Advanced Entry</h2>
+<p>This entry has many features to develop your applications quickly. When this entry completed, it finds next entry in Parent layout and focus it. AdvancedEntry contains validation system inside it. You can set some properties to validate it and you can handle all your entries is validated or not with **FormView**.
+You can set validation message and AnnotatinColor. Entry will automaticly display your message when it's not validated.
+</p>
 <h4>SAMPLE:</h4>
 
 ```xaml
@@ -185,7 +187,22 @@
 
 <h4>PROPERTIES:</h4>
 <ul>
-<li><strong>Coming</strong> <em>(double)</em> Soon !</li>
+<li><strong>Text:</strong> <em>(string)</em> Text of user typed</li>
+<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
+<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
+<li><strong>IconColor:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
+<li><strong>Placeholder:</strong> <em>(string)</em> Entry's placeholder.</li>
+<li><strong>MaxLength:</strong> <em>(int)</em> Text's Maximum length can user type.</li>
+<li><strong>MinLength:</strong> <em>(int)</em> Text's Minimum length to be validated.</li>
+<li><strong>AnnotationMessage:</strong> <em>(string)</em> This will be shown below title. This automaticly updating. If you set this manually you must set true IgnoreValidationMessage !!!  .</li>
+<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
+<li><strong>Annotation:</strong> <em>(Enum)</em> There is some annotation types inside in kit.</li>
+<li><strong>IsDisabled:</strong> <em>(bool)</em> Sets this control disabled or not.</li>
+<li><strong>IsAnnotated:</strong> <em>(bool)</em> Gets this control annotated or not. Depends on Annotation</li>
+<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
+<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
+<li><strong>IgnoreValidationMessage:</strong> <em>(bool)</em> Ignores automaticly shown ValidationMessage and you can use AnnotationMessage as custom. </li>
+<li><strong>CompletedCommand:</strong> <em>(ICommand)</em> Executed when completed. </li>
 </ul>
 <hr />
 

@@ -122,20 +122,40 @@ namespace Plugin.InputKit.Shared.Controls
                 lblValue.TextColor = value;
             }
         }
-
+        ///---------------------------------------------------------------------
+        /// <summary>
+        /// This is not available for this control
+        /// </summary>
         public bool IsRequired { get; set; }
-
+        ///---------------------------------------------------------------------
+        /// <summary>
+        /// this always true, because this control value can not be null
+        /// </summary>
         public bool IsValidated => true;
-
+        ///---------------------------------------------------------------------
+        /// <summary>
+        /// It's not available for this control
+        /// </summary>
         public string ValidationMessage { get; set; }
 
         #region BindableProperties
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).Value = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
-
-        public event EventHandler ValidationChanged;
         #endregion
+        ///---------------------------------------------------------------------
+        /// <summary>
+        /// doesn't effect
+        /// </summary>
+        public event EventHandler ValidationChanged;
 
+        ///---------------------------------------------------------------------
+        /// <summary>
+        /// It's not available for this control
+        /// </summary>
+        public void DisplayValidation()
+        {
+
+        }
         void UpdateMinMaxValueText()
         {
             lblMinValue.Text = this.MinValue.ToString();
@@ -157,10 +177,6 @@ namespace Plugin.InputKit.Shared.Controls
 
             //lblValue.LayoutTo(new Rectangle(new Point(pos, slider.Y + lblValue.Height * 0.8), new Size(lblValue.Width, lblValue.Height)));
         }
-
-        public void DisplayValidation()
-        {
-
-        }
+     
     }
 }

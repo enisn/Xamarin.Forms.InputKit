@@ -74,6 +74,7 @@ namespace Plugin.InputKit.Shared.Controls
             OnPropertyChanged(nameof(SelectedIndex));
             SelectedItemChanged?.Invoke(this, new EventArgs());
             SelectedItemChangedCommand?.Execute(this);
+            ValidationChanged?.Invoke(this, new EventArgs());
         }
         /// <summary>
         /// this will be added later
@@ -151,7 +152,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// It will be added later
         /// </summary>
-        public bool IsValidated { get => !this.IsRequired || this.SelectedItem != null; }
+        public bool IsValidated { get => !this.IsRequired || this.SelectedIndex >= 0; }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// It will be added later

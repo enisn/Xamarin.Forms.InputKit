@@ -6,35 +6,64 @@
              x:Class="FormViewSample.InputKit.MainPage"
              BackgroundColor="WhiteSmoke">
 
+    <ContentPage.BindingContext>
+        <local:MainViewModel/>
+    </ContentPage.BindingContext>
     <ContentPage.Content>
         <StackLayout Padding="30">
             <Label Text="You can see FormView Below:"/>
-            <input:FormView>
+            <BoxView HeightRequest="1" Color="LightGray" />
+            <input:FormView IsValidated="{Binding IsValidated}">
 
                 <input:AdvancedEntry 
+                    Text="{Binding Email}"
+                    IsRequired="True"
                     Title="Place your email below:"
                     Annotation="Email"
                     Placeholder="sample@domain.com"
                     AnnotationColor="Accent"
                     ValidationMessage="Please type a valid email address"
-                    IsRequired="True"
                     IconImage="ic_email_black_24dp.png"
                     MinLength="10"
                     MaxLength="50"
                     />
 
                 <input:AdvancedEntry 
+                    Text="{Binding NameSurname}"
+                    IsRequired="True"
                     Title="Place your name below:"
                     Annotation="NameSurname"
                     Placeholder="John Doe"
                     AnnotationColor="Accent"
                     ValidationMessage="Please type your name correctly"
-                    IsRequired="True"
                     IconImage="ic_account_circle_black_24dp.png"
                     MinLength="5"
                     MaxLength="30"
                     />
 
+                <input:AdvancedEntry 
+                    Text="{Binding Phone}"
+                    IsRequired="True"
+                    Title="Place your phone number below:"
+                    Annotation="Phone"
+                    Placeholder="5439998877"
+                    AnnotationColor="Accent"
+                    ValidationMessage="Please type your phone number correctly"
+                    IconImage="ic_account_circle_black_24dp.png"
+                    MaxLength="10"
+                    />
+
+                <input:CheckBox IsRequired="True" Type="Check" Text="I Accept User Agreement" />
+
+                    <Label Text="Choose your subscription type:" />
+                <input:RadioButtonGroupView IsRequired="True" SelectedItemChanged="RadioButtonGroupView_SelectedItemChanged">
+                    <input:RadioButton Text="Free" />
+                    <input:RadioButton Text="Bronze" />
+                    <input:RadioButton Text="Gold" />
+                    <input:RadioButton Text="Platinium" />
+                </input:RadioButtonGroupView>
+
+                <Button Command="{Binding SubmitCommand}" Margin="0,20" Text="Submit" BackgroundColor="Accent" CornerRadius="20" TextColor="White" />
             </input:FormView>
         </StackLayout>
     </ContentPage.Content>

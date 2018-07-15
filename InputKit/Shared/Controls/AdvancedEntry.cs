@@ -66,30 +66,37 @@ namespace Plugin.InputKit.Shared.Controls
 
 
         #region Not Implemented
-        public event EventHandler Clicked;
         public bool IsSelected { get => false; set { } }
         public object Value { get; set; }
         public bool IsValidated => IsAnnotated;
-        private Color _defaultAnnotationColor = Color.Gray;
         #endregion
-
-
-
+        #region Fields
+        private Color _defaultAnnotationColor = Color.Gray;
         private AnnotationType _annotation;
         private bool _isDisabled;
         private bool _isRequired;
-        private int _minLength;
-
+        private int _minLength; 
+        #endregion
         public event EventHandler Completed;
+        public event EventHandler Clicked;
         public event EventHandler ValidationChanged;
+        /// <summary>
+        /// Focus on this entry
+        /// </summary>
         public new void Focus()
         {
             txtInput.Focus();
         }
+        /// <summary>
+        /// Onfocus from this entry and hides keyboard.
+        /// </summary>
         public new void Unfocus()
         {
             txtInput.Unfocus();
         }
+        /// <summary>
+        /// Automaticly finds next Advanced entry and focus it.
+        /// </summary>
         public void FocusNext()
         {
             if (this.Parent is Layout<View> == false) return;
@@ -109,7 +116,6 @@ namespace Plugin.InputKit.Shared.Controls
 
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-
             SetValue(TextProperty, txtInput.Text);
             SetValue(IsAnnotatedProperty, IsAnnotated);
             ValidationChanged?.Invoke(this, new EventArgs());
@@ -118,29 +124,70 @@ namespace Plugin.InputKit.Shared.Controls
             if (!IgnoreValidationMessage)
                 DisplayValidation();
         }
-
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Text of this input
+        /// </summary>
         public string Text { get => txtInput.Text; set => txtInput.Text = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Title will be shown top of this control
+        /// </summary>
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Icons of this Entry
+        /// </summary>
         public string IconImage { get => imgIcon.Source.ToString(); set => imgIcon.Source = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Color of Icon
+        /// </summary>
         public Color IconColor { get => imgIcon.FillColor; set => imgIcon.FillColor = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Placeholder of entry
+        /// </summary>
         public string Placeholder { get => txtInput.Placeholder; set => txtInput.Placeholder = value; }
+        /// <summary>
+        /// Maximum length of this Entry
+        /// </summary>
         public int MaxLength
         {
             get => txtInput.MaxLength;
             set => txtInput.MaxLength = value;
         }
-        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); DisplayValidation(); } }
-        private string AnnotationMessage
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Minimum length of this Entry
+        /// </summary>
+        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }
+        /// <summary>
+        /// This will be shown below title. This automaticly updating. If you set this manually you must set true IgnoreValidationMessage !!! 
+        /// </summary>
+        public string AnnotationMessage
         {
             get => lblAnnotation.Text;
-            set { lblAnnotation.Text = value; lblAnnotation.IsVisible = !String.IsNullOrEmpty(value); }
+            set { lblAnnotation.Text = value; lblAnnotation.IsVisible = !String.IsNullOrEmpty(value);}
         }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// AnnotationMessage's color.
+        /// </summary>
         public Color AnnotationColor
         {
             get => lblAnnotation.TextColor;
             set { lblAnnotation.TextColor = value; _defaultAnnotationColor = value; }
         }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// will be added
+        /// </summary>
         public AnnotationType Annotation { get => _annotation; set { _annotation = value; UpdateKeyboard(value); } }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Disabled this control
+        /// </summary>
         public bool IsDisabled
         {
             get => _isDisabled; set
@@ -150,6 +197,10 @@ namespace Plugin.InputKit.Shared.Controls
                 txtInput.IsEnabled = !value;
             }
         }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Finds this entry if Annotated
+        /// </summary>
         public bool IsAnnotated
         {
             get
@@ -187,10 +238,24 @@ namespace Plugin.InputKit.Shared.Controls
 
             set { }
         }
-
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Comes from IValidatable implementation. Shows this if Validated.
+        /// </summary>
         public bool IsRequired { get => _isRequired; set { _isRequired = value; UpdateWarning(); } }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Validation message to update automaticly. This will be shown when entry is not validated
+        /// </summary>
         public string ValidationMessage { get; set; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Ignores automaticly update annotationmessage
+        /// </summary>
         public bool IgnoreValidationMessage { get; set; }
+        /// <summary>
+        /// Executed when entry completed.
+        /// </summary>
         public ICommand CompletedCommand { get; set; }
 
 
@@ -237,7 +302,10 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
             }
         }
-
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Triggers to display annotation message
+        /// </summary>
         public void DisplayValidation()
         {
             if (!this.IsValidated)
@@ -258,7 +326,9 @@ namespace Plugin.InputKit.Shared.Controls
         {
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
         }
-
+        /// <summary>
+        /// Anum of Annotations. Detail will be added later.
+        /// </summary>
         public enum AnnotationType
         {
             None,
@@ -273,12 +343,4 @@ namespace Plugin.InputKit.Shared.Controls
             Phone
         }
     }
-
-
-    internal class EmptyEntry : Entry
-    {
-
-    }
-
-
 }
