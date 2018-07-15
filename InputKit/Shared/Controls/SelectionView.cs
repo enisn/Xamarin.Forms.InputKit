@@ -23,7 +23,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             Color = Color.Accent,
             BackgroundColor = (Color) Button.BackgroundColorProperty.DefaultValue,
-            BorderColor = Color.Transparent,
+            BorderColor = (Color) Button.BorderColorProperty.DefaultValue,
             CornerRadius = 20,
             FontSize = Device.GetNamedSize(NamedSize.Default,typeof(Button)),
             Size = -1,

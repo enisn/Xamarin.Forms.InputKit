@@ -23,11 +23,11 @@ namespace Plugin.InputKit.Shared.Controls
         {
             BackgroundColor = Color.White,
             CornerRadius = 20,
-            BorderColor = Color.Transparent,
+            BorderColor = (Color) Frame.BorderColorProperty.DefaultValue,
             Color = Color.Accent,
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1,
-            TextColor = Color.Black,
+            TextColor = (Color)Entry.TextColorProperty.DefaultValue,
         };
 
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, };
@@ -332,15 +332,13 @@ namespace Plugin.InputKit.Shared.Controls
         {
             if (!this.IsValidated)
             {
-                //txtInput.TextColor = Color.Red;
                 AnnotationMessage = ValidationMessage;
-                AnnotationColor = Color.Red;
+                //AnnotationColor = Color.Red;
             }
             else
             {
-                //if (!String.IsNullOrEmpty(ValidationMessage)) return;
                 AnnotationMessage = null;
-                AnnotationColor = _defaultAnnotationColor;
+                //AnnotationColor = _defaultAnnotationColor;
             }
         }
 

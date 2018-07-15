@@ -16,7 +16,7 @@ namespace Plugin.InputKit.Shared.Controls
             BackgroundColor = Color.Transparent,
             Color = Color.Accent,
             BorderColor = Color.Black,
-            TextColor = Color.Black,
+            TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = 25,
             CornerRadius = -1,
             FontSize = 14,

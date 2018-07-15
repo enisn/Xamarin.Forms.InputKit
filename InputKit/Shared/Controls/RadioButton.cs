@@ -179,7 +179,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             Color = Color.Accent, 
             BorderColor = Color.Black, 
-            TextColor = Color.Black, 
+            TextColor = (Color) Label.TextColorProperty.DefaultValue, 
             Size = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Medium : NamedSize.Small, typeof(Label)),
             CornerRadius = -1,
             FontSize = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Medium : NamedSize.Small, typeof(Label)),
