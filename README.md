@@ -183,7 +183,7 @@ You can set validation message and AnnotatinColor. Entry will automaticly displa
             </input:FormView>
         </StackLayout>
 ```
-<a href="#"><img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p280x280/37062816_2009089342435502_2148195452929966080_n.png?_nc_cat=0&_nc_ad=z-m&_nc_cid=0&oh=d7de5e1104e3db6617fe49b9028ddb4d&oe=5BD0F285" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+<a href="#"><img src="https://media.giphy.com/media/1zl0u7O2doNolIXnrT/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
 
 <h4>PROPERTIES:</h4>
 <ul>

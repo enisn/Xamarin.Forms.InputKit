@@ -52,20 +52,17 @@
                     IconImage="ic_account_circle_black_24dp.png"
                     MaxLength="10"
                     />
-
-                <input:CheckBox IsRequired="True" Type="Check" Text="I Accept User Agreement" />
-
                     <Label Text="Choose your subscription type:" />
-                <input:RadioButtonGroupView IsRequired="True" SelectedItemChanged="RadioButtonGroupView_SelectedItemChanged">
+                <input:RadioButtonGroupView IsRequired="True">
                     <input:RadioButton Text="Free" />
                     <input:RadioButton Text="Bronze" />
                     <input:RadioButton Text="Gold" />
                     <input:RadioButton Text="Platinium" />
                 </input:RadioButtonGroupView>
 
+                <input:CheckBox IsRequired="True" Type="Check" Text="I Accept User Agreement" />
                 <Button Command="{Binding SubmitCommand}" Margin="0,20" Text="Submit" BackgroundColor="Accent" CornerRadius="20" TextColor="White" />
             </input:FormView>
         </StackLayout>
     </ContentPage.Content>
-
 </ContentPage>

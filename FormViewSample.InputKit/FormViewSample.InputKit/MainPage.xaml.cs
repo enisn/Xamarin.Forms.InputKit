@@ -13,10 +13,5 @@ namespace FormViewSample.InputKit
 		{
 			InitializeComponent();
 		}
-
-        private void RadioButtonGroupView_SelectedItemChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

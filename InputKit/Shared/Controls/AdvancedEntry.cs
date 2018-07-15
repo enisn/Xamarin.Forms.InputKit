@@ -32,7 +32,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor };
-        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, Padding = 0 };
+        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center };
@@ -146,6 +146,27 @@ namespace Plugin.InputKit.Shared.Controls
         public Color IconColor { get => imgIcon.FillColor; set => imgIcon.FillColor = value; }
         ///------------------------------------------------------------------------
         /// <summary>
+        /// BackgroundColor of this Control
+        /// </summary>
+        public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Bordercolor of this control
+        /// </summary>
+        public Color BorderColor { get => frmBackground.BorderColor; set => frmBackground.BorderColor = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Text Color of this Control
+        /// </summary>
+        public Color TextColor { get => txtInput.TextColor; set => txtInput.TextColor = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// BackgroundColor of this Control
+        /// </summary>
+        public Color PlaceholderColor { get => txtInput.PlaceholderColor; set => txtInput.PlaceholderColor = value; }
+
+        ///------------------------------------------------------------------------
+        /// <summary>
         /// Placeholder of entry
         /// </summary>
         public string Placeholder { get => txtInput.Placeholder; set => txtInput.Placeholder = value; }
@@ -161,7 +182,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Minimum length of this Entry
         /// </summary>
-        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }
+        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }  
+        public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
         /// <summary>
         /// This will be shown below title. This automaticly updating. If you set this manually you must set true IgnoreValidationMessage !!! 
         /// </summary>
