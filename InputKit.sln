@@ -29,7 +29,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiki", "Wiki", "{AA39162B-B93C-48CF-9566-8A04CCFF987C}"
 	ProjectSection(SolutionItems) = preProject
 		Wiki\DynamicRadioButtons.md = Wiki\DynamicRadioButtons.md
-		SelectionView.md = SelectionView.md
+		Wiki\SelectionView.md = Wiki\SelectionView.md
 	EndProjectSection
 EndProject
 Global

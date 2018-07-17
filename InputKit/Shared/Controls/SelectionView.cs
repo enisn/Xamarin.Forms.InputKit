@@ -247,6 +247,8 @@ namespace Plugin.InputKit.Shared.Controls
     {
         private bool _isSelected = false;
         private object _value;
+        private Color _selectionColor = Color.Accent;
+
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Default constructor
@@ -277,9 +279,18 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         /// <param name="value"></param>
         /// <param name="backColor"></param>
-        public SelectableButton(object value, Color backColor) : this(value)
+        public SelectableButton(object value, Color selectionColor) : this(value)
         {
-            this.BackgroundColor = backColor;
+            this.SelectionColor = selectionColor;
+        }
+        public Color SelectionColor
+        {
+            get => _selectionColor;
+            set
+            {
+                _selectionColor = value;
+                UpdateColors();
+            }
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -298,7 +309,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             if (IsSelected)
             {
-                this.BackgroundColor = Color.Accent;
+                this.BackgroundColor = SelectionColor;
                 this.TextColor = Color.WhiteSmoke;
             }
             else
