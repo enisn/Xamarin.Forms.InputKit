@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.0.1.0</version>
+    <version>2.0.2</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -30,7 +30,7 @@
 
     <title>Common controls mostly required</title>
     <summary>
-      Checkbox, Radio Button, Advanced Slider included this package
+      Checkbox, Radio Button,Advanced Entry, Advanced Slider included this package
     </summary>
 
     <description>
@@ -40,6 +40,15 @@
 
 
       ChangeLog:
+      
+      v.2.0.2
+      GlobalSettings default values updated.
+      
+      v.2.0.0
+      FormView &amp; AdvancedEntry added.
+      IValidatable interface implemented controls.
+      FormView finds IValidatable controls from inside itsef and checks validation of inputs.
+      
       v.1.2.0
       CheckBox border added.
       GlobalSettings added to CheckBox and RadioButton.

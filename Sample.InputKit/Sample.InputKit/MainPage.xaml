@@ -9,26 +9,14 @@
         <local:MainViewModel/>
     </ContentPage.BindingContext>
     <ScrollView>
-        <StackLayout Spacing="12" Padding="10">
-
+        <StackLayout Spacing="12" Padding="20">
+            
             <input:CheckBox Text="Option 0" Type="Box"/>
             <input:CheckBox Text="Option 1" Type="Box"/>
             <input:CheckBox Text="Option 2" Type="Check"/>
             <input:CheckBox Text="Option 3" Type="Cross"/>
             <input:CheckBox Text="Option 4" Type="Star"/>
-
-
-            <!--<input:CheckBox Text="Option 1" Type="Box" IsDisabled="True"  />
-            <input:CheckBox Text="Option 1" Type="Box" IsChecked="True" IsDisabled="True"  />-->
-            
-            
-            <!--<input:CheckBox Text="Option 1" Type="Check" />
-            
-            <input:CheckBox Text="Hello World I'm Option 2" Type="Check"/>
-            <input:CheckBox Text="Consetetur eum kasd eos dolore Option 3" Type="Cross"/>
-            <input:CheckBox Text="Sea sed justo" Type="Star"/>
-
-
+           
 
 
             <input:RadioButtonGroupView>
@@ -39,10 +27,13 @@
                 <input:RadioButton Text="Option 4" />
             </input:RadioButtonGroupView>
 
+            
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
 
-            <input:SelectionView x:Name="selectionView" ColumnNumber="3" SelectionType="Button"/>-->
+            <input:SelectionView x:Name="selectionView" ColumnNumber="3" SelectionType="Button"/>
 
+            
+            
         </StackLayout>
     </ScrollView>
 

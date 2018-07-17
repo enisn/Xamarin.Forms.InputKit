@@ -26,6 +26,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit.iOS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormViewSample.InputKit", "FormViewSample.InputKit\FormViewSample.InputKit\FormViewSample.InputKit.csproj", "{15D16C2C-2F95-467B-B466-6CA34F6FCF70}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiki", "Wiki", "{AA39162B-B93C-48CF-9566-8A04CCFF987C}"
+	ProjectSection(SolutionItems) = preProject
+		Wiki\DynamicRadioButtons.md = Wiki\DynamicRadioButtons.md
+		SelectionView.md = SelectionView.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Ad-Hoc|Any CPU = Ad-Hoc|Any CPU

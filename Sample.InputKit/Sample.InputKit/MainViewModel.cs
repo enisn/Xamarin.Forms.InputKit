@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Text;
+using System.Runtime.CompilerServices;
 
 namespace Sample.InputKit
 {
-    class MainViewModel : INotifyPropertyChanged
+    public class MainViewModel : INotifyPropertyChanged
     {
-        private bool _ıisCheckedRB;
+        public MainViewModel()
+        {
+            FillData();
+        }
+        public IList<SampleClass> MyList { get; set; } = new ObservableCollection<SampleClass>();
+        private SampleClass _selectedItem;
+        public SampleClass SelectedItem
+        {
+            get => _selectedItem;
+            set { _selectedItem = value; OnPropertyChanged(); }
+        }
 
-        public bool IsCheckedRB { get => _ıisCheckedRB;
-            set
+        void FillData()
+        {
+            for (int i = 0; i < 6; i++)
             {
-                _ıisCheckedRB = value;
-                Debug.WriteLine("Triggered");
+                MyList.Add(new SampleClass { Id = i, Name = "Option " + (i + 1) });
             }
         }
 
-        private double _price;
-
-        public double Price
-        {
-            get { return _price; }
-            set { _price = value; }
-        }
-
+        #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
+        public void OnPropertyChanged([CallerMemberName]string propName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+        #endregion
     }
 }

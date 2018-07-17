@@ -15,10 +15,12 @@ namespace Sample.InputKit
 
             //Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.BorderColor = Color.Accent;
             //Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.TextColor = Color.Red;
-            //Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.Color = Color.Blue;
+            Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.BackgroundColor = Color.LightGray;
+            Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.BorderColor = Color.Transparent;
+            Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.CornerRadius = 0;
+
 
             MainPage = new NavigationPage(new Sample.InputKit.MainPage());
-
             
         }
 
