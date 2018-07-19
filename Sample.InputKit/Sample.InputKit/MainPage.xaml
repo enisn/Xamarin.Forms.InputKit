@@ -30,7 +30,7 @@
             
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
 
-            <input:SelectionView x:Name="selectionView" ColumnNumber="3" SelectionType="Button"/>
+            <input:SelectionView ColumnNumber="1" SelectionType="Button" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
 
             
             

@@ -22,12 +22,12 @@ namespace Plugin.InputKit.Shared.Controls
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
             Color = Color.Accent,
-            BackgroundColor = (Color) Button.BackgroundColorProperty.DefaultValue,
-            BorderColor = (Color) Button.BorderColorProperty.DefaultValue,
+            BackgroundColor = (Color)Button.BackgroundColorProperty.DefaultValue,
+            BorderColor = (Color)Button.BorderColorProperty.DefaultValue,
             CornerRadius = 20,
-            FontSize = Device.GetNamedSize(NamedSize.Default,typeof(Button)),
+            FontSize = Device.GetNamedSize(NamedSize.Default, typeof(Button)),
             Size = -1,
-            TextColor = (Color) Button.TextColorProperty.DefaultValue,
+            TextColor = (Color)Button.TextColorProperty.DefaultValue,
         };
 
         private IList _itemSource;
@@ -35,6 +35,7 @@ namespace Plugin.InputKit.Shared.Controls
         private IList _disabledSource;
         private int _columnNumber = 2;
         private Color _color = GlobalSetting.Color;
+        private BindingBase _itemDisplayBinding;
 
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -118,11 +119,12 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set
             {
-                foreach (var item in this.Children)
-                    if (item is ISelection)
-                        (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
+                //foreach (var item in this.Children)
+                //    if (item is ISelection)
+                //        (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
             }
         }
+
         private void UpdateEvents(IList value)
         {
             if (value is INotifyCollectionChanged)
@@ -141,13 +143,18 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         private void UpdateView()
         {
-            try
+            if (ItemsSource == null) return;
+
+            this.Children.Clear();
+            SetValue(SelectedItemProperty, null);
+            foreach (var item in ItemsSource)
             {
-                this.Children.Clear();
-                SetValue(SelectedItemProperty, null);
-                foreach (var item in ItemsSource)
+                try
                 {
                     var _View = GetInstance(item);
+
+                    SetTextBinding(_View);
+
                     (_View as ISelection).Clicked -= Element_Clicked;
                     (_View as ISelection).Clicked += Element_Clicked;
 
@@ -158,11 +165,12 @@ namespace Plugin.InputKit.Shared.Controls
 
                     this.Children.Add(_View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
                 }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine(ex.ToString());
+                }
             }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine(ex.ToString());
-            }
+
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -177,12 +185,22 @@ namespace Plugin.InputKit.Shared.Controls
         }
         private void Element_Clicked(object sender, EventArgs e)
         {
-            SelectedItem = (sender as ISelection).Value;
             if ((int)this.SelectionType % 2 == 0)
-                SetValue(SelectedItemProperty, SelectedItems);
-
-            SetValue(SelectedItemProperty, SelectedItem);
+            {
+                SetValue(SelectedItemsProperty, SelectedItems);
+            }
+            else
+            {
+                SelectedItem = (sender as ISelection).Value;
+                SetValue(SelectedItemProperty, SelectedItem);
+            }
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        ///         Gets or sets a binding that selects the property that will be displayed for each
+        ///object in the list of items.
+        /// </summary>
+        public BindingBase ItemDisplayBinding { get => _itemDisplayBinding; set { _itemDisplayBinding = value; SetTextBindings(); } }
 
         private View GetInstance(object obj)
         {
@@ -197,6 +215,35 @@ namespace Plugin.InputKit.Shared.Controls
             }
             return null;
         }
+
+        private void SetTextBinding(View control)
+        {
+            if (ItemDisplayBinding == null) return;
+
+            BindingBase _binding = new Binding((ItemDisplayBinding as Binding)?.Path, source: (control as ISelection)?.Value);
+            switch (SelectionType)
+            {
+                case SelectionType.Button:
+                    (control as SelectableButton).SetBinding(SelectableButton.TextProperty, _binding);
+                    break;
+                case SelectionType.RadioButton:
+                    (control as SelectableRadioButton).SetBinding(SelectableRadioButton.TextProperty, _binding);
+                    break;
+                case SelectionType.CheckBox:
+                    (control as SelectableCheckBox).SetBinding(SelectableCheckBox.TextProperty, _binding);
+                    break;
+            }
+        }
+        private void SetTextBindings()
+        {
+            if (ItemDisplayBinding == null) return;
+
+            foreach (var item in this.Children)
+            {
+                SetTextBinding(item);
+            }
+        }
+
         private void SetInstanceColor(View view, Color color)
         {
             switch (SelectionType)
@@ -226,6 +273,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
         public static readonly BindableProperty DisabledSourceProperty = BindableProperty.Create(nameof(DisabledSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).DisabledSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItem = nv);
+        public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItems = (IList)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
@@ -278,7 +326,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// Colored Constructor
         /// </summary>
         /// <param name="value"></param>
-        /// <param name="backColor"></param>
+        /// <param name="selectionColor">Color of selected situation</param>
         public SelectableButton(object value, Color selectionColor) : this(value)
         {
             this.SelectionColor = selectionColor;
