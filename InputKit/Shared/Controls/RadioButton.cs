@@ -189,7 +189,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         Label lblEmpty = new Label { TextColor = GlobalSetting.BorderColor, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size, };
         Label lblFilled = new Label { TextColor = GlobalSetting.Color, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size * .92 };
-        Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize };
+        Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
         private bool _isDisabled;
 
         ///-----------------------------------------------------------------------------
@@ -292,6 +292,11 @@ namespace Plugin.InputKit.Shared.Controls
         /// Size of Radio Button
         /// </summary>
         public double CircleSize { get => lblEmpty.FontSize; set => SetCircleSize(value); }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// To be added.
+        /// </summary>
+        public string FontFamily { get => lblText.FontFamily; set => lblText.FontFamily = value; }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of Radio Button's checked.

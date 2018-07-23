@@ -1,4 +1,5 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
+using Plugin.InputKit.Shared.Configuration;
 using System;
 using Xamarin.Forms;
 
@@ -6,11 +7,17 @@ namespace Plugin.InputKit.Shared.Controls
 {
     public class AdvancedSlider : StackLayout, IValidatable
     {
-        Slider slider = new Slider();
-        Label lblTitle = new Label { Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
-        Label lblValue = new Label { InputTransparent = true, TextColor = (Color)Label.TextColorProperty.DefaultValue, };
-        Label lblMinValue = new Label { TextColor = (Color)Label.TextColorProperty.DefaultValue, };
-        Label lblMaxValue = new Label { TextColor = (Color)Label.TextColorProperty.DefaultValue, };
+        public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
+        {
+            FontSize = Device.GetNamedSize(NamedSize.Default, typeof(Label)),
+            TextColor = (Color)Label.TextColorProperty.DefaultValue,
+            Color = Color.Accent,
+        };
+        Slider slider = new Slider { ThumbColor = GlobalSetting.Color, MinimumTrackColor = GlobalSetting.Color };
+        Label lblTitle = new Label {  FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = GlobalSetting.TextColor, };
+        Label lblValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, InputTransparent = true, TextColor = GlobalSetting.TextColor, };
+        Label lblMinValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
+        Label lblMaxValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
         private string _valueSuffix;
         private string _valuePrefix;
         private Color _textColor;

@@ -30,12 +30,12 @@ namespace Plugin.InputKit.Shared.Controls
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
         };
 
-        Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, };
-        Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor };
+        Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
+        Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
-        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center };
+        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily };
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -116,9 +116,9 @@ namespace Plugin.InputKit.Shared.Controls
 
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
         {
+            ValidationChanged?.Invoke(this, new EventArgs());
             SetValue(TextProperty, txtInput.Text);
             SetValue(IsAnnotatedProperty, IsAnnotated);
-            ValidationChanged?.Invoke(this, new EventArgs());
 
             UpdateWarning();
             if (!IgnoreValidationMessage)
@@ -182,8 +182,25 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Minimum length of this Entry
         /// </summary>
-        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }  
+        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// Corner radius of Entry.
+        /// </summary>
         public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
+        ///------------------------------------------------------------------------
+        /// <summary>
+        /// To be added.
+        /// </summary>
+        public string FontFamily { get => txtInput.FontFamily;
+            set
+            {
+                lblTitle.FontFamily = value;
+                lblAnnotation.FontFamily = value;
+                txtInput.FontFamily = value;
+            }
+        }
+        ///------------------------------------------------------------------------
         /// <summary>
         /// This will be shown below title. This automaticly updating. If you set this manually you must set true IgnoreValidationMessage !!! 
         /// </summary>

@@ -42,10 +42,16 @@ namespace Plugin.InputKit.Shared.Configuration
         /// Size of control. ( Like HeightRequest and WidthRequest )
         /// </summary>
         public double Size { get; set; }
+        ///------------------------------------------------------------------
         /// <summary>
         /// Text Color of control.
         /// </summary>
         public Color TextColor { get; set; }
+        ///------------------------------------------------------------------
+        /// <summary>
+        /// Font family of control.
+        /// </summary>
+        public string FontFamily { get; set; }
 
         ///------------------------------------------------------------------
         /// <summary>

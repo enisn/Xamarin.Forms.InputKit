@@ -315,6 +315,7 @@ namespace Plugin.InputKit.Shared.Controls
         public SelectableButton(object value) : this()
         {
             this.Value = value;
+            this.FontFamily = SelectionView.GlobalSetting.FontFamily;
             this.TextColor = SelectionView.GlobalSetting.TextColor;
             this.FontSize = SelectionView.GlobalSetting.FontSize;
             this.CornerRadius = (int)SelectionView.GlobalSetting.CornerRadius;
