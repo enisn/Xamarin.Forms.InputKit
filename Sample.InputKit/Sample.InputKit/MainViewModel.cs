@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using Xamarin.Forms;
 
 namespace Sample.InputKit
 {
@@ -14,6 +15,8 @@ namespace Sample.InputKit
         }
         public IList<SampleClass> MyList { get; set; } = new ObservableCollection<SampleClass>();
         private SampleClass _selectedItem;
+        private int _selectedIndex;
+
         public SampleClass SelectedItem
         {
             get => _selectedItem;
@@ -27,6 +30,9 @@ namespace Sample.InputKit
                 MyList.Add(new SampleClass { Id = i, Name = "Option " + (i + 1) });
             }
         }
+        
+
+  
 
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;

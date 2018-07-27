@@ -109,6 +109,32 @@ namespace Plugin.InputKit.Shared.Controls
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
+        /// Sets or Gets SelectedItem of SelectionView
+        /// </summary>
+        public int SelectedIndex
+        {
+            get
+            {
+                for (int i = 0; i < this.Children.Count; i++)
+                {
+                    if ((this.Children[i] as ISelection)?.IsSelected ?? false)
+                        return i;
+                }
+                return -1;
+            }
+            set
+            {
+
+                for (int i = 0; i < this.Children.Count; i++)
+                {
+                    if (!(this.Children[i] as ISelection)?.IsDisabled ?? false)
+                        (this.Children[i] as ISelection).IsSelected = i == value;
+                }
+            }
+        }
+
+        ///-----------------------------------------------------------------------------
+        /// <summary>
         ///Selected Items for the multiple selections, 
         /// </summary>
         public IList SelectedItems
@@ -119,11 +145,13 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set
             {
-                //foreach (var item in this.Children)
-                //    if (item is ISelection)
-                //        (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
+                foreach (var item in this.Children)
+                    if (item is ISelection)
+                        (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
             }
         }
+
+
 
         private void UpdateEvents(IList value)
         {
@@ -171,6 +199,21 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
 
+            ChooseFirstIndex();
+        }
+        /// <summary>
+        /// Finds first undisabled selection and sets selected
+        /// </summary>
+        private void ChooseFirstIndex()
+        {
+            for (int i = 0; i < this.Children.Count; i++)
+            {
+                if(!(this.Children[i] as ISelection)?.IsDisabled ?? false)
+                {
+                    this.SelectedIndex = i;
+                    return;
+                }
+            }
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -193,6 +236,7 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 SelectedItem = (sender as ISelection).Value;
                 SetValue(SelectedItemProperty, SelectedItem);
+                SetValue(SelectedIndexProperty, SelectedIndex);
             }
         }
         ///-----------------------------------------------------------------------------
@@ -274,6 +318,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty DisabledSourceProperty = BindableProperty.Create(nameof(DisabledSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).DisabledSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItem = nv);
         public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItems = (IList)nv);
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndex = (int)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
@@ -303,7 +348,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public SelectableButton()
         {
-            this.BorderRadius = 20;
             this.Margin = new Thickness(20, 5);
             UpdateColors();
         }

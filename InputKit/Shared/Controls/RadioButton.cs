@@ -253,9 +253,14 @@ namespace Plugin.InputKit.Shared.Controls
         public event EventHandler Clicked;
         ///-----------------------------------------------------------------------------
         /// <summary>
-        /// Click command, executed when clicked
+        /// Click command, executed when clicked.  Parameter will be Value property if CommandParameter is not set
         /// </summary>
         public ICommand ClickCommand { get; set; }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// A command parameter will be sent to commands.
+        /// </summary>
+        public object CommandParameter { get; set; }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Value to keep inside of Radio Button
@@ -322,6 +327,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CircleColorProperty = BindableProperty.Create(nameof(CircleColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).CircleColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextColor = (Color)nv);
         public static readonly BindableProperty ClickCommandProperty = BindableProperty.Create(nameof(ClickCommand), typeof(ICommand), typeof(RadioButton), null, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ClickCommand = (ICommand)nv);
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
@@ -334,7 +340,7 @@ namespace Plugin.InputKit.Shared.Controls
             if (IsDisabled) return;
             IsChecked = !IsChecked;
             Clicked?.Invoke(this, new EventArgs());
-            ClickCommand?.Execute(this);
+            ClickCommand?.Execute(CommandParameter ?? Value);
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
