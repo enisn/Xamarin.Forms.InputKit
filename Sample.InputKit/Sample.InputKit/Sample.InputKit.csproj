@@ -22,4 +22,7 @@
       <DependentUpon>*.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\InputKit\InputKit.csproj" />
+  </ItemGroup>
 </Project>
