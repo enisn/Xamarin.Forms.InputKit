@@ -96,7 +96,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Color of Checkbox checked
         /// </summary>
-        public Color Color { get => boxSelected.BackgroundColor; set { boxSelected.BackgroundColor = value; lblSelected.TextColor = value; } }
+        public Color Color { get => boxSelected.Color; set { boxSelected.Color = value; lblSelected.TextColor = value; } }
         /// <summary>
         /// Color of text
         /// </summary>
