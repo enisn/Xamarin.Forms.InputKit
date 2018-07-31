@@ -14,7 +14,7 @@ namespace Plugin.InputKit.Shared.Controls
             Color = Color.Accent,
         };
         Slider slider = new Slider { ThumbColor = GlobalSetting.Color, MinimumTrackColor = GlobalSetting.Color };
-        Label lblTitle = new Label {  FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = GlobalSetting.TextColor, };
+        Label lblTitle = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, Margin = new Thickness(20, 0), InputTransparent = true, FontAttributes = FontAttributes.Bold, TextColor = GlobalSetting.TextColor, };
         Label lblValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, InputTransparent = true, TextColor = GlobalSetting.TextColor, };
         Label lblMinValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
         Label lblMaxValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
@@ -159,10 +159,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// It's not available for this control
         /// </summary>
-        public void DisplayValidation()
-        {
-
-        }
+        public void DisplayValidation() { }
         void UpdateMinMaxValueText()
         {
             lblMinValue.Text = this.MinValue.ToString();
@@ -174,16 +171,12 @@ namespace Plugin.InputKit.Shared.Controls
         }
         void UpdateView()
         {
-
             lblValue.TranslateTo(
                 this.Value * ((slider.Width - 40) / this.MaxValue), //pos X
                 slider.TranslationY - lblValue.Height * 0.9, //pos Y
                 40 //Latency
                 );
-
-
             //lblValue.LayoutTo(new Rectangle(new Point(pos, slider.Y + lblValue.Height * 0.8), new Size(lblValue.Width, lblValue.Height)));
         }
-     
     }
 }

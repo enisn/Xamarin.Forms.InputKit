@@ -63,8 +63,6 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.Completed += (s, args) => { CompletedCommand?.Execute(s); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             imgWarning.IsVisible = this.IsRequired;
         }
-
-
         #region Not Implemented
         public bool IsSelected { get => false; set { } }
         public object Value { get; set; }
@@ -207,7 +205,11 @@ namespace Plugin.InputKit.Shared.Controls
         public string AnnotationMessage
         {
             get => lblAnnotation.Text;
-            set { lblAnnotation.Text = value; lblAnnotation.IsVisible = !String.IsNullOrEmpty(value);}
+            set
+            {
+                lblAnnotation.Text = value;
+                lblAnnotation.IsVisible = !String.IsNullOrEmpty(value);
+            }
         }
         ///------------------------------------------------------------------------
         /// <summary>
@@ -296,8 +298,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// Executed when entry completed.
         /// </summary>
         public ICommand CompletedCommand { get; set; }
-
-
+        //--------------------------------------------------------------------------------------------------------------------------------------------------
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(AdvancedEntry), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Text = (string)nv);
@@ -312,7 +313,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AdvancedEntry.AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
-
+        //--------------------------------------------------------------------------------------------------------------------------------------------------
         void UpdateKeyboard(AnnotationType annotation)
         {
             switch (annotation)

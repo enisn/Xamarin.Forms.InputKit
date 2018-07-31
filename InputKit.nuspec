@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.0.5</version>
+    <version>2.0.6</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>FontFamily Added</releaseNotes>
+    <releaseNotes>CheckBox Color property fixed, CheckBox CommandParameter added. Some SelectionView improvements.</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -38,6 +38,11 @@
 
 
       ChangeLog:
+      v.2.0.6
+      CheckBox Color property fixed,
+      CheckBox CommandParameter added.
+      Some SelectionView improvements.
+      
       v.2.0.5
       SelectedIndex added to selectionview (SelectedIndexes are coming soon)
       RadioButton CommandParameter added.      

@@ -124,7 +124,6 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set
             {
-
                 for (int i = 0; i < this.Children.Count; i++)
                 {
                     if (!(this.Children[i] as ISelection)?.IsDisabled ?? false)
@@ -150,8 +149,6 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
             }
         }
-
-
 
         private void UpdateEvents(IList value)
         {
