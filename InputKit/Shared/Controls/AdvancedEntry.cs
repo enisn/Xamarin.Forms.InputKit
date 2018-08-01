@@ -23,7 +23,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             BackgroundColor = Color.White,
             CornerRadius = 20,
-            BorderColor = (Color) Frame.BorderColorProperty.DefaultValue,
+            BorderColor = (Color)Frame.BorderColorProperty.DefaultValue,
             Color = Color.Accent,
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1,
@@ -73,7 +73,7 @@ namespace Plugin.InputKit.Shared.Controls
         private AnnotationType _annotation;
         private bool _isDisabled;
         private bool _isRequired;
-        private int _minLength; 
+        private int _minLength;
         #endregion
         public event EventHandler Completed;
         public event EventHandler Clicked;
@@ -190,7 +190,9 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// To be added.
         /// </summary>
-        public string FontFamily { get => txtInput.FontFamily;
+        public string FontFamily
+        {
+            get => txtInput.FontFamily;
             set
             {
                 lblTitle.FontFamily = value;
@@ -314,24 +316,28 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
-        void UpdateKeyboard(AnnotationType annotation)
+        public void UpdateKeyboard(AnnotationType annotation)
         {
             switch (annotation)
             {
                 case AnnotationType.Letter:
                 case AnnotationType.Text:
                     txtInput.Keyboard = Keyboard.Chat;
+                    txtInput.IsPassword = false;
                     break;
                 case AnnotationType.Integer:
                 case AnnotationType.Number:
                 case AnnotationType.Money:
                     txtInput.Keyboard = Keyboard.Numeric;
+                    txtInput.IsPassword = false;
                     break;
                 case AnnotationType.Email:
                     txtInput.Keyboard = Keyboard.Email;
+                    txtInput.IsPassword = false;
                     break;
                 case AnnotationType.Phone:
                     txtInput.Keyboard = Keyboard.Telephone;
+                    txtInput.IsPassword = false;
                     break;
                 case AnnotationType.Password:
                     txtInput.Keyboard = Keyboard.Plain;
@@ -339,6 +345,7 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
                 default:
                     txtInput.Keyboard = Keyboard.Default;
+                    txtInput.IsPassword = false;
                     break;
             }
         }

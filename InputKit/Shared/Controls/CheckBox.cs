@@ -1,5 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
+using Plugin.InputKit.Shared.Helpers;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -107,7 +108,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Checkbox box background color. Default is LightGray
         /// </summary>
-        public Color BoxBackgroundColor { get => boxBackground.BackgroundColor; set { if (this.Type == CheckType.Material) return; boxBackground.BackgroundColor = value; } }
+        public Color BoxBackgroundColor { get => (Color)GetValue(BoxBackgroundColorProperty); set => SetValue(BoxBackgroundColorProperty, value); }
         /// <summary>
         /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
         /// </summary>
@@ -117,21 +118,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public Color Color
         {
-            get => boxSelected.Color;
-            set
-            {
-                boxSelected.Color = value;
-                if (Type == CheckType.Material)
-                {
-                    boxBackground.BorderColor = value;
-                    boxBackground.BackgroundColor = IsChecked ? value : Color.Transparent;
-                    lblSelected.TextColor = Color.White;
-                }
-                else
-                {
-                    lblSelected.TextColor = value;
-                }
-            }
+            get => (Color)GetValue(ColorProperty);
+            set => SetValue(ColorProperty, value);
         }
         /// <summary>
         /// Color of text
@@ -156,7 +144,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Border color of around CheckBox
         /// </summary>
-        public Color BorderColor { get => boxBackground.BorderColor; set => boxBackground.BorderColor = value; }
+        public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty,value); }
         /// <summary>
         /// WARNING! : If you set this as required, user must set checked this control to be validated!
         /// </summary>
@@ -175,18 +163,52 @@ namespace Plugin.InputKit.Shared.Controls
         public string FontFamily { get => lblOption.FontFamily; set => lblOption.FontFamily = value; }
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Color = (Color)nv);
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColor());
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsChecked = (bool)nv);
         public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CheckBox), "", propertyChanged: (bo, ov, nv) => (bo as CheckBox).Text = (string)nv);
         public static readonly BindableProperty CheckChangedCommandProperty = BindableProperty.Create(nameof(CheckChangedCommand), typeof(ICommand), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).CheckChangedCommand = (ICommand)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(CheckBox), null);
-        public static readonly BindableProperty BoxBackgroundColorProperty = BindableProperty.Create(nameof(BoxBackgroundColor), typeof(Color), typeof(CheckBox), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as CheckBox).BoxBackgroundColor = (Color)nv);
+        public static readonly BindableProperty BoxBackgroundColorProperty = BindableProperty.Create(nameof(BoxBackgroundColor), typeof(Color), typeof(CheckBox), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBoxBackground());
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), 14.0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
+        void UpdateBoxBackground()
+        {
+            if (this.Type == CheckType.Material)
+                return;
+            boxBackground.BackgroundColor = BoxBackgroundColor;
+        }
+        void UpdateColor()
+        {
+            boxSelected.Color = Color;
+            if (Type == CheckType.Material)
+            {
+                boxBackground.BorderColor = Color;
+                boxBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
+                lblSelected.TextColor = Color.ToSurfaceColor();
+            }
+            else
+            {
+                boxBackground.BorderColor = BorderColor;
+                boxBackground.BackgroundColor = BackgroundColor;
+                lblSelected.TextColor = Color;
+            }
+        }
+        void UpdateBorderColor()
+        {
+            if (this.Type == CheckType.Material) return;
+            boxBackground.BorderColor = this.BorderColor;
+        }
+        void UpdateAllColors()
+        {
+            UpdateColor();
+            UpdateBoxBackground();
+            UpdateBorderColor();
+        }
         void SetBoxSize(double value)
         {
             boxBackground.WidthRequest = value;
@@ -218,13 +240,11 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
                 case CheckType.Material:
                     lblSelected.Text = "✓";
-                    lblSelected.TextColor = Color.White;
-                    BoxBackgroundColor = Color.Transparent;
                     boxBackground.CornerRadius = 5;
-                    BorderColor = Color;
                     boxBackground.Content = lblSelected;
-                    return;
+                    break;
             }
+            UpdateAllColors();
         }
         /// <summary>
         /// Not available for this control

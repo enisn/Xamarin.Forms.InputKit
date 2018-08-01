@@ -51,14 +51,15 @@ namespace Plugin.InputKit.Shared.Controls
 
         private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
         {
-            OnPropertyChanging(nameof(Value));
-            SetValue(ValueProperty, slider.Value);
+            //if (e.NewValue == e.OldValue || e.NewValue == slider.Value) return;
+
 
             if (e.NewValue % StepValue != 0)
             {
                 slider.Value = Math.Round(e.NewValue / StepValue) * StepValue;
                 return;
             }
+            SetValue(ValueProperty, slider.Value);
             UpdateValueText();
             UpdateView();
         }
@@ -73,7 +74,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Value of slider which user selected
         /// </summary>
-        public double Value { get => slider.Value; set => slider.Value = value; }
+        public double Value { get => (double)GetValue(ValueProperty); set => SetValue(ValueProperty,value); }
         ///---------------------------------------------------------------------
         /// <summary>
         /// Title of slider, It'll be shown tp of slider
@@ -146,7 +147,7 @@ namespace Plugin.InputKit.Shared.Controls
         public string ValidationMessage { get; set; }
 
         #region BindableProperties
-        public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).Value = (double)nv);
+        public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).slider.Value = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
         #endregion
         ///---------------------------------------------------------------------
