@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.InputKit.Shared.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,15 +14,7 @@ namespace Sample.InputKit
         {
             InitializeComponent();
 
-            //Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.BorderColor = Color.Accent;
-            //Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.TextColor = Color.Red;
-            Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.BackgroundColor = Color.LightGray;
-            Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.BorderColor = Color.Transparent;
-            Plugin.InputKit.Shared.Controls.CheckBox.GlobalSetting.CornerRadius = 0;
-
-
-            MainPage = new NavigationPage(new Sample.InputKit.MainPage());
-            
+            MainPage = new NavigationPage(new Sample.InputKit.MainPage());   
         }
 
         protected override void OnStart()

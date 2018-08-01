@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;MonoAndroid80;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;</TargetFrameworks>
+    <!--<TargetFrameworks>netstandard2.0;MonoAndroid80;Xamarin.iOS10;</TargetFrameworks>-->
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
@@ -49,7 +50,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.5.4" PrivateAssets="All" />
+    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.46" PrivateAssets="All" />
     <PackageReference Include="Xamarin.Forms" Version="3.1.0.637273" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>

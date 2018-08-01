@@ -23,9 +23,9 @@ namespace Plugin.InputKit.Shared.Controls
         };
 
 
-        Frame boxBackground = new Frame { Padding = 0,CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand };
-        BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size *.60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        Label lblSelected = new Label { Text = "✓",Margin=new Thickness(0,-1,0,0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand };
+        BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
+        Label lblSelected = new Label { Text = "✓", Margin = new Thickness(0, -1, 0, 0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
@@ -35,7 +35,7 @@ namespace Plugin.InputKit.Shared.Controls
         public CheckBox()
         {
             this.Orientation = StackOrientation.Horizontal;
-            this.Padding = new Thickness(0,10);
+            this.Padding = new Thickness(0, 10);
             this.Spacing = 10;
             boxBackground.Content = boxSelected;
             this.Children.Add(boxBackground);
@@ -45,6 +45,20 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; CheckChanged?.Invoke(this, new EventArgs()); CheckChangedCommand?.Execute(CommandParameter ?? this); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
+        }
+        async void Animate()
+        {
+            try
+            {
+                if (Type != CheckType.Material) return;
+
+                await boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
+                boxBackground.BackgroundColor = IsChecked ? this.Color : Color.Transparent;
+                await boxBackground.ScaleTo(1, 100, Easing.BounceIn);
+            }
+            catch (Exception)
+            {
+            }
         }
         /// <summary>
         /// Invoked when check changed
@@ -58,7 +72,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Command Parameter for Commands. If this is null, CommandParameter will be sent as itself of CheckBox
         /// </summary>
-        public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty,value); }
+        public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
         /// <summary>
         /// Quick generator constructor
         /// </summary>
@@ -87,12 +101,13 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 boxBackground.Content.IsVisible = value;
                 SetValue(IsCheckedProperty, value);
+                Animate();
             }
         }
         /// <summary>
         /// Checkbox box background color. Default is LightGray
         /// </summary>
-        public Color BoxBackgroundColor { get => boxBackground.BackgroundColor; set => boxBackground.BackgroundColor = value; }
+        public Color BoxBackgroundColor { get => boxBackground.BackgroundColor; set { if (this.Type == CheckType.Material) return; boxBackground.BackgroundColor = value; } }
         /// <summary>
         /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
         /// </summary>
@@ -100,7 +115,24 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Color of Checkbox checked
         /// </summary>
-        public Color Color { get => boxSelected.Color; set { boxSelected.Color = value; lblSelected.TextColor = value; } }
+        public Color Color
+        {
+            get => boxSelected.Color;
+            set
+            {
+                boxSelected.Color = value;
+                if (Type == CheckType.Material)
+                {
+                    boxBackground.BorderColor = value;
+                    boxBackground.BackgroundColor = IsChecked ? value : Color.Transparent;
+                    lblSelected.TextColor = Color.White;
+                }
+                else
+                {
+                    lblSelected.TextColor = value;
+                }
+            }
+        }
         /// <summary>
         /// Color of text
         /// </summary>
@@ -179,12 +211,19 @@ namespace Plugin.InputKit.Shared.Controls
                 case CheckType.Cross:
                     lblSelected.Text = "✕";
                     boxBackground.Content = lblSelected;
-
                     break;
                 case CheckType.Star:
                     lblSelected.Text = "★";
                     boxBackground.Content = lblSelected;
                     break;
+                case CheckType.Material:
+                    lblSelected.Text = "✓";
+                    lblSelected.TextColor = Color.White;
+                    BoxBackgroundColor = Color.Transparent;
+                    boxBackground.CornerRadius = 5;
+                    BorderColor = Color;
+                    boxBackground.Content = lblSelected;
+                    return;
             }
         }
         /// <summary>
@@ -200,7 +239,8 @@ namespace Plugin.InputKit.Shared.Controls
             Box,
             Check,
             Cross,
-            Star
+            Star,
+            Material
         }
     }
 }
