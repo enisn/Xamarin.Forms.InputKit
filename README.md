@@ -129,7 +129,46 @@
 <li><strong>TextColor:</strong> <em>(Color)</em> Color of Text</li>
 </ul>
 <hr />
+<hr />
 
+
+
+<h2>Dropdown ( * NEW )</h2>
+<p>Alternative picker with dropdown menu.
+</p>
+<h4>SAMPLE:</h4>
+
+```xaml
+ <input:Dropdown Title="Chosse an option below:"
+                            TitleColor="Black"
+                            ValidationMessage="This field is required" 
+                            AnnotationColor="Accent" 
+                            IsRequired="True" 
+                            BorderColor="Black" 
+                            Color="BlueViolet"
+                            Placeholder="Choose one" 
+                            ItemsSource="{Binding MyList}" 
+                            SelectedItem="{Binding SelectedItem}" />
+```
+<a href="#"><img src="https://media.giphy.com/media/CjGR8p3HoeOup8r21J/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+
+<h4>PROPERTIES:</h4>
+<ul>
+<li><strong>Placeholder:</strong> <em>(string)</em> Placehodler Text</li>
+<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
+<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
+<li><strong>Color:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
+<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
+<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
+<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
+</ul>
+
+To be adde...
+<hr />
+
+
+
+<hr />
 <h2>Advanced Entry</h2>
 <p>This entry has many features to develop your applications quickly. When this entry completed, it finds next entry in Parent layout and focus it. AdvancedEntry contains validation system inside it. You can set some properties to validate it and you can handle all your entries is validated or not with **FormView**.
 You can set validation message and AnnotatinColor. Entry will automaticly display your message when it's not validated.

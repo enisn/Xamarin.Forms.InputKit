@@ -30,8 +30,6 @@ namespace Sample.InputKit
                 MyList.Add(new SampleClass { Id = i, Name = "Option " + (i + 1) });
             }
         }
-        
-
   
 
         #region INotifyPropertyChanged Implementation

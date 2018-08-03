@@ -1,19 +1,19 @@
 ﻿using Android.Content;
 using Android.Graphics.Drawables;
-using Plugin.InputKit.Platforms.Android;
+using Plugin.InputKit.Platforms.Droid;
 using Plugin.InputKit.Shared.Controls;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly:ExportRenderer(typeof(EmptyEntry),typeof(EmptyEntryRenderer))]
-namespace Plugin.InputKit.Platforms.Android
+namespace Plugin.InputKit.Platforms.Droid
 {
     public class EmptyEntryRenderer : EntryRenderer
     {
-        public EmptyEntryRenderer()
-        {
-
-        }
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="context"></param>
         public EmptyEntryRenderer(Context context) : base(context)
         {
         }

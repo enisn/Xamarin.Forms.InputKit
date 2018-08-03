@@ -72,10 +72,11 @@ namespace Plugin.InputKit.Shared.Controls
         private Color _defaultAnnotationColor = Color.Gray;
         private AnnotationType _annotation;
         private bool _isDisabled;
-        private bool _isRequired;
         private int _minLength;
+        private string _validationMessage;
         #endregion
         public event EventHandler Completed;
+        public event EventHandler<TextChangedEventArgs> TextChanged;
         public event EventHandler Clicked;
         public event EventHandler ValidationChanged;
         /// <summary>
@@ -114,13 +115,13 @@ namespace Plugin.InputKit.Shared.Controls
 
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
         {
-            ValidationChanged?.Invoke(this, new EventArgs());
             SetValue(TextProperty, txtInput.Text);
             SetValue(IsAnnotatedProperty, IsAnnotated);
 
             UpdateWarning();
             if (!IgnoreValidationMessage)
                 DisplayValidation();
+            TextChanged?.Invoke(this, e);
         }
         ///------------------------------------------------------------------------
         /// <summary>
@@ -258,7 +259,7 @@ namespace Plugin.InputKit.Shared.Controls
                 switch (Annotation)
                 {
                     case AnnotationType.NameSurname:
-                        return Text.Trim().Contains(" ");
+                        return Text.Trim().Contains(" ") && Text.All((c) => !Char.IsNumber(c));
                     case AnnotationType.Letter:
                         return Text.All(Char.IsLetter);
                     case AnnotationType.Number:
@@ -278,24 +279,23 @@ namespace Plugin.InputKit.Shared.Controls
                 }
                 return true;
             }
-
             set { }
         }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Comes from IValidatable implementation. Shows this if Validated.
         /// </summary>
-        public bool IsRequired { get => _isRequired; set { _isRequired = value; UpdateWarning(); } }
+        public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Validation message to update automaticly. This will be shown when entry is not validated
         /// </summary>
-        public string ValidationMessage { get; set; }
+        public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Ignores automaticly update annotationmessage
         /// </summary>
-        public bool IgnoreValidationMessage { get; set; }
+        public bool IgnoreValidationMessage { get => (bool)GetValue(IgnoreValidationMessageProperty); set => SetValue(IgnoreValidationMessageProperty, value); }
         /// <summary>
         /// Executed when entry completed.
         /// </summary>
@@ -313,6 +313,10 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
         public static readonly BindableProperty CompletedCommandProperty = BindableProperty.Create(nameof(CompletedCommand), typeof(ICommand), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CompletedCommand = (ICommand)nv);
         public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AdvancedEntry.AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
+        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ValidationMessage = (string)nv);
+        public static readonly BindableProperty IgnoreValidationMessageProperty = BindableProperty.Create(nameof(IgnoreValidationMessage), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).DisplayValidation());
+        public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -369,6 +373,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         void UpdateWarning()
         {
+            ValidationChanged?.Invoke(this, new EventArgs());
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
         }
         /// <summary>

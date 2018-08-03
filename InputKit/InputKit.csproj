@@ -60,11 +60,23 @@
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid80' ">
-    <Compile Include="Platforms\Android\**\*.cs" />
+    <Compile Include="Platforms\Droid\**\*.cs" />
+    <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" PrivateAssets="All" />
+
+    <AndroidResource Include="Resources\drawable\*.xml" />
+    <AndroidResource Include="Resources\drawable\*.png" />
+    <AndroidResource Include="Resources\drawable-hdpi\*.png" />
+    <AndroidResource Include="Resources\drawable-xhdpi\*.png" />
+    <AndroidResource Include="Resources\drawable-xxhdpi\*.png" />
+    <AndroidResource Include="Resources\drawable-xxxhdpi\*.png" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
     <Compile Include="Platforms\iOS\**\*.cs" />
+    
+    <Content Include="Resources\*.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 
@@ -90,12 +102,14 @@
     <None Remove="Shared\Controls\AdvancedEntry.cs" />
     <None Remove="Shared\Controls\AdvancedSlider.cs" />
     <None Remove="Shared\Controls\CheckBox.cs" />
+    <None Remove="Shared\Controls\Dropdown.cs" />
     <None Remove="Shared\Controls\EmptyEntry.cs" />
     <None Remove="Shared\Controls\FormView.cs" />
     <None Remove="Shared\Controls\IconView.cs" />
     <None Remove="Shared\Controls\RadioButton.cs" />
     <None Remove="Shared\Controls\SelectionView.cs" />
     <None Remove="Shared\Helpers\ColorExtensions.cs" />
+    <None Remove="Shared\Utils\PopupMenu.cs" />
   </ItemGroup>
 
   <!--

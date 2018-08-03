@@ -1,4 +1,4 @@
-﻿using Plugin.InputKit.Platforms.Android;
+﻿using Plugin.InputKit.Platforms.Droid;
 using Plugin.InputKit.Shared.Controls;
 using Android.Content;
 using Android.Graphics;
@@ -9,7 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
 
 [assembly:ExportRenderer(typeof(IconView),typeof(NewIconViewRenderer))]
-namespace Plugin.InputKit.Platforms.Android
+namespace Plugin.InputKit.Platforms.Droid
 {
     public class NewIconViewRenderer : ViewRenderer<IconView, ImageView>
     {
@@ -20,7 +20,6 @@ namespace Plugin.InputKit.Platforms.Android
             base.AutoPackage = false;
             _context = context;
         }
-
         protected override void Dispose(bool disposing)
         {
             if (_isDisposed)
@@ -59,9 +58,9 @@ namespace Plugin.InputKit.Platforms.Android
 
                 
                 if (d == null) return;
-                //if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
-                //    d.SetTint(Element.FillColor.ToAndroid());
-                //else
+                if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
+                    d.SetTint(Element.FillColor.ToAndroid());
+                else
                     d.SetColorFilter(new LightingColorFilter(Xamarin.Forms.Color.Black.ToAndroid(), Element.FillColor.ToAndroid()));
 
                 d.Alpha = Element.FillColor.ToAndroid().A;

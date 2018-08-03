@@ -27,5 +27,10 @@ namespace Sample.InputKit
             //    new SampleClass{ Name = "Option 8", Id = 8 },
             //};
         }
+
+        private void AdvancedEntry_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(e.NewTextValue);
+        }
     }
 }

@@ -10,11 +10,22 @@
     </ContentPage.BindingContext>
     <ScrollView>
         <StackLayout Spacing="12" Padding="20">
-            <input:CheckBox Text="Option 0" Type="Material" />
+
+            <!--<input:AdvancedEntry Title="Test" TextChanged="AdvancedEntry_TextChanged" BackgroundColor="Accent" 
+                                  
+                                 BorderColor="Black" 
+                                 Annotation="NameSurname" 
+                                 IsRequired="True"
+                                 ValidationMessage="{Binding SelectedItem}"
+                                 />
+
+
+            <input:CheckBox Text="Option 0" />
             <input:CheckBox Text="Option 1" Type="Box"/>
             <input:CheckBox Text="Option 2" Type="Check"/>
             <input:CheckBox Text="Option 3" Type="Cross"/>
             <input:CheckBox Text="Option 4" Type="Star"/>
+            
 
             <input:RadioButtonGroupView>
                 <input:RadioButton Text="Option 1" CircleSize="75" FontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />
@@ -22,12 +33,23 @@
                 <input:RadioButton Text="Option 3" />
                 <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et" />
                 <input:RadioButton Text="Option 4" />
-            </input:RadioButtonGroupView>
+            </input:RadioButtonGroupView>-->
 
-            
-            <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
+            <input:Dropdown Title="Chosse an option below:"
+                            TitleColor="Black"
+                            ValidationMessage="This field is required" 
+                            AnnotationColor="Accent" 
+                            IsRequired="True" 
+                            BorderColor="Black" 
+                            Color="BlueViolet"
+                            Placeholder="Choose one" 
+                            ItemsSource="{Binding MyList}" 
+                            SelectedItem="{Binding SelectedItem}" />
 
-            <input:SelectionView ColumnNumber="1" SelectionType="RadioButton" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
+
+            <!--<input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
+
+            <input:SelectionView ColumnNumber="1" SelectionType="RadioButton" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />-->
 
             
             
