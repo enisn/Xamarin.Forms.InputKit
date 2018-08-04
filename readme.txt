@@ -20,6 +20,14 @@ If doesn't exits alert icon won't be displayed.
 
 
 
+-------------------Dropdown-Arrow-Icon----------------------------------
+((Only iOS))
+
+Your **iOS Project** resources must contain 36pt           arrow_down.png           to display arrow down icon on Dropdown!
+If doesn't exits arrow down icon won't be displayed.
+------------------------------------------------------------------------------
+
+
 --------------EASY--DESIGNING----------------
 
 If you want to set all the controls in your app you can use GlobalSettings for this package.

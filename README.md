@@ -15,7 +15,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
 [![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
-<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-2.2s.0-blue.svg" /></a>
+<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-2.2.1-blue.svg" /></a>
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
 <p>
 <b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
@@ -69,7 +69,17 @@
 </ContentPage>
 ```
 <br />
+<table>
+<tr>
+<td>
 <img src="https://scontent-frx5-1.xx.fbcdn.net/v/t1.15752-9/37154277_2011557202188716_8748276176344055808_n.png?_nc_cat=0&oh=f180f20ac9e89598fbbbc5e255aea5a0&oe=5BE4FF53" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
+</td>
+<td>
+<img src="https://camo.githubusercontent.com/7aa6b380224413dc27770e8305d3d60856f17e1f/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f424c6a655a5574494442753764474d5270562f67697068792e676966" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
+</td>
+</tr>
+</table>
+
 <h4>PROPERTIES:</h4>
 <ul>
 	<li><strong>CheckChanged:</strong> <em>(Event)</em> Invokes when check changed.</li>
