@@ -63,7 +63,14 @@ namespace Plugin.InputKit.Shared.Controls
         }
         private void Menu_Item_Selected(string item, int index)
         {
-            SelectedItem = ItemsSource[index];
+            try
+            {
+                SelectedItem = ItemsSource[index];
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.ToString());
+            }
         }
         public IList ItemsSource
         {
@@ -135,7 +142,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(Dropdown), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BorderColor = (Color)nv);
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).Placeholder = (string)nv);
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsRequired = (bool)nv);
-        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).ValidationMessage = (string)nv);
+        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).ValidationMessage = (string)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }

@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.2.1</version>
+    <version>2.2.2</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>CheckBox Color property fixed, CheckBox CommandParameter added. Some SelectionView improvements.</releaseNotes>
+    <releaseNotes>Highly dropdown bug fixed</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -34,6 +34,19 @@
     </summary>
 
     <description>
+      
+      v.2.2.2
+      Dropdown BidnableProperties added,
+      Dropdown selectedIndex bug fixed.
+      CanExecute check added all commands
+      CommandParameter added in AdvancedEntry
+      CommandParameter added in RadioButton
+      Checkbox unwanted shadow bug fixed
+      SelectionView TextColor fixed
+      iOS Dropdown improvements. 
+      
+      Dropdown will be popover on iOS
+      
       v.2.2.0
       Controls in this package are fully bindable and ready to use.
       AdvancedEntry Completed event added,

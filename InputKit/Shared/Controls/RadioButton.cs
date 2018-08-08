@@ -37,6 +37,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// Executes when tapped on RadioButton
         /// </summary>
         public ICommand SelectedItemChangedCommand { get; set; }
+        /// <summary>
+        /// Command Parameter will be sent in SelectedItemChangedCommand
+        /// </summary>
+        public object CommandParameter { get; set; }
         private void RadioButtonGroupView_ChildrenReordered(object sender, EventArgs e)
         {
             UpdateAllEvent();
@@ -73,7 +77,8 @@ namespace Plugin.InputKit.Shared.Controls
             SetValue(SelectedIndexProperty, this.SelectedIndex);
             OnPropertyChanged(nameof(SelectedIndex));
             SelectedItemChanged?.Invoke(this, new EventArgs());
-            SelectedItemChangedCommand?.Execute(this);
+            if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? false) ;
+            SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
             ValidationChanged?.Invoke(this, new EventArgs());
         }
         /// <summary>

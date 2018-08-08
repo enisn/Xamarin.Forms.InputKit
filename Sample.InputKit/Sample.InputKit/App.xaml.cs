@@ -13,7 +13,7 @@ namespace Sample.InputKit
         public App()
         {
             InitializeComponent();
-
+            
             MainPage = new NavigationPage(new Sample.InputKit.MainPage());   
         }
 

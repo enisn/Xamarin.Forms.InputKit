@@ -1,5 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
+using Plugin.InputKit.Shared.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -400,7 +401,7 @@ namespace Plugin.InputKit.Shared.Controls
             if (IsSelected)
             {
                 this.BackgroundColor = SelectionColor;
-                this.TextColor = Color.WhiteSmoke;
+                this.TextColor = SelectionColor.ToSurfaceColor();
             }
             else
             {

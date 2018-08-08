@@ -4,7 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -60,8 +59,13 @@ namespace Plugin.InputKit.Shared.Controls
             };
 
             txtInput.TextChanged += TxtInput_TextChanged;
-            txtInput.Completed += (s, args) => { CompletedCommand?.Execute(s); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
+            txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             imgWarning.IsVisible = this.IsRequired;
+        }
+        void ExecuteCommand()
+        {
+            if (CompletedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+                CompletedCommand?.Execute(CommandParameter ?? this);
         }
         #region Not Implemented
         public bool IsSelected { get => false; set { } }
@@ -300,6 +304,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// Executed when entry completed.
         /// </summary>
         public ICommand CompletedCommand { get; set; }
+        /// <summary>
+        /// Parameter to send with CompletedCommand
+        /// </summary>
+        public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -317,6 +325,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty IgnoreValidationMessageProperty = BindableProperty.Create(nameof(IgnoreValidationMessage), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).DisplayValidation());
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
