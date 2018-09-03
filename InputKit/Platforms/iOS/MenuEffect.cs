@@ -35,10 +35,11 @@ namespace Plugin.InputKit.Platforms.iOS
             
             UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.Alert);
 
-            //int i = 0;
-            for (int i = 0; i < Effect.Parent.ItemsSource.Count; i++)
+            int i = 0;
+            var _enumerator = Effect.Parent.ItemsSource.GetEnumerator();
+            while (_enumerator.MoveNext())
             {
-                actionSheetAlert.AddAction(UIAlertAction.Create(Effect.Parent.ItemsSource[i].ToString(), UIAlertActionStyle.Default, (action) => Effect.Parent.InvokeItemSelected(Effect.Parent.ItemsSource[i].ToString(),i)));
+                actionSheetAlert.AddAction(UIAlertAction.Create(_enumerator.Current?.ToString(), UIAlertActionStyle.Default, (action) => Effect.Parent.InvokeItemSelected(_enumerator.Current?.ToString(), i)));
             }
 
             actionSheetAlert.AddAction(UIAlertAction.Create(UIAlertControllerCancelText, UIAlertActionStyle.Destructive, null));
