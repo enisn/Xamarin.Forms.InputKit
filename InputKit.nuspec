@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.2.2</version>
+    <version>2.2.3</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -35,6 +35,10 @@
 
     <description>
       
+      v.2.2.3
+      Checkbox Text sizing improved.
+      CheckBoxCell added.
+
       v.2.2.2
       Dropdown BidnableProperties added,
       Dropdown selectedIndex bug fixed.
@@ -56,14 +60,11 @@
       PlaceholderColor (Can be given PlaceholderColor = "{DynamicResource YourColor}"  )
       Dropdown added. More properties will be added.
 
-
-
       v.2.1.0
       AdvancedEntry Password Annotation problem fixed.
       Material CheckBox coloring problem fixed.
       ToSurfaceColor() extension added in ColorExtensions. (It used for CheckBox coloring)
       AdvancedSlider looping problem fixed.
-
 
       ChangeLog:
       v.2.0.6
@@ -99,8 +100,6 @@
       RadioButton.GlobalSetting.Size = 36;
       in App.cs
 
-
-
       v.1.1.1
       AdvancedSlider PropertyChanging addded.
       RadioButton ClickCommand missing bindableproperty added.
@@ -113,7 +112,6 @@
       v.1.0.91
       SelectionView color properties added, rest of some properties are updated.
       'ItemSource' renamed to 'ItemsSource', old one marked as Obselete, It'll removed in later versions.
-
 
       v.1.0.9
       RadioButtonGroupView, BindableProperty, Event and Command added for SelectedItem
@@ -156,6 +154,8 @@
   <files>
     <!--Readme to display after installaction-->
     <file src="readme.txt" target="" />
+    
+    <file src="InputKit\Resources\arrow_down.png" target="Resources" />
 
     <!-- Cross-platform reference assemblies -->
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
@@ -175,7 +175,6 @@
 
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.dll" target="lib\xamarin.watchos10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.xml" target="lib\xamarin.watchos10\Plugin.InputKit.xml" />
-
 
   </files>
 </package>

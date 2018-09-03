@@ -133,6 +133,26 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
+        public IEnumerable<int> SelectedIndexes
+        {
+            get
+            {
+                for (int i = 0; i < this.Children.Count; i++)
+                {
+                    if (this.Children[i] is ISelection && (this.Children[i] as ISelection).IsSelected)
+                        yield return i;
+                }
+            }
+            set
+            {
+                for (int i = 0; i < Children.Count; i++)
+                {
+                    if (this.Children[i] is ISelection)
+                        (this.Children[i] as ISelection).IsSelected = value.Contains(i);
+                }
+            }
+        }
+
         ///-----------------------------------------------------------------------------
         /// <summary>
         ///Selected Items for the multiple selections, 
@@ -229,6 +249,7 @@ namespace Plugin.InputKit.Shared.Controls
             if ((int)this.SelectionType % 2 == 0)
             {
                 SetValue(SelectedItemsProperty, SelectedItems);
+                SetValue(SelectedIndexesProperty, SelectedIndexes);
             }
             else
             {
@@ -317,6 +338,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItem = nv);
         public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItems = (IList)nv);
         public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndex = (int)nv);
+        public static readonly BindableProperty SelectedIndexesProperty = BindableProperty.Create(nameof(SelectedIndexes), typeof(IEnumerable<int>), typeof(SelectionView), new int[0], BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndexes = (IEnumerable<int>)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }

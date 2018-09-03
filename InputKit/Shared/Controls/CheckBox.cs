@@ -27,7 +27,7 @@ namespace Plugin.InputKit.Shared.Controls
         Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
         BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
         Label lblSelected = new Label { Text = "✓", Margin = new Thickness(0, -1, 0, 0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
-        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
+        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily , IsVisible = false};
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
         /// <summary>
@@ -88,7 +88,7 @@ namespace Plugin.InputKit.Shared.Controls
         public CheckBox(string optionName, int key) : this()
         {
             Key = key;
-            lblOption.Text = optionName;
+            Text = optionName;
         }
         /// <summary>
         /// You can set a Unique key for each control
@@ -97,7 +97,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Text to display right of CheckBox
         /// </summary>
-        public string Text { get => lblOption.Text; set => lblOption.Text = value; }
+        public string Text { get => lblOption.Text; set { lblOption.Text = value; lblOption.IsVisible = !String.IsNullOrEmpty(value); } }
         /// <summary>
         /// IsChecked Property
         /// </summary>
