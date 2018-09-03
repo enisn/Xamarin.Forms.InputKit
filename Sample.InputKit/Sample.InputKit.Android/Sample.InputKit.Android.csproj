@@ -56,9 +56,6 @@
     <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
     <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
-    <PackageReference Include="Xamarin.Forms.InputKit">
-      <Version>2.3.0-pre6</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -86,6 +83,10 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\InputKit\InputKit.csproj">
+      <Project>{B7F4F0DD-F749-4E39-9353-81B6BB56DFC8}</Project>
+      <Name>InputKit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sample.InputKit\Sample.InputKit.csproj">
       <Project>{297E5473-62A3-47B9-98DA-C409435A794C}</Project>
       <Name>Sample.InputKit</Name>

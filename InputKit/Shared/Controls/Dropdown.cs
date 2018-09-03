@@ -30,7 +30,8 @@ namespace Plugin.InputKit.Shared.Controls
         IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = "arrow_down.png", HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = 5 };
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
-        Button btnBackground = new Button { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
+        Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
+        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
 
         PopupMenu pMenu = new PopupMenu();
         private string _placeholder;
@@ -41,25 +42,41 @@ namespace Plugin.InputKit.Shared.Controls
         {
             this.Children.Add(lblTitle);
             this.Children.Add(lblAnnotation);
-
-            this.Children.Add(new Grid
+            frmBackground.Content = new StackLayout
             {
+                Orientation = StackOrientation.Horizontal,
                 Children =
-                {
-                    btnBackground,
-                    imgIcon,
-                    imgArrow
-                }
-            });
-            btnBackground.Clicked += Menu_Requested;
+                        {
+                            imgIcon,
+                            txtInput,
+                            imgArrow
+                        }
+            };
+            this.Children.Add(frmBackground);
+            frmBackground.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Menu_Requested), CommandParameter = frmBackground });
+            txtInput.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Menu_Requested), CommandParameter = txtInput });
+
+            //+= Menu_Requested;
             pMenu.OnItemSelected += Menu_Item_Selected;
+            txtInput.TextChanged += (s, args) => Text = args.NewTextValue;
             UpdateMainText();
         }
         public event EventHandler ValidationChanged;
         #region SelectionRegion
         private void Menu_Requested(object sender, EventArgs e)
         {
-            pMenu.ShowPopup(imgArrow);
+            ShowMenu();
+        }
+        private void ShowMenu() => pMenu.ShowPopup(imgArrow);
+        private void Menu_Requested(object obj)
+        {
+            if (obj != txtInput || !IsEditable)
+                ShowMenu();
+            else
+            {
+                txtInput.Focus();
+            }
+
         }
         private void Menu_Item_Selected(string item, int index)
         {
@@ -97,33 +114,33 @@ namespace Plugin.InputKit.Shared.Controls
 
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
         public string IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
-        public string FontFamily { get => btnBackground.FontFamily; set { btnBackground.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
-        public new Color BackgroundColor { get => btnBackground.BackgroundColor; set => btnBackground.BackgroundColor = value; }
+        public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
+        public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
         public Color Color { get => imgIcon.FillColor; set => UpdateColors(); }
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
         public Color AnnotationColor { get => lblAnnotation.TextColor; set => lblAnnotation.TextColor = value; }
         public Color TitleColor { get => lblTitle.TextColor; set => lblTitle.TextColor = value; }
-        public Color BorderColor { get => btnBackground.BorderColor; set { btnBackground.BorderColor = value; btnBackground.BorderWidth = value == (Color)Button.BorderColorProperty.DefaultValue ? (double)Button.BorderWidthProperty.DefaultValue : 2; } }
-        public int CornerRadius { get => btnBackground.CornerRadius; set => btnBackground.CornerRadius = value; }
+        public Color BorderColor { get => frmBackground.BorderColor; set { frmBackground.BorderColor = value; } }
+        public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
         public string Placeholder { get => _placeholder; set { _placeholder = value; UpdateMainText(); } }
 
         public bool IsRequired { get => _isRequired; set { _isRequired = value; DisplayValidation(); } }
 
         public bool IsValidated => !IsRequired || SelectedItem != null;
 
+        public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
+        public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
-
-        void UpdateColors()
+        private void UpdateColors()
         {
             imgIcon.FillColor = Color;
             imgArrow.FillColor = Color;
         }
-        void UpdateMainText()
+        private void UpdateMainText()
         {
-            btnBackground.Text = SelectedItem == null ? Placeholder : SelectedItem.ToString();
-            btnBackground.TextColor = SelectedItem == null ? TextColor.MultiplyAlpha(0.5) : TextColor.MultiplyAlpha(1);
+            txtInput.Text = SelectedItem == null ? Placeholder : SelectedItem.ToString();
+            txtInput.TextColor = SelectedItem == null ? TextColor.MultiplyAlpha(0.5) : TextColor.MultiplyAlpha(1);
         }
-
         public void DisplayValidation()
         {
             lblAnnotation.Text = IsValidated ? null : ValidationMessage;
@@ -143,6 +160,8 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).Placeholder = (string)nv);
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsRequired = (bool)nv);
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).ValidationMessage = (string)nv);
+        public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(TextProperty), typeof(string), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).txtInput.Text = (string)nv);
+        public static readonly BindableProperty IsEditableProperty = BindableProperty.Create(nameof(IsEditable), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsEditable = (bool)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }

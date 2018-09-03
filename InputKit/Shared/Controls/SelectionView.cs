@@ -368,7 +368,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public SelectableButton()
         {
-            this.Margin = new Thickness(20, 5);
+            //this.Margin = new Thickness(0);
             UpdateColors();
         }
         ///-----------------------------------------------------------------------------
@@ -428,7 +428,7 @@ namespace Plugin.InputKit.Shared.Controls
             else
             {
                 this.BackgroundColor = (Color)Button.BackgroundColorProperty.DefaultValue;
-                this.TextColor = (Color)Button.TextColorProperty.DefaultValue;
+                this.TextColor = (Color)SelectionView.GlobalSetting.TextColor;
             }
         }
         ///-----------------------------------------------------------------------------

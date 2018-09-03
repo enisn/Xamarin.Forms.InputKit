@@ -14,7 +14,7 @@ namespace Sample.InputKit
 		{
 			InitializeComponent();
 
-
+            
             //selectionView.ItemsSource = new[]
             //{
             //    new SampleClass{ Name = "Option 1", Id = 1 },

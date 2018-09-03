@@ -33,6 +33,7 @@
                             IsRequired="True" 
                             BorderColor="Black" 
                             Color="BlueViolet"
+                            IsEditable="True"
                             Placeholder="Choose one" 
                             ItemsSource="{Binding MyList}" 
                             SelectedItem="{Binding SelectedItem}" />
