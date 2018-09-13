@@ -161,14 +161,14 @@
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.xml" target="lib\netstandard2.0\Plugin.InputKit.xml" />
 
-    <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.dll" target="lib\monoandroid80\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.xml" target="lib\monoandroid80\Plugin.InputKit.xml" />
+    <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.dll" target="lib\monoandroid81\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.xml" target="lib\monoandroid81\Plugin.InputKit.xml" />
 
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.dll" target="lib\xamarin.ios10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.xml" target="lib\xamarin.ios10\Plugin.InputKit.xml" />
 
-    <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.dll" target="lib\xamarin.mac20\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.xml" target="lib\xamarin.mac20\Plugin.InputKit.xml" />
+    <!-- <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.dll" target="lib\xamarin.mac20\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.xml" target="lib\xamarin.mac20\Plugin.InputKit.xml" /> -->
 
     <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.dll" target="lib\xamarin.tvos10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.xml" target="lib\xamarin.tvos10\Plugin.InputKit.xml" />
