@@ -111,7 +111,7 @@ namespace Plugin.InputKit.Shared.Controls
             ValidationChanged?.Invoke(this, new EventArgs());
         }
         #endregion
-
+        //public Label TitleLabel { get => lblTitle; }
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
         public string IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }

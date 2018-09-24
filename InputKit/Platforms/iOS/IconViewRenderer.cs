@@ -67,7 +67,12 @@ namespace Plugin.InputKit.Platforms.iOS
                 System.Diagnostics.Debug.WriteLine("SOURCE : " + Element?.Source?.ToString());
                 if (Element?.Source == null)
                     return;
-                var uiImage = new UIImage(Element.Source);
+                UIImage uiImage;
+                if (Element.Source?.Contains("http") ?? false)
+                    uiImage = new UIImage(Element.Source);
+                else
+                    uiImage = UIImage.FromBundle(Element.Source);
+
                 uiImage = uiImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
                 Control.TintColor = Element.FillColor.ToUIColor();
                 Control.Image = uiImage;

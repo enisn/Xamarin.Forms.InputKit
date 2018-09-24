@@ -9,7 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\InputKit\InputKit.csproj" />
+    <Reference Include="Plugin.InputKit">
+      <HintPath>..\..\InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
