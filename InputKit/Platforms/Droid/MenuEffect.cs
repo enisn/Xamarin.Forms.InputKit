@@ -1,6 +1,6 @@
 ﻿using Android.Content;
 using Android.OS;
-using Android.Support.V7.Widget;
+using Android.Widget;
 using Plugin.InputKit.Platforms.Droid;
 using System.Linq;
 using Xamarin.Forms;
@@ -30,7 +30,10 @@ namespace Plugin.InputKit.Platforms.Droid
             {
                 ToggleMenu = new PopupMenu(context, Container);
             }
-            ToggleMenu.Gravity = (int)Android.Views.GravityFlags.Right;
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
+            {
+                ToggleMenu.Gravity = Android.Views.GravityFlags.Right;
+            }
             ToggleMenu.MenuItemClick += MenuItemClick;
         }
 
