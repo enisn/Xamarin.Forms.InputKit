@@ -1,11 +1,11 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
     <!-- The identifier that must be unique within the hosting gallery -->
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.3.0</version>
+    <version>2.3.2</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>Highly dropdown bug fixed</releaseNotes>
+    <releaseNotes>Dropdown crash handled. UWP support added</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -34,7 +34,7 @@
     </summary>
 
     <description>
-      
+      ...
       v.2.2.3
       Checkbox Text sizing improved.
       CheckBoxCell added.
@@ -47,10 +47,10 @@
       CommandParameter added in RadioButton
       Checkbox unwanted shadow bug fixed
       SelectionView TextColor fixed
-      iOS Dropdown improvements. 
-      
+      iOS Dropdown improvements.
+
       Dropdown will be popover on iOS
-      
+
       v.2.2.0
       Controls in this package are fully bindable and ready to use.
       AdvancedEntry Completed event added,
@@ -154,19 +154,21 @@
   <files>
     <!--Readme to display after installaction-->
     <file src="readme.txt" target="" />
-    
+
     <file src="InputKit\Resources\arrow_down.png" target="Resources" />
 
     <!-- Cross-platform reference assemblies -->
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.xml" target="lib\netstandard2.0\Plugin.InputKit.xml" />
 
-    <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.dll" target="lib\monoandroid81\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\monoandroid80\Plugin.InputKit.xml" target="lib\monoandroid81\Plugin.InputKit.xml" />
+    <file src="InputKit\bin\Release\monoandroid81\monoandroid81\Plugin.InputKit.dll" target="lib\monoandroid81\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\monoandroid81\monoandroid81\Plugin.InputKit.xml" target="lib\monoandroid81\Plugin.InputKit.xml" />
 
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.dll" target="lib\xamarin.ios10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.xml" target="lib\xamarin.ios10\Plugin.InputKit.xml" />
 
+    <file src="InputKit\bin\Release\uap10.0.16299\Plugin.InputKit.dll" target="lib\uap10.0.16299\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\uap10.0.16299\Plugin.InputKit.xml" target="lib\uap10.0.16299\Plugin.InputKit.xml" />
     <!-- <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.dll" target="lib\xamarin.mac20\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.xml" target="lib\xamarin.mac20\Plugin.InputKit.xml" /> -->
 
