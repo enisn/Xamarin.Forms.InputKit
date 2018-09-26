@@ -94,7 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FormViewSample.InputKit\FormViewSample.InputKit.csproj">
-      <Project>{E3432B8D-D39C-4520-A0DD-996D75EE92E8}</Project>
+      <Project>{15D16C2C-2F95-467B-B466-6CA34F6FCF70}</Project>
       <Name>FormViewSample.InputKit</Name>
     </ProjectReference>
   </ItemGroup>

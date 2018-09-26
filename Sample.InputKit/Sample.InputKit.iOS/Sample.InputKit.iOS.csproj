@@ -123,8 +123,12 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
+    <ProjectReference Include="..\..\InputKit\InputKit.csproj">
+      <Project>{b7f4f0dd-f749-4e39-9353-81b6bb56dfc8}</Project>
+      <Name>InputKit</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Sample.InputKit\Sample.InputKit.csproj">
-      <Project>{297E5473-62A3-47B9-98DA-C409435A794C}</Project>
+      <Project>{7BD830DC-A17D-47EC-87C2-5D7506C659E8}</Project>
       <Name>Sample.InputKit</Name>
     </ProjectReference>
   </ItemGroup>

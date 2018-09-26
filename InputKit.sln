@@ -14,9 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.InputKit.Android", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.InputKit.iOS", "Sample.InputKit\Sample.InputKit.iOS\Sample.InputKit.iOS.csproj", "{06236AEA-E5E5-4B21-A0CA-BFD471850EFC}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Sample.InputKit", "Sample.InputKit\Sample.InputKit\Sample.InputKit.csproj", "{7BD830DC-A17D-47EC-87C2-5D7506C659E8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.InputKit", "Sample.InputKit\Sample.InputKit\Sample.InputKit.csproj", "{7BD830DC-A17D-47EC-87C2-5D7506C659E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputKit", "InputKit\InputKit.csproj", "{B7F4F0DD-F749-4E39-9353-81B6BB56DFC8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputKit", "InputKit\InputKit.csproj", "{B7F4F0DD-F749-4E39-9353-81B6BB56DFC8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FormViewSample", "FormViewSample", "{5B9A73D7-9FF6-433B-BD7A-01C705D5B0CB}"
 EndProject
@@ -24,7 +24,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit.And
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit.iOS", "FormViewSample.InputKit\FormViewSample.InputKit.iOS\FormViewSample.InputKit.iOS.csproj", "{7266B8FF-71CB-4EC5-9F2C-891BF323DA63}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FormViewSample.InputKit", "FormViewSample.InputKit\FormViewSample.InputKit\FormViewSample.InputKit.csproj", "{15D16C2C-2F95-467B-B466-6CA34F6FCF70}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormViewSample.InputKit", "FormViewSample.InputKit\FormViewSample.InputKit\FormViewSample.InputKit.csproj", "{15D16C2C-2F95-467B-B466-6CA34F6FCF70}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiki", "Wiki", "{AA39162B-B93C-48CF-9566-8A04CCFF987C}"
 	ProjectSection(SolutionItems) = preProject
