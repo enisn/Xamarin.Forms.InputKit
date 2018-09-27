@@ -22,13 +22,15 @@ namespace Plugin.InputKit.Platforms.Droid
             if (Effect != null)
                 Effect.Parent.OnPopupRequest += OnPopupRequest;
             Context context = Plugin.CurrentActivity.CrossCurrentActivity.Current.AppContext;
+            Context wrapper = new Android.Support.V7.View.ContextThemeWrapper(context,Resource.Style.MyPopupMenu);
+
             if (Control != null)
             {
-                ToggleMenu = new PopupMenu(context, Control);
+                ToggleMenu = new PopupMenu(wrapper, Control);
             }
             else if (Container != null)
             {
-                ToggleMenu = new PopupMenu(context, Container);
+                ToggleMenu = new PopupMenu(wrapper, Container);
             }
             ToggleMenu.Gravity = (int)Android.Views.GravityFlags.Right;
             ToggleMenu.MenuItemClick += MenuItemClick;

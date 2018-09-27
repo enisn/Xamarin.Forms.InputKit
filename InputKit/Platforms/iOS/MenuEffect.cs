@@ -1,4 +1,6 @@
 ﻿using Plugin.InputKit.Platforms.iOS;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using UIKit;
 using Xamarin.Forms;
@@ -32,14 +34,17 @@ namespace Plugin.InputKit.Platforms.iOS
                 return;
 
             RootViewController = UIApplication.SharedApplication.KeyWindow.RootViewController;
-            
-            UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.Alert);
 
-            int i = 0;
+            UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.Alert);
             var _enumerator = Effect.Parent.ItemsSource.GetEnumerator();
             while (_enumerator.MoveNext())
             {
-                actionSheetAlert.AddAction(UIAlertAction.Create(_enumerator.Current?.ToString(), UIAlertActionStyle.Default, (action) => Effect.Parent.InvokeItemSelected(_enumerator.Current?.ToString(), i)));
+                UIAlertAction alertAction = UIAlertAction.Create(_enumerator.Current?.ToString(), UIAlertActionStyle.Default, (action) =>
+                {
+                    int index = actionSheetAlert.Actions.ToList<UIAlertAction>().IndexOf(action);
+                    Effect.Parent.InvokeItemSelected(action.Title, index);
+                });
+                actionSheetAlert.AddAction(alertAction);
             }
 
             actionSheetAlert.AddAction(UIAlertAction.Create(UIAlertControllerCancelText, UIAlertActionStyle.Destructive, null));
