@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\InputKit\InputKit.csproj">
-      <Project>{b7f4f0dd-f749-4e39-9353-81b6bb56dfc8}</Project>
+      <Project>{0d4edd99-6439-48e9-8f9a-8b4dc0ca5431}</Project>
       <Name>InputKit</Name>
     </ProjectReference>
     <ProjectReference Include="..\Sample.InputKit\Sample.InputKit.csproj">

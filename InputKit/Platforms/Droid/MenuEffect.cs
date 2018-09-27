@@ -1,6 +1,6 @@
 ﻿using Android.Content;
 using Android.OS;
-using Android.Widget;
+using Android.Support.V7.Widget;
 using Plugin.InputKit.Platforms.Droid;
 using System.Linq;
 using Xamarin.Forms;
@@ -22,18 +22,17 @@ namespace Plugin.InputKit.Platforms.Droid
             if (Effect != null)
                 Effect.Parent.OnPopupRequest += OnPopupRequest;
             Context context = Plugin.CurrentActivity.CrossCurrentActivity.Current.AppContext;
+            Context wrapper = new Android.Support.V7.View.ContextThemeWrapper(context,Resource.Style.MyPopupMenu);
+
             if (Control != null)
             {
-                ToggleMenu = new PopupMenu(context, Control);
+                ToggleMenu = new PopupMenu(wrapper, Control);
             }
             else if (Container != null)
             {
-                ToggleMenu = new PopupMenu(context, Container);
+                ToggleMenu = new PopupMenu(wrapper, Container);
             }
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.M)
-            {
-                ToggleMenu.Gravity = Android.Views.GravityFlags.Right;
-            }
+            ToggleMenu.Gravity = (int)Android.Views.GravityFlags.Right;
             ToggleMenu.MenuItemClick += MenuItemClick;
         }
 

@@ -69,6 +69,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\*.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\*.png" />
     <AndroidResource Include="Resources\drawable-xxxhdpi\*.png" />
+    <AndroidResource Include="Resources\values\*.xml" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">

@@ -1507,6 +1507,7 @@ namespace Sample.InputKit.Droid
 			global::Plugin.InputKit.Resource.Style.CardView = global::Sample.InputKit.Droid.Resource.Style.CardView;
 			global::Plugin.InputKit.Resource.Style.CardView_Dark = global::Sample.InputKit.Droid.Resource.Style.CardView_Dark;
 			global::Plugin.InputKit.Resource.Style.CardView_Light = global::Sample.InputKit.Droid.Resource.Style.CardView_Light;
+			global::Plugin.InputKit.Resource.Style.MyPopupMenu = global::Sample.InputKit.Droid.Resource.Style.MyPopupMenu;
 			global::Plugin.InputKit.Resource.Style.Platform_AppCompat = global::Sample.InputKit.Droid.Resource.Style.Platform_AppCompat;
 			global::Plugin.InputKit.Resource.Style.Platform_AppCompat_Light = global::Sample.InputKit.Droid.Resource.Style.Platform_AppCompat_Light;
 			global::Plugin.InputKit.Resource.Style.Platform_ThemeOverlay_AppCompat = global::Sample.InputKit.Droid.Resource.Style.Platform_ThemeOverlay_AppCompat;
@@ -6410,8 +6411,8 @@ namespace Sample.InputKit.Droid
 			// aapt resource value: 0x7f0b016e
 			public const int Animation_Design_BottomSheetDialog = 2131427694;
 			
-			// aapt resource value: 0x7f0b0191
-			public const int AppCompatDialogStyle = 2131427729;
+			// aapt resource value: 0x7f0b0192
+			public const int AppCompatDialogStyle = 2131427730;
 			
 			// aapt resource value: 0x7f0b00a9
 			public const int Base_AlertDialog_AppCompat = 2131427497;
@@ -6914,11 +6915,14 @@ namespace Sample.InputKit.Droid
 			// aapt resource value: 0x7f0b000e
 			public const int CardView_Light = 2131427342;
 			
-			// aapt resource value: 0x7f0b018f
-			public const int MainTheme = 2131427727;
-			
 			// aapt resource value: 0x7f0b0190
-			public const int MainTheme_Base = 2131427728;
+			public const int MainTheme = 2131427728;
+			
+			// aapt resource value: 0x7f0b0191
+			public const int MainTheme_Base = 2131427729;
+			
+			// aapt resource value: 0x7f0b018f
+			public const int MyPopupMenu = 2131427727;
 			
 			// aapt resource value: 0x7f0b002d
 			public const int Platform_AppCompat = 2131427373;
