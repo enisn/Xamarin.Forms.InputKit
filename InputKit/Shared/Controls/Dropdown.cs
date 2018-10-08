@@ -123,7 +123,7 @@ namespace Plugin.InputKit.Shared.Controls
         public Color BorderColor { get => frmBackground.BorderColor; set { frmBackground.BorderColor = value; } }
         public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
         public string Placeholder { get => _placeholder; set { _placeholder = value; UpdateMainText(); } }
-
+        public Color PlaceholderColor { get => (Color)GetValue(PlaceholderColorProperty); set => SetValue(PlaceholderColorProperty, value); }
         public bool IsRequired { get => _isRequired; set { _isRequired = value; DisplayValidation(); } }
 
         public bool IsValidated => !IsRequired || SelectedItem != null;
@@ -139,7 +139,7 @@ namespace Plugin.InputKit.Shared.Controls
         private void UpdateMainText()
         {
             txtInput.Text = SelectedItem == null ? Placeholder : SelectedItem.ToString();
-            txtInput.TextColor = SelectedItem == null ? TextColor.MultiplyAlpha(0.5) : TextColor.MultiplyAlpha(1);
+            txtInput.TextColor = SelectedItem == null ? PlaceholderColor : TextColor;
         }
         public void DisplayValidation()
         {
@@ -162,6 +162,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).ValidationMessage = (string)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(TextProperty), typeof(string), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).txtInput.Text = (string)nv);
         public static readonly BindableProperty IsEditableProperty = BindableProperty.Create(nameof(IsEditable), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsEditable = (bool)nv);
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }

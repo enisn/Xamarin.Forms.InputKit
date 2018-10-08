@@ -26,7 +26,7 @@
                 <input:RadioButton Text="Option 4" />
             </input:RadioButtonGroupView>
 
-            <input:Dropdown Title="Chosse an option below:"
+            <input:Dropdown Title="Chosse an option below:"                            
                             TitleColor="Black"
                             ValidationMessage="This field is required" 
                             AnnotationColor="Accent" 
@@ -36,7 +36,10 @@
                             IsEditable="True"
                             Placeholder="Choose one" 
                             ItemsSource="{Binding MyList}" 
-                            SelectedItem="{Binding SelectedItem}" />
+                            SelectedItem="{Binding SelectedItem}"
+                            />
+
+
 
 
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
