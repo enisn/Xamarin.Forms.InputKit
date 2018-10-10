@@ -12,15 +12,15 @@
         <StackLayout Spacing="12" Padding="20">
 
             <input:CheckBox Text="Option 0" />
-            <input:CheckBox Text="Option 1" Type="Box"/>
-            <input:CheckBox Text="Option 2" Type="Check"/>
-            <input:CheckBox Text="Option 3" Type="Cross"/>
-            <input:CheckBox Text="Option 4" Type="Star"/>
-            
+            <input:CheckBox Text="Option 1" IsChecked="True" Type="Box"/>
+            <input:CheckBox Text="Option 2" IsChecked="True" Type="Check"/>
+            <input:CheckBox Text="Option 3" IsChecked="True" Type="Cross"/>
+            <input:CheckBox Text="Option 4" IsChecked="True" Type="Star"/>
+            <input:CheckBox Text="Option 5" IsChecked="True" Type="Material"/>
 
             <input:RadioButtonGroupView>
-                <input:RadioButton Text="Option 1" CircleSize="75" FontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />
-                <input:RadioButton Text="Option 2" FontSize="24" />
+                <input:RadioButton Text="Option 1" CircleSize="75" TextFontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />
+                <input:RadioButton Text="Option 2" TextFontSize="24" />
                 <input:RadioButton Text="Option 3" />
                 <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et" />
                 <input:RadioButton Text="Option 4" />
@@ -28,23 +28,21 @@
 
             <input:Dropdown Title="Chosse an option below:"                            
                             TitleColor="Black"
+                            Color="Green"
                             ValidationMessage="This field is required" 
                             AnnotationColor="Accent" 
                             IsRequired="True" 
                             BorderColor="Black" 
-                            Color="BlueViolet"
+                            IconImage="ic_account_balance_black"
                             IsEditable="True"
                             Placeholder="Choose one" 
                             ItemsSource="{Binding MyList}" 
                             SelectedItem="{Binding SelectedItem}"
                             />
 
-
-
-
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
 
-            <input:SelectionView ColumnNumber="1" SelectionType="RadioButton" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
+            <input:SelectionView ColumnNumber="1" SelectionType="Button" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
 
             
             

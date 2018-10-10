@@ -132,4 +132,13 @@
       <Name>Sample.InputKit</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_account_balance_black.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_account_balance_black%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\ic_account_balance_black%403x.png" />
+  </ItemGroup>
 </Project>
