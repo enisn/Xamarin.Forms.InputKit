@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Internals;
@@ -116,7 +117,15 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
+        /// <summary>
+        /// Resets of current annotation check and hides annotation message 
+        /// </summary>
+        public void Reset()
+        {
+            txtInput.Text = null;
+            this.AnnotationMessage = null;
+            imgWarning.IsVisible = false;
+        }
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
         {
             SetValue(TextProperty, txtInput.Text);
@@ -280,6 +289,8 @@ namespace Plugin.InputKit.Shared.Controls
                         return Text.Contains("@") && splitted.Length == 2 && splitted.LastOrDefault().Length > 3 && splitted.LastOrDefault().Contains(".") && splitted.LastOrDefault().Split('.').LastOrDefault()?.Length >= 2;
                     case AnnotationType.Password:
                         return Text.Any(Char.IsDigit) && Text.Any(Char.IsLetter);
+                    case AnnotationType.Regex:
+                        return Regex.IsMatch(Text, RegexPattern);
                 }
                 return true;
             }
@@ -308,6 +319,15 @@ namespace Plugin.InputKit.Shared.Controls
         /// Parameter to send with CompletedCommand
         /// </summary>
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
+        /// <summary>
+        /// You need to set Annotation="Regex" to use this.
+        /// </summary>
+        public string RegexPattern { get; set; }
+        /// <summary>
+        /// Gets and sets keyboard type of this entry
+        /// </summary>
+        public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; }
+
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -326,9 +346,11 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
+        public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); } );
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
+        [Obsolete("Keyboard won't be changed automaticly on newer versions. Try set Keyboard property",false)]
         public void UpdateKeyboard(AnnotationType annotation)
         {
             switch (annotation)
@@ -399,7 +421,8 @@ namespace Plugin.InputKit.Shared.Controls
             Email,
             NameSurname,
             Password,
-            Phone
+            Phone,
+            Regex
         }
     }
 }

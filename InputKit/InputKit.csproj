@@ -124,6 +124,7 @@
     <None Remove="Shared\Controls\SelectionView.cs" />
     <None Remove="Shared\Helpers\ColorExtensions.cs" />
     <None Remove="Shared\Utils\PopupMenu.cs" />
+    <None Remove="Shared\Utils\SelectedItemChangedArgs.cs" />
   </ItemGroup>
 
 
