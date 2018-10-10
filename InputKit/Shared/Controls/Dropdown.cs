@@ -26,7 +26,7 @@ namespace Plugin.InputKit.Shared.Controls
             TextColor = Color.Black,
         };
 
-        IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = 5 };
+        IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10,5,5,5) };
         IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = "arrow_down.png", HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = 5 };
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
@@ -62,6 +62,7 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateMainText();
         }
         public event EventHandler ValidationChanged;
+        public event EventHandler<SelectedItemChangedArgs> SelectedItemChanged;
         #region SelectionRegion
         private void Menu_Requested(object sender, EventArgs e)
         {
@@ -109,6 +110,7 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateMainText();
             DisplayValidation();
             ValidationChanged?.Invoke(this, new EventArgs());
+            SelectedItemChanged?.Invoke(this, new SelectedItemChangedArgs(this.SelectedItem, this.ItemsSource?.IndexOf(this.SelectedItem) ?? -1) );
         }
         #endregion
         //public Label TitleLabel { get => lblTitle; }
@@ -116,7 +118,7 @@ namespace Plugin.InputKit.Shared.Controls
         public string IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
-        public Color Color { get => imgIcon.FillColor; set => UpdateColors(); }
+        public Color Color { get => imgIcon.FillColor; set => UpdateColors(value); }
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
         public Color AnnotationColor { get => lblAnnotation.TextColor; set => lblAnnotation.TextColor = value; }
         public Color TitleColor { get => lblTitle.TextColor; set => lblTitle.TextColor = value; }
@@ -131,10 +133,10 @@ namespace Plugin.InputKit.Shared.Controls
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
         public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
-        private void UpdateColors()
+        private void UpdateColors(Color color)
         {
-            imgIcon.FillColor = Color;
-            imgArrow.FillColor = Color;
+            imgIcon.FillColor = color;
+            imgArrow.FillColor = color;
         }
         private void UpdateMainText()
         {
@@ -165,5 +167,6 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
+
     }
 }

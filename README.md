@@ -17,14 +17,13 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
 <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-2.3.3-blue.svg" /></a>
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
+<hr/>
 <p>
-<b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
-</p>
-<p>
-<b>Sample Project Available: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit/tree/master/Sample.InputKit">Sample.InputKit on GitHub</a>
-</p>
-<p>
-<b>Source Codes Available Too: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit/tree/master/InputKit">Plugin.InputKit on GitHub</a>
+
+## You can offer new controls!
+
+You can contribute and type your feedbacks about new controls and featues from [here](https://github.com/enisn/Xamarin.Forms.InputKit/issues/45).
+
 </p>
 
 <hr/>
