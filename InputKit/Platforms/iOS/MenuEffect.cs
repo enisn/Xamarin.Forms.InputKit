@@ -33,7 +33,7 @@ namespace Plugin.InputKit.Platforms.iOS
             if (Effect.Parent.ItemsSource == null)
                 return;
 
-            RootViewController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+            RootViewController = GetVisibleViewController();
 
             UIAlertController actionSheetAlert = UIAlertController.Create(null, null, UIAlertControllerStyle.Alert);
             var _enumerator = Effect.Parent.ItemsSource.GetEnumerator();
@@ -85,6 +85,26 @@ namespace Plugin.InputKit.Platforms.iOS
         {
             if (Effect != null)
                 Effect.Parent.OnPopupRequest -= OnPopupRequest;
+        }
+
+        UIViewController GetVisibleViewController()
+        {
+            var rootController = UIApplication.SharedApplication.KeyWindow.RootViewController;
+
+            if (rootController.PresentedViewController == null)
+                return rootController;
+
+            if (rootController.PresentedViewController is UINavigationController)
+            {
+                return ((UINavigationController)rootController.PresentedViewController).VisibleViewController;
+            }
+
+            if (rootController.PresentedViewController is UITabBarController)
+            {
+                return ((UITabBarController)rootController.PresentedViewController).SelectedViewController;
+            }
+
+            return rootController.PresentedViewController;
         }
     }
 }
