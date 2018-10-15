@@ -133,7 +133,7 @@ You can contribute and type your feedbacks about new controls and featues from [
 <li><strong>Value:</strong> <em>(object)</em> A value keeps inside and groupview returns that value as SelectedItem</li>
 <li><strong>IsChecked:</strong> <em>(bool)</em> Gets or Sets that radio button selected</li>
 <li><strong>Text:</strong> <em>(string)</em> Text to display near of Radio Button</li>
-<li><strong>FontSize:</strong> <em>(double)</em> Fontsize of Text</li>
+<li><strong>TextFontSize:</strong> <em>(double)</em> Fontsize of Text</li>
 <li><strong>Color:</strong> <em>(Color)</em> Color of selected radio button dot</li>
 <li><strong>TextColor:</strong> <em>(Color)</em> Color of Text</li>
 </ul>
