@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.3.3</version>
+    <version>2.3.5</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>Enis Necipoglu</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>Pull Requestes included the package</releaseNotes>
+    <releaseNotes>Fixes and improvements</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -35,106 +35,10 @@
 
     <description>
       ...
-      v.2.2.3
-      Checkbox Text sizing improved.
-      CheckBoxCell added.
-
-      v.2.2.2
-      Dropdown BidnableProperties added,
-      Dropdown selectedIndex bug fixed.
-      CanExecute check added all commands
-      CommandParameter added in AdvancedEntry
-      CommandParameter added in RadioButton
-      Checkbox unwanted shadow bug fixed
-      SelectionView TextColor fixed
-      iOS Dropdown improvements.
-
-      Dropdown will be popover on iOS
-
-      v.2.2.0
-      Controls in this package are fully bindable and ready to use.
-      AdvancedEntry Completed event added,
-      AdvancedEntry BindableProperties added:
-      ValidationMessage,
-      IgnoreValidationMessage
-      PlaceholderColor (Can be given PlaceholderColor = "{DynamicResource YourColor}"  )
-      Dropdown added. More properties will be added.
-
-      v.2.1.0
-      AdvancedEntry Password Annotation problem fixed.
-      Material CheckBox coloring problem fixed.
-      ToSurfaceColor() extension added in ColorExtensions. (It used for CheckBox coloring)
-      AdvancedSlider looping problem fixed.
-
-      ChangeLog:
-      v.2.0.6
-      CheckBox Color property fixed,
-      CheckBox CommandParameter added.
-      Some SelectionView improvements.
-
-      v.2.0.5
-      SelectedIndex added to selectionview (SelectedIndexes are coming soon)
-      RadioButton CommandParameter added.
-
-      v.2.0.4
-      Fontfamily added to GlobalSettings and controls.
-
-      v.2.0.3
-      SelectionView CheckBoxes bug fixed.
-      SelectionView ItemDisplayBinding added.
-      Obsolete properties updated.
-
-      v.2.0.2
-      GlobalSettings default values updated.
-
-      v.2.0.0
-      FormView &amp; AdvancedEntry added.
-      IValidatable interface implemented controls.
-      FormView finds IValidatable controls from inside itsef and checks validation of inputs.
-
-      v.1.2.0
-      CheckBox border added.
-      GlobalSettings added to CheckBox and RadioButton.
-      - You can set default values of these controls like:
-      CheckBox.GlobalSetting.Color = Color.Red;
-      RadioButton.GlobalSetting.Size = 36;
-      in App.cs
-
-      v.1.1.1
-      AdvancedSlider PropertyChanging addded.
-      RadioButton ClickCommand missing bindableproperty added.
-
-      v.1.1.0
-      SelectionView has CheckBoxes now.
-      RadioButton 2 Line checked problem solved.
-      Rest of Improvements...
-
-      v.1.0.91
-      SelectionView color properties added, rest of some properties are updated.
-      'ItemSource' renamed to 'ItemsSource', old one marked as Obselete, It'll removed in later versions.
-
-      v.1.0.9
-      RadioButtonGroupView, BindableProperty, Event and Command added for SelectedItem
-
-      v.1.0.8
-      RadioButton sizing problem with Multiline text solved and CircleSize added
-
-      v.1.0.7
-      MultiLine text problem on Checkbox solved for bigger chexboxes
-
-      v.1.0.6
-      Checkbox Size and Text FontSize can be set now.
-
-      v.1.0.5 - v.1.0.4
-      Checkbox Sizing problem on Multiline Text Solved.
-
-      v.1.0.3
-      BoxBackgroundColor added to Checkbox.
-
-      v.1.0.2
-      FormView was added!
-      It helps to gel validation from multiple elements inside from its at once.
-      You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
+      This package includes awesome controls to get inputs easily from users and make validation easier.
+      Just import NuGet package to your project and use it! 
+      
+      There is no any Init() methods for your each platform!
 
     </description>
 
@@ -167,16 +71,16 @@
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.dll" target="lib\xamarin.ios10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.xml" target="lib\xamarin.ios10\Plugin.InputKit.xml" />
 
-    <file src="InputKit\bin\Release\uap10.0.16299\Plugin.InputKit.dll" target="lib\uap10.0.16299\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\uap10.0.16299\Plugin.InputKit.xml" target="lib\uap10.0.16299\Plugin.InputKit.xml" />
+    <!--<file src="InputKit\bin\Release\uap10.0.16299\Plugin.InputKit.dll" target="lib\uap10.0.16299\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\uap10.0.16299\Plugin.InputKit.xml" target="lib\uap10.0.16299\Plugin.InputKit.xml" />-->
     <!-- <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.dll" target="lib\xamarin.mac20\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.mac20\Plugin.InputKit.xml" target="lib\xamarin.mac20\Plugin.InputKit.xml" /> -->
 
-    <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.dll" target="lib\xamarin.tvos10\Plugin.InputKit.dll" />
+    <!--<file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.dll" target="lib\xamarin.tvos10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.tvos10\Plugin.InputKit.xml" target="lib\xamarin.tvos10\Plugin.InputKit.xml" />
 
     <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.dll" target="lib\xamarin.watchos10\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.xml" target="lib\xamarin.watchos10\Plugin.InputKit.xml" />
+    <file src="InputKit\bin\Release\xamarin.watchos10\Plugin.InputKit.xml" target="lib\xamarin.watchos10\Plugin.InputKit.xml" />-->
 
   </files>
 </package>

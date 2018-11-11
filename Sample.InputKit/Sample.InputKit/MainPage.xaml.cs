@@ -32,10 +32,5 @@ namespace Sample.InputKit
         {
             System.Diagnostics.Debug.WriteLine(e.NewTextValue);
         }
-
-        private void Button_Clicked(object sender, EventArgs e)
-        {
-            advEntry.Reset();
-        }
     }
 }
