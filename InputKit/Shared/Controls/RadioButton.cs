@@ -194,7 +194,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         Label lblEmpty = new Label { TextColor = GlobalSetting.BorderColor, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size, };
         Label lblFilled = new Label { TextColor = GlobalSetting.Color, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size * .92 };
-        Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+        Label lblText = new Label { Margin = new Thickness(0,5,0,0), Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
         private bool _isDisabled;
 
         ///-----------------------------------------------------------------------------
