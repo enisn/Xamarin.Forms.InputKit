@@ -322,7 +322,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// You need to set Annotation="Regex" to use this.
         /// </summary>
-        public string RegexPattern { get; set; }
+        public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty,value); }
         /// <summary>
         /// Gets and sets keyboard type of this entry
         /// </summary>
