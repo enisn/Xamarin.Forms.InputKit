@@ -170,7 +170,19 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
             }
         }
-
+        /// <summary>
+        /// Changes all <see cref="SelectableButton.UnselectedColor"/> in <see cref="SelectionView"/>
+        /// </summary>
+        public new Color BackgroundColor
+        {
+            get => (Color)GetValue(BackgroundColorProperty);
+            set
+            {
+                foreach (var item in this.Children)
+                    if (item is SelectableButton)
+                        (item as SelectableButton).UnselectedColor = value;
+            }
+        }
         private void UpdateEvents(IList value)
         {
             if (value is INotifyCollectionChanged)
@@ -226,7 +238,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             for (int i = 0; i < this.Children.Count; i++)
             {
-                if(!(this.Children[i] as ISelection)?.IsDisabled ?? false)
+                if (!(this.Children[i] as ISelection)?.IsDisabled ?? false)
                 {
                     this.SelectedIndex = i;
                     return;
@@ -270,7 +282,9 @@ namespace Plugin.InputKit.Shared.Controls
             switch (SelectionType)
             {
                 case SelectionType.Button:
-                    return new SelectableButton(obj, this.Color);
+                    var btn =new SelectableButton(obj, this.Color);
+                    btn.UnselectedColor = this.BackgroundColor;
+                    return btn;
                 case SelectionType.RadioButton:
                     return new SelectableRadioButton(obj, this.Color);
                 case SelectionType.CheckBox:
@@ -314,7 +328,9 @@ namespace Plugin.InputKit.Shared.Controls
                 case SelectionType.Button:
                     {
                         if (view is Button)
+                        {
                             (view as Button).BackgroundColor = color;
+                        }
                     }
                     break;
                 case SelectionType.RadioButton:
@@ -339,6 +355,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItems = (IList)nv);
         public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndex = (int)nv);
         public static readonly BindableProperty SelectedIndexesProperty = BindableProperty.Create(nameof(SelectedIndexes), typeof(IEnumerable<int>), typeof(SelectionView), new int[0], BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndexes = (IEnumerable<int>)nv);
+        public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(SelectionView), SelectionView.GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as SelectionView).BackgroundColor = (Color)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
@@ -361,6 +378,7 @@ namespace Plugin.InputKit.Shared.Controls
         private bool _isSelected = false;
         private object _value;
         private Color _selectionColor = Color.Accent;
+        private Color _unselectedColor;
 
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -384,6 +402,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.FontSize = SelectionView.GlobalSetting.FontSize;
             this.CornerRadius = (int)SelectionView.GlobalSetting.CornerRadius;
             this.BorderColor = SelectionView.GlobalSetting.BorderColor;
+            this.UnselectedColor = SelectionView.GlobalSetting.BackgroundColor;
             this.BorderWidth = 2;
         }
         ///-----------------------------------------------------------------------------
@@ -394,9 +413,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// <param name="selectionColor">Color of selected situation</param>
         public SelectableButton(object value, Color selectionColor) : this(value)
         {
-            this.SelectionColor = selectionColor;
+            this.SelectedColor = selectionColor;
         }
-        public Color SelectionColor
+        public Color UnselectedColor { get => _unselectedColor; set { _unselectedColor = value; UpdateColors(); } }
+        public Color SelectedColor
         {
             get => _selectionColor;
             set
@@ -422,12 +442,12 @@ namespace Plugin.InputKit.Shared.Controls
         {
             if (IsSelected)
             {
-                this.BackgroundColor = SelectionColor;
-                this.TextColor = SelectionColor.ToSurfaceColor();
+                this.BackgroundColor = SelectedColor;
+                this.TextColor = SelectedColor.ToSurfaceColor();
             }
             else
             {
-                this.BackgroundColor = (Color)Button.BackgroundColorProperty.DefaultValue;
+                this.BackgroundColor = UnselectedColor;
                 this.TextColor = (Color)SelectionView.GlobalSetting.TextColor;
             }
         }
