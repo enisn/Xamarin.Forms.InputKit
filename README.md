@@ -28,6 +28,23 @@ You can contribute and type your feedbacks about new controls and featues from [
 
 <hr/>
 
+### Also You may interested in:
+
+<table border="0">
+<tr>
+<td>
+    <a href="https://github.com/enisn/Xamarin.Forms.MaterialKit"> <img height="50" src="https://camo.githubusercontent.com/56583f8e2349013be52ef8a0bfa5a485094fcb40/687474703a2f2f656e69736e656369706f676c752e636f6d2f506c7567696e732f6d6174657269616c6b69745f636f72652e706e67" /> </a>
+ </td>
+<td>
+    <a href="https://github.com/enisn/Xamarin.Forms.MaterialKit/tree/master/Lib/MaterialKit.Backdrop"> <img height="50" src="https://camo.githubusercontent.com/42a15bc88498c0cbcfcb925de3cac313aa34f14a/687474703a2f2f656e69736e656369706f676c752e636f6d2f506c7567696e732f6d6174657269616c6b69745f6261636b64726f702e706e67" /> </a>
+ </td>
+<td>
+    <a href="https://github.com/enisn/Xamarin.Forms.MaterialKit/tree/master/Lib/MaterialKit.Backdrop"> <img height="50" src="https://camo.githubusercontent.com/52af9c689718723e1bbca2337fb7c9e17ec742c9/687474703a2f2f656e69736e656369706f676c752e636f6d2f506c7567696e732f6d6174657269616c6b69745f63686970732e706e67" /> </a>
+ </td>
+</tr>
+ </table>
+
+
  ## Available Platforms
 
 
