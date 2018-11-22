@@ -26,6 +26,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 GradientDrawable gd = new GradientDrawable();
                 gd.SetColor(global::Android.Graphics.Color.Transparent);
                 this.Control.SetBackground(gd);
+                Control.SetTextColor(Android.Graphics.Color.Black);
             }
         }
     }
