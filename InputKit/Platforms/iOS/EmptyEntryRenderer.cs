@@ -15,6 +15,7 @@ namespace Plugin.InputKit.Platforms.iOS
             if (Control != null)
             {
                 Control.BorderStyle = UITextBorderStyle.None;
+                Control.TextColor = Element.TextColor.ToUIColor();
             }
         }
     }
