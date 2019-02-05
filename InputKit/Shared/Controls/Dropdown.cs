@@ -26,7 +26,7 @@ namespace Plugin.InputKit.Shared.Controls
             TextColor = Color.Black,
         };
 
-        IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10,5,5,5) };
+        IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10, 5, 5, 5) };
         IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = "arrow_down.png", HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = 5 };
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
@@ -37,7 +37,6 @@ namespace Plugin.InputKit.Shared.Controls
         private string _placeholder;
         private string _validationMessage;
         private bool _isRequired;
-
         public Dropdown()
         {
             this.Children.Add(lblTitle);
@@ -110,11 +109,13 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateMainText();
             DisplayValidation();
             ValidationChanged?.Invoke(this, new EventArgs());
-            SelectedItemChanged?.Invoke(this, new SelectedItemChangedArgs(this.SelectedItem, this.ItemsSource?.IndexOf(this.SelectedItem) ?? -1) );
+            SelectedItemChanged?.Invoke(this, new SelectedItemChangedArgs(this.SelectedItem, this.ItemsSource?.IndexOf(this.SelectedItem) ?? -1));
         }
         #endregion
         //public Label TitleLabel { get => lblTitle; }
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double TitleFontSize { get => lblTitle.FontSize; set => lblTitle.FontSize = value; }
         public string IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
