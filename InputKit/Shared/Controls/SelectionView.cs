@@ -37,7 +37,7 @@ namespace Plugin.InputKit.Shared.Controls
         private int _columnNumber = 2;
         private Color _color = GlobalSetting.Color;
         private BindingBase _itemDisplayBinding;
-
+        private int _selectedIndex = 0;
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
@@ -105,7 +105,7 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 foreach (var item in this.Children)
                     if (item is ISelection && !(item as ISelection).IsDisabled)
-                        (item as ISelection).IsSelected = (item as ISelection).Value == value;
+                        (item as ISelection).IsSelected = (item as ISelection).Value.Equals(value);
             }
         }
         ///-----------------------------------------------------------------------------
@@ -125,6 +125,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set
             {
+                _selectedIndex = value;
                 for (int i = 0; i < this.Children.Count; i++)
                 {
                     if ((!(this.Children[i] as ISelection)?.IsDisabled) ?? false)
@@ -211,17 +212,19 @@ namespace Plugin.InputKit.Shared.Controls
                 {
                     var _View = GetInstance(item);
 
-                    SetTextBinding(_View);
+                    SetTextBinding(_View as View);
 
-                    (_View as ISelection).Clicked -= Element_Clicked;
-                    (_View as ISelection).Clicked += Element_Clicked;
+                    _View.Clicked -= Element_Clicked;
+                    _View.Clicked += Element_Clicked;
 
                     if (!String.IsNullOrEmpty(IsDisabledPropertyName)) //Sets if property Disabled
-                        (_View as ISelection).IsDisabled = Convert.ToBoolean(item.GetType().GetProperty(IsDisabledPropertyName)?.GetValue(item) ?? false);
+                        _View.IsDisabled = Convert.ToBoolean(item.GetType().GetProperty(IsDisabledPropertyName)?.GetValue(item) ?? false);
                     if (DisabledSource?.Contains(item) ?? false)
-                        (_View as ISelection).IsDisabled = true;
+                        _View.IsDisabled = true;
 
-                    this.Children.Add(_View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
+                    this.Children.Add(_View as View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
+
+                    _View.IsSelected = this.Children.Count == _selectedIndex; //to keep selected index when content is changed
                 }
                 catch (Exception ex)
                 {
@@ -232,18 +235,16 @@ namespace Plugin.InputKit.Shared.Controls
             ChooseFirstIndex();
         }
         /// <summary>
-        /// Finds first undisabled selection and sets selected
+        /// Finds selected index and sets selected if it's not disabled. Used at Initialization
         /// </summary>
         private void ChooseFirstIndex()
         {
-            if (SelectedIndex == -1) return;
+            //if (_selectedIndex == -1) return;
+
             for (int i = 0; i < this.Children.Count; i++)
             {
-                if (!(this.Children[i] as ISelection)?.IsDisabled ?? false)
-                {
-                    this.SelectedIndex = i;
-                    return;
-                }
+                if ((!(this.Children[i] as ISelection)?.IsDisabled) ?? false)
+                    (this.Children[i] as ISelection).IsSelected = i == _selectedIndex;
             }
         }
         ///-----------------------------------------------------------------------------
@@ -278,7 +279,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public BindingBase ItemDisplayBinding { get => _itemDisplayBinding; set { _itemDisplayBinding = value; SetTextBindings(); } }
 
-        private View GetInstance(object obj)
+        private ISelection GetInstance(object obj)
         {
             switch (SelectionType)
             {

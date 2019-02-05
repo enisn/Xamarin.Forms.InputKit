@@ -20,7 +20,7 @@
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
     <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
-    
+
     <!--TODO: Fill these in-->
     <PackageLicenseUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
@@ -28,15 +28,16 @@
     <PackageReleaseNotes>IsDisabled properties added. SelectionView RadioButons added</PackageReleaseNotes>
     <PackageIconUrl>http://enisnecipoglu.com/Plugins/inputkit.png</PackageIconUrl>
     <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</PackageTags>
-    
+
     <Title>Common controls mostly required</Title>
     <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
     <Description>
-    FormView was added!
-    It helps to gel validation from multiple elements inside from its at once.
-    You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
-    
-    Controls in this package are fully bindable and ready to use.</Description>
+      FormView was added!
+      It helps to gel validation from multiple elements inside from its at once.
+      You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
+
+      Controls in this package are fully bindable and ready to use.
+    </Description>
 
     <Owners>Enis Necipoglu</Owners>
     <Authors>Enis Necipoglu</Authors>
@@ -51,7 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.55" PrivateAssets="All" />
-    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1009999" PrivateAssets="All" />
+    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
@@ -141,7 +142,7 @@
     <PackageReference Include="Tizen.NET" Version="4.0.0" />
   </ItemGroup>
   -->
-  
+
   <!--
     <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
     <Compile Include="Platforms\DotNet\**\*.cs" />
