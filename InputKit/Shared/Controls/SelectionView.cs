@@ -162,7 +162,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             get
             {
-                return this.Children.Where(w => (w is ISelection) && (w as ISelection).IsSelected)?.ToList();
+                return this.Children.Where(w => (w is ISelection) && (w as ISelection).IsSelected)?.Select(s => (s as ISelection).Value).ToList();
             }
             set
             {
