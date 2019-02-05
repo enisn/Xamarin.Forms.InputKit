@@ -236,6 +236,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         private void ChooseFirstIndex()
         {
+            if (SelectedIndex == -1) return;
             for (int i = 0; i < this.Children.Count; i++)
             {
                 if (!(this.Children[i] as ISelection)?.IsDisabled ?? false)
