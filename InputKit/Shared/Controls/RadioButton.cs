@@ -144,7 +144,7 @@ namespace Plugin.InputKit.Shared.Controls
                 foreach (var item in this.Children)
                 {
                     if (item is RadioButton)
-                        (item as RadioButton).IsChecked = (item as RadioButton).Value == value;
+                        (item as RadioButton).IsChecked = (item as RadioButton).Value.Equals(value);
                 }
             }
         }
