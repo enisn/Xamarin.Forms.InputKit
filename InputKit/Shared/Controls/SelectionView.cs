@@ -127,7 +127,7 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 for (int i = 0; i < this.Children.Count; i++)
                 {
-                    if (!(this.Children[i] as ISelection)?.IsDisabled ?? false)
+                    if ((!(this.Children[i] as ISelection)?.IsDisabled) ?? false)
                         (this.Children[i] as ISelection).IsSelected = i == value;
                 }
             }
