@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.3.6.1</version>
+    <version>2.3.6.2</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>enisn</authors>
@@ -36,8 +36,8 @@
     <description>
       ...
       This package includes awesome controls to get inputs easily from users and make validation easier.
-      Just import NuGet package to your project and use it! 
-      
+      Just import NuGet package to your project and use it!
+
       There is no any Init() methods for your each platform!
 
     </description>
@@ -50,8 +50,17 @@
 
     <!-- Dependencies are automatically installed when the package is installed -->
     <dependencies>
-      <dependency id="Xamarin.Forms" version="3.1.0.583944" />
-    </dependencies>
+      <group>
+        <dependency id="Xamarin.Forms" version="3.2.0.839982" />
+      </group>
+      <group targetFramework="MonoAndroid81">
+        <dependency id="Xamarin.Forms" version="3.2.0.839982" />
+        <dependency id="Plugin.CurrentActivity" version="2.1.0.4" />
+      </group>
+      <group targetFramework="Xamarin.iOS10">
+        <dependency id="Xamarin.Forms" version="3.2.0.839982" />
+      </group>  
+  </dependencies>
   </metadata>
 
   <!-- A readme.txt to display when the package is installed -->

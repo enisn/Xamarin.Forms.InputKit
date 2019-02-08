@@ -9,40 +9,15 @@
 </table>
 
 
-
-
 <hr />
 
 [![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
 [![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
 <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-2.3.6.1-blue.svg" /></a>
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
-<hr/>
-<p>
 
-## You can offer new controls!
-
-You can contribute and type your feedbacks about new controls and featues from [here](https://github.com/enisn/Xamarin.Forms.InputKit/issues/45).
-
-</p>
 
 <hr/>
-
-### Also You may interested in:
-
-<table border="0">
-<tr>
-<td>
-    <a href="https://github.com/enisn/Xamarin.Forms.MaterialKit"> <img height="50" src="https://camo.githubusercontent.com/56583f8e2349013be52ef8a0bfa5a485094fcb40/687474703a2f2f656e69736e656369706f676c752e636f6d2f506c7567696e732f6d6174657269616c6b69745f636f72652e706e67" /> </a>
- </td>
-<td>
-    <a href="https://github.com/enisn/Xamarin.Forms.MaterialKit/tree/master/Lib/MaterialKit.Backdrop"> <img height="50" src="https://camo.githubusercontent.com/42a15bc88498c0cbcfcb925de3cac313aa34f14a/687474703a2f2f656e69736e656369706f676c752e636f6d2f506c7567696e732f6d6174657269616c6b69745f6261636b64726f702e706e67" /> </a>
- </td>
-<td>
-    <a href="https://github.com/enisn/Xamarin.Forms.MaterialKit/tree/master/Lib/MaterialKit.Backdrop"> <img height="50" src="https://camo.githubusercontent.com/52af9c689718723e1bbca2337fb7c9e17ec742c9/687474703a2f2f656e69736e656369706f676c752e636f6d2f506c7567696e732f6d6174657269616c6b69745f63686970732e706e67" /> </a>
- </td>
-</tr>
- </table>
 
 
  ## Available Platforms
@@ -52,13 +27,19 @@ You can contribute and type your feedbacks about new controls and featues from [
 | --- | --- | --- |
 | Android | MonoAndroid80 | YES |
 | iOS | Xamarin.iOS10 | YES |
-| UWP | - | YES * |
+| UWP | - | **EXPERIMENTAL** |
 | MAC | Xamarin.Mac20 | YES |
 | WatchOS | Xamarin.WatchOS10 | YES |
 | .NET Standard | 2.0 | YES |
 | .NET Standard | 1.0 | **NO** |
 
+<hr/>
 
+## Getting Started with InputKit
+
+There is no complicated steps for set-up, no Inits no implementation codes. Plug & Play.
+
+Read [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started).
 
 <hr />
 
@@ -67,6 +48,7 @@ You can contribute and type your feedbacks about new controls and featues from [
 </a>
 <p>As you know ther is no CheckBox in Xamarin Forms Library. You can use a custom renderer to use Native Checkbox in portable layer. This CheckBox is not a native one, It's created in Xamarin Forms Portable layer.</p>
 
+<p>Also you can read more about Checkbox from <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">here</a> </p>
 <h4>SAMPLE:</h4>
 
 ```xaml
