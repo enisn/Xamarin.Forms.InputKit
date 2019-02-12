@@ -284,8 +284,10 @@ namespace Plugin.InputKit.Shared.Controls
             switch (SelectionType)
             {
                 case SelectionType.Button:
-                    var btn =new SelectableButton(obj, this.Color);
+                case SelectionType.MultipleButton:
+                    var btn = new SelectableButton(obj, this.Color);
                     btn.UnselectedColor = this.BackgroundColor;
+                    btn.CanChangeSelectedState = SelectionType == SelectionType.MultipleButton;
                     return btn;
                 case SelectionType.RadioButton:
                     return new SelectableRadioButton(obj, this.Color);
@@ -303,6 +305,7 @@ namespace Plugin.InputKit.Shared.Controls
             switch (SelectionType)
             {
                 case SelectionType.Button:
+                case SelectionType.MultipleButton:
                     (control as SelectableButton).SetBinding(SelectableButton.TextProperty, _binding);
                     break;
                 case SelectionType.RadioButton:
@@ -328,6 +331,7 @@ namespace Plugin.InputKit.Shared.Controls
             switch (SelectionType)
             {
                 case SelectionType.Button:
+                case SelectionType.MultipleButton:
                     {
                         if (view is Button)
                         {
@@ -370,6 +374,7 @@ namespace Plugin.InputKit.Shared.Controls
         Button = 1,
         RadioButton = 3,
         CheckBox = 2,
+        MultipleButton = 4,
     }
 
     /// <summary>
@@ -406,6 +411,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.BorderColor = SelectionView.GlobalSetting.BorderColor;
             this.UnselectedColor = SelectionView.GlobalSetting.BackgroundColor;
             this.BorderWidth = 2;
+            this.Clicked += (s, args) => UpdateSelection();
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -463,6 +469,15 @@ namespace Plugin.InputKit.Shared.Controls
         /// This button is disabled or not. Disabled buttons(if it's true) can not be choosen.
         /// </summary>
         public bool IsDisabled { get; set; } = false;
+        /// <summary>
+        /// Defines Can Selected State Change by itself
+        /// </summary>
+        public bool CanChangeSelectedState { get; set; }
+        private void UpdateSelection()
+        {
+            if (CanChangeSelectedState)
+                IsSelected = !IsSelected;
+        }
     }
 
     /// <summary>
