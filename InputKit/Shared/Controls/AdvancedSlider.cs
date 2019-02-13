@@ -1,6 +1,7 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using System;
+using System.Diagnostics;
 using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
@@ -22,6 +23,10 @@ namespace Plugin.InputKit.Shared.Controls
         private string _valuePrefix;
         private Color _textColor;
         private double _stepValue = 1;
+        private string _minValuePrefix;
+        private string _maxValuePrefix;
+        private string _minValueSuffix;
+        private string _maxValueSuffix;
 
         public AdvancedSlider()
         {
@@ -53,15 +58,20 @@ namespace Plugin.InputKit.Shared.Controls
         {
             //if (e.NewValue == e.OldValue || e.NewValue == slider.Value) return;
 
+            Debug.WriteLine($"[{this.GetType().Name}] Value change. Old Value: {e.OldValue},  New Value: {e.NewValue}  |  slider.Value: {slider.Value}");
 
-            if (e.NewValue % StepValue != 0)
+            var mod = e.NewValue - (int)(e.NewValue / StepValue) * StepValue;
+            if (mod != 0)
             {
                 slider.Value = Math.Round(e.NewValue / StepValue) * StepValue;
+                Debug.WriteLine($"[{this.GetType().Name}] Value fixed as {slider.Value}");
                 return;
             }
+
             SetValue(ValueProperty, slider.Value);
             UpdateValueText();
             UpdateView();
+            Debug.WriteLine($"[{this.GetType().Name}] UpdateView() triggered!");
         }
         protected override void OnSizeAllocated(double width, double height)
         {
@@ -90,6 +100,26 @@ namespace Plugin.InputKit.Shared.Controls
         /// It'll be displayed end of value
         /// </summary>
         public string ValuePrefix { get => _valuePrefix; set { _valuePrefix = value; UpdateValueText(); } }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// This will be displayed start of MinValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// </summary>
+        public string MinValuePrefix { get => _minValuePrefix; set { _minValuePrefix = value; UpdateMinMaxValueText(); } }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// This will be displayed start of MaxValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// </summary>
+        public string MaxValuePrefix { get => _maxValuePrefix; set { _maxValuePrefix = value; UpdateMinMaxValueText(); } }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// This will be displayed end of MinValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// </summary>
+        public string MinValueSuffix { get => _minValueSuffix; set { _minValueSuffix = value; UpdateMinMaxValueText(); } }
+        //---------------------------------------------------------------------
+        /// <summary>
+        /// This will be displayed end of MaxValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// </summary>
+        public string MaxValueSuffix { get => _maxValueSuffix; set { _maxValueSuffix = value; UpdateMinMaxValueText(); } }
         ///---------------------------------------------------------------------
         /// <summary>
         /// Minimum value, user can slide
@@ -163,8 +193,8 @@ namespace Plugin.InputKit.Shared.Controls
         public void DisplayValidation() { }
         void UpdateMinMaxValueText()
         {
-            lblMinValue.Text = this.MinValue.ToString();
-            lblMaxValue.Text = this.MaxValue.ToString() + "+ ";
+            lblMinValue.Text = $"{MinValuePrefix}{this.MinValue}{MinValueSuffix}";
+            lblMaxValue.Text = $"{MaxValuePrefix}{this.MaxValue}{MaxValueSuffix}";
         }
         void UpdateValueText()
         {
