@@ -74,7 +74,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Value of slider which user selected
         /// </summary>
-        public double Value { get => (double)GetValue(ValueProperty); set => SetValue(ValueProperty,value); }
+        public double Value { get => (double)GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
         ///---------------------------------------------------------------------
         /// <summary>
         /// Title of slider, It'll be shown tp of slider
@@ -172,8 +172,10 @@ namespace Plugin.InputKit.Shared.Controls
         }
         void UpdateView()
         {
+            var totalLength = this.MaxValue - this.MinValue;
+            var normalizedValue = this.Value - this.MinValue;
             lblValue.TranslateTo(
-                this.Value * ((slider.Width - 40) / this.MaxValue), //pos X
+                (normalizedValue) * ((slider.Width - 30) / (totalLength)), //pos X  /* -30 is used to make smaller label horizontal movable region and prevent touching minValue and maxValue labels*/
                 slider.TranslationY - lblValue.Height * 0.9, //pos Y
                 40 //Latency
                 );
