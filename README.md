@@ -13,7 +13,7 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
 [![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
-<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-2.3.7-blue.svg" /></a>
+<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-2.3.8-blue.svg" /></a>
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
 
 
@@ -377,14 +377,12 @@ public partial class MainPage : ContentPage
 
 <br />
 <hr />
-<p>
-<b>Nuget Package Available: </b> :  <a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img source="http://enisnecipoglu.com/Plugins/inputkit.png" height="15" />Xamarin.Forms.InputKit on NuGet</a>
-</p>
-<p>
-<b>Sample Project Available: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit">Sample.InputKit on GitHub</a>
-</p>
-<p>
-<b>Source Codes Available Too: </b> :  <a href="https://github.com/enisn/Xamarin.Forms.InputKit/tree/master/InputKit">Plugin.InputKit on GitHub</a>
-</p>
+
+# Did you like ?
+
+<a href="https://www.buymeacoffee.com/enisn" target="_blank"><img src="https://www.buymeacoffee.com/assets/img/custom_images/purple_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
+Your coffee keeps me awake while developing projects like this. 👍☕
+
 <hr />
 
