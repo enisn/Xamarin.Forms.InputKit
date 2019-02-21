@@ -78,8 +78,8 @@ namespace Plugin.InputKit.Platforms.iOS
                 }
             }
 
-            //RootViewController.PresentViewController(actionSheetAlert, true, null);
-            UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(actionSheetAlert, true, null);
+            RootViewController.PresentViewController(actionSheetAlert, true, null);
+            //UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(actionSheetAlert, true, null);
 
         }
 
