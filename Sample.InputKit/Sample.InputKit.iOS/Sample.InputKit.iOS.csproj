@@ -141,4 +141,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\ic_account_balance_black%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrow_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrow_down%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\arrow_down%403x.png" />
+  </ItemGroup>
 </Project>
