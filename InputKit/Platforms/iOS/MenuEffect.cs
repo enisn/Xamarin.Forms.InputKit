@@ -51,32 +51,49 @@ namespace Plugin.InputKit.Platforms.iOS
 
             // Required for iPad - You must specify a source for the Action Sheet since it is
             // displayed as a popover
-            if (Device.Idiom != TargetIdiom.Phone)
-            {
-                UIPopoverPresentationController presentationPopover = actionSheetAlert.PopoverPresentationController;
-                if (presentationPopover != null)
+            //if (Device.Idiom != TargetIdiom.Phone)
+            //{
+
+                var controller = new UIViewController();
+                
+                var enumerator = Effect.Parent.ItemsSource.GetEnumerator();
+                while (enumerator.MoveNext())
                 {
-                    if (Control != null)
+                    var btn = new UIButton();
+                    
+                    btn.SetTitle(enumerator.Current?.ToString(), UIControlState.Normal);
+                    btn.TouchUpInside += (s,e) =>
                     {
-                        presentationPopover.SourceRect = Control.Frame;
-                        presentationPopover.SourceView = Control;
-                    }
-
-                    else if (Container != null)
-                    {
-                        presentationPopover.SourceRect = Container.Frame;
-                        presentationPopover.SourceView = Container;
-                    }
-
-                    else
-                    {
-                        presentationPopover.SourceRect = RootViewController.View.Frame;
-                        presentationPopover.SourceView = RootViewController.View;
-                    }
-
-                    presentationPopover.PermittedArrowDirections = PermittedArrowDirections;
+                        //TODO: do stuffs
+                    };
+                    controller.View.Add(btn);
                 }
-            }
+                var popoverController = new UIPopoverController(RootViewController);
+                popoverController.PresentFromRect(new CoreGraphics.CGRect(1, 1, 100, 100), controller.View, UIPopoverArrowDirection.Any, true);
+                //UIPopoverPresentationController presentationPopover = actionSheetAlert.PopoverPresentationController;
+                //if (presentationPopover != null)
+                //{
+                //    if (Control != null)
+                //    {
+                //        presentationPopover.SourceRect = Control.Frame;
+                //        presentationPopover.SourceView = Control;
+                //    }
+
+                //    else if (Container != null)
+                //    {
+                //        presentationPopover.SourceRect = Container.Frame;
+                //        presentationPopover.SourceView = Container;
+                //    }
+
+                //    else
+                //    {
+                //        presentationPopover.SourceRect = RootViewController.View.Frame;
+                //        presentationPopover.SourceView = RootViewController.View;
+                //    }
+
+                //    presentationPopover.PermittedArrowDirections = PermittedArrowDirections;
+                //}
+            //}
 
             RootViewController.PresentViewController(actionSheetAlert, true, null);
         }
