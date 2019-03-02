@@ -15,7 +15,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// a custom list for selections,
     /// </summary>
-    public class SelectionView : Grid
+    public partial class SelectionView : Grid
     {
         /// <summary>
         /// Manages default values of selectionview

@@ -10,7 +10,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
     /// </summary>
-    public class CheckBox : StackLayout, IValidatable
+    public partial class CheckBox : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {

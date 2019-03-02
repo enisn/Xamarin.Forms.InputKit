@@ -14,7 +14,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// This Entry contains validation and some stuffs inside
     /// </summary>
-    public class AdvancedEntry : StackLayout, IValidatable
+    public partial class AdvancedEntry : StackLayout, IValidatable
     {
         /// <summary>
         /// This settings will be replaced default values of all AdvancedEntries

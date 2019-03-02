@@ -13,7 +13,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A dropdown picker
     /// </summary>
-    public class Dropdown : StackLayout, IValidatable
+    public partial class Dropdown : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
@@ -76,7 +76,6 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 txtInput.Focus();
             }
-
         }
         private void Menu_Item_Selected(string item, int index)
         {
@@ -168,6 +167,5 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
-
     }
 }

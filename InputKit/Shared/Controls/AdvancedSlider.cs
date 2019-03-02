@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
-    public class AdvancedSlider : StackLayout, IValidatable
+    public partial class AdvancedSlider : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
