@@ -52,7 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.55" PrivateAssets="All" />
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" PrivateAssets="All" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
@@ -121,13 +121,11 @@
 
 
   <ItemGroup>
-    <EmbeddedResource Include="Shared\Resources\check.png" />
-    <EmbeddedResource Include="Shared\Resources\circlecheck.png" />
-    <EmbeddedResource Include="Shared\Resources\cross.png" />
-    <EmbeddedResource Include="Shared\Resources\star.png" />
+    <EmbeddedResource Include="Shared\Resources\**\*.png" />
+    <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
   </ItemGroup>
-
-
+  
+  
   <!--
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <Compile Include="Platforms\DotNet\**\*.cs" />

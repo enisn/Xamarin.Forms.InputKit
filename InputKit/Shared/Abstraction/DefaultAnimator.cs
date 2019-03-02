@@ -39,12 +39,12 @@ namespace Plugin.InputKit.Shared.Abstraction
                 async (v)=>
                 {
                     var chk = v as CheckBox;
-                    await chk.boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
+                    //await chk.boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
                     if (chk.Type == CheckBox.CheckType.Material)
                         chk.boxBackground.BackgroundColor = chk.IsChecked ? chk.Color : Color.Transparent;
                     else
                         chk.boxBackground.BorderColor = chk.IsChecked ? chk.Color : chk.BorderColor;
-                    await chk.boxBackground.ScaleTo(1, 100, Easing.BounceIn);
+                    //await chk.boxBackground.ScaleTo(1, 100, Easing.BounceIn);
                 }
             },
             {
@@ -52,14 +52,14 @@ namespace Plugin.InputKit.Shared.Abstraction
                 async (v) =>
                 {
                     var rb = v as RadioButton;
-                    if (rb.IsChecked)
-                    {
-                        await rb.lblEmpty.ScaleTo(.5,100, Easing.BounceIn);
-                        rb.lblEmpty.TextColor = rb.IsChecked ? rb.Color : rb.CircleColor;
-                        await rb.lblEmpty.ScaleTo(1,100, Easing.BounceIn);
-                    }
-                    else
-                        rb.lblEmpty.TextColor = rb.IsChecked ? rb.Color : rb.CircleColor;
+                    //if (rb.IsChecked)
+                    //{
+                    //    await rb.iconCircle.ScaleTo(.5,100, Easing.BounceIn);
+                    //    rb.iconCircle.FillColor = rb.IsChecked ? rb.Color : rb.CircleColor;
+                    //    await rb.iconCircle.ScaleTo(1,100, Easing.BounceIn);
+                    //}
+                    //else
+                        rb.iconCircle.FillColor = rb.IsChecked ? rb.Color : rb.CircleColor;
 
                 }
             }
