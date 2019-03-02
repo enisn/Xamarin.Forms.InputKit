@@ -23,6 +23,7 @@ namespace Plugin.InputKit.Shared.Abstraction
                 Debug.WriteLine(ex?.ToString());
             }
         }
+
         //DECLERATION
         static readonly Dictionary<Type, Action<View>> actions = new Dictionary<Type, Action<View>>
         {
@@ -36,31 +37,21 @@ namespace Plugin.InputKit.Shared.Abstraction
             },
             {
                 typeof(CheckBox),
-                async (v)=>
+                (v) =>
                 {
                     var chk = v as CheckBox;
-                    //await chk.boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
                     if (chk.Type == CheckBox.CheckType.Material)
                         chk.boxBackground.BackgroundColor = chk.IsChecked ? chk.Color : Color.Transparent;
                     else
                         chk.boxBackground.BorderColor = chk.IsChecked ? chk.Color : chk.BorderColor;
-                    //await chk.boxBackground.ScaleTo(1, 100, Easing.BounceIn);
                 }
             },
             {
                 typeof(RadioButton),
-                async (v) =>
+                (v) =>
                 {
                     var rb = v as RadioButton;
-                    //if (rb.IsChecked)
-                    //{
-                    //    await rb.iconCircle.ScaleTo(.5,100, Easing.BounceIn);
-                    //    rb.iconCircle.FillColor = rb.IsChecked ? rb.Color : rb.CircleColor;
-                    //    await rb.iconCircle.ScaleTo(1,100, Easing.BounceIn);
-                    //}
-                    //else
-                        rb.iconCircle.FillColor = rb.IsChecked ? rb.Color : rb.CircleColor;
-
+                    rb.iconCircle.FillColor = rb.IsChecked ? rb.Color : rb.CircleColor;
                 }
             }
         };

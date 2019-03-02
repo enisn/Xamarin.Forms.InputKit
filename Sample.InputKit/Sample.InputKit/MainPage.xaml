@@ -10,7 +10,7 @@
     </ContentPage.BindingContext>
     <ScrollView>
         <StackLayout Spacing="12" Padding="20">
-
+            
             <input:CheckBox Text="Option 0" />
             <input:CheckBox Text="Option 1" IsChecked="True" Type="Box"/>
             <input:CheckBox Text="Option 2" IsChecked="True" Type="Check"/>
