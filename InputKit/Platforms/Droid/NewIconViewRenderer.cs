@@ -7,8 +7,9 @@ using Android.Widget;
 using System.ComponentModel;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.Android;
+using System;
 
-[assembly:ExportRenderer(typeof(IconView),typeof(NewIconViewRenderer))]
+[assembly: ExportRenderer(typeof(IconView), typeof(NewIconViewRenderer))]
 namespace Plugin.InputKit.Platforms.Droid
 {
     public class NewIconViewRenderer : ViewRenderer<IconView, ImageView>
@@ -36,28 +37,46 @@ namespace Plugin.InputKit.Platforms.Droid
             {
                 SetNativeControl(new ImageView(Context));
             }
-            UpdateBitmap(e.OldElement);
+            UpdateBitmapAsync(e.OldElement);
         }
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
             if (e.PropertyName == IconView.SourceProperty.PropertyName)
             {
-                UpdateBitmap(null);
+                UpdateBitmapAsync(null);
             }
             else if (e.PropertyName == IconView.FillColorProperty.PropertyName)
             {
-                UpdateBitmap(null);
+                UpdateBitmapAsync(null);
             }
         }
-        private void UpdateBitmap(IconView previous = null)
+
+        private async void UpdateBitmapAsync(IconView previous = null)
         {
             if (!_isDisposed)
             {
-                var d = _context?.GetDrawable(Element.Source)?.Mutate();
+                if (Element.Source == null) return;
 
-                
+                Drawable d = default;
+                if (Element.Source is StreamImageSource streamImageSource)
+                {
+                    var stream = await streamImageSource.Stream(new System.Threading.CancellationToken());
+                    d = Drawable.CreateFromStream(stream, "inputkit_check");
+                }
+                else if(Element.Source is FileImageSource fileImageSource)
+                {
+                    d = _context?.GetDrawable(fileImageSource.File);
+                }
+                else
+                {
+                    d = _context?.GetDrawable(Element.Source.ToString());
+                }
+
+                //var d = _context?.GetDrawable(Element.Source)?.Mutate();
+
                 if (d == null) return;
+
                 if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
                     d.SetTint(Element.FillColor.ToAndroid());
                 else
