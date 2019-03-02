@@ -10,11 +10,12 @@
             <Button Text="Randomize Colors" Clicked="RandomizeColors" />
 
             <controls:RadioButtonGroupView x:Name="groupView">
-                <controls:RadioButton Text="Option 1" />
+                <controls:RadioButton Text="Option 1"/>
                 <controls:RadioButton Text="Option 2"/>
-                <controls:RadioButton Text="Option 3 Disabled" IsDisabled="True"/>
+                <controls:RadioButton Text="Option 3"/>
                 <controls:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>
                 <controls:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
+                <controls:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
             </controls:RadioButtonGroupView>
 
             
