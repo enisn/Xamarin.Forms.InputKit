@@ -1,4 +1,5 @@
 ﻿using Plugin.InputKit.Shared.Controls;
+using Sample.InputKit.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,5 +32,14 @@ namespace Sample.InputKit
         {
             System.Diagnostics.Debug.WriteLine(e.NewTextValue);
         }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxes_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new CheckBoxesPage());
+
+        private void RadioButons_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new RadioButtonsPage());
     }
 }

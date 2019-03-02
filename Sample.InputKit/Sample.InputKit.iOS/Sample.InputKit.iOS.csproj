@@ -150,4 +150,13 @@
   <ItemGroup>
     <BundleResource Include="Resources\arrow_down%403x.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\circle_check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\circle_check%402x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\circle_check%403x.png" />
+  </ItemGroup>
 </Project>
