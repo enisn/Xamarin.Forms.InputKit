@@ -108,16 +108,13 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
     <Compile Include="Platforms\macOS\**\*.cs" />
   </ItemGroup>
-
-
-  <ItemGroup>
-    <Compile Remove="Shared\Constants.cs" />
-  </ItemGroup>
-
-
+  
+  
   <ItemGroup>
     <None Remove="Shared\Abstraction\ISelection.cs" />
     <None Remove="Shared\Abstraction\IValidatable.cs" />
+    <None Remove="Shared\Abstraction\IAnimator.cs" />
+    <None Remove="Shared\Abstraction\DefaultAnimator.cs" />
     <None Remove="Shared\Configuration\GlobalSetting.cs" />
     <None Remove="Shared\Controls\AdvancedEntry.cs" />
     <None Remove="Shared\Controls\AdvancedSlider.cs" />

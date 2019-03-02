@@ -1,6 +1,7 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -71,7 +72,7 @@ namespace Plugin.InputKit.Shared.Controls
                 if (item is RadioButton)
                     (item as RadioButton).IsChecked = item == selected;
             }
-
+            
             SetValue(SelectedItemProperty, this.SelectedItem);
             OnPropertyChanged(nameof(SelectedItem));
             SetValue(SelectedIndexProperty, this.SelectedIndex);
@@ -192,9 +193,9 @@ namespace Plugin.InputKit.Shared.Controls
         //.92
         //1.66 minReq
 
-        Label lblEmpty = new Label { TextColor = GlobalSetting.BorderColor, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size, };
-        Label lblFilled = new Label { TextColor = GlobalSetting.Color, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size * .92 };
-        Label lblText = new Label { Margin = new Thickness(0, 5, 0, 0), Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+        internal Label lblEmpty = new Label { TextColor = GlobalSetting.BorderColor, Text = "◯", VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size, };
+        internal Label lblFilled = new Label { TextColor = GlobalSetting.Color, Text = "●", IsVisible = false, Scale = 0.9, VerticalTextAlignment = TextAlignment.Center, HorizontalTextAlignment = TextAlignment.Center, FontSize = GlobalSetting.Size * .92 };
+        internal Label lblText = new Label { Margin = new Thickness(0, 5, 0, 0), Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
         private bool _isDisabled;
 
         ///-----------------------------------------------------------------------------
@@ -221,6 +222,11 @@ namespace Plugin.InputKit.Shared.Controls
             this.Children.Add(lblText);
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
         }
+        ///-----------------------------------------------------------------------------
+        /// <summary>
+        /// Animator object to animate when touch.
+        /// </summary>
+        public IAnimator<RadioButton> Animator { get; set; } = new DefaultAnimator<RadioButton>();
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Quick generating constructor.
@@ -275,7 +281,15 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Gets or Sets, is that Radio Button selected/choosed/Checked
         /// </summary>
-        public bool IsChecked { get => lblFilled.IsVisible; set { lblFilled.IsVisible = value; SetValue(IsCheckedProperty, value); } }
+        public bool IsChecked
+        {
+            get => lblFilled.IsVisible; set
+            {
+                lblFilled.IsVisible = value;
+                SetValue(IsCheckedProperty, value);
+                Animator?.Animate(this);
+            }
+        }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// this control if is Disabled
@@ -304,25 +318,25 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Color of Radio Button's checked.
         /// </summary>
-        public Color Color { get => lblFilled.TextColor; set => lblFilled.TextColor = value; }
+        public Color Color { get => (Color)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of radio button's outline border 
         /// </summary>
-        public Color CircleColor { get => lblEmpty.TextColor; set => lblEmpty.TextColor = value; }
+        public Color CircleColor { get => (Color)GetValue(CircleColorProperty); set => SetValue(CircleColorProperty, value); }
         ///-----------------------------------------------------------------------------
         /// <summary>
         /// Color of description text of Radio Button
         /// </summary>
-        public Color TextColor { get => lblText.TextColor; set => lblText.TextColor = value; }
+        public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsChecked = (bool)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextFontSize = (double)nv);
-        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).Color = (Color)nv);
-        public static readonly BindableProperty CircleColorProperty = BindableProperty.Create(nameof(CircleColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).CircleColor = (Color)nv);
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextColor = (Color)nv);
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
+        public static readonly BindableProperty CircleColorProperty = BindableProperty.Create(nameof(CircleColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), Color.Default, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
         public static readonly BindableProperty ClickCommandProperty = BindableProperty.Create(nameof(ClickCommand), typeof(ICommand), typeof(RadioButton), null, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ClickCommand = (ICommand)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -338,6 +352,7 @@ namespace Plugin.InputKit.Shared.Controls
             IsChecked = !IsChecked;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(CommandParameter ?? Value);
+
         }
         ///-----------------------------------------------------------------------------
         /// <summary>
@@ -349,6 +364,13 @@ namespace Plugin.InputKit.Shared.Controls
             lblFilled.FontSize = value * .92;
             if (this.Children.Count > 0)
                 this.Children[0].MinimumWidthRequest = value * 1.66;
+        }
+
+        void UpdateColors()
+        {
+            lblFilled.TextColor = this.Color;
+            lblEmpty.TextColor = this.CircleColor;
+            lblText.TextColor = this.TextColor;
         }
     }
 }

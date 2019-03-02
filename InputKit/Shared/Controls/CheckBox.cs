@@ -27,7 +27,7 @@ namespace Plugin.InputKit.Shared.Controls
         public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
         public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
         #endregion
-        Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
+        internal Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
         BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
         //Label lblSelected = new Label { Text = "✓", Margin = new Thickness(0, -1, 0, 0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
         IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.CenterAndExpand };
@@ -57,21 +57,8 @@ namespace Plugin.InputKit.Shared.Controls
             if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
                 CheckChangedCommand?.Execute(CommandParameter ?? this);
         }
-        async void Animate()
-        {
-            try
-            {
-                await boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
-                if (Type == CheckType.Material)
-                    boxBackground.BackgroundColor = IsChecked ? this.Color : Color.Transparent;
-                else
-                    boxBackground.BorderColor = IsChecked ? this.Color : this.BorderColor;
-                await boxBackground.ScaleTo(1, 100, Easing.BounceIn);
-            }
-            catch (Exception)
-            {
-            }
-        }
+
+        public IAnimator<CheckBox> Animator { get; set; } = new DefaultAnimator<CheckBox>();
         /// <summary>
         /// Invoked when check changed
         /// </summary>
@@ -113,7 +100,8 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 boxBackground.Content.IsVisible = value;
                 SetValue(IsCheckedProperty, value);
-                Animate();
+                Animator?.Animate(this);
+                //Animate();
             }
         }
         /// <summary>
