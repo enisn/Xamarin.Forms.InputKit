@@ -11,12 +11,15 @@
     <ScrollView>
         <StackLayout Spacing="12" Padding="20">
 
+
             <input:CheckBox Text="Option 0" />
             <input:CheckBox Text="Option 1" IsChecked="True" Type="Box"/>
             <input:CheckBox Text="Option 2" IsChecked="True" Type="Check"/>
             <input:CheckBox Text="Option 3" IsChecked="True" Type="Cross"/>
             <input:CheckBox Text="Option 4" IsChecked="True" Type="Star"/>
             <input:CheckBox Text="Option 5" IsChecked="True" Type="Material"/>
+            <input:CheckBox Text="Option 6" IsChecked="True" Type="CircleCheck"/>
+            <input:CheckBox Text="Option 7" IsChecked="True" Type="Custom" CustomIcon="ic_account_balance_black"/>
 
             <input:RadioButtonGroupView>
                 <input:RadioButton Text="Option 1" CircleSize="75" TextFontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />

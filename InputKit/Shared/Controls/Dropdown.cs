@@ -116,7 +116,7 @@ namespace Plugin.InputKit.Shared.Controls
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
         [TypeConverter(typeof(FontSizeConverter))]
         public double TitleFontSize { get => lblTitle.FontSize; set => lblTitle.FontSize = value; }
-        public string IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
+        public ImageSource IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
         public Color Color { get => imgIcon.FillColor; set => UpdateColors(value); }
@@ -156,7 +156,7 @@ namespace Plugin.InputKit.Shared.Controls
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Dropdown), Color.White, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BackgroundColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Dropdown), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateMainText());
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).Title = (string)nv);
-        public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).IconImage = (string)nv);
+        public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(ImageSource), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).IconImage = (ImageSource)nv);
         public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(Dropdown), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as Dropdown).AnnotationColor = (Color)nv);
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(Dropdown), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).TitleColor = (Color)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(Dropdown), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BorderColor = (Color)nv);

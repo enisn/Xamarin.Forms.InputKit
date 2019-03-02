@@ -13,7 +13,6 @@ namespace Sample.InputKit
 		public MainPage()
 		{
 			InitializeComponent();
-
             
             //selectionView.ItemsSource = new[]
             //{
