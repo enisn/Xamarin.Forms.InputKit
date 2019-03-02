@@ -24,7 +24,6 @@ namespace Plugin.InputKit.Shared.Controls
         };
         #region Constants
         public const string RESOURCE_CHECK = "Plugin.InputKit.Shared.Resources.check.png";
-        public const string RESOURCE_CIRCLECHECK = "Plugin.InputKit.Shared.Resources.circlecheck.png";
         public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
         public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
         #endregion
@@ -63,8 +62,10 @@ namespace Plugin.InputKit.Shared.Controls
             try
             {
                 await boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
-                if (Type != CheckType.Material)
+                if (Type == CheckType.Material)
                     boxBackground.BackgroundColor = IsChecked ? this.Color : Color.Transparent;
+                else
+                    boxBackground.BorderColor = IsChecked ? this.Color : this.BorderColor;
                 await boxBackground.ScaleTo(1, 100, Easing.BounceIn);
             }
             catch (Exception)
@@ -257,10 +258,6 @@ namespace Plugin.InputKit.Shared.Controls
                     boxBackground.CornerRadius = 5;
                     boxBackground.Content = imgSelected;
                     break;
-                case CheckType.CircleCheck:
-                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CIRCLECHECK);
-                    boxBackground.Content = imgSelected;
-                    break;
                 case CheckType.Custom:
                     imgSelected.Source = CustomIcon;
                     boxBackground.Content = imgSelected;
@@ -284,7 +281,6 @@ namespace Plugin.InputKit.Shared.Controls
             Cross,
             Star,
             Material,
-            CircleCheck,
             Custom = 90
         }
     }
