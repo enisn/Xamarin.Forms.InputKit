@@ -22,12 +22,16 @@ namespace Plugin.InputKit.Shared.Controls
             CornerRadius = -1,
             FontSize = 14,
         };
-
-
+        #region Constants
+        public const string RESOURCE_CHECK = "Plugin.InputKit.Shared.Resources.check.png";
+        public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
+        public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
+        #endregion
         Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
         BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        Label lblSelected = new Label { Text = "✓", Margin = new Thickness(0, -1, 0, 0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
-        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily , IsVisible = false};
+        //Label lblSelected = new Label { Text = "✓", Margin = new Thickness(0, -1, 0, 0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
+        IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.CenterAndExpand };
+        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
         /// <summary>
@@ -51,16 +55,17 @@ namespace Plugin.InputKit.Shared.Controls
         void ExecuteCommand()
         {
             if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
-                CheckChangedCommand?.Execute(CommandParameter ?? this);            
+                CheckChangedCommand?.Execute(CommandParameter ?? this);
         }
         async void Animate()
         {
             try
             {
-                if (Type != CheckType.Material) return;
-
                 await boxBackground.ScaleTo(0.9, 100, Easing.BounceIn);
-                boxBackground.BackgroundColor = IsChecked ? this.Color : Color.Transparent;
+                if (Type == CheckType.Material)
+                    boxBackground.BackgroundColor = IsChecked ? this.Color : Color.Transparent;
+                else
+                    boxBackground.BorderColor = IsChecked ? this.Color : this.BorderColor;
                 await boxBackground.ScaleTo(1, 100, Easing.BounceIn);
             }
             catch (Exception)
@@ -167,6 +172,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// Fontfamily of CheckBox Text
         /// </summary>
         public string FontFamily { get => lblOption.FontFamily; set => lblOption.FontFamily = value; }
+
+        public ImageSource CustomIcon { get => (ImageSource)GetValue(CustomIconProperty); set => SetValue(CustomIconProperty, value); }
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColor());
@@ -180,8 +187,10 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty BoxBackgroundColorProperty = BindableProperty.Create(nameof(BoxBackgroundColor), typeof(Color), typeof(CheckBox), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBoxBackground());
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), 14.0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
+        public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
+        #region Methods
         void UpdateBoxBackground()
         {
             if (this.Type == CheckType.Material)
@@ -195,13 +204,13 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 boxBackground.BorderColor = Color;
                 boxBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
-                lblSelected.TextColor = Color.ToSurfaceColor();
+                imgSelected.FillColor = Color.ToSurfaceColor();
             }
             else
             {
                 boxBackground.BorderColor = BorderColor;
                 boxBackground.BackgroundColor = BackgroundColor;
-                lblSelected.TextColor = Color;
+                imgSelected.FillColor = Color;
             }
         }
         void UpdateBorderColor()
@@ -221,7 +230,7 @@ namespace Plugin.InputKit.Shared.Controls
             boxBackground.HeightRequest = value;
             boxSelected.WidthRequest = value * .6;  //old value 0.72
             boxSelected.HeightRequest = value * 0.6;
-            lblSelected.FontSize = value * 0.72;       //old value 0.76
+            //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
             this.Children[0].MinimumWidthRequest = value * 1.4;
         }
 
@@ -233,21 +242,25 @@ namespace Plugin.InputKit.Shared.Controls
                     boxBackground.Content = boxSelected;
                     break;
                 case CheckType.Check:
-                    lblSelected.Text = "✓";
-                    boxBackground.Content = lblSelected;
+                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CHECK);
+                    boxBackground.Content = imgSelected;
                     break;
                 case CheckType.Cross:
-                    lblSelected.Text = "✕";
-                    boxBackground.Content = lblSelected;
+                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CROSS);
+                    boxBackground.Content = imgSelected;
                     break;
                 case CheckType.Star:
-                    lblSelected.Text = "★";
-                    boxBackground.Content = lblSelected;
+                    imgSelected.Source = ImageSource.FromResource(RESOURCE_STAR);
+                    boxBackground.Content = imgSelected;
                     break;
                 case CheckType.Material:
-                    lblSelected.Text = "✓";
+                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CHECK);
                     boxBackground.CornerRadius = 5;
-                    boxBackground.Content = lblSelected;
+                    boxBackground.Content = imgSelected;
+                    break;
+                case CheckType.Custom:
+                    imgSelected.Source = CustomIcon;
+                    boxBackground.Content = imgSelected;
                     break;
             }
             UpdateAllColors();
@@ -259,6 +272,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
 
         }
+        #endregion
 
         public enum CheckType
         {
@@ -266,7 +280,8 @@ namespace Plugin.InputKit.Shared.Controls
             Check,
             Cross,
             Star,
-            Material
+            Material,
+            Custom = 90
         }
     }
 }

@@ -7,7 +7,6 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public class IconView : View
     {
-        #region ForegroundProperty
 
         public static readonly BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(IconView), default(Color));
 
@@ -23,24 +22,17 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
-        #endregion
-
-        #region SourceProperty
-
-        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(string), typeof(IconView), default(string));
-
-        public string Source
+        public static readonly BindableProperty SourceProperty = BindableProperty.Create(nameof(Source), typeof(ImageSource), typeof(IconView), default(ImageSource));
+        public ImageSource Source
         {
             get
             {
-                return (string)GetValue(SourceProperty);
+                return (ImageSource)GetValue(SourceProperty);
             }
             set
             {
                 SetValue(SourceProperty, value);
             }
         }
-
-        #endregion
     }
 }
