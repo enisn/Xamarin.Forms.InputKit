@@ -52,7 +52,7 @@
 
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.55" PrivateAssets="All" />
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" PrivateAssets="All" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
@@ -111,24 +111,21 @@
 
 
   <ItemGroup>
-    <None Remove="Shared\Abstraction\ISelection.cs" />
-    <None Remove="Shared\Abstraction\IValidatable.cs" />
+    <None Remove="Shared\Abstraction\**\*.cs" />
     <None Remove="Shared\Configuration\GlobalSetting.cs" />
-    <None Remove="Shared\Controls\AdvancedEntry.cs" />
-    <None Remove="Shared\Controls\AdvancedSlider.cs" />
-    <None Remove="Shared\Controls\CheckBox.cs" />
-    <None Remove="Shared\Controls\Dropdown.cs" />
-    <None Remove="Shared\Controls\EmptyEntry.cs" />
-    <None Remove="Shared\Controls\FormView.cs" />
-    <None Remove="Shared\Controls\IconView.cs" />
-    <None Remove="Shared\Controls\RadioButton.cs" />
-    <None Remove="Shared\Controls\SelectionView.cs" />
-    <None Remove="Shared\Helpers\ColorExtensions.cs" />
-    <None Remove="Shared\Utils\PopupMenu.cs" />
-    <None Remove="Shared\Utils\SelectedItemChangedArgs.cs" />
+    <None Remove="Shared\Controls\**\*.cs" />
+    <None Remove="Shared\Helpers\**\*.cs" />
+    <None Remove="Shared\Utils\**\*.cs" />
   </ItemGroup>
 
 
+
+  <ItemGroup>
+    <EmbeddedResource Include="Shared\Resources\**\*.png" />
+    <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
+  </ItemGroup>
+  
+  
   <!--
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <Compile Include="Platforms\DotNet\**\*.cs" />
