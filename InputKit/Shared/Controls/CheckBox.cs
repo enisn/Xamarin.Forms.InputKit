@@ -39,6 +39,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public CheckBox()
         {
+            
             this.Orientation = StackOrientation.Horizontal;
             this.Padding = new Thickness(0, 10);
             this.Spacing = 10;

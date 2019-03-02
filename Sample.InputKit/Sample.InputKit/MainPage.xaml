@@ -19,10 +19,12 @@
             <input:CheckBox Text="Option 5" IsChecked="True" Type="Material"/>
             <input:CheckBox Text="Option 7" IsChecked="True" Type="Custom" CustomIcon="ic_account_balance_black"/>
 
+            
             <input:RadioButtonGroupView>
-                <input:RadioButton Text="Option 1" CircleSize="75" TextFontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />
+                <input:RadioButton Text="Option 1" TextFontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />
                 <input:RadioButton Text="Option 2" TextFontSize="24" />
                 <input:RadioButton Text="Option 3" />
+
                 <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et" />
                 <input:RadioButton Text="Option 4" />
             </input:RadioButtonGroupView>
@@ -47,8 +49,8 @@
 
             <input:SelectionView ColumnNumber="2" RowSpacing="1" ColumnSpacing="1" SelectionType="Button" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
 
-            
-            
+
+
         </StackLayout>
     </ScrollView>
 
