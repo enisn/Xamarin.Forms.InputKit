@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>2.3.7</version>
+    <version>3.0.0-pre2</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>enisn</authors>
