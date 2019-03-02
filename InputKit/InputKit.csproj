@@ -108,31 +108,16 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
     <Compile Include="Platforms\macOS\**\*.cs" />
   </ItemGroup>
-  
-  
+
+
   <ItemGroup>
-    <None Remove="Shared\Abstraction\ISelection.cs" />
-    <None Remove="Shared\Abstraction\IValidatable.cs" />
-    <None Remove="Shared\Abstraction\IAnimator.cs" />
-    <None Remove="Shared\Abstraction\DefaultAnimator.cs" />
+    <None Remove="Shared\Abstraction\**\*.cs" />
     <None Remove="Shared\Configuration\GlobalSetting.cs" />
-    <None Remove="Shared\Controls\AdvancedEntry.cs" />
-    <None Remove="Shared\Controls\AdvancedSlider.cs" />
-    <None Remove="Shared\Controls\CheckBox.cs" />
-    <None Remove="Shared\Controls\Dropdown.cs" />
-    <None Remove="Shared\Controls\EmptyEntry.cs" />
-    <None Remove="Shared\Controls\FormView.cs" />
-    <None Remove="Shared\Controls\IconView.cs" />
-    <None Remove="Shared\Controls\RadioButton.cs" />
-    <None Remove="Shared\Controls\SelectionView.cs" />
-    <None Remove="Shared\Helpers\ColorExtensions.cs" />
-    <None Remove="Shared\Resources\check.png" />
-    <None Remove="Shared\Resources\circlecheck.png" />
-    <None Remove="Shared\Resources\cross.png" />
-    <None Remove="Shared\Resources\star.png" />
-    <None Remove="Shared\Utils\PopupMenu.cs" />
-    <None Remove="Shared\Utils\SelectedItemChangedArgs.cs" />
+    <None Remove="Shared\Controls\**\*.cs" />
+    <None Remove="Shared\Helpers\**\*.cs" />
+    <None Remove="Shared\Utils\**\*.cs" />
   </ItemGroup>
+
 
 
   <ItemGroup>
