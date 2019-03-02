@@ -1,7 +1,9 @@
 ﻿using CoreGraphics;
+using Foundation;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Shared.Controls;
 using System.ComponentModel;
+using System.Threading;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -43,7 +45,7 @@ namespace Plugin.InputKit.Platforms.iOS
             }
             if (e.NewElement != null)
             {
-                SetImage(e.OldElement);
+                SetImageAsync(e.OldElement);
             }
         }
 
@@ -52,26 +54,43 @@ namespace Plugin.InputKit.Platforms.iOS
             base.OnElementPropertyChanged(sender, e);
             if (e.PropertyName == IconView.SourceProperty.PropertyName)
             {
-                SetImage(null);
+                SetImageAsync(null);
             }
             else if (e.PropertyName == IconView.FillColorProperty.PropertyName)
             {
-                SetImage(null);
+                SetImageAsync(null);
             }
         }
 
-        private void SetImage(IconView previous = null)
+        private async void SetImageAsync(IconView previous = null)
         {
             if (previous == null)
             {
                 System.Diagnostics.Debug.WriteLine("SOURCE : " + Element?.Source?.ToString());
-                if (Element?.Source == null)
-                    return;
+                if (Element?.Source == null) return;
+
+
+
                 UIImage uiImage;
-                if (Element.Source?.Contains("http") ?? false)
-                    uiImage = new UIImage(Element.Source);
+
+                if (Element.Source is StreamImageSource streamImageSource)
+                {
+                    var stream = await streamImageSource.Stream(new CancellationToken());
+                    var data = NSData.FromStream(stream);
+                    uiImage = UIImage.LoadFromData(data);
+                }
+                else if (Element.Source is FileImageSource fileImageSource)
+                {
+                    uiImage = UIImage.FromBundle(fileImageSource.File);
+                }
                 else
-                    uiImage = UIImage.FromBundle(Element.Source);
+                {
+                    if (Element.Source?.ToString().Contains("http") ?? false)
+                        uiImage = new UIImage(Element.Source.ToString());
+                    else
+                        uiImage = UIImage.FromBundle(Element.Source.ToString());
+                }
+               
 
                 uiImage = uiImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
                 Control.TintColor = Element.FillColor.ToUIColor();
