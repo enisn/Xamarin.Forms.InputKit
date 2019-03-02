@@ -27,19 +27,21 @@ namespace Plugin.InputKit.Shared.Controls
         public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
         public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
         #endregion
+        #region Fields
         internal Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
-        BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        //Label lblSelected = new Label { Text = "✓", Margin = new Thickness(0, -1, 0, 0), FontSize = GlobalSetting.Size * .72, FontAttributes = FontAttributes.Bold, IsVisible = false, TextColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Center, VerticalOptions = LayoutOptions.CenterAndExpand };
-        IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.CenterAndExpand };
-        Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
+        internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
+        internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.CenterAndExpand };
+        internal Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
+        #endregion
+        #region Ctor
         /// <summary>
         /// Default Constructor
         /// </summary>
         public CheckBox()
         {
-            
+            InitVisualStates();
             this.Orientation = StackOrientation.Horizontal;
             this.Padding = new Thickness(0, 10);
             this.Spacing = 10;
@@ -51,7 +53,8 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
-        }
+        } 
+        #endregion
 
         void ExecuteCommand()
         {
@@ -59,6 +62,7 @@ namespace Plugin.InputKit.Shared.Controls
                 CheckChangedCommand?.Execute(CommandParameter ?? this);
         }
 
+        #region Properties
         public IAnimator<CheckBox> Animator { get; set; } = new DefaultAnimator<CheckBox>();
         /// <summary>
         /// Invoked when check changed
@@ -163,6 +167,9 @@ namespace Plugin.InputKit.Shared.Controls
         public string FontFamily { get => lblOption.FontFamily; set => lblOption.FontFamily = value; }
 
         public ImageSource CustomIcon { get => (ImageSource)GetValue(CustomIconProperty); set => SetValue(CustomIconProperty, value); }
+
+        public bool IsPressed { get; set; } 
+        #endregion
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColor());
@@ -177,6 +184,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), 14.0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
         public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
+        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).boxBackground.ScaleTo((bool)nv ? .8 : 1, 50, Easing.BounceIn));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         #region Methods
@@ -260,6 +268,40 @@ namespace Plugin.InputKit.Shared.Controls
         public void DisplayValidation()
         {
 
+        }
+
+
+        void InitVisualStates()
+        {
+            VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
+            {
+                new VisualStateGroup
+                {
+                    Name = "InputKitStates",
+                    TargetType = typeof(CheckBox),
+                    States =
+                    {
+                        new VisualState
+                        {
+                            Name = "Pressed",
+                            TargetType = typeof(CheckBox),
+                            Setters =
+                            {
+                                new Setter { Property = CheckBox.IsPressedProperty, Value = true }
+                            }
+                        },
+                        new VisualState
+                        {
+                            Name = "Normal",
+                            TargetType = typeof(RadioButton),
+                            Setters =
+                            {
+                                new Setter { Property = CheckBox.IsPressedProperty, Value = false }
+                            }
+                        }
+                    }
+                }
+            });
         }
         #endregion
 
