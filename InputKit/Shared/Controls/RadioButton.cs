@@ -38,7 +38,7 @@ namespace Plugin.InputKit.Shared.Controls
         #region Fields
         internal IconView iconCircle = new IconView { Source = ImageSource.FromResource(RESOURCE_CIRCLE), FillColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
         internal IconView iconChecked = new IconView { Source = ImageSource.FromResource(RESOURCE_DOT), FillColor = GlobalSetting.Color, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
-        internal Label lblText = new Label { Margin = new Thickness(0, 5, 0, 0), Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+        internal Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
         private bool _isDisabled;
         #endregion
 
