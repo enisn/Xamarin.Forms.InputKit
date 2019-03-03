@@ -13,22 +13,9 @@
 
             <Button Text="CheckBoxes" Clicked="CheckBoxes_Clicked" />
             <Button Text="RadioButons" Clicked="RadioButons_Clicked" />
+            <Button Text="AutoCompleteEntries" Clicked="AutoCompleteEntries_Clicked" />
 
-
-            <input:AutoCompleteEntry Threshold="2">
-                <input:AutoCompleteEntry.ItemsSource>
-                    <x:Array Type="{x:Type x:String}">
-                        <x:String>Test 1</x:String>
-                        <x:String>Test 2</x:String>
-                        <x:String>Enis</x:String>
-                        <x:String>Enes</x:String>
-                        <x:String>Emre</x:String>
-                        <x:String>This is completiton</x:String>
-                        <x:String>ABCDFEFEFEF</x:String>
-                        <x:String>123141</x:String>
-                    </x:Array>
-                </input:AutoCompleteEntry.ItemsSource>
-            </input:AutoCompleteEntry>
+            
             <input:Dropdown Title="Chosse an option below:"                            
                             TitleColor="Black"
                             Color="Green"

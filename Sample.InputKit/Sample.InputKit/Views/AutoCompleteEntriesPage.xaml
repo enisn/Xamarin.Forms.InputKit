@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             x:Class="Sample.InputKit.Views.AutoCompleteEntriesPage"
+             Title="AutoCompleteEntries">
+    <ContentPage.Content>
+        <StackLayout x:Name="mainLayout" Padding="25" Spacing="15">
+            <input:AutoCompleteEntry 
+                x:Name="autoCompleteEntry"
+                Title="Type something"
+                Placeholder="Here you go..."
+                IconImage="ic_account_balance_black">
+            </input:AutoCompleteEntry>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
