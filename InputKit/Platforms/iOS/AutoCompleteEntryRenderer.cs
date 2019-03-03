@@ -5,8 +5,10 @@ using Plugin.InputKit.Platforms.iOS.Helpers;
 using Plugin.InputKit.Shared.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Drawing;
+using System.Linq;
 using System.Text;
 using UIKit;
 using Xamarin.Forms;
@@ -17,220 +19,102 @@ namespace Plugin.InputKit.Platforms.iOS
 {
     public class AutoCompleteEntryRenderer : ViewRenderer<AutoCompleteEntry, FloatLabeledTextField>
     {
-        private bool _hasError;
-        private bool _hasFocus;
-        private UIColor _defaultTextColor;
+        private MbAutoCompleteTextField NativeControl => (MbAutoCompleteTextField)Control;
+        private AutoCompleteEntry ComboBox => (AutoCompleteEntry)Element;
+
+        public AutoCompleteEntryRenderer()
+        {
+            // ReSharper disable once VirtualMemberCallInContructor
+            Frame = new RectangleF(0, 20, 320, 40);
+        }
+
+        protected override FloatLabeledTextField CreateNativeControl()
+        {
+            var element = (AutoCompleteEntry)Element;
+            var view = new MbAutoCompleteTextField
+            {
+                AutoCompleteViewSource = new MbAutoCompleteDefaultDataSource(),
+                SortingAlgorithm = element.SortingAlgorithm
+            };
+            view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
+            return view;
+        }
+
+        public override void Draw(CGRect rect)
+        {
+            base.Draw(rect);
+            var scrollView = GetParentScrollView(Control);
+            var ctrl = UIApplication.SharedApplication.GetTopViewController();
+            NativeControl.Draw(ctrl, Layer, scrollView);
+        }
 
         protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteEntry> e)
         {
             base.OnElementChanged(e);
-
-            // unsubscribe
             if (e.OldElement != null)
             {
-                Control.EditingDidBegin -= OnEditingDidBegin;
-                Control.EditingDidEnd -= OnEditingDidEnd;
-                Control.EditingChanged -= ViewOnEditingChanged;
+                // unsubscribe
+                NativeControl.AutoCompleteViewSource.Selected -= AutoCompleteViewSourceOnSelected;
+                var elm = (AutoCompleteEntry)e.OldElement;
+                elm.CollectionChanged -= ItemsSourceCollectionChanged;
             }
 
             if (e.NewElement != null)
             {
-                SetNativeControl(CreateNativeControl());
+                SetItemsSource();
+                SetThreshold();
+                KillPassword();
 
-                if (!string.IsNullOrWhiteSpace(Element.AutomationId))
-                    SetAutomationId(Element.AutomationId);
-
-                _defaultTextColor = Control.FloatingLabelTextColor;
-
-                SetIsPassword();
-                SetText();
-                SetHintText();
-                SetTextColor();
-                SetBackgroundColor();
-                SetPlaceholderColor();
-                SetKeyboard();
-                SetHorizontalTextAlignment();
-                SetFont();
-                SetUnfocusedColor();
-                
-                Control.EditingDidBegin += OnEditingDidBegin;
-                Control.EditingDidEnd += OnEditingDidEnd;
-                Control.EditingChanged += ViewOnEditingChanged;
+                var elm = (AutoCompleteEntry)e.NewElement;
+                elm.CollectionChanged += ItemsSourceCollectionChanged;
             }
-        }
-
-        protected virtual FloatLabeledTextField CreateNativeControl()
-        {
-            return new FloatLabeledTextField();
         }
 
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            
-            if (e.PropertyName == Entry.TextColorProperty.PropertyName)
-                SetTextColor();
-            else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
-                SetBackgroundColor();
-            else if (e.PropertyName == Entry.IsPasswordProperty.PropertyName)
-                SetIsPassword();
-            else if (e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
-            {
-                SetIsPassword();
-                SetTextColor();
-            }
-            else if (e.PropertyName == Entry.TextProperty.PropertyName)
-                SetText();
-            else if (e.PropertyName == Entry.PlaceholderColorProperty.PropertyName)
-            {
-                SetUnfocusedColor();
-                SetPlaceholderColor();
-            }
-            else if (e.PropertyName == Xamarin.Forms.InputView.KeyboardProperty.PropertyName)
-                SetKeyboard();
-            else if (e.PropertyName == Entry.HorizontalTextAlignmentProperty.PropertyName)
-                SetHorizontalTextAlignment();
-            else if ((e.PropertyName == Entry.FontAttributesProperty.PropertyName) ||
-                     (e.PropertyName == Entry.FontFamilyProperty.PropertyName) ||
-                     (e.PropertyName == Entry.FontSizeProperty.PropertyName))
-                SetFont();
+
+            if (e.PropertyName == Entry.IsPasswordProperty.PropertyName)
+                KillPassword();
+            if (e.PropertyName == AutoCompleteEntry.ItemsSourceProperty.PropertyName)
+                SetItemsSource();
+            else if (e.PropertyName == AutoCompleteEntry.ThresholdProperty.PropertyName)
+                SetThreshold();
         }
 
-        private void OnEditingDidEnd(object sender, EventArgs eventArgs)
+        private void SetThreshold()
         {
-            _hasFocus = false;
-            Control.UnderlineColor = GetUnderlineColorForState();
+            NativeControl.Threshold = ComboBox.Threshold;
         }
 
-        private void OnEditingDidBegin(object sender, EventArgs eventArgs)
+        private void SetItemsSource()
         {
-            _hasFocus = true;
-            Control.UnderlineColor = GetUnderlineColorForState();
+            var items = ComboBox.ItemsSource.ToList();
+            NativeControl.UpdateItems(items);
         }
 
-        private void ViewOnEditingChanged(object sender, EventArgs eventArgs)
+        private void KillPassword()
         {
-            Element?.SetValueFromRenderer(Entry.TextProperty, Control.Text);
+            if (Element.IsPassword)
+                throw new NotImplementedException("Cannot set IsPassword on a AutoCompleteEntry");
         }
 
-        private void SetUnfocusedColor()
+        private void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
         {
-            Control.FloatingLabelTextColor = Element.PlaceholderColor == Color.Default
-                ? Control.TextColor
-                : Element.PlaceholderColor.ToUIColor();
+            SetItemsSource();
         }
 
-        private CGColor GetUnderlineColorForState()
+        private static UIScrollView GetParentScrollView(UIView element)
         {
-            if (_hasError) return UIColor.Red.CGColor;
-            return 
-            (Element.PlaceholderColor == Color.Default
-                    ? Control.TextColor.CGColor
-                    : Element.PlaceholderColor.ToCGColor());
+            if (element.Superview == null) return null;
+            var scrollView = element.Superview as UIScrollView;
+            return scrollView ?? GetParentScrollView(element.Superview);
         }
 
-        private void SetBackgroundColor()
+        private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            NativeView.BackgroundColor = Element.BackgroundColor.ToUIColor();
-            Control.UnderlineColor = Element.PlaceholderColor.ToCGColor();
-        }
-
-        private void SetText()
-        {
-            if (Control.Text != Element.Text)
-                Control.Text = Element.Text;
-        }
-
-        private void SetIsPassword()
-        {
-            if (Element.IsPassword && Control.IsFirstResponder)
-            {
-                Control.Enabled = false;
-                Control.SecureTextEntry = true;
-                Control.Enabled = Element.IsEnabled;
-                Control.BecomeFirstResponder();
-            }
-            else
-            {
-                Control.SecureTextEntry = Element.IsPassword;
-            }
-        }
-
-        private void SetHintText()
-        {
-            Control.Placeholder = Element.Placeholder;
-        }
-
-        // taken from Xamarin.Forms codebase
-        private void SetPlaceholderColor()
-        {
-            var formatted = (FormattedString)Element.Placeholder;
-
-            if (formatted == null)
-                return;
-
-            var targetColor = Element.PlaceholderColor;
-
-            // Placeholder default color is 70% gray
-            // https://developer.apple.com/library/prerelease/ios/documentation/UIKit/Reference/UITextField_Class/index.html#//apple_ref/occ/instp/UITextField/placeholder
-
-            var color = Element.IsEnabled && !targetColor.IsDefault ? targetColor : Color.Gray;
-        }
-
-        private void SetTextColor()
-        {
-            if ((Element.TextColor == Color.Default) || !Element.IsEnabled)
-                Control.TextColor = _defaultTextColor;
-            else
-                Control.TextColor = Element.TextColor.ToUIColor();
-        }
-
-        private void SetFont()
-        {
-            Control.Font = Element.ToUIFont();
-        }
-
-        private void SetHorizontalTextAlignment()
-        {
-            switch (Element.HorizontalTextAlignment)
-            {
-                case TextAlignment.Center:
-                    Control.TextAlignment = UITextAlignment.Center;
-                    break;
-                case TextAlignment.End:
-                    Control.TextAlignment = UITextAlignment.Right;
-                    break;
-                default:
-                    Control.TextAlignment = UITextAlignment.Left;
-                    break;
-            }
-        }
-
-        private void SetKeyboard()
-        {
-            var kbd = Element.Keyboard.ToNative();
-            Control.KeyboardType = kbd;
-            Control.InputAccessoryView = kbd == UIKeyboardType.NumberPad ? NumberpadAccessoryView() : null;
-            Control.ShouldReturn = InvokeCompleted;
-        }
-
-        private UIToolbar NumberpadAccessoryView()
-        {
-            return new UIToolbar(new RectangleF(0.0f, 0.0f, (float)Control.Frame.Size.Width, 44.0f))
-            {
-                Items = new[]
-                {
-                    new UIBarButtonItem(UIBarButtonSystemItem.FlexibleSpace),
-                    new UIBarButtonItem(UIBarButtonSystemItem.Done, delegate { InvokeCompleted(null); })
-                }
-            };
-        }
-
-        private bool InvokeCompleted(UITextField textField)
-        {
-            Control.ResignFirstResponder();
-            ((IEntryController)Element).SendCompleted();
-            return true;
+            ComboBox.OnItemSelectedInternal(Element, args);
+            // TODO : Florell, Chase (Contractor) 02/15/17 SET FOCUS
         }
     }
 }
