@@ -13,7 +13,7 @@ using Xamarin.Forms.Platform.iOS;
 namespace Plugin.InputKit.Platforms.iOS.Controls
 {
     [Register("MbAutoCompleteTextField")]
-    public class MbAutoCompleteTextField : FloatLabeledTextField, IUITextFieldDelegate
+    public class MbAutoCompleteTextField : UITextField, IUITextFieldDelegate
     {
         private MbAutoCompleteViewSource _autoCompleteViewSource;
         private UIView _background;

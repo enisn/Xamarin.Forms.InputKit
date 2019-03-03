@@ -17,10 +17,10 @@ using Xamarin.Forms.Platform.iOS;
 [assembly: ExportRenderer(typeof(AutoCompleteEntry), typeof(AutoCompleteEntryRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
 {
-    public class AutoCompleteEntryRenderer : ViewRenderer<AutoCompleteEntry, FloatLabeledTextField>
+    public class AutoCompleteEntryRenderer : ViewRenderer<AutoCompleteEntry, UITextField>
     {
         private MbAutoCompleteTextField NativeControl => (MbAutoCompleteTextField)Control;
-        private AutoCompleteEntry ComboBox => (AutoCompleteEntry)Element;
+        private AutoCompleteEntry AutoCompleteEntry => (AutoCompleteEntry)Element;
 
         public AutoCompleteEntryRenderer()
         {
@@ -28,7 +28,7 @@ namespace Plugin.InputKit.Platforms.iOS
             Frame = new RectangleF(0, 20, 320, 40);
         }
 
-        protected override FloatLabeledTextField CreateNativeControl()
+        protected override UITextField CreateNativeControl()
         {
             var element = (AutoCompleteEntry)Element;
             var view = new MbAutoCompleteTextField
@@ -39,7 +39,6 @@ namespace Plugin.InputKit.Platforms.iOS
             view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
             return view;
         }
-
         public override void Draw(CGRect rect)
         {
             base.Draw(rect);
@@ -61,6 +60,7 @@ namespace Plugin.InputKit.Platforms.iOS
 
             if (e.NewElement != null)
             {
+                SetNativeControl(CreateNativeControl());
                 SetItemsSource();
                 SetThreshold();
                 KillPassword();
@@ -84,13 +84,16 @@ namespace Plugin.InputKit.Platforms.iOS
 
         private void SetThreshold()
         {
-            NativeControl.Threshold = ComboBox.Threshold;
+            NativeControl.Threshold = AutoCompleteEntry.Threshold;
         }
 
         private void SetItemsSource()
         {
-            var items = ComboBox.ItemsSource.ToList();
-            NativeControl.UpdateItems(items);
+            if (AutoCompleteEntry.ItemsSource != null)
+            {
+                var items = AutoCompleteEntry.ItemsSource.ToList();
+                NativeControl.UpdateItems(items);
+            }
         }
 
         private void KillPassword()
@@ -113,7 +116,7 @@ namespace Plugin.InputKit.Platforms.iOS
 
         private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
         {
-            ComboBox.OnItemSelectedInternal(Element, args);
+            AutoCompleteEntry.OnItemSelectedInternal(Element, args);
             // TODO : Florell, Chase (Contractor) 02/15/17 SET FOCUS
         }
     }
