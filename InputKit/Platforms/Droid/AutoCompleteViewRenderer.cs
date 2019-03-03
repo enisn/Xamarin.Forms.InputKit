@@ -24,13 +24,14 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Collections;
+using Android.Graphics.Drawables;
 
-[assembly: ExportRenderer(typeof(AutoCompleteEntry), typeof(AutoCompleteEntryRenderer))]
+[assembly: ExportRenderer(typeof(AutoCompleteView), typeof(AutoCompleteViewRenderer))]
 namespace Plugin.InputKit.Platforms.Droid
 {
-    public class AutoCompleteEntryRenderer : FormsAppCompat.ViewRenderer<AutoCompleteEntry, TextInputLayout>
+    public class AutoCompleteViewRenderer : FormsAppCompat.ViewRenderer<AutoCompleteView, TextInputLayout>
     {
-        public AutoCompleteEntryRenderer(Context context) : base(context)
+        public AutoCompleteViewRenderer(Context context) : base(context)
         {
         }
 
@@ -43,11 +44,16 @@ namespace Plugin.InputKit.Platforms.Droid
             {
                 BackgroundTintList = ColorStateList.ValueOf(GetPlaceholderColor())
             };
+
+            GradientDrawable gd = new GradientDrawable();
+            gd.SetColor(global::Android.Graphics.Color.Transparent);
+            autoComplete.SetBackground(gd);
+
             textInputLayout.AddView(autoComplete);
             return textInputLayout;
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteEntry> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement != null)
@@ -77,9 +83,9 @@ namespace Plugin.InputKit.Platforms.Droid
 
             if (e.PropertyName == Entry.IsPasswordProperty.PropertyName)
                 KillPassword();
-            if (e.PropertyName == AutoCompleteEntry.ItemsSourceProperty.PropertyName)
+            if (e.PropertyName == AutoCompleteView.ItemsSourceProperty.PropertyName)
                 SetItemsSource();
-            else if (e.PropertyName == AutoCompleteEntry.ThresholdProperty.PropertyName)
+            else if (e.PropertyName == AutoCompleteView.ThresholdProperty.PropertyName)
                 SetThreshold();
         }
 
@@ -87,13 +93,13 @@ namespace Plugin.InputKit.Platforms.Droid
         {
             var view = (AutoCompleteTextView)sender;
             var selectedItemArgs = new SelectedItemChangedEventArgs(view.Text);
-            var element = (AutoCompleteEntry)Element;
+            var element = (AutoCompleteView)Element;
             element.OnItemSelectedInternal(Element, selectedItemArgs);
         }
 
         private void ItemsSourceCollectionChanged(object sender, NotifyCollectionChangedEventArgs notifyCollectionChangedEventArgs)
         {
-            var element = (AutoCompleteEntry)Element;
+            var element = (AutoCompleteView)Element;
             ResetAdapter(element);
         }
 
@@ -103,7 +109,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 throw new NotImplementedException("Cannot set IsPassword on a AutoComplete");
         }
 
-        private void ResetAdapter(AutoCompleteEntry element)
+        private void ResetAdapter(AutoCompleteView element)
         {
             var adapter = new BoxArrayAdapter(Context,
                 Android.Resource.Layout.SimpleDropDownItem1Line,
@@ -115,7 +121,7 @@ namespace Plugin.InputKit.Platforms.Droid
 
         private void SetItemsSource()
         {
-            var element = (AutoCompleteEntry)Element;
+            var element = (AutoCompleteView)Element;
             if (element.ItemsSource == null) return;
 
             ResetAdapter(element);
@@ -123,7 +129,7 @@ namespace Plugin.InputKit.Platforms.Droid
 
         private void SetThreshold()
         {
-            var element = (AutoCompleteEntry)Element;
+            var element = (AutoCompleteView)Element;
             AutoComplete.Threshold = element.Threshold;
         }
 

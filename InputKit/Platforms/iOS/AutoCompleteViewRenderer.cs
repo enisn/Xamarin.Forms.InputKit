@@ -14,15 +14,15 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly: ExportRenderer(typeof(AutoCompleteEntry), typeof(AutoCompleteEntryRenderer))]
+[assembly: ExportRenderer(typeof(AutoCompleteView), typeof(AutoCompleteViewRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
 {
-    public class AutoCompleteEntryRenderer : ViewRenderer<AutoCompleteEntry, UITextField>
+    public class AutoCompleteViewRenderer : ViewRenderer<AutoCompleteView, UITextField>
     {
         private MbAutoCompleteTextField NativeControl => (MbAutoCompleteTextField)Control;
-        private AutoCompleteEntry AutoCompleteEntry => (AutoCompleteEntry)Element;
+        private AutoCompleteView AutoCompleteEntry => (AutoCompleteView)Element;
 
-        public AutoCompleteEntryRenderer()
+        public AutoCompleteViewRenderer()
         {
             // ReSharper disable once VirtualMemberCallInContructor
             Frame = new RectangleF(0, 20, 320, 40);
@@ -30,7 +30,7 @@ namespace Plugin.InputKit.Platforms.iOS
 
         protected override UITextField CreateNativeControl()
         {
-            var element = (AutoCompleteEntry)Element;
+            var element = (AutoCompleteView)Element;
             var view = new MbAutoCompleteTextField
             {
                 AutoCompleteViewSource = new MbAutoCompleteDefaultDataSource(),
@@ -47,14 +47,14 @@ namespace Plugin.InputKit.Platforms.iOS
             NativeControl.Draw(ctrl, Layer, scrollView);
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteEntry> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement != null)
             {
                 // unsubscribe
                 NativeControl.AutoCompleteViewSource.Selected -= AutoCompleteViewSourceOnSelected;
-                var elm = (AutoCompleteEntry)e.OldElement;
+                var elm = (AutoCompleteView)e.OldElement;
                 elm.CollectionChanged -= ItemsSourceCollectionChanged;
             }
 
@@ -65,7 +65,7 @@ namespace Plugin.InputKit.Platforms.iOS
                 SetThreshold();
                 KillPassword();
 
-                var elm = (AutoCompleteEntry)e.NewElement;
+                var elm = (AutoCompleteView)e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;
             }
         }
@@ -76,9 +76,9 @@ namespace Plugin.InputKit.Platforms.iOS
 
             if (e.PropertyName == Entry.IsPasswordProperty.PropertyName)
                 KillPassword();
-            if (e.PropertyName == AutoCompleteEntry.ItemsSourceProperty.PropertyName)
+            if (e.PropertyName == AutoCompleteView.ItemsSourceProperty.PropertyName)
                 SetItemsSource();
-            else if (e.PropertyName == AutoCompleteEntry.ThresholdProperty.PropertyName)
+            else if (e.PropertyName == AutoCompleteView.ThresholdProperty.PropertyName)
                 SetThreshold();
         }
 
