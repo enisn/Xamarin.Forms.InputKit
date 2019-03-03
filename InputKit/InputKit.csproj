@@ -125,7 +125,6 @@
     <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
   </ItemGroup>
   
-  
   <!--
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <Compile Include="Platforms\DotNet\**\*.cs" />
