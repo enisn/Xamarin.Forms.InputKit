@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.InputKit.Shared.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,10 +31,13 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput = new AutoCompleteView
             {
                 HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand,
             };
             txtInput.SortingAlgorithm = (text, options) => 
                 options
-                .Where(x => x.StartsWith(text, StringComparison.CurrentCultureIgnoreCase))
+                .Where(x => x.Contains(text, StringComparison.CurrentCultureIgnoreCase))
+                .OrderBy(o => o.StartsWith(text, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
+                .ThenBy(t => t)
                 .ToList();
             return txtInput ;
         }

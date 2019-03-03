@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Linq;
 using System.Text;
 using Xamarin.Forms;
 
@@ -9,6 +10,10 @@ namespace Plugin.InputKit.Shared.Controls
     public class AutoCompleteView : Entry
     {
         private static readonly Func<string, ICollection<string>, ICollection<string>> _defaultSortingAlgorithm = (t, d) => d;
+        public AutoCompleteView()
+        {
+            
+        }
 
         public static readonly BindableProperty SortingAlgorithmProperty = BindableProperty.Create(nameof(SortingAlgorithm),
             typeof(Func<string, ICollection<string>, ICollection<string>>),
