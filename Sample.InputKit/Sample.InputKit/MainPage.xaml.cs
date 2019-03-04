@@ -41,5 +41,18 @@ namespace Sample.InputKit
         private void CheckBoxes_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new CheckBoxesPage());
 
         private void RadioButons_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new RadioButtonsPage());
+
+        private void AutoCompleteEntries_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                Navigation.PushAsync(new AutoCompleteEntriesPage());
+
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Error:", ex.ToString(), "ok");
+            }
+        }
     }
 }

@@ -13,7 +13,9 @@
 
             <Button Text="CheckBoxes" Clicked="CheckBoxes_Clicked" />
             <Button Text="RadioButons" Clicked="RadioButons_Clicked" />
+            <Button Text="AutoCompleteEntries" Clicked="AutoCompleteEntries_Clicked" />
 
+            
             <input:Dropdown Title="Chosse an option below:"                            
                             TitleColor="Black"
                             Color="Green"

@@ -35,12 +35,13 @@ namespace Plugin.InputKit.Shared.Controls
         Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
-        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily };
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
+        Entry txtInput;
+            /// <summary>
+            /// Default Constructor
+            /// </summary>
         public AdvancedEntry()
         {
+            txtInput = GetInputEntry();
             this.Children.Add(lblTitle);
             this.Children.Add(lblAnnotation);
             this.Children.Add(frmBackground);
@@ -322,7 +323,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// You need to set Annotation="Regex" to use this.
         /// </summary>
-        public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty,value); }
+        public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty, value); }
         /// <summary>
         /// Gets and sets keyboard type of this entry
         /// </summary>
@@ -346,11 +347,11 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
-        public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); } );
+        public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
-        [Obsolete("Keyboard won't be changed automaticly on newer versions. Try set Keyboard property",false)]
+        [Obsolete("Keyboard won't be changed automaticly on newer versions. Try set Keyboard property", false)]
         public void UpdateKeyboard(AnnotationType annotation)
         {
             switch (annotation)
@@ -406,6 +407,17 @@ namespace Plugin.InputKit.Shared.Controls
         {
             ValidationChanged?.Invoke(this, new EventArgs());
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
+        }
+        private protected virtual Entry GetInputEntry()
+        {
+            return new EmptyEntry
+            {
+                TextColor = GlobalSetting.TextColor,
+                PlaceholderColor = Color.LightGray,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center,
+                FontFamily = GlobalSetting.FontFamily
+            };
         }
         /// <summary>
         /// Anum of Annotations. Detail will be added later.
