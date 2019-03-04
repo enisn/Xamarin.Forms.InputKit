@@ -71,6 +71,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 SetItemsSource();
                 SetThreshold();
                 KillPassword();
+                AutoComplete.TextChanged += (s, args) => Element.RaiseTextChanged(AutoComplete.Text);
                 AutoComplete.ItemClick += AutoCompleteOnItemSelected;
                 var elm = e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;

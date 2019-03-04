@@ -64,7 +64,7 @@ namespace Plugin.InputKit.Platforms.iOS
                 SetItemsSource();
                 SetThreshold();
                 KillPassword();
-
+                NativeControl.EditingChanged += (s, args) => Element.RaiseTextChanged(NativeControl.Text);
                 var elm = (AutoCompleteView)e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;
             }
