@@ -84,7 +84,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
             if (scrollViewIsNull)
             {
                 view = _parentViewController.View;
-                frame = new CGRect(_drawnFrame.X, _drawnFrame.Bottom + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
+                frame = new CGRect(_drawnFrame.X, _drawnFrame.Bottom + _drawnFrame.Height + 90, _drawnFrame.Width, AutocompleteTableViewHeight);
             }
             else
             {
@@ -92,7 +92,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
                 var p = e.Padding;
                 var m = e.Margin;
                 frame = new CGRect(_drawnFrame.X + p.Left + m.Left,
-                    _drawnFrame.Y + _drawnFrame.Height - 5,
+                    _drawnFrame.Y + _drawnFrame.Height + 90,
                     _drawnFrame.Width,
                     AutocompleteTableViewHeight);
                 view = _scrollView;

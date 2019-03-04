@@ -117,7 +117,6 @@ namespace Plugin.InputKit.Platforms.iOS
         private void AutoCompleteViewSourceOnSelected(object sender, SelectedItemChangedEventArgs args)
         {
             AutoCompleteEntry.OnItemSelectedInternal(Element, args);
-            // TODO : Florell, Chase (Contractor) 02/15/17 SET FOCUS
         }
     }
 }
