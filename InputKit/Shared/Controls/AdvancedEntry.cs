@@ -39,11 +39,8 @@ namespace Plugin.InputKit.Shared.Controls
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput;
-
-            /// <summary>
-            /// Default Constructor
-            /// </summary>
-        #endregion        
+        #endregion
+        
         /// <summary>
         /// Default Constructor
         /// </summary>
