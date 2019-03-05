@@ -61,7 +61,7 @@
                         <input:RadioButton Text="Platinium" />
                     </input:RadioButtonGroupView>
 
-                    <input:CheckBox IsRequired="True" Type="Check" Text="I Accept User Agreement" />
+                    <input:CheckBox IsRequired="True" Type="Material" Text="I Accept User Agreement" />
                     <Button Command="{Binding SubmitCommand}" Margin="0,20" Text="Submit" BackgroundColor="Accent" CornerRadius="20" TextColor="White" />
                 </input:FormView>
             </StackLayout>

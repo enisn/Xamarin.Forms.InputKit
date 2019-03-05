@@ -29,10 +29,9 @@ namespace Plugin.InputKit.Shared.Abstraction
         {
             {
                 typeof(View), //default
-                async (v) =>
+                (v) =>
                 {
-                    await v.ScaleTo(.9,100);
-                    await v.ScaleTo(1,100);
+
                 }
             },
             {
@@ -41,7 +40,6 @@ namespace Plugin.InputKit.Shared.Abstraction
                 {
                     await v.FadeTo(.9,50);
                     await v.FadeTo(1,50);
-                    //nothing.
                 }
             },
             {
