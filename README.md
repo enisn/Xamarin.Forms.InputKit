@@ -70,10 +70,10 @@ Read [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.I
 <table>
 <tr>
 <td>
-<img src="https://scontent-frx5-1.xx.fbcdn.net/v/t1.15752-9/37154277_2011557202188716_8748276176344055808_n.png?_nc_cat=0&oh=f180f20ac9e89598fbbbc5e255aea5a0&oe=5BE4FF53" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
+<img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/checkboxes_android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
 </td>
 <td>
-<img src="https://camo.githubusercontent.com/7aa6b380224413dc27770e8305d3d60856f17e1f/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f424c6a655a5574494442753764474d5270562f67697068792e676966" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
+<img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/checkboxes_ios.png" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" height="480" class="aligncenter size-medium wp-image-996" />
 </td>
 </tr>
 </table>
@@ -118,7 +118,16 @@ Read [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.I
 </ContentPage>
 ```
 
-<img src="http://enisnecipoglu.com/wp-content/uploads/2018/04/XamarinFormsRadioButton-169x300.png" alt="Xamarin Forms Radio Button Input Kit Enis Necipoğlu" width="270" height="480" class="aligncenter size-medium wp-image-1001" />
+<table>
+<tr>
+<td>
+<img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/radiobuttons_android.gif" alt="Xamarin Forms Radio Button Input Kit Enis Necipoğlu" width="270" height="480" class="aligncenter size-medium wp-image-1001" />
+</td>
+<td>
+<img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/radiobuttons_ios.png" alt="Xamarin Forms Radio Button Input Kit Enis Necipoğlu" width="270" height="480" class="aligncenter size-medium wp-image-1001" />
+</td>
+</tr>
+</table>
 <h4>PROPERTIES:</h4>
 <h5>RadioButtonGroupView</h5>
 <ul>
@@ -140,6 +149,42 @@ Read [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.I
 <hr />
 
 
+<h2>AutoCompleteEntry ( Experimental )</h2>
+<p>Alternative picker with dropdown menu.
+</p>
+<h4>SAMPLE:</h4>
+
+```xaml
+ <input:AutoCompleteEntry Title="Type something below:"
+                          ItemsSource="{Binding MyList}" 
+                          SelectedItem="{Binding SelectedItem}" />
+```
+
+<table>
+<tr>
+<td>
+<a href="#"><img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/autocompleteentries_android.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+</td>
+<td>
+<a href="#"><img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/autocompleteentries_ios.png" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+</td>
+</tr>
+</table>
+
+<h4>PROPERTIES:</h4>
+<ul>
+<li><strong>Placeholder:</strong> <em>(string)</em> Placehodler Text</li>
+<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
+<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
+<li><strong>Color:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
+<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
+<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
+<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
+<li><strong>ItemsSource:</strong> <em>(IList)</em> Suggestions items</li>
+</ul>
+
+To be added...
+<hr />
 
 <h2>Dropdown ( Experimental  * Not Stable * )</h2>
 <p>Alternative picker with dropdown menu.

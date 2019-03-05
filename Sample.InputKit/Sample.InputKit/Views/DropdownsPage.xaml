@@ -17,6 +17,7 @@
                             ValidationMessage="This field is required" 
                             AnnotationColor="Accent" 
                             IsRequired="True" 
+                            CornerRadius="10"
                             BorderColor="Black" 
                             IconImage="ic_account_balance_black"
                             IsEditable="True"

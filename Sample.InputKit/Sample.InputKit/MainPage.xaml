@@ -14,7 +14,7 @@
             <Button Text="CheckBoxes" Clicked="CheckBoxes_Clicked" />
             <Button Text="RadioButons" Clicked="RadioButons_Clicked" />
             <Button Text="AutoCompleteEntries" Clicked="AutoCompleteEntries_Clicked" />
-            <Button Text="AutoCompleteEntries" Clicked="Dropdowns_Clicked" />
+            <Button Text="Dropdowns" Clicked="Dropdowns_Clicked" />
             <Button Text="AdvancedEntries" Clicked="AdvancedEntries_Clicked" />
             <Button Text="AdvancedSliders" Clicked="AdvancedSliders_Clicked" />
             <Button Text="SelectionView" Clicked="SelectionView_Clicked" />
