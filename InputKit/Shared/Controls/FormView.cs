@@ -9,7 +9,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Quickly gets last result of all IValidatable elements inside of this
     /// </summary>
-    public class FormView : StackLayout
+    public partial class FormView : StackLayout
     {
         private bool _isValidated;
         /// <summary>

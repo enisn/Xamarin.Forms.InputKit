@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>3.0.0-pre2</version>
+    <version>3.0.0-pre5</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>enisn</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>SelectionView Multiple Button Type added</releaseNotes>
+    <releaseNotes>CheckBox and RadioButton are ready for V3</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>

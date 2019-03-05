@@ -1,4 +1,5 @@
 ﻿using Plugin.InputKit.Shared.Controls;
+using Sample.InputKit.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,28 @@ namespace Sample.InputKit
         private void AdvancedEntry_TextChanged(object sender, TextChangedEventArgs e)
         {
             System.Diagnostics.Debug.WriteLine(e.NewTextValue);
+        }
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
+        }
+
+        private void CheckBoxes_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new CheckBoxesPage());
+
+        private void RadioButons_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new RadioButtonsPage());
+
+        private void AutoCompleteEntries_Clicked(object sender, EventArgs e)
+        {
+            try
+            {
+                Navigation.PushAsync(new AutoCompleteEntriesPage());
+
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Error:", ex.ToString(), "ok");
+            }
         }
     }
 }

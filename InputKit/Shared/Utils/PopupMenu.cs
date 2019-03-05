@@ -24,7 +24,7 @@ namespace Plugin.InputKit.Shared.Utils
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
      
-        ///---------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------
         /// <summary>
         /// Items to display.
         /// </summary>
@@ -35,7 +35,7 @@ namespace Plugin.InputKit.Shared.Utils
         }
         public InternalPopupEffect InternalEffect { get; private set; }
   
-        ///---------------------------------------------------------------------------------------------------
+        //---------------------------------------------------------------------------------------------------
         /// <summary>
         /// Default constructor
         /// </summary>
