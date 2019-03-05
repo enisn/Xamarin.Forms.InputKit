@@ -14,26 +14,13 @@
             <Button Text="CheckBoxes" Clicked="CheckBoxes_Clicked" />
             <Button Text="RadioButons" Clicked="RadioButons_Clicked" />
             <Button Text="AutoCompleteEntries" Clicked="AutoCompleteEntries_Clicked" />
+            <Button Text="AutoCompleteEntries" Clicked="Dropdowns_Clicked" />
+            <Button Text="AdvancedEntries" Clicked="AdvancedEntries_Clicked" />
+            <Button Text="AdvancedSliders" Clicked="AdvancedSliders_Clicked" />
+            <Button Text="SelectionView" Clicked="SelectionView_Clicked" />
+
             
-            <input:Dropdown Title="Chosse an option below:"                            
-                            TitleColor="Black"
-                            Color="Green"
-                            ValidationMessage="This field is required" 
-                            AnnotationColor="Accent" 
-                            IsRequired="True" 
-                            BorderColor="Black" 
-                            IconImage="ic_account_balance_black"
-                            IsEditable="True"
-                            Placeholder="Choose one" 
-                            ItemsSource="{Binding MyList}" 
-                            SelectedItem="{Binding SelectedItem}"
-                            />
 
-            <input:AdvancedEntry Placeholder="E-mail" IsRequired="True" ValidationMessage="Hey it's wrong!!" Annotation="Regex" RegexPattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
-
-            <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
-
-            <input:SelectionView ColumnNumber="2" RowSpacing="1" ColumnSpacing="1" SelectionType="Button" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
 
         </StackLayout>
     </ScrollView>

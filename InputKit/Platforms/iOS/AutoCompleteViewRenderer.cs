@@ -1,4 +1,5 @@
 ﻿using CoreGraphics;
+using Foundation;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Platforms.iOS.Controls;
 using Plugin.InputKit.Platforms.iOS.Helpers;
@@ -56,7 +57,6 @@ namespace Plugin.InputKit.Platforms.iOS
             
             var relativePosition = UIApplication.SharedApplication.KeyWindow;
             var relativeFrame = NativeControl.Superview.ConvertRectToView(NativeControl.Frame, relativePosition);
-            Debug.WriteLine($"************** RelativeFrame:   x: {relativeFrame.X} | y: {relativeFrame.Y} *****************");
             NativeControl.Draw(ctrl, Layer, scrollView, relativeFrame.Y);
         }
 

@@ -35,7 +35,7 @@ namespace Plugin.InputKit.Platforms.Droid
         {
         }
         
-        private AppCompatAutoCompleteTextView AutoComplete => Control?.EditText as AppCompatAutoCompleteTextView;
+        private AppCompatAutoCompleteTextView NativeControl => Control?.EditText as AppCompatAutoCompleteTextView;
 
         protected override TextInputLayout CreateNativeControl()
         {

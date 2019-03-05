@@ -36,6 +36,15 @@ namespace Plugin.InputKit.Shared.Abstraction
                 }
             },
             {
+                typeof(SelectionView), //default
+                async (v) =>
+                {
+                    await v.FadeTo(.9,50);
+                    await v.FadeTo(1,50);
+                    //nothing.
+                }
+            },
+            {
                 typeof(CheckBox),
                 (v) =>
                 {

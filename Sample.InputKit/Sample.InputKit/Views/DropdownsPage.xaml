@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Sample.InputKit"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             x:Class="Sample.InputKit.Views.DropdownsPage"
+             Title="Dropdowns">
+    <ContentPage.BindingContext>
+        <local:MainViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Content>
+        <StackLayout Padding="25" Spacing="15">
+            <input:Dropdown Title="Chosse an option below:"                            
+                            TitleColor="Black"
+                            Color="Green"
+                            ValidationMessage="This field is required" 
+                            AnnotationColor="Accent" 
+                            IsRequired="True" 
+                            BorderColor="Black" 
+                            IconImage="ic_account_balance_black"
+                            IsEditable="True"
+                            Placeholder="Choose one" 
+                            ItemsSource="{Binding MyList}" 
+                            SelectedItem="{Binding SelectedItem}"
+                            />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

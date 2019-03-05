@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Sample.InputKit"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="Sample.InputKit.Views.SelectionViewPage"
+             Title="SelectionView">
+    <ContentPage.BindingContext>
+        <local:MainViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Content>
+        <StackLayout Padding="25" Spacing="15">
+            <Picker x:Name="picker" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
+
+            <input:SelectionView x:Name="selectionView"
+                                 ColumnNumber="2" 
+                                 RowSpacing="1" 
+                                 ColumnSpacing="1" 
+                                 SelectionType="Button" 
+                                 ItemDisplayBinding="{Binding Id}" 
+                                 ItemsSource="{Binding MyList}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

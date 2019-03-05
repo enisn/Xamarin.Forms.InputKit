@@ -10,9 +10,7 @@
             <input:AutoCompleteEntry 
                 x:Name="autoCompleteEntry"
                 Title="Type something"
-                Placeholder="Here you go..."
                 IconImage="ic_account_balance_black"
-                Text="Starting Text"
                 TextColor="Accent"
                 >
             </input:AutoCompleteEntry>

@@ -9,12 +9,12 @@ using Xamarin.Forms;
 
 namespace Sample.InputKit
 {
-	public partial class MainPage : ContentPage
-	{
-		public MainPage()
-		{
-			InitializeComponent();
-            
+    public partial class MainPage : ContentPage
+    {
+        public MainPage()
+        {
+            InitializeComponent();
+
             //selectionView.ItemsSource = new[]
             //{
             //    new SampleClass{ Name = "Option 1", Id = 1 },
@@ -42,17 +42,14 @@ namespace Sample.InputKit
 
         private void RadioButons_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new RadioButtonsPage());
 
-        private void AutoCompleteEntries_Clicked(object sender, EventArgs e)
-        {
-            try
-            {
-                Navigation.PushAsync(new AutoCompleteEntriesPage());
+        private void AutoCompleteEntries_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AutoCompleteEntriesPage());
 
-            }
-            catch (Exception ex)
-            {
-                DisplayAlert("Error:", ex.ToString(), "ok");
-            }
-        }
+        private void Dropdowns_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new DropdownsPage());
+
+        private void AdvancedEntries_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AdvancedEntriesPage());
+
+        private void AdvancedSliders_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AdvancedSlidersPage());
+
+        private void SelectionView_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new SelectionViewPage());
     }
 }
