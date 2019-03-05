@@ -14,26 +14,53 @@ namespace Sample.InputKit.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AutoCompleteEntriesPage : ContentPage
     {
+        ObservableCollection<string> source = new ObservableCollection<string>();
         public AutoCompleteEntriesPage()
         {
-            InitializeComponent();
-            var source = new ObservableCollection<string>();
-            autoCompleteEntry.ItemsSource = source;
-            source.Add("Option 1");
-            source.Add("Option 2");
-            source.Add("Test 1");
-            source.Add("Test 2");
-            source.Add("Test 3");
-            source.Add("Test 4");
-            source.Add("Sample");
-            source.Add("Xamarin");
-            source.Add("Xamarin Forms");
-            source.Add("Xamarin Droid");
-            source.Add("Xamarin Android");
-            source.Add("Xamarin iOS");
-            source.Add("Xamarin Apple");
-            source.Add("Xamarin Mac");
-            source.Add("Xamarin UWP");
+            try
+            {
+                InitializeComponent();
+                autoCompleteEntry.ItemsSource = source;
+                source.Add("Option 1");
+                source.Add("Option 2");
+                source.Add("Test 1");
+                source.Add("Test 2");
+                source.Add("Test 3");
+                source.Add("Test 4");
+                source.Add("Sample");
+                source.Add("Xamarin");
+                source.Add("Xamarin Forms");
+                source.Add("Xamarin Droid");
+                source.Add("Xamarin Android");
+                source.Add("Xamarin iOS");
+                source.Add("Xamarin Apple");
+                source.Add("Xamarin Mac");
+                source.Add("Xamarin UWP");
+            }
+            catch (Exception e)
+            {
+                DisplayAlert("Error:", e.ToString(), "ok");
+            }
+        }
+        private void AddAutoCompleteEntry(object sender, EventArgs e)
+        {
+            try
+            {
+                var entry = new AutoCompleteEntry
+                {
+                    ItemsSource = source,
+                    Text = "Starting Text",
+                    Placeholder = "This is placeholder",
+                    TextColor = Color.Accent,
+                    PlaceholderColor = Color.Red,
+                };
+                mainLayout.Children.Add(entry);
+            }
+            catch (Exception ex)
+            {
+
+                DisplayAlert("Error:", ex.ToString(), "ok");
+            }
         }
     }
 }

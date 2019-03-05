@@ -4,6 +4,7 @@ using Foundation;
 using Plugin.InputKit.Platforms.iOS.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UIKit;
@@ -46,8 +47,9 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
 
         public int AutocompleteTableViewHeight { get; set; } = 150;
 
-        public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView)
+        public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, nfloat y)
         {
+            y = 200;
             if (viewController == null)
             {
                 throw new ArgumentNullException(nameof(viewController), @"View cannot be null");
@@ -55,6 +57,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
 
             _scrollView = scrollView;
             _drawnFrame = layer.Frame;
+            Debug.WriteLine($"layer.Frame: x: {layer.Frame.X} | Y: {layer.Frame.Y} | bottom {layer.Frame.Bottom}");
             _parentViewController = viewController;
 
 
@@ -84,7 +87,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
             if (scrollViewIsNull)
             {
                 view = _parentViewController.View;
-                frame = new CGRect(_drawnFrame.X, _drawnFrame.Bottom + _drawnFrame.Height + 90, _drawnFrame.Width, AutocompleteTableViewHeight);
+                frame = new CGRect(_drawnFrame.X, _drawnFrame.Y + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
             }
             else
             {
@@ -92,7 +95,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
                 var p = e.Padding;
                 var m = e.Margin;
                 frame = new CGRect(_drawnFrame.X + p.Left + m.Left,
-                    _drawnFrame.Y + _drawnFrame.Height + 90,
+                    _drawnFrame.Y + _drawnFrame.Height,
                     _drawnFrame.Width,
                     AutocompleteTableViewHeight);
                 view = _scrollView;

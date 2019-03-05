@@ -35,7 +35,7 @@ namespace Plugin.InputKit.Shared.Controls
             typeof(int),
             typeof(AutoCompleteView),
             2);
-
+        
         /// <summary>
         ///     Sorting Algorithm for the drop down list. This is a bindable property.
         /// </summary>

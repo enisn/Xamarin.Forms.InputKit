@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -41,10 +42,28 @@ namespace Plugin.InputKit.Platforms.iOS
         }
         public override void Draw(CGRect rect)
         {
-            base.Draw(rect);
+            //base.Draw(rect);
+            Debug.WriteLine($"*****************************");
+            //Debug.WriteLine($"rect: X: {rect.X} | Y: {rect.Y}");
+            //Debug.WriteLine($"Control.Frame: X: {Control.Frame.X} | Y: {Control.Frame.Y} | Bottom: {Control.Frame.Bottom}");
+            //Debug.WriteLine($"Control.Bounds: X: {Control.Bounds.X} | Y: {Control.Bounds.Y} | Bottom: {Control.Bounds.Bottom}");
+            //Debug.WriteLine($"Control.Superview.Frame: X: {Control.Superview.Frame.X} | Y: {Control.Superview.Frame.Y} | Bottom: {Control.Superview.Frame.Bottom}");
+            //Debug.WriteLine($"Control.Superview.Bounds: X: {Control.Superview.Bounds.X} | Y: {Control.Superview.Bounds.Y} | Bottom: {Control.Superview.Bounds.Bottom}");
+            //Debug.WriteLine($"Control.Superview.Superview.Frame: X: {Control.Superview.Superview?.Frame.X} | Y: {Control.Superview.Superview?.Frame.Y} | Bottom: {Control.Superview.Superview?.Frame.Bottom} | Top: {Control.Superview.Superview?.Frame.Bottom}");
+            //Debug.WriteLine($"this.Frame: X: {this.Frame.X} | Y: {this.Frame.Y} | Bottom: {this.Frame.Bottom}");
+            Debug.WriteLine($"NativeView.Frame: X: {NativeView.Frame.X} | Y: {this.NativeView.Frame.Y} | Bottom: {this.NativeView.Frame.Bottom}");
+            Debug.WriteLine($"NativeView.Frame.Location: X: {NativeView.Frame.Location.X} | Y: {this.NativeView.Frame.Location.Y}");
+            Debug.WriteLine($"NativeView.Bounds: X: {NativeView.Bounds.X} | Y: {this.NativeView.Bounds.Y} | Bottom: {this.NativeView.Bounds.Bottom}");
+            Debug.WriteLine($"NativeView.Bounds.Location: X: {NativeView.Bounds.Location.X} | Y: {this.NativeView.Bounds.Location.Y}");
+            //var gPoint = NativeView.Superview.ConvertRectFromCoordinateSpace(NativeView.Frame.Location,);
+            //Debug.WriteLine($"gPoint.Bounds: X: {gPoint.X} | Y: {gPoint.Y} | Bottom: {gPoint.Bottom}");
+            
+
             var scrollView = GetParentScrollView(Control);
             var ctrl = UIApplication.SharedApplication.GetTopViewController();
-            NativeControl.Draw(ctrl, Layer, scrollView);
+
+
+            NativeControl.Draw(ctrl, Layer, scrollView, Frame.X + Frame.Bottom);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
