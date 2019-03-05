@@ -38,14 +38,18 @@ namespace Plugin.InputKit.Shared.Controls
         Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
-        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily };
+        Entry txtInput;
 
+            /// <summary>
+            /// Default Constructor
+            /// </summary>
         #endregion        
         /// <summary>
         /// Default Constructor
         /// </summary>
         public AdvancedEntry()
         {
+            txtInput = GetInputEntry();
             this.Children.Add(lblTitle);
             this.Children.Add(lblAnnotation);
             this.Children.Add(frmBackground);
@@ -432,8 +436,19 @@ namespace Plugin.InputKit.Shared.Controls
             ValidationChanged?.Invoke(this, new EventArgs());
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
         } 
-        #endregion
 
+        private protected virtual Entry GetInputEntry()
+        {
+            return new EmptyEntry
+            {
+                TextColor = GlobalSetting.TextColor,
+                PlaceholderColor = Color.LightGray,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.Center,
+                FontFamily = GlobalSetting.FontFamily
+            };
+        }
+        #endregion
         /// <summary>
         /// Enum of Annotations. Detail will be added later.
         /// </summary>
