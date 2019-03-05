@@ -41,26 +41,6 @@ namespace Sample.InputKit.Views
             {
                 DisplayAlert("Error:", e.ToString(), "ok");
             }
-        }
-        private void AddAutoCompleteEntry(object sender, EventArgs e)
-        {
-            try
-            {
-                var entry = new AutoCompleteEntry
-                {
-                    ItemsSource = source,
-                    Text = "Starting Text",
-                    Placeholder = "This is placeholder",
-                    TextColor = Color.Accent,
-                    PlaceholderColor = Color.Red,
-                };
-                mainLayout.Children.Add(entry);
-            }
-            catch (Exception ex)
-            {
-
-                DisplayAlert("Error:", ex.ToString(), "ok");
-            }
-        }
+        }       
     }
 }

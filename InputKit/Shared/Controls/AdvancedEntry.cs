@@ -16,8 +16,9 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public partial class AdvancedEntry : StackLayout, IValidatable
     {
+        #region Statics
         /// <summary>
-        /// This settings will be replaced default values of all AdvancedEntries
+        /// Keeps default setting of <see cref="AdvancedEntry"/>. AdvancedEntry uses this default settings to initalize.
         /// </summary>
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
@@ -28,14 +29,18 @@ namespace Plugin.InputKit.Shared.Controls
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1,
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
-        };
+        }; 
+        #endregion
 
+        #region Fields
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput;
+        #endregion
+        
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -64,11 +69,7 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             imgWarning.IsVisible = this.IsRequired;
         }
-        void ExecuteCommand()
-        {
-            if (CompletedCommand?.CanExecute(CommandParameter ?? this) ?? false)
-                CompletedCommand?.Execute(CommandParameter ?? this);
-        }
+
         #region Not Implemented
         public bool IsSelected { get => false; set { } }
         public object Value { get; set; }
@@ -81,62 +82,13 @@ namespace Plugin.InputKit.Shared.Controls
         private int _minLength;
         private string _validationMessage;
         #endregion
+        #region Events
         public event EventHandler Completed;
         public event EventHandler<TextChangedEventArgs> TextChanged;
         public event EventHandler Clicked;
-        public event EventHandler ValidationChanged;
-        /// <summary>
-        /// Focus on this entry
-        /// </summary>
-        public new void Focus()
-        {
-            txtInput.Focus();
-        }
-        /// <summary>
-        /// Onfocus from this entry and hides keyboard.
-        /// </summary>
-        public new void Unfocus()
-        {
-            txtInput.Unfocus();
-        }
-        /// <summary>
-        /// Automaticly finds next Advanced entry and focus it.
-        /// </summary>
-        public void FocusNext()
-        {
-            if (this.Parent is Layout<View> == false) return;
-
-            Layout<View> parent = this.Parent as Layout<View>;
-
-            int index = parent.Children.IndexOf(this);
-            for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
-            {
-                if (parent.Children[i] is AdvancedEntry)
-                {
-                    (parent.Children[i] as AdvancedEntry).Focus();
-                    break;
-                }
-            }
-        }
-        /// <summary>
-        /// Resets of current annotation check and hides annotation message 
-        /// </summary>
-        public void Reset()
-        {
-            txtInput.Text = null;
-            this.AnnotationMessage = null;
-            imgWarning.IsVisible = false;
-        }
-        private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            SetValue(TextProperty, txtInput.Text);
-            SetValue(IsAnnotatedProperty, IsAnnotated);
-
-            UpdateWarning();
-            if (!IgnoreValidationMessage)
-                DisplayValidation();
-            TextChanged?.Invoke(this, e);
-        }
+        public event EventHandler ValidationChanged; 
+        #endregion
+        #region Properties
         ///------------------------------------------------------------------------
         /// <summary>
         /// Text of this input
@@ -242,7 +194,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// will be added
         /// </summary>
         public AnnotationType Annotation { get => _annotation; set { _annotation = value; UpdateKeyboard(value); } }
-        ///------------------------------------------------------------------------
+        //------------------------------------------------------------------------
         /// <summary>
         /// Disabled this control
         /// </summary>
@@ -255,7 +207,7 @@ namespace Plugin.InputKit.Shared.Controls
                 txtInput.IsEnabled = !value;
             }
         }
-        ///------------------------------------------------------------------------
+        //------------------------------------------------------------------------
         /// <summary>
         /// Finds this entry if Annotated
         /// </summary>
@@ -297,37 +249,48 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set { }
         }
-        ///------------------------------------------------------------------------
+        //------------------------------------------------------------------------
         /// <summary>
         /// Comes from IValidatable implementation. Shows this if Validated.
         /// </summary>
         public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
-        ///------------------------------------------------------------------------
+        //------------------------------------------------------------------------
         /// <summary>
         /// Validation message to update automaticly. This will be shown when entry is not validated
         /// </summary>
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
-        ///------------------------------------------------------------------------
+        //------------------------------------------------------------------------
         /// <summary>
         /// Ignores automaticly update annotationmessage
         /// </summary>
         public bool IgnoreValidationMessage { get => (bool)GetValue(IgnoreValidationMessageProperty); set => SetValue(IgnoreValidationMessageProperty, value); }
+        ///----------------------------------------- -------------------------------
         /// <summary>
         /// Executed when entry completed.
         /// </summary>
         public ICommand CompletedCommand { get; set; }
+        ///----------------------------------------- -------------------------------
         /// <summary>
         /// Parameter to send with CompletedCommand
         /// </summary>
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
+        ///----------------------------------------- -------------------------------
         /// <summary>
         /// You need to set Annotation="Regex" to use this.
         /// </summary>
         public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty, value); }
+        //------------------------------------------------------------------------
+        /// <summary>
+        /// Changes Font Size of Entry's Text
+        /// </summary>
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double TextFontSize { get => (double)GetValue(TextFontSizeProperty); set => SetValue(TextFontSizeProperty, value); }
+        ///----------------------------------------- -------------------------------
         /// <summary>
         /// Gets and sets keyboard type of this entry
         /// </summary>
-        public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; }
+        public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; } 
+        #endregion
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
         #region BindableProperties
@@ -348,9 +311,71 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
+        public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
+
+        #region Methods
+        void ExecuteCommand()
+        {
+            if (CompletedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+                CompletedCommand?.Execute(CommandParameter ?? this);
+        }
+
+        /// <summary>
+        /// Focus on this entry
+        /// </summary>
+        public virtual new void Focus()
+        {
+            txtInput.Focus();
+        }
+        /// <summary>
+        /// Onfocus from this entry and hides keyboard.
+        /// </summary>
+        public virtual new void Unfocus()
+        {
+            txtInput.Unfocus();
+        }
+        /// <summary>
+        /// Automaticly finds next Advanced entry and focus it.
+        /// </summary>
+        public virtual void FocusNext()
+        {
+            if (this.Parent is Layout<View> == false) return;
+
+            Layout<View> parent = this.Parent as Layout<View>;
+
+            int index = parent.Children.IndexOf(this);
+            for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
+            {
+                if (parent.Children[i] is AdvancedEntry)
+                {
+                    (parent.Children[i] as AdvancedEntry).Focus();
+                    break;
+                }
+            }
+        }
+        /// <summary>
+        /// Resets of current annotation check and hides annotation message 
+        /// </summary>
+        public void Reset()
+        {
+            txtInput.Text = null;
+            this.AnnotationMessage = null;
+            imgWarning.IsVisible = false;
+        }
+        private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SetValue(TextProperty, txtInput.Text);
+            SetValue(IsAnnotatedProperty, IsAnnotated);
+
+            UpdateWarning();
+            if (!IgnoreValidationMessage)
+                DisplayValidation();
+            TextChanged?.Invoke(this, e);
+        }
+
         [Obsolete("Keyboard won't be changed automaticly on newer versions. Try set Keyboard property", false)]
         public void UpdateKeyboard(AnnotationType annotation)
         {
@@ -407,7 +432,8 @@ namespace Plugin.InputKit.Shared.Controls
         {
             ValidationChanged?.Invoke(this, new EventArgs());
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
-        }
+        } 
+
         private protected virtual Entry GetInputEntry()
         {
             return new EmptyEntry
@@ -419,8 +445,9 @@ namespace Plugin.InputKit.Shared.Controls
                 FontFamily = GlobalSetting.FontFamily
             };
         }
+        #endregion
         /// <summary>
-        /// Anum of Annotations. Detail will be added later.
+        /// Enum of Annotations. Detail will be added later.
         /// </summary>
         public enum AnnotationType
         {

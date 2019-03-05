@@ -6,7 +6,7 @@
              Title="AutoCompleteEntries">
     <ContentPage.Content>
         <StackLayout x:Name="mainLayout" Padding="25" Spacing="15">
-            <Button Text="Add" Clicked="AddAutoCompleteEntry" />
+
             <input:AutoCompleteEntry 
                 x:Name="autoCompleteEntry"
                 Title="Type something"

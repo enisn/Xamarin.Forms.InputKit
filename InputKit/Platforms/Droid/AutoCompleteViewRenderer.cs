@@ -34,8 +34,8 @@ namespace Plugin.InputKit.Platforms.Droid
         public AutoCompleteViewRenderer(Context context) : base(context)
         {
         }
-
-        private AppCompatAutoCompleteTextView NativeControl => Control?.EditText as AppCompatAutoCompleteTextView;
+        
+        private AppCompatAutoCompleteTextView AutoComplete => Control?.EditText as AppCompatAutoCompleteTextView;
 
         protected override TextInputLayout CreateNativeControl()
         {
@@ -79,6 +79,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 KillPassword();
                 NativeControl.TextChanged += (s, args) => Element.RaiseTextChanged(NativeControl.Text);
                 NativeControl.ItemClick += AutoCompleteOnItemSelected;
+
                 var elm = e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;
             }
@@ -123,6 +124,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 element.ItemsSource.ToList(),
                 element.SortingAlgorithm);
             NativeControl.Adapter = adapter;
+
             adapter.NotifyDataSetChanged();
         }
 

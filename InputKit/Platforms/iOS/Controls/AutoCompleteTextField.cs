@@ -1,12 +1,10 @@
-﻿using CoreAnimation;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using CoreAnimation;
 using CoreGraphics;
 using Foundation;
 using Plugin.InputKit.Platforms.iOS.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
@@ -14,9 +12,9 @@ using Xamarin.Forms.Platform.iOS;
 namespace Plugin.InputKit.Platforms.iOS.Controls
 {
     [Register("MbAutoCompleteTextField")]
-    public class MbAutoCompleteTextField : UITextField, IUITextFieldDelegate
+    public class AutoCompleteTextField : UITextField, IUITextFieldDelegate
     {
-        private MbAutoCompleteViewSource _autoCompleteViewSource;
+        private AutoCompleteViewSource _autoCompleteViewSource;
         private UIView _background;
         private CGRect _drawnFrame;
         private List<string> _items;
@@ -25,7 +23,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
 
         public Func<string, ICollection<string>, ICollection<string>> SortingAlgorithm { get; set; } = (t, d) => d;
 
-        public MbAutoCompleteViewSource AutoCompleteViewSource
+        public AutoCompleteViewSource AutoCompleteViewSource
         {
             get { return _autoCompleteViewSource; }
             set
@@ -47,7 +45,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
 
         public int AutocompleteTableViewHeight { get; set; } = 150;
 
-        public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView)
+        public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, nfloat y)
         {
             if (viewController == null)
             {
@@ -57,6 +55,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
             _scrollView = scrollView;
             _drawnFrame = layer.Frame;
             _parentViewController = viewController;
+
 
             //Make new tableview and do some settings
             AutoCompleteTableView = new MbAutoCompleteTableView(_scrollView)
@@ -84,8 +83,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
             if (scrollViewIsNull)
             {
                 view = _parentViewController.View;
-
-                frame = new CGRect(_drawnFrame.X, _drawnFrame.Bottom + _drawnFrame.Height + 90, _drawnFrame.Width, AutocompleteTableViewHeight);
+                frame = new CGRect(_drawnFrame.X, y + _drawnFrame.Height, _drawnFrame.Width, AutocompleteTableViewHeight);
             }
             else
             {
@@ -93,7 +91,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
                 var p = e.Padding;
                 var m = e.Margin;
                 frame = new CGRect(_drawnFrame.X + p.Left + m.Left,
-                    _drawnFrame.Y + _drawnFrame.Height + 90,
+                    y + _drawnFrame.Height,
                     _drawnFrame.Width,
                     AutocompleteTableViewHeight);
                 view = _scrollView;

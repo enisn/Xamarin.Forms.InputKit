@@ -20,7 +20,9 @@ namespace Plugin.InputKit.Platforms.iOS
 {
     public class AutoCompleteViewRenderer : ViewRenderer<AutoCompleteView, UITextField>
     {
-        private MbAutoCompleteTextField NativeControl => (MbAutoCompleteTextField)Control;
+
+        private AutoCompleteTextField NativeControl => (AutoCompleteTextField)Control;
+
         private AutoCompleteView AutoCompleteEntry => (AutoCompleteView)Element;
 
         public AutoCompleteViewRenderer()
@@ -31,39 +33,31 @@ namespace Plugin.InputKit.Platforms.iOS
 
         protected override UITextField CreateNativeControl()
         {
-            var element = (AutoCompleteView)Element;
-            var view = new MbAutoCompleteTextField
+            var view = new AutoCompleteTextField
             {
-                AutoCompleteViewSource = new MbAutoCompleteDefaultDataSource(),
-                SortingAlgorithm = element.SortingAlgorithm
+                AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
+                SortingAlgorithm = Element.SortingAlgorithm
             };
+
+            if (Element != null)
+            {
+                view.AttributedPlaceholder = new NSAttributedString(Element.Placeholder,null,Element.PlaceholderColor.ToUIColor());
+                view.Text = Element.Text;
+                view.TextColor = Element.TextColor.ToUIColor();
+            }
             view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
             return view;
         }
         public override void Draw(CGRect rect)
         {
-            //base.Draw(rect);
-            Debug.WriteLine($"*****************************");
-            //Debug.WriteLine($"rect: X: {rect.X} | Y: {rect.Y}");
-            //Debug.WriteLine($"Control.Frame: X: {Control.Frame.X} | Y: {Control.Frame.Y} | Bottom: {Control.Frame.Bottom}");
-            //Debug.WriteLine($"Control.Bounds: X: {Control.Bounds.X} | Y: {Control.Bounds.Y} | Bottom: {Control.Bounds.Bottom}");
-            //Debug.WriteLine($"Control.Superview.Frame: X: {Control.Superview.Frame.X} | Y: {Control.Superview.Frame.Y} | Bottom: {Control.Superview.Frame.Bottom}");
-            //Debug.WriteLine($"Control.Superview.Bounds: X: {Control.Superview.Bounds.X} | Y: {Control.Superview.Bounds.Y} | Bottom: {Control.Superview.Bounds.Bottom}");
-            //Debug.WriteLine($"Control.Superview.Superview.Frame: X: {Control.Superview.Superview?.Frame.X} | Y: {Control.Superview.Superview?.Frame.Y} | Bottom: {Control.Superview.Superview?.Frame.Bottom} | Top: {Control.Superview.Superview?.Frame.Bottom}");
-            //Debug.WriteLine($"this.Frame: X: {this.Frame.X} | Y: {this.Frame.Y} | Bottom: {this.Frame.Bottom}");
-            Debug.WriteLine($"NativeView.Frame: X: {NativeView.Frame.X} | Y: {this.NativeView.Frame.Y} | Bottom: {this.NativeView.Frame.Bottom}");
-            Debug.WriteLine($"NativeView.Frame.Location: X: {NativeView.Frame.Location.X} | Y: {this.NativeView.Frame.Location.Y}");
-            Debug.WriteLine($"NativeView.Bounds: X: {NativeView.Bounds.X} | Y: {this.NativeView.Bounds.Y} | Bottom: {this.NativeView.Bounds.Bottom}");
-            Debug.WriteLine($"NativeView.Bounds.Location: X: {NativeView.Bounds.Location.X} | Y: {this.NativeView.Bounds.Location.Y}");
-            //var gPoint = NativeView.Superview.ConvertRectFromCoordinateSpace(NativeView.Frame.Location,);
-            //Debug.WriteLine($"gPoint.Bounds: X: {gPoint.X} | Y: {gPoint.Y} | Bottom: {gPoint.Bottom}");
-            
-
+            base.Draw(rect);
             var scrollView = GetParentScrollView(Control);
             var ctrl = UIApplication.SharedApplication.GetTopViewController();
-
-
-            NativeControl.Draw(ctrl, Layer, scrollView, Frame.X + Frame.Bottom);
+            
+            var relativePosition = UIApplication.SharedApplication.KeyWindow;
+            var relativeFrame = NativeControl.Superview.ConvertRectToView(NativeControl.Frame, relativePosition);
+            Debug.WriteLine($"************** RelativeFrame:   x: {relativeFrame.X} | y: {relativeFrame.Y} *****************");
+            NativeControl.Draw(ctrl, Layer, scrollView, relativeFrame.Y);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
@@ -84,6 +78,7 @@ namespace Plugin.InputKit.Platforms.iOS
                 SetThreshold();
                 KillPassword();
                 NativeControl.EditingChanged += (s, args) => Element.RaiseTextChanged(NativeControl.Text);
+
                 var elm = (AutoCompleteView)e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;
             }
