@@ -35,7 +35,7 @@ namespace Plugin.InputKit.Shared.Controls
             typeof(int),
             typeof(AutoCompleteView),
             2);
-
+            
         /// <summary>
         ///     Sorting Algorithm for the drop down list. This is a bindable property.
         /// </summary>
@@ -112,7 +112,10 @@ namespace Plugin.InputKit.Shared.Controls
         {
             CollectionChanged?.Invoke(sender, args);
         }
-
+        public virtual void RaiseTextChanged(string text)
+        {
+            base.Text = text;
+        }
         protected virtual void OnItemsSourcePropertyChanged(AutoCompleteView bindable, object oldvalue, object newvalue) { }
         protected virtual void OnItemSelected(SelectedItemChangedEventArgs args) { }
     }

@@ -20,6 +20,7 @@ namespace Plugin.InputKit.Platforms.iOS
 {
     public class AutoCompleteViewRenderer : ViewRenderer<AutoCompleteView, UITextField>
     {
+
         private AutoCompleteTextField NativeControl => (AutoCompleteTextField)Control;
 
         private AutoCompleteView AutoCompleteEntry => (AutoCompleteView)Element;
@@ -32,7 +33,6 @@ namespace Plugin.InputKit.Platforms.iOS
 
         protected override UITextField CreateNativeControl()
         {
-
             var view = new AutoCompleteTextField
             {
                 AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
@@ -77,6 +77,7 @@ namespace Plugin.InputKit.Platforms.iOS
                 SetItemsSource();
                 SetThreshold();
                 KillPassword();
+                NativeControl.EditingChanged += (s, args) => Element.RaiseTextChanged(NativeControl.Text);
 
                 var elm = (AutoCompleteView)e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;

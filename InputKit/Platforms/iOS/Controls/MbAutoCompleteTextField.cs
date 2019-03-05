@@ -4,6 +4,7 @@ using Foundation;
 using Plugin.InputKit.Platforms.iOS.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using UIKit;
@@ -57,7 +58,6 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
             _drawnFrame = layer.Frame;
             _parentViewController = viewController;
 
-
             //Make new tableview and do some settings
             AutoCompleteTableView = new MbAutoCompleteTableView(_scrollView)
             {
@@ -84,6 +84,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
             if (scrollViewIsNull)
             {
                 view = _parentViewController.View;
+
                 frame = new CGRect(_drawnFrame.X, _drawnFrame.Bottom + _drawnFrame.Height + 90, _drawnFrame.Width, AutocompleteTableViewHeight);
             }
             else

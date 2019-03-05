@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>3.0.0-pre5</version>
+    <version>3.0.0-pre6</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>enisn</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>CheckBox and RadioButton are ready for V3</releaseNotes>
+    <releaseNotes>CheckBox, RadioButton are ready for V3 | AutoCompleteEntry is ready for preview.</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -45,7 +45,7 @@
     <copyright>Copyright ©2018 Enis Necipoglu</copyright>
 
     <!-- Tags appear in the gallery and can be used for tag searches -->
-    <tags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</tags>
+    <tags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown, autocomplete</tags>
 
     <!-- Dependencies are automatically installed when the package is installed -->
     <dependencies>
