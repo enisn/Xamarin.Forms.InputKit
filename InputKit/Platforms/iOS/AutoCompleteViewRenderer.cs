@@ -1,4 +1,5 @@
 ﻿using CoreGraphics;
+using Foundation;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Platforms.iOS.Controls;
 using Plugin.InputKit.Platforms.iOS.Helpers;
@@ -31,12 +32,18 @@ namespace Plugin.InputKit.Platforms.iOS
 
         protected override UITextField CreateNativeControl()
         {
-            var element = (AutoCompleteView)Element;
             var view = new AutoCompleteTextField
             {
                 AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
-                SortingAlgorithm = element.SortingAlgorithm
+                SortingAlgorithm = Element.SortingAlgorithm
             };
+
+            if (Element != null)
+            {
+                view.AttributedPlaceholder = new NSAttributedString(Element.Placeholder,null,Element.PlaceholderColor.ToUIColor());
+                view.Text = Element.Text;
+                view.TextColor = Element.TextColor.ToUIColor();
+            }
             view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
             return view;
         }
