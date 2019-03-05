@@ -1,5 +1,4 @@
 ﻿using CoreGraphics;
-using Foundation;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Platforms.iOS.Controls;
 using Plugin.InputKit.Platforms.iOS.Helpers;
@@ -21,7 +20,9 @@ namespace Plugin.InputKit.Platforms.iOS
 {
     public class AutoCompleteViewRenderer : ViewRenderer<AutoCompleteView, UITextField>
     {
+
         private AutoCompleteTextField NativeControl => (AutoCompleteTextField)Control;
+
         private AutoCompleteView AutoCompleteEntry => (AutoCompleteView)Element;
 
         public AutoCompleteViewRenderer()
@@ -52,7 +53,7 @@ namespace Plugin.InputKit.Platforms.iOS
             base.Draw(rect);
             var scrollView = GetParentScrollView(Control);
             var ctrl = UIApplication.SharedApplication.GetTopViewController();
-
+            
             var relativePosition = UIApplication.SharedApplication.KeyWindow;
             var relativeFrame = NativeControl.Superview.ConvertRectToView(NativeControl.Frame, relativePosition);
             Debug.WriteLine($"************** RelativeFrame:   x: {relativeFrame.X} | y: {relativeFrame.Y} *****************");
@@ -76,6 +77,7 @@ namespace Plugin.InputKit.Platforms.iOS
                 SetItemsSource();
                 SetThreshold();
                 KillPassword();
+                NativeControl.EditingChanged += (s, args) => Element.RaiseTextChanged(NativeControl.Text);
 
                 var elm = (AutoCompleteView)e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;

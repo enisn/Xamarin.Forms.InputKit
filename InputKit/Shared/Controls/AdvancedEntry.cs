@@ -39,7 +39,8 @@ namespace Plugin.InputKit.Shared.Controls
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput;
-        #endregion        
+        #endregion
+        
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -92,7 +93,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Text of this input
         /// </summary>
-        public string Text { get => txtInput.Text; set => txtInput.Text = value; }
+        public string Text { get => txtInput.Text; set { txtInput.Text = value; OnPropertyChanged(); } }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Title will be shown top of this control
@@ -133,7 +134,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Placeholder of entry
         /// </summary>
-        public string Placeholder { get => txtInput.Placeholder; set => txtInput.Placeholder = value; }
+        public string Placeholder { get => txtInput.Placeholder; set { txtInput.Placeholder = value; OnPropertyChanged(nameof(Placeholder)); } }
         /// <summary>
         /// Maximum length of this Entry
         /// </summary>

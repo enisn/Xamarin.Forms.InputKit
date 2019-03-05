@@ -14,7 +14,6 @@
             <Button Text="CheckBoxes" Clicked="CheckBoxes_Clicked" />
             <Button Text="RadioButons" Clicked="RadioButons_Clicked" />
             <Button Text="AutoCompleteEntries" Clicked="AutoCompleteEntries_Clicked" />
-
             
             <input:Dropdown Title="Chosse an option below:"                            
                             TitleColor="Black"
@@ -35,8 +34,6 @@
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
 
             <input:SelectionView ColumnNumber="2" RowSpacing="1" ColumnSpacing="1" SelectionType="Button" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
-
-
 
         </StackLayout>
     </ScrollView>

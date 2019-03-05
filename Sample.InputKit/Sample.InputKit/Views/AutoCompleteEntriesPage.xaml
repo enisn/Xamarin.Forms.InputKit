@@ -6,11 +6,15 @@
              Title="AutoCompleteEntries">
     <ContentPage.Content>
         <StackLayout x:Name="mainLayout" Padding="25" Spacing="15">
+
             <input:AutoCompleteEntry 
                 x:Name="autoCompleteEntry"
                 Title="Type something"
                 Placeholder="Here you go..."
-                IconImage="ic_account_balance_black">
+                IconImage="ic_account_balance_black"
+                Text="Starting Text"
+                TextColor="Accent"
+                >
             </input:AutoCompleteEntry>
         </StackLayout>
     </ContentPage.Content>

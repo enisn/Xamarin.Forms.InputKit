@@ -34,7 +34,7 @@ namespace Plugin.InputKit.Platforms.Droid
         public AutoCompleteViewRenderer(Context context) : base(context)
         {
         }
-
+        
         private AppCompatAutoCompleteTextView AutoComplete => Control?.EditText as AppCompatAutoCompleteTextView;
 
         protected override TextInputLayout CreateNativeControl()
@@ -42,13 +42,19 @@ namespace Plugin.InputKit.Platforms.Droid
             var textInputLayout = new TextInputLayout(Context);
             var autoComplete = new AppCompatAutoCompleteTextView(Context)
             {
-                BackgroundTintList = ColorStateList.ValueOf(GetPlaceholderColor())
+                BackgroundTintList = ColorStateList.ValueOf(GetPlaceholderColor()),
+                Text = Element?.Text,
+                Hint = Element?.Placeholder,
             };
 
             GradientDrawable gd = new GradientDrawable();
             gd.SetColor(global::Android.Graphics.Color.Transparent);
             autoComplete.SetBackground(gd);
-
+            if (Element != null)
+            {
+                autoComplete.SetHintTextColor(Element.PlaceholderColor.ToAndroid());
+                autoComplete.SetTextColor(Element.TextColor.ToAndroid());
+            }
             textInputLayout.AddView(autoComplete);
             return textInputLayout;
         }
@@ -59,7 +65,7 @@ namespace Plugin.InputKit.Platforms.Droid
             if (e.OldElement != null)
             {
                 // unsubscribe
-                AutoComplete.ItemClick -= AutoCompleteOnItemSelected;
+                NativeControl.ItemClick -= AutoCompleteOnItemSelected;
                 var elm = e.OldElement;
                 elm.CollectionChanged -= ItemsSourceCollectionChanged;
             }
@@ -71,7 +77,9 @@ namespace Plugin.InputKit.Platforms.Droid
                 SetItemsSource();
                 SetThreshold();
                 KillPassword();
-                AutoComplete.ItemClick += AutoCompleteOnItemSelected;
+                NativeControl.TextChanged += (s, args) => Element.RaiseTextChanged(NativeControl.Text);
+                NativeControl.ItemClick += AutoCompleteOnItemSelected;
+
                 var elm = e.NewElement;
                 elm.CollectionChanged += ItemsSourceCollectionChanged;
             }
@@ -115,7 +123,8 @@ namespace Plugin.InputKit.Platforms.Droid
                 Android.Resource.Layout.SimpleDropDownItem1Line,
                 element.ItemsSource.ToList(),
                 element.SortingAlgorithm);
-            AutoComplete.Adapter = adapter;
+            NativeControl.Adapter = adapter;
+
             adapter.NotifyDataSetChanged();
         }
 
@@ -130,7 +139,7 @@ namespace Plugin.InputKit.Platforms.Droid
         private void SetThreshold()
         {
             var element = (AutoCompleteView)Element;
-            AutoComplete.Threshold = element.Threshold;
+            NativeControl.Threshold = element.Threshold;
         }
 
         #region Section 2
