@@ -1,11 +1,11 @@
-﻿using Foundation;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Foundation;
 using UIKit;
 
 namespace Plugin.InputKit.Platforms.iOS.Helpers
 {
-    public class MbAutoCompleteDefaultDataSource : MbAutoCompleteViewSource
+    public class AutoCompleteDefaultDataSource : AutoCompleteViewSource
     {
         private const string _cellIdentifier = "DefaultIdentifier";
 

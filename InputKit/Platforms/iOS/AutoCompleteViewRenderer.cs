@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -19,7 +20,7 @@ namespace Plugin.InputKit.Platforms.iOS
 {
     public class AutoCompleteViewRenderer : ViewRenderer<AutoCompleteView, UITextField>
     {
-        private MbAutoCompleteTextField NativeControl => (MbAutoCompleteTextField)Control;
+        private AutoCompleteTextField NativeControl => (AutoCompleteTextField)Control;
         private AutoCompleteView AutoCompleteEntry => (AutoCompleteView)Element;
 
         public AutoCompleteViewRenderer()
@@ -31,9 +32,9 @@ namespace Plugin.InputKit.Platforms.iOS
         protected override UITextField CreateNativeControl()
         {
             var element = (AutoCompleteView)Element;
-            var view = new MbAutoCompleteTextField
+            var view = new AutoCompleteTextField
             {
-                AutoCompleteViewSource = new MbAutoCompleteDefaultDataSource(),
+                AutoCompleteViewSource = new AutoCompleteDefaultDataSource(),
                 SortingAlgorithm = element.SortingAlgorithm
             };
             view.AutoCompleteViewSource.Selected += AutoCompleteViewSourceOnSelected;
@@ -44,7 +45,11 @@ namespace Plugin.InputKit.Platforms.iOS
             base.Draw(rect);
             var scrollView = GetParentScrollView(Control);
             var ctrl = UIApplication.SharedApplication.GetTopViewController();
-            NativeControl.Draw(ctrl, Layer, scrollView);
+
+            var relativePosition = UIApplication.SharedApplication.KeyWindow;
+            var relativeFrame = NativeControl.Superview.ConvertRectToView(NativeControl.Frame, relativePosition);
+            Debug.WriteLine($"************** RelativeFrame:   x: {relativeFrame.X} | y: {relativeFrame.Y} *****************");
+            NativeControl.Draw(ctrl, Layer, scrollView, relativeFrame.Y);
         }
 
         protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
