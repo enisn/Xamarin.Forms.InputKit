@@ -1,6 +1,7 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -50,6 +51,8 @@ namespace Plugin.InputKit.Shared.Controls
         public RadioButton()
         {
             InitVisualStates();
+            this.ApplyIsCheckedAction = ApplyIsChecked;
+            this.ApplyIsPressedAction = ApplyIsPressed;
             if (Device.RuntimePlatform != Device.iOS)
                 lblText.FontSize = lblText.FontSize *= 1.5;
             Orientation = StackOrientation.Horizontal;
@@ -103,12 +106,18 @@ namespace Plugin.InputKit.Shared.Controls
         /// Click event, triggered when clicked
         /// </summary>
         public event EventHandler Clicked;
+
         #region Properties
         //-----------------------------------------------------------------------------
         /// <summary>
-        /// Animator object to animate when touch.
+        /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
         /// </summary>
-        public IAnimator<RadioButton> Animator { get; set; } = new DefaultAnimator<RadioButton>();
+        public Action<bool> ApplyIsCheckedAction { get; set; }
+        //-----------------------------------------------------------------------------
+        /// <summary>
+        /// Applies pressed effect. Default value is <see cref="ApplyIsPressed(bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
+        /// </summary>
+        public Action<bool> ApplyIsPressedAction { get; set; }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Click command, executed when clicked.  Parameter will be Value property if CommandParameter is not set
@@ -130,12 +139,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public bool IsChecked
         {
-            get => iconChecked.IsVisible; set
-            {
-                iconChecked.IsVisible = value;
-                SetValue(IsCheckedProperty, value);
-                Animator?.Animate(this);
-            }
+            get => (bool)GetValue(IsCheckedProperty);
+            set => SetValue(IsCheckedProperty, value);
         }
         //-----------------------------------------------------------------------------
         /// <summary>
@@ -185,13 +190,16 @@ namespace Plugin.InputKit.Shared.Controls
         /// Color of description text of Radio Button
         /// </summary>
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
-
+        /// <summary>
+        /// Internal use only. Applies effect when pressed.
+        /// </summary>
+        [Browsable(false)]
         public bool IsPressed { get => (bool)GetValue(IsPressedProperty); set => SetValue(IsPressedProperty, value); }
         #endregion
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsChecked = (bool)nv);
+        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsCheckedAction((bool)nv));
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextFontSize = (double)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
@@ -201,7 +209,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(RadioButton), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
         public static readonly BindableProperty ClickCommandProperty = BindableProperty.Create(nameof(ClickCommand), typeof(ICommand), typeof(RadioButton), null, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ClickCommand = (ICommand)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
-        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).iconCircle.ScaleTo((bool)nv ? .5 : 1, 100));
+        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
@@ -235,11 +243,20 @@ namespace Plugin.InputKit.Shared.Controls
 
         void UpdateColors()
         {
-            iconChecked.FillColor = this.Color;
-            iconCircle.FillColor = IsChecked ? this.Color : this.CircleColor;
-            lblText.TextColor = this.TextColor;
+            iconChecked.FillColor = Color;
+            iconCircle.FillColor = IsChecked ? Color : CircleColor;
+            lblText.TextColor = TextColor;
         }
 
+        public virtual void ApplyIsChecked(bool isChecked)
+        {
+            iconChecked.IsVisible = isChecked;
+            UpdateColors();
+        }
+        public virtual async void ApplyIsPressed(bool isPressed)
+        {
+            await iconCircle.ScaleTo(isPressed ? .5 : 1, 100);
+        }
         void InitVisualStates()
         {
             VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
