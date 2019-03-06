@@ -1,12 +1,15 @@
-﻿using UIKit;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using UIKit;
 
-namespace Plugin.InputKit.Platforms.iOS.Helpers
+namespace Plugin.InputKit.Platforms.iOS.Controls
 {
-    internal class MbAutoCompleteTableView : UITableView
+    internal class AutoCompleteTableView : UITableView
     {
         private readonly UIScrollView _parentScrollView;
 
-        public MbAutoCompleteTableView(UIScrollView parentScrollView)
+        public AutoCompleteTableView(UIScrollView parentScrollView)
         {
             _parentScrollView = parentScrollView;
         }

@@ -58,7 +58,7 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
 
 
             //Make new tableview and do some settings
-            AutoCompleteTableView = new MbAutoCompleteTableView(_scrollView)
+            AutoCompleteTableView = new AutoCompleteTableView(_scrollView)
             {
                 DelaysContentTouches = true,
                 ClipsToBounds = true,
