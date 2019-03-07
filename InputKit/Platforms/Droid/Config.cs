@@ -19,7 +19,7 @@ namespace Plugin.InputKit.Platforms.Droid
 
         public static Bundle CurrentBundle
         {
-            get => currentBundle ?? throw new NotImplementedException("Android wasn't initialized! Make sure your MainActivity > OnCreate() contains Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstance)");;
+            get => currentBundle ?? throw new NotImplementedException("Android wasn't initialized! Make sure your MainActivity > OnCreate() contains Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstance)");
             set => currentBundle = value;
         }
 

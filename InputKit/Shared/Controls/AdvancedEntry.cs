@@ -59,8 +59,8 @@ namespace Plugin.InputKit.Shared.Controls
         {
             txtInput = GetInputEntry();
             this.Children.Add(lblTitle);
-            this.Children.Add(lblAnnotation);
             this.Children.Add(frmBackground);
+            this.Children.Add(lblAnnotation);
             frmBackground.Content = new Grid
             {
                 Children =
