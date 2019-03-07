@@ -31,7 +31,7 @@
 | MAC | Xamarin.Mac20 | YES |
 | WatchOS | Xamarin.WatchOS10 | YES |
 | .NET Standard | 2.0 | YES |
-| .NET Standard | 1.0 | **NO** |
+| .NET Standard | 1.0 | YES |
 
 <hr/>
 
