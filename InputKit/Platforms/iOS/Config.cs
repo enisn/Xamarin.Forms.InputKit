@@ -20,7 +20,6 @@ namespace Plugin.InputKit.Platforms.iOS
 
             Console.WriteLine($"[{typeof(AutoCompleteTableView).FullName}] Initialized.");
             Console.WriteLine($"[{typeof(AutoCompleteTextField).FullName}] Initialized.");
-
         }
     }
 }

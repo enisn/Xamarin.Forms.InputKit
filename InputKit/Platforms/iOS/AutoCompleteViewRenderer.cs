@@ -21,9 +21,7 @@ namespace Plugin.InputKit.Platforms.iOS
 {
     public class AutoCompleteViewRenderer : ViewRenderer<AutoCompleteView, UITextField>
     {
-
         private AutoCompleteTextField NativeControl => (AutoCompleteTextField)Control;
-
         private AutoCompleteView AutoCompleteEntry => (AutoCompleteView)Element;
 
         public AutoCompleteViewRenderer()

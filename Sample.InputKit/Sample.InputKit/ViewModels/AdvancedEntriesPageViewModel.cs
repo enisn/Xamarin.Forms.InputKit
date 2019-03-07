@@ -33,7 +33,6 @@ namespace Sample.InputKit.ViewModels
             //DO SOME STUFFS HERE
         }
 
-
         #region INotifyPropertyChanged Implementation
         public event PropertyChangedEventHandler PropertyChanged;
         public void OnPropertyChanged([CallerMemberName]string propName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
