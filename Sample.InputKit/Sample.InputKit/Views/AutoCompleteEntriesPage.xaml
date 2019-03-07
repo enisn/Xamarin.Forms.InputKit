@@ -10,8 +10,12 @@
             <input:AutoCompleteEntry 
                 x:Name="autoCompleteEntry"
                 Title="Type something"
+                Placeholder="Start writing xamarin"
                 IconImage="ic_account_balance_black"
-                TextColor="Accent"
+                TextColor="Black"
+                IsRequired="True"
+                ValidationMessage="Is not valid"
+                Annotation="NameSurname"
                 >
             </input:AutoCompleteEntry>
         </StackLayout>

@@ -29,7 +29,17 @@ namespace Plugin.InputKit.Shared.Controls
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1,
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
-        }; 
+        };
+        #endregion
+
+        #region Constants
+        public const string REGEX_LETTERONLY = "[A-Za-z]";
+        public const string REGEX_NONDIGITS = "[^0-9]";
+        public const string REGEX_DIGITSONLY = "[0-9]";
+        public const string REGEX_DECIMAL = "\\d+(\\.|,\\d{1,2})?";
+        public const string REGEX_EMAIL = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        public const string REGEX_PASSWORD = "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})";
+        public const string REGEX_PHONE = "^([0-9]( |-)?)?(\\(?[0-9]{3}\\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$";
         #endregion
 
         #region Fields
@@ -40,7 +50,8 @@ namespace Plugin.InputKit.Shared.Controls
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput;
         #endregion
-        
+
+        #region Ctor
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -68,7 +79,9 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.TextChanged += TxtInput_TextChanged;
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             imgWarning.IsVisible = this.IsRequired;
-        }
+            Reset();
+        } 
+        #endregion
 
         #region Not Implemented
         public bool IsSelected { get => false; set { } }
@@ -224,26 +237,23 @@ namespace Plugin.InputKit.Shared.Controls
 
                 switch (Annotation)
                 {
-                    case AnnotationType.NameSurname:
-                        return Text.Trim().Contains(" ") && Text.All((c) => !Char.IsNumber(c));
-                    case AnnotationType.Letter:
-                        return Text.All(Char.IsLetter);
-                    case AnnotationType.Number:
-                    case AnnotationType.Money:
-                        return Text.All(c => Char.IsDigit(c) || c == ',');
-                    case AnnotationType.Integer:
-                        return Text.All(Char.IsDigit);
-                    case AnnotationType.Phone:
-                        return Text.All(Char.IsDigit) && this.Text.Length == this.MaxLength;
-                    case AnnotationType.Text:
-                        return Text.All(c => c == ' ' || !(Char.IsSymbol(c) || Char.IsSurrogate(c) || Char.IsControl(c) || Char.IsPunctuation(c)));
+                    case AnnotationType.None:
+                        break;
+                    case AnnotationType.LetterSOnly:
+                        return Regex.Match(Text, REGEX_LETTERONLY).Success;
+                    case AnnotationType.NonDigitsOnly:
+                        return Regex.Match(Text, REGEX_NONDIGITS).Success;
+                    case AnnotationType.Decimal:
+                        return Regex.Match(Text, REGEX_DECIMAL).Success;
                     case AnnotationType.Email:
-                        var splitted = Text.Split('@');
-                        return Text.Contains("@") && splitted.Length == 2 && splitted.LastOrDefault().Length > 3 && splitted.LastOrDefault().Contains(".") && splitted.LastOrDefault().Split('.').LastOrDefault()?.Length >= 2;
+                        return Regex.Match(Text, REGEX_EMAIL).Success;
                     case AnnotationType.Password:
-                        return Text.Any(Char.IsDigit) && Text.Any(Char.IsLetter);
-                    case AnnotationType.Regex:
-                        return Regex.IsMatch(Text, RegexPattern);
+                        return Regex.Match(Text, REGEX_DIGITSONLY).Success;
+                        break;
+                    case AnnotationType.Phone:
+                        break;
+                    default:
+                        break;
                 }
                 return true;
             }
@@ -342,17 +352,16 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual void FocusNext()
         {
-            if (this.Parent is Layout<View> == false) return;
-
-            Layout<View> parent = this.Parent as Layout<View>;
-
-            int index = parent.Children.IndexOf(this);
-            for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
+            if (this.Parent is Layout<View> parent)
             {
-                if (parent.Children[i] is AdvancedEntry)
+                int index = parent.Children.IndexOf(this);
+                for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
                 {
-                    (parent.Children[i] as AdvancedEntry).Focus();
-                    break;
+                    if (parent.Children[i] is AdvancedEntry)
+                    {
+                        (parent.Children[i] as AdvancedEntry).Focus();
+                        break;
+                    }
                 }
             }
         }
@@ -381,32 +390,24 @@ namespace Plugin.InputKit.Shared.Controls
         {
             switch (annotation)
             {
-                case AnnotationType.Letter:
-                case AnnotationType.Text:
-                    txtInput.Keyboard = Keyboard.Chat;
-                    txtInput.IsPassword = false;
+                case AnnotationType.None:
+                    txtInput.Keyboard = Keyboard.Default;
                     break;
-                case AnnotationType.Integer:
-                case AnnotationType.Number:
-                case AnnotationType.Money:
+                case AnnotationType.LetterSOnly:
+                    txtInput.Keyboard = Keyboard.Text;
+                    break;
+                case AnnotationType.NonDigitsOnly:
+                case AnnotationType.Decimal:
                     txtInput.Keyboard = Keyboard.Numeric;
-                    txtInput.IsPassword = false;
                     break;
                 case AnnotationType.Email:
                     txtInput.Keyboard = Keyboard.Email;
-                    txtInput.IsPassword = false;
+                    break;
+                case AnnotationType.Password:
+                    txtInput.Keyboard = Keyboard.Chat;
                     break;
                 case AnnotationType.Phone:
                     txtInput.Keyboard = Keyboard.Telephone;
-                    txtInput.IsPassword = false;
-                    break;
-                case AnnotationType.Password:
-                    txtInput.Keyboard = Keyboard.Plain;
-                    txtInput.IsPassword = true;
-                    break;
-                default:
-                    txtInput.Keyboard = Keyboard.Default;
-                    txtInput.IsPassword = false;
                     break;
             }
         }
@@ -452,16 +453,12 @@ namespace Plugin.InputKit.Shared.Controls
         public enum AnnotationType
         {
             None,
-            Letter,
-            Integer,
-            Number,
-            Text,
-            Money,
+            LetterSOnly,
+            NonDigitsOnly,
+            Decimal,
             Email,
-            NameSurname,
             Password,
             Phone,
-            Regex
         }
     }
 }
