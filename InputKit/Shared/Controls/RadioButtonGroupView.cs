@@ -69,7 +69,7 @@ namespace Plugin.InputKit.Shared.Controls
             foreach (var item in this.Children)
             {
                 if (item is RadioButton)
-                    (item as RadioButton).IsChecked = item == selected;
+                    (item as RadioButton).IsChecked = item.Equals(selected);
             }
 
             SetValue(SelectedItemProperty, this.SelectedItem);
