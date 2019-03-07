@@ -76,6 +76,8 @@ namespace Plugin.InputKit.Platforms.iOS
             }
 
             RootViewController.PresentViewController(actionSheetAlert, true, null);
+            //UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(actionSheetAlert, true, null);
+
         }
 
         protected override void OnDetached()
