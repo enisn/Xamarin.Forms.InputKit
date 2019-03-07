@@ -8,7 +8,7 @@ using Xamarin.Forms.Platform.Android;
 using static Plugin.InputKit.Shared.Utils.PopupMenu;
 
 [assembly: ResolutionGroupName("Plugin.InputKit.Platforms")]
-[assembly: ExportEffect(typeof(MenuEffect), "MenuEffect")]
+[assembly: ExportEffect(typeof(MenuEffect), nameof(MenuEffect))]
 namespace Plugin.InputKit.Platforms.Droid
 {
     public class MenuEffect : PlatformEffect
@@ -21,8 +21,9 @@ namespace Plugin.InputKit.Platforms.Droid
 
             if (Effect != null)
                 Effect.Parent.OnPopupRequest += OnPopupRequest;
-            Context context = Plugin.CurrentActivity.CrossCurrentActivity.Current.AppContext;
-            Context wrapper = new Android.Support.V7.View.ContextThemeWrapper(context,Resource.Style.MyPopupMenu);
+            
+            Context context = Config.CurrentActivity;            
+            Context wrapper = new Android.Support.V7.View.ContextThemeWrapper(context, Resource.Style.MyPopupMenu);
 
             if (Control != null)
             {

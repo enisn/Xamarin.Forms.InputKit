@@ -13,7 +13,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A dropdown picker
     /// </summary>
-    public class Dropdown : StackLayout, IValidatable
+    public partial class Dropdown : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
@@ -26,12 +26,16 @@ namespace Plugin.InputKit.Shared.Controls
             TextColor = Color.Black,
         };
 
+        #region Constants
+        public const string RESOURCE_ARROWDOWN = "Plugin.InputKit.Shared.Resources.arrow_down.png";
+        #endregion
+
         IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10, 5, 5, 5) };
-        IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = "arrow_down.png", HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = 5 };
+        IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = ImageSource.FromResource(RESOURCE_ARROWDOWN), HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = 5 };
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
-        Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
-        Entry txtInput = new EmptyEntry { TextColor = GlobalSetting.TextColor, PlaceholderColor = Color.LightGray, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
+        Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
+        Entry txtInput = new EmptyEntry { TextColor = Color.Blue, PlaceholderColor = Color.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
 
         PopupMenu pMenu = new PopupMenu();
         private string _placeholder;
@@ -76,7 +80,6 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 txtInput.Focus();
             }
-
         }
         private void Menu_Item_Selected(string item, int index)
         {
@@ -128,9 +131,7 @@ namespace Plugin.InputKit.Shared.Controls
         public string Placeholder { get => _placeholder; set { _placeholder = value; UpdateMainText(); } }
         public Color PlaceholderColor { get => (Color)GetValue(PlaceholderColorProperty); set => SetValue(PlaceholderColorProperty, value); }
         public bool IsRequired { get => _isRequired; set { _isRequired = value; DisplayValidation(); } }
-
         public bool IsValidated => !IsRequired || SelectedItem != null;
-
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
         public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
@@ -168,6 +169,5 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
-
     }
 }

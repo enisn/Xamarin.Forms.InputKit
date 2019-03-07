@@ -1,55 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Sample.InputKit"
-             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="Sample.InputKit.MainPage">
+<ContentPage
+    x:Class="Sample.InputKit.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:local="clr-namespace:Sample.InputKit">
 
     <ContentPage.BindingContext>
-        <local:MainViewModel/>
+        <local:MainViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <StackLayout Spacing="12" Padding="20">
-            
-            <input:CheckBox Text="Option 0" />
-            <input:CheckBox Text="Option 1" IsChecked="True" Type="Box"/>
-            <input:CheckBox Text="Option 2" IsChecked="True" Type="Check"/>
-            <input:CheckBox Text="Option 3" IsChecked="True" Type="Cross"/>
-            <input:CheckBox Text="Option 4" IsChecked="True" Type="Star"/>
-            <input:CheckBox Text="Option 5" IsChecked="True" Type="Material"/>
-            <input:CheckBox Text="Option 7" IsChecked="True" Type="Custom" CustomIcon="ic_account_balance_black"/>
+        <StackLayout Padding="20" Spacing="12">
 
-            
-            <input:RadioButtonGroupView>
-                <input:RadioButton Text="Option 1" TextFontSize="24" IsChecked="{Binding IsCheckedRB,Mode=TwoWay}" />
-                <input:RadioButton Text="Option 2" TextFontSize="24" />
-                <input:RadioButton Text="Option 3" />
-
-                <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et" />
-                <input:RadioButton Text="Option 4" />
-            </input:RadioButtonGroupView>
-
-            <input:Dropdown Title="Chosse an option below:"                            
-                            TitleColor="Black"
-                            Color="Green"
-                            ValidationMessage="This field is required" 
-                            AnnotationColor="Accent" 
-                            IsRequired="True" 
-                            BorderColor="Black" 
-                            IconImage="ic_account_balance_black"
-                            IsEditable="True"
-                            Placeholder="Choose one" 
-                            ItemsSource="{Binding MyList}" 
-                            SelectedItem="{Binding SelectedItem}"
-                            />
-
-            <input:AdvancedEntry Placeholder="E-mail" IsRequired="True" ValidationMessage="Hey it's wrong!!" Annotation="Regex" RegexPattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
-
-            <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
-
-            <input:SelectionView ColumnNumber="2" RowSpacing="1" ColumnSpacing="1" SelectionType="Button" ItemDisplayBinding="{Binding Id}" ItemsSource="{Binding MyList}" />
-
-
+            <Button Clicked="CheckBoxes_Clicked" Text="CheckBoxes" />
+            <Button Clicked="RadioButons_Clicked" Text="RadioButons" />
+            <Button Clicked="AutoCompleteEntries_Clicked" Text="AutoCompleteEntries" />
+            <Button Clicked="Dropdowns_Clicked" Text="Dropdowns" />
+            <Button Clicked="AdvancedEntries_Clicked" Text="FormView + AdvancedEntry" />
+            <Button Clicked="AdvancedSliders_Clicked" Text="AdvancedSliders" />
+            <Button Clicked="SelectionView_Clicked" Text="SelectionView" />
 
         </StackLayout>
     </ScrollView>

@@ -1,6 +1,26 @@
-﻿----------------After Installation----------------
+﻿--------------------------------------------------
+----------------After Installation----------------
+--------------------------------------------------
 
 You should visit https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started to complete set-up. Or follow instructions below:
+
+
+## Android
+
+- Go your MainActivity and add following code to your OnCreate() method:
+
+			Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstance);
+
+## iOS
+
+- Go your AppDelegate.cs and add following code to your FinishedLaunching() method:
+
+            Plugin.InputKit.Platforms.iOS.Config.Init();
+
+
+------------------------------------------------------------
+---------------------------Usage----------------------------
+------------------------------------------------------------
 
 Go your XAML page and add that xmlns to your <ContentPage tag
 
@@ -9,42 +29,24 @@ xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.Input
 
 Then you will be able to use controls easily inside your page like:
 
-            
-            <input:CheckBox Text="Option 1" Type="Check" />
-
--------------------------iOS---------------------------------
-Go your AppDelegate and add following code before LoadApplication();
-			
-			Plugin.InputKit.Platforms.iOS.Config.Init();
-
--------------------------Android----------------------------
-Add Plugin.CurrentActivity NuGet package to your Android Project.
-Go your MainActivity and add following code before Xamarin.Forms.Init()
+<input:CheckBox Text="Option 1" Type="Check" />
 
 
-            CrossCurrentActivity.Current.Init(this, bundle);
-
+------------------------------------------------------------
+---------------------Optional Settings----------------------
 ------------------------------------------------------------
 
 
-*********************OPTINAL**CONFIGURATIONS****************
-
 -------------------Advanced-Entry-Alert-Icon----------------------------------
-Your resources must contain 24dp            alert.png           to display validation warning on AdvancedEntry !
+Your resources must contain 24dp             alert.png            to display validation warning on AdvancedEntry !
 If doesn't exits alert icon won't be displayed.
 ------------------------------------------------------------------------------
 
 
 
--------------------Dropdown-Arrow-Icon----------------------------------
-((Only iOS))
-
-Your **iOS Project** resources must contain 36pt           arrow_down.png           to display arrow down icon on Dropdown!
-If doesn't exits arrow down icon won't be displayed.
-------------------------------------------------------------------------------
-
-
---------------EASY--DESIGNING----------------
+-----------------------------------------------------------
+---------------------EASY--DESIGNING-----------------------
+-----------------------------------------------------------
 
 If you want to set all the controls in your app you can use GlobalSettings for this package.
 Go your
@@ -60,4 +62,4 @@ Plugin.InputKit.Shared.Controls.RadioButton.GlobalSetting.Color = Color.Red;
 
 ...and you'll see all the controls default values changed in entire project.
 
-
+--------------------------------------------

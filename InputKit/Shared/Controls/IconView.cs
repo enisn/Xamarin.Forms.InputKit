@@ -5,7 +5,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Default Constructor
     /// </summary>
-    public class IconView : View
+    public partial class IconView : View
     {
 
         public static readonly BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(IconView), default(Color));

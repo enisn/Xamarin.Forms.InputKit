@@ -18,8 +18,7 @@ namespace Plugin.InputKit.Platforms.iOS
 
         InternalPopupEffect Effect;
         UIViewController RootViewController;
-
-
+        
         protected override void OnAttached()
         {
             Effect = (InternalPopupEffect)Element.Effects.FirstOrDefault(e => e is InternalPopupEffect);
@@ -61,13 +60,11 @@ namespace Plugin.InputKit.Platforms.iOS
                         presentationPopover.SourceRect = Control.Frame;
                         presentationPopover.SourceView = Control;
                     }
-
                     else if (Container != null)
                     {
                         presentationPopover.SourceRect = Container.Frame;
                         presentationPopover.SourceView = Container;
                     }
-
                     else
                     {
                         presentationPopover.SourceRect = RootViewController.View.Frame;

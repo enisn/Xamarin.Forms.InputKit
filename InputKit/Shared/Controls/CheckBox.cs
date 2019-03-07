@@ -10,7 +10,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
     /// </summary>
-    public class CheckBox : StackLayout, IValidatable
+    public partial class CheckBox : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
@@ -22,19 +22,22 @@ namespace Plugin.InputKit.Shared.Controls
             CornerRadius = -1,
             FontSize = 14,
         };
+
         #region Constants
         public const string RESOURCE_CHECK = "Plugin.InputKit.Shared.Resources.check.png";
         public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
         public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
         #endregion
+
         #region Fields
         internal Frame boxBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
         internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.CenterAndExpand };
+        internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, IsVisible = false };
         internal Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
         #endregion
+
         #region Ctor
         /// <summary>
         /// Default Constructor
@@ -45,38 +48,16 @@ namespace Plugin.InputKit.Shared.Controls
             this.Orientation = StackOrientation.Horizontal;
             this.Padding = new Thickness(0, 10);
             this.Spacing = 10;
-            boxBackground.Content = boxSelected;
+            this.boxBackground.Content = boxSelected;
             this.Children.Add(boxBackground);
-            //this.Children.Add(new Grid { Children = { boxBackground, boxSelected }, MinimumWidthRequest = 35 });
             this.Children.Add(lblOption);
+            this.ApplyIsCheckedAction = ApplyIsChecked;
+            this.ApplyIsPressedAction = ApplyIsPressed;
             this.GestureRecognizers.Add(new TapGestureRecognizer
             {
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
-        } 
-        #endregion
-
-        void ExecuteCommand()
-        {
-            if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
-                CheckChangedCommand?.Execute(CommandParameter ?? this);
         }
-
-        #region Properties
-        public IAnimator<CheckBox> Animator { get; set; } = new DefaultAnimator<CheckBox>();
-        /// <summary>
-        /// Invoked when check changed
-        /// </summary>
-        public event EventHandler CheckChanged;
-        public event EventHandler ValidationChanged;
-        /// <summary>
-        /// Executed when check changed
-        /// </summary>
-        public ICommand CheckChangedCommand { get; set; }
-        /// <summary>
-        /// Command Parameter for Commands. If this is null, CommandParameter will be sent as itself of CheckBox
-        /// </summary>
-        public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
         /// <summary>
         /// Quick generator constructor
         /// </summary>
@@ -87,6 +68,35 @@ namespace Plugin.InputKit.Shared.Controls
             Key = key;
             Text = optionName;
         }
+        #endregion
+
+        #region Events
+        /// <summary>
+        /// Invoked when check changed
+        /// </summary>
+        public event EventHandler CheckChanged;
+        public event EventHandler ValidationChanged;
+        #endregion
+
+        #region Properties
+        //-----------------------------------------------------------------------------
+        /// <summary>
+        /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
+        /// </summary>
+        public Action<bool> ApplyIsCheckedAction { get; set; }
+        //-----------------------------------------------------------------------------
+        /// <summary>
+        /// Applies pressed effect. Default value is <see cref="ApplyIsPressed(bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
+        /// </summary>
+        public Action<bool> ApplyIsPressedAction { get; set; }
+        /// <summary>
+        /// Executed when check changed
+        /// </summary>
+        public ICommand CheckChangedCommand { get; set; }
+        /// <summary>
+        /// Command Parameter for Commands. If this is null, CommandParameter will be sent as itself of CheckBox
+        /// </summary>
+        public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
         /// <summary>
         /// You can set a Unique key for each control
         /// </summary>
@@ -100,13 +110,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public bool IsChecked
         {
-            get => boxBackground.Content.IsVisible;
+            get => (bool)GetValue(IsCheckedProperty);
             set
             {
-                boxBackground.Content.IsVisible = value;
                 SetValue(IsCheckedProperty, value);
-                Animator?.Animate(this);
-                //Animate();
             }
         }
         /// <summary>
@@ -168,13 +175,14 @@ namespace Plugin.InputKit.Shared.Controls
 
         public ImageSource CustomIcon { get => (ImageSource)GetValue(CustomIconProperty); set => SetValue(CustomIconProperty, value); }
 
-        public bool IsPressed { get; set; } 
+        public bool IsPressed { get; set; }
         #endregion
+
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColor());
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
-        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsChecked = (bool)nv);
+        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction((bool)nv));
         public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CheckBox), "", propertyChanged: (bo, ov, nv) => (bo as CheckBox).Text = (string)nv);
@@ -184,17 +192,24 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), 14.0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
         public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
-        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).boxBackground.ScaleTo((bool)nv ? .8 : 1, 50, Easing.BounceIn));
+        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction((bool)nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
+
         #region Methods
+        void ExecuteCommand()
+        {
+            if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+                CheckChangedCommand?.Execute(CommandParameter ?? this);
+        }
         void UpdateBoxBackground()
         {
             if (this.Type == CheckType.Material)
                 return;
+
             boxBackground.BackgroundColor = BoxBackgroundColor;
         }
-        void UpdateColor()
+        void UpdateColors()
         {
             boxSelected.Color = Color;
             if (Type == CheckType.Material)
@@ -205,21 +220,23 @@ namespace Plugin.InputKit.Shared.Controls
             }
             else
             {
-                boxBackground.BorderColor = BorderColor;
+                boxBackground.BorderColor = IsChecked ? Color : BorderColor;
                 boxBackground.BackgroundColor = BackgroundColor;
                 imgSelected.FillColor = Color;
             }
         }
         void UpdateBorderColor()
         {
-            if (this.Type == CheckType.Material) return;
+            if (this.Type == CheckType.Material)
+                return;
+
             boxBackground.BorderColor = this.BorderColor;
         }
         void UpdateAllColors()
         {
-            UpdateColor();
-            UpdateBoxBackground();
-            UpdateBorderColor();
+            UpdateColors();
+            //UpdateBoxBackground();
+            //UpdateBorderColor();
         }
         void SetBoxSize(double value)
         {
@@ -230,7 +247,6 @@ namespace Plugin.InputKit.Shared.Controls
             //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
             this.Children[0].MinimumWidthRequest = value * 1.4;
         }
-
         void UpdateType(CheckType _Type)
         {
             switch (_Type)
@@ -262,16 +278,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
             UpdateAllColors();
         }
-        /// <summary>
-        /// Not available for this control
-        /// </summary>
-        public void DisplayValidation()
-        {
-
-        }
-
-
-        void InitVisualStates()
+        protected virtual void InitVisualStates()
         {
             VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
             {
@@ -302,6 +309,22 @@ namespace Plugin.InputKit.Shared.Controls
                     }
                 }
             });
+        }
+        /// <summary>
+        /// Not available for this control
+        /// </summary>
+        public void DisplayValidation()
+        {
+
+        }
+        public virtual void ApplyIsChecked(bool isChecked)
+        {
+            boxBackground.Content.IsVisible = isChecked;
+            UpdateColors();
+        }
+        public virtual async void ApplyIsPressed(bool isPressed)
+        {
+            await boxBackground.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
         }
         #endregion
 

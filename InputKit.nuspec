@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>3.0.0-pre2</version>
+    <version>3.0.0-pre7</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>enisn</authors>
@@ -26,7 +26,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
 
     <!-- Any details about this particular release -->
-    <releaseNotes>SelectionView Multiple Button Type added</releaseNotes>
+    <releaseNotes>CheckBox, RadioButton are ready for V3 | AutoCompleteEntry is ready for preview. .Net Standard 1.0 Support added.</releaseNotes>
 
     <title>Common controls mostly required</title>
     <summary>
@@ -42,10 +42,10 @@
     </description>
 
     <!-- Copyright information -->
-    <copyright>Copyright ©2018 Enis Necipoglu</copyright>
+    <copyright>Copyright ©2019 Enis Necipoglu</copyright>
 
     <!-- Tags appear in the gallery and can be used for tag searches -->
-    <tags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</tags>
+    <tags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown, autocomplete</tags>
 
     <!-- Dependencies are automatically installed when the package is installed -->
     <dependencies>
@@ -54,7 +54,6 @@
       </group>
       <group targetFramework="MonoAndroid81">
         <dependency id="Xamarin.Forms" version="3.2.0.839982" />
-        <dependency id="Plugin.CurrentActivity" version="2.1.0.4" />
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Xamarin.Forms" version="3.2.0.839982" />
@@ -70,6 +69,9 @@
     <file src="InputKit\Resources\arrow_down.png" target="Resources" />
 
     <!-- Cross-platform reference assemblies -->
+    <file src="InputKit\bin\Release\netstandard1.0\Plugin.InputKit.dll" target="lib\netstandard1.0\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\netstandard1.0\Plugin.InputKit.xml" target="lib\netstandard1.0\Plugin.InputKit.xml" />
+    
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.xml" target="lib\netstandard2.0\Plugin.InputKit.xml" />
 

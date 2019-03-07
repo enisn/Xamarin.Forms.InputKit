@@ -1,4 +1,26 @@
-﻿----------------After Installation----------------
+﻿--------------------------------------------------
+----------------After Installation----------------
+--------------------------------------------------
+
+You should visit https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started to complete set-up. Or follow instructions below:
+
+
+## Android
+
+- Go your MainActivity and add following code to your OnCreate() method:
+
+			Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstance);
+
+## iOS
+
+- Go your AppDelegate.cs and add following code to your FinishedLaunching() method:
+
+            Plugin.InputKit.Platforms.iOS.Config.Init();
+
+
+------------------------------------------------------------
+---------------------------Usage----------------------------
+------------------------------------------------------------
 
 Go your XAML page and add that xmlns to your <ContentPage tag
 
@@ -11,6 +33,8 @@ Then you will be able to use controls easily inside your page like:
 
 
 ------------------------------------------------------------
+---------------------Optional Settings----------------------
+------------------------------------------------------------
 
 
 -------------------Advanced-Entry-Alert-Icon----------------------------------
@@ -20,7 +44,9 @@ If doesn't exits alert icon won't be displayed.
 
 
 
---------------EASY--DESIGNING----------------
+-----------------------------------------------------------
+---------------------EASY--DESIGNING-----------------------
+-----------------------------------------------------------
 
 If you want to set all the controls in your app you can use GlobalSettings for this package.
 Go your

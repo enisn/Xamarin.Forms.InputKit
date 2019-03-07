@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Sample.InputKit.Views.AutoCompleteEntriesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    Title="AutoCompleteEntries">
+    <ContentPage.Content>
+        <StackLayout
+            x:Name="mainLayout"
+            Padding="25"
+            Spacing="15">
+
+            <input:AutoCompleteEntry
+                x:Name="autoCompleteEntry"
+                Title="Type something"
+                Annotation="Email"
+                IconImage="ic_account_balance_black"
+                IsRequired="True"
+                Placeholder="Start writing xamarin"
+                TextColor="Black"
+                ValidationMessage="Is not valid" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

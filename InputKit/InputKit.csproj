@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;uap10.0.16299;</TargetFrameworks> -->
-    <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid81;Xamarin.iOS10;uap10.0.16299;</TargetFrameworks>
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
@@ -14,7 +14,7 @@
     <PackageVersion>1.0.0.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
-    <LangVersion>7.1</LangVersion>
+    <LangVersion>7.3</LangVersion>
     <DefineConstants>$(DefineConstants);</DefineConstants>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
@@ -48,11 +48,12 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
     <DocumentationFile>bin\Debug\netstandard2.0\Plugin.InputKit.xml</DocumentationFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.55" PrivateAssets="All" />
-    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" PrivateAssets="All" />
+    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
@@ -62,7 +63,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid81' ">
     <Compile Include="Platforms\Droid\**\*.cs" />
-    <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" PrivateAssets="All" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
     <AndroidResource Include="Resources\drawable\*.png" />
@@ -124,8 +124,7 @@
     <EmbeddedResource Include="Shared\Resources\**\*.png" />
     <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
   </ItemGroup>
-  
-  
+
   <!--
   <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
     <Compile Include="Platforms\DotNet\**\*.cs" />
