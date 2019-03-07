@@ -12,9 +12,10 @@ namespace Plugin.InputKit.Platforms.iOS
         protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
-            if (Control != null)
+            if (Control != null && e.NewElement != null)
             {
                 Control.BorderStyle = UITextBorderStyle.None;
+                Control.TextColor = Element.TextColor.ToUIColor();
             }
         }
     }
