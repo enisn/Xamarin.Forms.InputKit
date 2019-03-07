@@ -6,7 +6,6 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Plugin.CurrentActivity;
 
 namespace Sample.InputKit.Droid
 {
@@ -19,8 +18,9 @@ namespace Sample.InputKit.Droid
             ToolbarResource = Resource.Layout.Toolbar;
             
             base.OnCreate(bundle);
+
+            Plugin.InputKit.Platforms.Droid.Config.Init(this,bundle); // <-- Add this
             
-            CrossCurrentActivity.Current.Init(this, bundle);
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
         }

@@ -54,7 +54,6 @@
       </group>
       <group targetFramework="MonoAndroid81">
         <dependency id="Xamarin.Forms" version="3.2.0.839982" />
-        <dependency id="Plugin.CurrentActivity" version="2.1.0.4" />
       </group>
       <group targetFramework="Xamarin.iOS10">
         <dependency id="Xamarin.Forms" version="3.2.0.839982" />

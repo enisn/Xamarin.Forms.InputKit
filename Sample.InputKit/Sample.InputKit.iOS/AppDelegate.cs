@@ -24,7 +24,7 @@ namespace Sample.InputKit.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
-            Plugin.InputKit.Platforms.iOS.Config.Init();
+            Plugin.InputKit.Platforms.iOS.Config.Init(); // < -- Add this
             return base.FinishedLaunching(app, options);
         }
     }

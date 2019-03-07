@@ -765,7 +765,6 @@ namespace Sample.InputKit.Droid
 			global::Plugin.InputKit.Resource.Drawable.abc_textfield_search_default_mtrl_alpha = global::Sample.InputKit.Droid.Resource.Drawable.abc_textfield_search_default_mtrl_alpha;
 			global::Plugin.InputKit.Resource.Drawable.abc_textfield_search_material = global::Sample.InputKit.Droid.Resource.Drawable.abc_textfield_search_material;
 			global::Plugin.InputKit.Resource.Drawable.abc_vector_test = global::Sample.InputKit.Droid.Resource.Drawable.abc_vector_test;
-			global::Plugin.InputKit.Resource.Drawable.arrow_down = global::Sample.InputKit.Droid.Resource.Drawable.arrow_down;
 			global::Plugin.InputKit.Resource.Drawable.avd_hide_password = global::Sample.InputKit.Droid.Resource.Drawable.avd_hide_password;
 			global::Plugin.InputKit.Resource.Drawable.avd_hide_password_1 = global::Sample.InputKit.Droid.Resource.Drawable.avd_hide_password_1;
 			global::Plugin.InputKit.Resource.Drawable.avd_hide_password_2 = global::Sample.InputKit.Droid.Resource.Drawable.avd_hide_password_2;

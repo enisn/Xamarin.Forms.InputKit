@@ -62,7 +62,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid81' ">
     <Compile Include="Platforms\Droid\**\*.cs" />
-    <PackageReference Include="Plugin.CurrentActivity" Version="2.1.0.4" PrivateAssets="All" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
     <AndroidResource Include="Resources\drawable\*.png" />

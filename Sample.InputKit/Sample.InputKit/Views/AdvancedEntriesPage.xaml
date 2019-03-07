@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:Sample.InputKit.ViewModels"
-             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="Sample.InputKit.Views.AdvancedEntriesPage"
-             Title="AdvancedEntries">
+<ContentPage
+    x:Class="Sample.InputKit.Views.AdvancedEntriesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:vm="clr-namespace:Sample.InputKit.ViewModels"
+    Title="AdvancedEntries">
     <ContentPage.BindingContext>
         <vm:AdvancedEntriesPageViewModel />
     </ContentPage.BindingContext>
@@ -12,47 +13,44 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Padding="30">
-                <Label Text="You can see FormView Below:"/>
+                <Label Text="You can see FormView Below:" />
                 <BoxView HeightRequest="1" Color="LightGray" />
                 <input:FormView IsValidated="{Binding IsValidated}">
 
-                    <input:AdvancedEntry 
-                    Text="{Binding Email}"
-                    IsRequired="True"
-                    Title="Place your email below:"
-                    Annotation="Email"
-                    Placeholder="sample@domain.com"
-                    AnnotationColor="Accent"
-                    ValidationMessage="Please type a valid email address"
-                    IconImage="ic_email_black_24dp.png"
-                    MinLength="10"
-                    MaxLength="50"
-                    />
+                    <input:AdvancedEntry
+                        Title="Place your email below:"
+                        Annotation="Email"
+                        AnnotationColor="Accent"
+                        IconImage="ic_email_black_24dp.png"
+                        IsRequired="True"
+                        MaxLength="50"
+                        MinLength="10"
+                        Placeholder="sample@domain.com"
+                        Text="{Binding Email}"
+                        ValidationMessage="Please type a valid email address" />
 
-                    <input:AdvancedEntry 
-                    Text="{Binding NameSurname}"
-                    IsRequired="True"
-                    Title="Place your name below:"
-                    Annotation="NameSurname"
-                    Placeholder="John Doe"
-                    AnnotationColor="Accent"
-                    ValidationMessage="Please type your name correctly"
-                    IconImage="ic_account_circle_black_24dp.png"
-                    MinLength="5"
-                    MaxLength="30"
-                    />
+                    <input:AdvancedEntry
+                        Title="Place your name below:"
+                        Annotation="NonDigitsOnly"
+                        AnnotationColor="Accent"
+                        IconImage="ic_account_circle_black_24dp.png"
+                        IsRequired="True"
+                        MaxLength="30"
+                        MinLength="5"
+                        Placeholder="John Doe"
+                        Text="{Binding NameSurname}"
+                        ValidationMessage="Please type your name correctly" />
 
-                    <input:AdvancedEntry 
-                    Text="{Binding Phone}"
-                    IsRequired="True"
-                    Title="Place your phone number below:"
-                    Annotation="Phone"
-                    Placeholder="5439998877"
-                    AnnotationColor="Accent"
-                    ValidationMessage="Please type your phone number correctly"
-                    IconImage="ic_account_circle_black_24dp.png"
-                    MaxLength="10"
-                    />
+                    <input:AdvancedEntry
+                        Title="Place your phone number below:"
+                        Annotation="Phone"
+                        AnnotationColor="Accent"
+                        IconImage="ic_account_circle_black_24dp.png"
+                        IsRequired="True"
+                        MaxLength="10"
+                        Placeholder="5439998877"
+                        Text="{Binding Phone}"
+                        ValidationMessage="Please type your phone number correctly" />
                     <Label Text="Choose your subscription type:" />
                     <input:RadioButtonGroupView IsRequired="True">
                         <input:RadioButton Text="Free" />
@@ -61,8 +59,17 @@
                         <input:RadioButton Text="Platinium" />
                     </input:RadioButtonGroupView>
 
-                    <input:CheckBox IsRequired="True" Type="Material" Text="I Accept User Agreement" />
-                    <Button Command="{Binding SubmitCommand}" Margin="0,20" Text="Submit" BackgroundColor="Accent" CornerRadius="20" TextColor="White" />
+                    <input:CheckBox
+                        IsRequired="True"
+                        Text="I Accept User Agreement"
+                        Type="Material" />
+                    <Button
+                        Margin="0,20"
+                        BackgroundColor="Accent"
+                        Command="{Binding SubmitCommand}"
+                        CornerRadius="20"
+                        Text="Submit"
+                        TextColor="White" />
                 </input:FormView>
             </StackLayout>
         </ScrollView>

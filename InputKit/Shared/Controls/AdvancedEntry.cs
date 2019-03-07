@@ -249,7 +249,6 @@ namespace Plugin.InputKit.Shared.Controls
                         return Regex.Match(Text, REGEX_EMAIL).Success;
                     case AnnotationType.Password:
                         return Regex.Match(Text, REGEX_DIGITSONLY).Success;
-                        break;
                     case AnnotationType.Phone:
                         break;
                     default:
