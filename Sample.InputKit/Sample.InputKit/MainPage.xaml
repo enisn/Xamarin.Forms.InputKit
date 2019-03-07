@@ -1,26 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Sample.InputKit"
-             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="Sample.InputKit.MainPage">
+<ContentPage
+    x:Class="Sample.InputKit.MainPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:local="clr-namespace:Sample.InputKit">
 
     <ContentPage.BindingContext>
-        <local:MainViewModel/>
+        <local:MainViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <StackLayout Spacing="12" Padding="20">
+        <StackLayout Padding="20" Spacing="12">
 
-            <Button Text="CheckBoxes" Clicked="CheckBoxes_Clicked" />
-            <Button Text="RadioButons" Clicked="RadioButons_Clicked" />
-            <Button Text="AutoCompleteEntries" Clicked="AutoCompleteEntries_Clicked" />
-            <Button Text="Dropdowns" Clicked="Dropdowns_Clicked" />
-            <Button Text="AdvancedEntries" Clicked="AdvancedEntries_Clicked" />
-            <Button Text="AdvancedSliders" Clicked="AdvancedSliders_Clicked" />
-            <Button Text="SelectionView" Clicked="SelectionView_Clicked" />
-
-            
-
+            <Button Clicked="CheckBoxes_Clicked" Text="CheckBoxes" />
+            <Button Clicked="RadioButons_Clicked" Text="RadioButons" />
+            <Button Clicked="AutoCompleteEntries_Clicked" Text="AutoCompleteEntries" />
+            <Button Clicked="Dropdowns_Clicked" Text="Dropdowns" />
+            <Button Clicked="AdvancedEntries_Clicked" Text="FormView + AdvancedEntry" />
+            <Button Clicked="AdvancedSliders_Clicked" Text="AdvancedSliders" />
+            <Button Clicked="SelectionView_Clicked" Text="SelectionView" />
 
         </StackLayout>
     </ScrollView>
