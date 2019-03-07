@@ -193,7 +193,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Internal use only. Applies effect when pressed.
         /// </summary>
+
+#if netstandard20
         [Browsable(false)]
+#endif
         public bool IsPressed { get => (bool)GetValue(IsPressedProperty); set => SetValue(IsPressedProperty, value); }
         #endregion
 
