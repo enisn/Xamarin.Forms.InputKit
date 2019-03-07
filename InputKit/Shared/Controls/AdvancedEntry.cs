@@ -39,7 +39,7 @@ namespace Plugin.InputKit.Shared.Controls
         public const string REGEX_DECIMAL = "\\d+(\\.|,\\d{1,2})?";
         public const string REGEX_EMAIL = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
         public const string REGEX_PASSWORD = "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})";
-        public const string REGEX_PHONE = "^([0-9]( |-)?)?(\\(?[0-9]{3}\\)?|[0-9]{3})( |-)?([0-9]{3}( |-)?[0-9]{4}|[a-zA-Z0-9]{7})$";
+        public const string REGEX_PHONE = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$";
         #endregion
 
         #region Fields
@@ -239,7 +239,7 @@ namespace Plugin.InputKit.Shared.Controls
                 {
                     case AnnotationType.None:
                         break;
-                    case AnnotationType.LetterSOnly:
+                    case AnnotationType.LettersOnly:
                         return Regex.Match(Text, REGEX_LETTERONLY).Success;
                     case AnnotationType.NonDigitsOnly:
                         return Regex.Match(Text, REGEX_NONDIGITS).Success;
@@ -384,7 +384,6 @@ namespace Plugin.InputKit.Shared.Controls
                 DisplayValidation();
             TextChanged?.Invoke(this, e);
         }
-
         [Obsolete("Keyboard won't be changed automaticly on newer versions. Try set Keyboard property", false)]
         public void UpdateKeyboard(AnnotationType annotation)
         {
@@ -393,10 +392,12 @@ namespace Plugin.InputKit.Shared.Controls
                 case AnnotationType.None:
                     txtInput.Keyboard = Keyboard.Default;
                     break;
-                case AnnotationType.LetterSOnly:
-                    txtInput.Keyboard = Keyboard.Text;
+                case AnnotationType.LettersOnly:
+                    txtInput.Keyboard = Keyboard.Plain;
                     break;
                 case AnnotationType.NonDigitsOnly:
+                    txtInput.Keyboard = Keyboard.Text;
+                    break;
                 case AnnotationType.Decimal:
                     txtInput.Keyboard = Keyboard.Numeric;
                     break;
@@ -453,7 +454,7 @@ namespace Plugin.InputKit.Shared.Controls
         public enum AnnotationType
         {
             None,
-            LetterSOnly,
+            LettersOnly,
             NonDigitsOnly,
             Decimal,
             Email,
