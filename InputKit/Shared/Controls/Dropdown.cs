@@ -131,9 +131,7 @@ namespace Plugin.InputKit.Shared.Controls
         public string Placeholder { get => _placeholder; set { _placeholder = value; UpdateMainText(); } }
         public Color PlaceholderColor { get => (Color)GetValue(PlaceholderColorProperty); set => SetValue(PlaceholderColorProperty, value); }
         public bool IsRequired { get => _isRequired; set { _isRequired = value; DisplayValidation(); } }
-
         public bool IsValidated => !IsRequired || SelectedItem != null;
-
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
         public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
