@@ -80,7 +80,7 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             imgWarning.IsVisible = this.IsRequired;
             Reset();
-        } 
+        }
         #endregion
 
         #region Not Implemented
@@ -99,7 +99,7 @@ namespace Plugin.InputKit.Shared.Controls
         public event EventHandler Completed;
         public event EventHandler<TextChangedEventArgs> TextChanged;
         public event EventHandler Clicked;
-        public event EventHandler ValidationChanged; 
+        public event EventHandler ValidationChanged;
         #endregion
         #region Properties
         ///------------------------------------------------------------------------
@@ -251,6 +251,8 @@ namespace Plugin.InputKit.Shared.Controls
                         return Regex.Match(Text, REGEX_DIGITSONLY).Success;
                     case AnnotationType.Phone:
                         break;
+                    case AnnotationType.RegexPattern:
+                        return Regex.Match(Text, RegexPattern).Success;
                     default:
                         break;
                 }
@@ -285,7 +287,7 @@ namespace Plugin.InputKit.Shared.Controls
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
         ///----------------------------------------- -------------------------------
         /// <summary>
-        /// You need to set Annotation="Regex" to use this.
+        /// You need to set Annotation="RegexPattern" to use this.
         /// </summary>
         public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty, value); }
         //------------------------------------------------------------------------
@@ -298,7 +300,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Gets and sets keyboard type of this entry
         /// </summary>
-        public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; } 
+        public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; }
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -433,7 +435,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             ValidationChanged?.Invoke(this, new EventArgs());
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
-        } 
+        }
 
         private protected virtual Entry GetInputEntry()
         {
@@ -459,6 +461,7 @@ namespace Plugin.InputKit.Shared.Controls
             Email,
             Password,
             Phone,
+            RegexPattern
         }
     }
 }
