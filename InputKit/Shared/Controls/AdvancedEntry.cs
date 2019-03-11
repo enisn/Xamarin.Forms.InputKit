@@ -262,6 +262,11 @@ namespace Plugin.InputKit.Shared.Controls
         }
         //------------------------------------------------------------------------
         /// <summary>
+        /// IsPassword situation of entry.
+        /// </summary>
+        public bool IsPassword { get => txtInput.IsPassword; set => txtInput.IsPassword = value; }
+        //------------------------------------------------------------------------
+        /// <summary>
         /// Comes from IValidatable implementation. Shows this if Validated.
         /// </summary>
         public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
