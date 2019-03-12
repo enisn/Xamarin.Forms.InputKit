@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:controls="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              x:Class="Sample.InputKit.Views.RadioButtonsPage"
              Title="RadioButtons">
     <ContentPage.Content>
@@ -9,14 +9,14 @@
 
             <Button Text="Randomize Colors" Clicked="RandomizeColors" />
 
-            <controls:RadioButtonGroupView x:Name="groupView">
-                <controls:RadioButton Text="Option 1"/>
-                <controls:RadioButton Text="Option 2"/>
-                <controls:RadioButton Text="Option 3"/>
-                <controls:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>
-                <controls:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
-                <controls:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
-            </controls:RadioButtonGroupView>
+            <input:RadioButtonGroupView x:Name="groupView">
+                <input:RadioButton Text="Option 1"/>
+                <input:RadioButton Text="Option 2"/>
+                <input:RadioButton Text="Option 3"/>
+                <input:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>
+                <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
+                <input:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
+            </input:RadioButtonGroupView>
 
             
         </StackLayout>

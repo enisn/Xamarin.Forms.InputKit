@@ -13,8 +13,8 @@ namespace Sample.InputKit
         public App()
         {
             InitializeComponent();
-            
-            MainPage = new NavigationPage(new Sample.InputKit.MainPage());   
+
+            MainPage = new NavigationPage(new Sample.InputKit.MainPage());
         }
 
         protected override void OnStart()
