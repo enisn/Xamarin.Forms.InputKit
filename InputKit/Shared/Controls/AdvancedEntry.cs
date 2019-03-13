@@ -230,35 +230,46 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 if (!this.IsRequired)
                     return true;
+
                 if (String.IsNullOrEmpty(Text))
                     return false;
+
                 if (Text.Length < MinLength)
                     return false;
 
                 switch (Annotation)
                 {
                     case AnnotationType.None:
+                        /* something can be placed here*/
                         break;
                     case AnnotationType.LettersOnly:
                         return Regex.Match(Text, REGEX_LETTERONLY).Success;
+
+                    case AnnotationType.DigitsOnly:
+                        return Regex.Match(Text, REGEX_DIGITSONLY).Success;
+
                     case AnnotationType.NonDigitsOnly:
                         return Regex.Match(Text, REGEX_NONDIGITS).Success;
+
                     case AnnotationType.Decimal:
                         return Regex.Match(Text, REGEX_DECIMAL).Success;
+
                     case AnnotationType.Email:
                         return Regex.Match(Text, REGEX_EMAIL).Success;
+
                     case AnnotationType.Password:
-                        return Regex.Match(Text, REGEX_DIGITSONLY).Success;
+                        return Regex.Match(Text, REGEX_PASSWORD).Success;
+
                     case AnnotationType.Phone:
-                        break;
+                        return Regex.Match(Text, REGEX_PHONE).Success;
+
+
                     case AnnotationType.RegexPattern:
                         return Regex.Match(Text, RegexPattern).Success;
-                    default:
-                        break;
                 }
                 return true;
             }
-            set { }
+            set { /*to make visible in XAML pages*/ }
         }
         //------------------------------------------------------------------------
         /// <summary>
@@ -401,6 +412,9 @@ namespace Plugin.InputKit.Shared.Controls
                 case AnnotationType.LettersOnly:
                     txtInput.Keyboard = Keyboard.Plain;
                     break;
+                case AnnotationType.DigitsOnly:
+                    txtInput.Keyboard = Keyboard.Numeric;
+                    break;
                 case AnnotationType.NonDigitsOnly:
                     txtInput.Keyboard = Keyboard.Text;
                     break;
@@ -461,6 +475,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             None,
             LettersOnly,
+            DigitsOnly,
             NonDigitsOnly,
             Decimal,
             Email,

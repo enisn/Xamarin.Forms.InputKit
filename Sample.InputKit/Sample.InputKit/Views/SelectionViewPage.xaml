@@ -15,8 +15,8 @@
 
             <input:SelectionView x:Name="selectionView"
                                  ColumnNumber="2" 
-                                 RowSpacing="1" 
-                                 ColumnSpacing="1" 
+                                 RowSpacing="10" 
+                                 ColumnSpacing="10"
                                  SelectionType="Button" 
                                  ItemDisplayBinding="{Binding Name}" 
                                  ItemsSource="{Binding MyList}" />
