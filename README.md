@@ -25,7 +25,7 @@
 
 | Platform | Version | Supported |
 | --- | --- | --- |
-| Android | MonoAndroid80 | YES |
+| Android | MonoAndroid81 | YES |
 | iOS | Xamarin.iOS10 | YES |
 | UWP | - | **EXPERIMENTAL** |
 | MAC | Xamarin.Mac20 | YES |
