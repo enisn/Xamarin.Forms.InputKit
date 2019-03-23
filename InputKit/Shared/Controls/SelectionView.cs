@@ -31,13 +31,13 @@ namespace Plugin.InputKit.Shared.Controls
             TextColor = (Color)Button.TextColorProperty.DefaultValue,
         };
 
-        private IList _itemSource;
+        #region Fields
         private SelectionType _selectionType = SelectionType.Button;
-        private IList _disabledSource;
         private int _columnNumber = 2;
         private Color _color = GlobalSetting.Color;
         private BindingBase _itemDisplayBinding;
         private int _selectedIndex = 0;
+        #endregion
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
@@ -47,6 +47,8 @@ namespace Plugin.InputKit.Shared.Controls
             this.RowSpacing = 0;
             this.ColumnSpacing = 0;
         }
+
+        #region Properties
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Selection Type, More types will be added later
@@ -66,48 +68,22 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Disables these options. They can not be choosen
         /// </summary>
-        public IList DisabledSource { get => _disabledSource; set { _disabledSource = value; UpdateView(); } }
-
+        public IList DisabledSource { get => (IList)GetValue(DisabledSourceProperty); set => SetValue(DisabledSourceProperty, value); }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Color of selections
         /// </summary>
         public Color Color { get => _color; set { _color = value; UpdateColor(); OnPropertyChanged(); } }
-
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Items Source of selections
         /// </summary>
-        public IList ItemsSource
-        {
-            get => _itemSource;
-            set
-            {
-                _itemSource = value;
-                UpdateEvents(value);
-                UpdateView();
-            }
-        }
+        public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Sets or Gets SelectedItem of SelectionView
         /// </summary>
-        public object SelectedItem
-        {
-            get
-            {
-                foreach (var item in this.Children)
-                    if (item is ISelection && (item as ISelection).IsSelected)
-                        return (item as ISelection).Value;
-                return null;
-            }
-            set
-            {
-                foreach (var item in this.Children)
-                    if (item is ISelection && !(item as ISelection).IsDisabled)
-                        (item as ISelection).IsSelected = (item as ISelection).Value.Equals(value);
-            }
-        }
+        public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Sets or Gets SelectedItem of SelectionView
@@ -133,7 +109,10 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
+        //-----------------------------------------------------------------------------
+        /// <summary>
+        /// To be added....
+        /// </summary>
         public IEnumerable<int> SelectedIndexes
         {
             get
@@ -153,24 +132,12 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
         //-----------------------------------------------------------------------------
         /// <summary>
-        ///Selected Items for the multiple selections, 
+        /// Selected Items for the multiple selections, 
         /// </summary>
-        public IList SelectedItems
-        {
-            get
-            {
-                return this.Children.Where(w => (w is ISelection) && (w as ISelection).IsSelected)?.Select(s => (s as ISelection).Value).ToList();
-            }
-            set
-            {
-                foreach (var item in this.Children)
-                    if (item is ISelection)
-                        (item as ISelection).IsSelected = value.Contains((item as ISelection).Value);
-            }
-        }
+        public IList SelectedItems { get => (IList)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Changes all <see cref="SelectableButton.UnselectedColor"/> in <see cref="SelectionView"/>
         /// </summary>
@@ -184,12 +151,33 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as SelectableButton).UnselectedColor = value;
             }
         }
+        //-----------------------------------------------------------------------------
+        /// <summary>
+        ///         Gets or sets a binding that selects the property that will be displayed for each
+        ///object in the list of items.
+        /// </summary>
+        public BindingBase ItemDisplayBinding { get => _itemDisplayBinding; set { _itemDisplayBinding = value; SetTextBindings(); } }
+        #endregion
+
+        #region BindableProperties
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SetItemsSource((IList)nv));
+        public static readonly BindableProperty DisabledSourceProperty = BindableProperty.Create(nameof(DisabledSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).UpdateView());
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SetSelectedItem(nv));
+        public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SetSelectedItems((IList)nv));
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndex = (int)nv);
+        public static readonly BindableProperty SelectedIndexesProperty = BindableProperty.Create(nameof(SelectedIndexes), typeof(IEnumerable<int>), typeof(SelectionView), new int[0], BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndexes = (IEnumerable<int>)nv);
+        public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(SelectionView), SelectionView.GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as SelectionView).BackgroundColor = (Color)nv);
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        #endregion
+
+        #region Methods
         private void UpdateEvents(IList value)
         {
-            if (value is INotifyCollectionChanged)
+            if (value is INotifyCollectionChanged notifyCollectionChanged)
             {
-                (value as INotifyCollectionChanged).CollectionChanged -= MultiSelectionView_CollectionChanged;
-                (value as INotifyCollectionChanged).CollectionChanged += MultiSelectionView_CollectionChanged;
+                notifyCollectionChanged.CollectionChanged -= MultiSelectionView_CollectionChanged;
+                notifyCollectionChanged.CollectionChanged += MultiSelectionView_CollectionChanged;
             }
         }
         private void MultiSelectionView_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -231,22 +219,8 @@ namespace Plugin.InputKit.Shared.Controls
                     System.Diagnostics.Debug.WriteLine(ex.ToString());
                 }
             }
-
-            ChooseFirstIndex();
         }
-        /// <summary>
-        /// Finds selected index and sets selected if it's not disabled. Used at Initialization
-        /// </summary>
-        private void ChooseFirstIndex()
-        {
-            //if (_selectedIndex == -1) return;
 
-            for (int i = 0; i < this.Children.Count; i++)
-            {
-                if ((!(this.Children[i] as ISelection)?.IsDisabled) ?? false)
-                    (this.Children[i] as ISelection).IsSelected = i == _selectedIndex;
-            }
-        }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Updates colors of inside, when color property changed on runtime
@@ -262,22 +236,26 @@ namespace Plugin.InputKit.Shared.Controls
         {
             if ((int)this.SelectionType % 2 == 0)
             {
-                SetValue(SelectedItemsProperty, SelectedItems);
-                SetValue(SelectedIndexesProperty, SelectedIndexes);
+                var query = Children.Where(x => x is ISelection selection && selection.IsSelected);
+                var selecteds = query
+                                .Select(s => (s as ISelection).Value)
+                                .ToList();
+
+                var selectedIndexes = query
+                                        .Select(s => ItemsSource.IndexOf((s as ISelection).Value))
+                                        .ToList();
+                SetValue(SelectedItemsProperty, selecteds);
+                SetValue(SelectedIndexesProperty, selectedIndexes);
             }
             else
             {
-                SelectedItem = (sender as ISelection).Value;
-                SetValue(SelectedItemProperty, SelectedItem);
-                SetValue(SelectedIndexProperty, SelectedIndex);
+                if (sender is ISelection selection)
+                {
+                    SetValue(SelectedItemProperty, selection.Value);
+                    SetValue(SelectedIndexProperty, ItemsSource.IndexOf(selection.Value));
+                }
             }
         }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        ///         Gets or sets a binding that selects the property that will be displayed for each
-        ///object in the list of items.
-        /// </summary>
-        public BindingBase ItemDisplayBinding { get => _itemDisplayBinding; set { _itemDisplayBinding = value; SetTextBindings(); } }
 
         private ISelection GetInstance(object obj)
         {
@@ -353,16 +331,24 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
             }
         }
-        #region BindableProperties
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).ItemsSource = (IList)nv);
-        public static readonly BindableProperty DisabledSourceProperty = BindableProperty.Create(nameof(DisabledSource), typeof(IList), typeof(SelectionView), null, propertyChanged: (bo, ov, nv) => (bo as SelectionView).DisabledSource = (IList)nv);
-        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItem = nv);
-        public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedItems = (IList)nv);
-        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndex = (int)nv);
-        public static readonly BindableProperty SelectedIndexesProperty = BindableProperty.Create(nameof(SelectedIndexes), typeof(IEnumerable<int>), typeof(SelectionView), new int[0], BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndexes = (IEnumerable<int>)nv);
-        public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(SelectionView), SelectionView.GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as SelectionView).BackgroundColor = (Color)nv);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+
+        private void SetSelectedItem(object value)
+        {
+            foreach (var item in this.Children)
+                if (item is ISelection selection && !selection.IsDisabled)
+                    selection.IsSelected = selection.Value.Equals(value);
+        }
+        private void SetSelectedItems(IList value)
+        {
+            foreach (var item in this.Children)
+                if (item is ISelection selection)
+                    (item as ISelection).IsSelected = value.Contains(selection.Value);
+        }
+        private void SetItemsSource(IList value)
+        {
+            UpdateEvents(value);
+            UpdateView();
+        }
         #endregion
     }
 
