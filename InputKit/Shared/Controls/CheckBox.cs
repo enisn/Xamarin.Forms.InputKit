@@ -1,6 +1,7 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Helpers;
+using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -10,7 +11,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
     /// </summary>
-    public partial class CheckBox : StackLayout, IValidatable
+    public partial class CheckBox : StatefulStackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {

@@ -1,5 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
+using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -14,7 +15,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Radio Button with Text
     /// </summary>
-    public partial class RadioButton : StackLayout
+    public partial class RadioButton : StatefulStackLayout
     {
         #region Statics
         /// <summary>

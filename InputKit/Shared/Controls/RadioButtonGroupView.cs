@@ -1,4 +1,5 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
+using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,7 +12,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Groups radiobuttons, Inherited StackLayout.
     /// </summary>
-    public partial class RadioButtonGroupView : StackLayout, IValidatable
+    public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     {
         //-----------------------------------------------------------------------------
         /// <summary>

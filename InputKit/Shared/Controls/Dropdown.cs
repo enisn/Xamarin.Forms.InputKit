@@ -1,5 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
+using Plugin.InputKit.Shared.Layouts;
 using Plugin.InputKit.Shared.Utils;
 using System;
 using System.Collections;
@@ -13,7 +14,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A dropdown picker
     /// </summary>
-    public partial class Dropdown : StackLayout, IValidatable
+    public partial class Dropdown : StatefulStackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
