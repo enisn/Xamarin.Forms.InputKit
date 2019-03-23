@@ -29,7 +29,7 @@ namespace Plugin.InputKit.Platforms.Droid
             Console.WriteLine($"[{typeof(EmptyEntryRenderer).FullName}] Initialized.");
             Console.WriteLine($"[{typeof(MenuEffect).FullName}] Initialized.");
             Console.WriteLine($"[{typeof(NewIconViewRenderer).FullName}] Initialized.");
-            Console.WriteLine($"[{typeof(StackLayoutWithVisualStatesRenderer).FullName}] Initialized.");
+            Console.WriteLine($"[{typeof(StatefulStackLayoutRenderer).FullName}] Initialized.");
         }
     }
 }

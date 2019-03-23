@@ -12,7 +12,7 @@ namespace Plugin.InputKit.Platforms.iOS
             Console.WriteLine($"[{typeof(EmptyEntryRenderer).FullName}] Initialized.");
             Console.WriteLine($"[{typeof(MenuEffect).FullName}] Initialized.");
             Console.WriteLine($"[{typeof(IconViewRenderer).FullName}] Initialized.");
-            Console.WriteLine($"[{typeof(StackLayoutWithVisualStatesRenderer).FullName}] Initialized.");
+            Console.WriteLine($"[{typeof(StatefulStackLayoutRenderer).FullName}] Initialized.");
 
             Console.WriteLine($"[{typeof(AutoCompleteDefaultDataSource).FullName}] Initialized.");
             Console.WriteLine($"[{typeof(AutoCompleteViewSource).FullName}] Initialized.");

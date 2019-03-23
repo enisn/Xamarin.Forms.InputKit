@@ -1,5 +1,6 @@
 ﻿using Foundation;
 using Plugin.InputKit.Platforms.iOS;
+using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,12 +8,12 @@ using UIKit;
 using Xamarin.Forms;
 using Xamarin.Forms.Platform.iOS;
 
-[assembly:ExportRenderer(typeof(StackLayout),typeof(StackLayoutWithVisualStatesRenderer))]
+[assembly:ExportRenderer(typeof(StatefulStackLayout),typeof(StatefulStackLayoutRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
 {
-    public class StackLayoutWithVisualStatesRenderer : VisualElementRenderer<StackLayout>
+    public class StatefulStackLayoutRenderer : VisualElementRenderer<StackLayout>
     {
-        public StackLayoutWithVisualStatesRenderer()
+        public StatefulStackLayoutRenderer()
         {
             
         }
