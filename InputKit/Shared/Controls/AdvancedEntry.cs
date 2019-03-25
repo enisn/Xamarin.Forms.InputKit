@@ -285,7 +285,7 @@ namespace Plugin.InputKit.Shared.Controls
                     case AnnotationType.Text:
                         return Text.All(c => c == ' ' || !(Char.IsSymbol(c) || Char.IsSurrogate(c) || Char.IsControl(c) || Char.IsPunctuation(c)));
                     case AnnotationType.Email:
-                        return Regex.Match(Text, "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$").Success;
+                        return Regex.Match(Text, @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$").Success;
                     case AnnotationType.Password:
                         return Text.Any(Char.IsDigit) && Text.Any(Char.IsLetter);
                     case AnnotationType.Regex:

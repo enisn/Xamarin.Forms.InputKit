@@ -40,7 +40,7 @@
                             SelectedItem="{Binding SelectedItem}"
                             />
 
-            <input:AdvancedEntry Placeholder="E-mail" IsRequired="True" ValidationMessage="Hey it's wrong!!" Annotation="Regex" RegexPattern="^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$" />
+            <input:AdvancedEntry Placeholder="E-mail" IsRequired="True" ValidationMessage="Hey it's wrong!!" Annotation="Email"/>
 
             <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" Value="{Binding Price}" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
 
