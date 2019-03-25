@@ -285,7 +285,17 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Validation message to update automaticly. This will be shown when entry is not validated
         /// </summary>
-        public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
+        public string ValidationMessage
+        {
+            get => _validationMessage;
+            set
+            {
+                var oldValueIsNull = _validationMessage == null;
+                _validationMessage = value;
+                if (!oldValueIsNull)
+                    DisplayValidation();
+            }
+        }
         //------------------------------------------------------------------------
         /// <summary>
         /// Ignores automaticly update annotationmessage
