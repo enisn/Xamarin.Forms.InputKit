@@ -20,7 +20,6 @@
             <Button Clicked="AdvancedSliders_Clicked" Text="AdvancedSliders" />
             <Button Clicked="SelectionView_Clicked" Text="SelectionView" />
 
-            <Button Clicked="TestPage_Clicked" Text="Test" />
         </StackLayout>
     </ScrollView>
 

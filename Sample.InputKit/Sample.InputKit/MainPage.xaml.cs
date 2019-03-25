@@ -34,7 +34,6 @@ namespace Sample.InputKit
         private void AdvancedSliders_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AdvancedSlidersPage());
 
         private void SelectionView_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new SelectionViewPage());
-
-        private void TestPage_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new TestPage());
+        
     }
 }

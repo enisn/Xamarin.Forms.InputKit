@@ -25,6 +25,7 @@
                         IsRequired="True"
                         MaxLength="50"
                         MinLength="10"
+                        TextColor="Black"
                         Placeholder="sample@domain.com"
                         Text="{Binding Email}"
                         ValidationMessage="Please type a valid email address" />
@@ -37,6 +38,7 @@
                         IsRequired="True"
                         MaxLength="30"
                         MinLength="5"
+                        TextColor="Black"
                         Placeholder="John Doe"
                         Text="{Binding NameSurname}"
                         ValidationMessage="Please type your name correctly" />
@@ -48,6 +50,8 @@
                         IconImage="ic_account_circle_black_24dp.png"
                         IsRequired="True"
                         MaxLength="10"
+                        MinLength="8"
+                        TextColor="Black"
                         Placeholder="5439998877"
                         Text="{Binding Phone}"
                         ValidationMessage="Please type your phone number correctly" />
