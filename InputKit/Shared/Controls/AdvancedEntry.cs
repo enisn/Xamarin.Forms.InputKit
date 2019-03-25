@@ -24,10 +24,10 @@ namespace Plugin.InputKit.Shared.Controls
         {
             BackgroundColor = Color.White,
             CornerRadius = 20,
-            BorderColor = (Color)Frame.BorderColorProperty.DefaultValue,
+            BorderColor = Color.Gray,
             Color = Color.Accent,
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-            Size = -1,
+            Size = -1, /* This is not supported for this control*/
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
         };
         #endregion
@@ -45,7 +45,7 @@ namespace Plugin.InputKit.Shared.Controls
         #region Fields
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
-        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
+        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0, HasShadow = false };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput;
