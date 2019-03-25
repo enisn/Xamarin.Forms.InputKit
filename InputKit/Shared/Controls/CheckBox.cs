@@ -20,7 +20,7 @@ namespace Plugin.InputKit.Shared.Controls
             BorderColor = Color.Black,
             TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = 25,
-            CornerRadius = -1,
+            CornerRadius = 4,
             FontSize = 14,
         };
 
@@ -331,6 +331,8 @@ namespace Plugin.InputKit.Shared.Controls
         public static async void ApplyIsPressed(CheckBox checkBox, bool isPressed)
         {
             await checkBox.frmBackground.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
+            var radiusVal = isPressed ? checkBox.frmBackground.CornerRadius * 2f : checkBox.CornerRadius;
+            checkBox.frmBackground.CornerRadius = radiusVal;
         }
         #endregion
 
