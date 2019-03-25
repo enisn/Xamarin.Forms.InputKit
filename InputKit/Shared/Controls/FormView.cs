@@ -11,7 +11,6 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public partial class FormView : StackLayout
     {
-        private bool _isValidated;
         /// <summary>
         /// Default constructor
         /// </summary>

@@ -82,12 +82,12 @@ namespace Plugin.InputKit.Shared.Controls
         #region Properties
         //-----------------------------------------------------------------------------
         /// <summary>
-        /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
+        /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
         /// </summary>
         public Action<CheckBox, bool> ApplyIsCheckedAction { get; set; }
         //-----------------------------------------------------------------------------
         /// <summary>
-        /// Applies pressed effect. Default value is <see cref="ApplyIsPressed(bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
+        /// Applies pressed effect. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
         /// </summary>
         public Action<CheckBox, bool> ApplyIsPressedAction { get; set; }
         /// <summary>
