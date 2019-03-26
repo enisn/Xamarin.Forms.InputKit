@@ -9,7 +9,7 @@ You should visit https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-St
 
 - Go your MainActivity and add following code to your OnCreate() method:
 
-			Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstance);
+			Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstanceState);
 
 ## iOS
 
