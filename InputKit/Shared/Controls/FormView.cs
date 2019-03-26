@@ -17,20 +17,37 @@ namespace Plugin.InputKit.Shared.Controls
         public FormView()
         {
             DeclareEvents();
-            this.ChildAdded += (s, args) =>
-            {
-                if (args.Element is IValidatable)
-                    SetEvent(args.Element as IValidatable);
-            };
-            this.ChildRemoved += (s, args) => { if (args is IValidatable) (args as IValidatable).ValidationChanged -= FormView_ValidationChanged; };
+            this.ChildAdded += FormView_ChildAdded;
+            this.ChildRemoved += FormView_ChildRemoved; ;
         }
+
+        private void FormView_ChildRemoved(object sender, ElementEventArgs e)
+        {
+            if (e is IValidatable validatable)
+                validatable.ValidationChanged -= FormView_ValidationChanged;
+        }
+
+        private void FormView_ChildAdded(object s, ElementEventArgs e)
+        {
+            if (e.Element is IValidatable validatable)
+            {
+                SetEvent(validatable);
+            }
+            else if (e.Element is Layout<View> la)
+            {
+                la.ChildAdded -= FormView_ChildAdded;
+                la.ChildAdded += FormView_ChildAdded;
+                la.ChildRemoved -= FormView_ChildRemoved;
+                la.ChildRemoved += FormView_ChildRemoved;
+                foreach (var child in GetChildIValidatables(la))
+                    SetEvent(child);
+            }
+        }
+
         void DeclareEvents()
         {
-            foreach (var item in this.Children)
-            {
-                if (item is IValidatable)
-                    SetEvent(item as IValidatable);
-            }
+            foreach (var item in GetChildIValidatables(this))
+                SetEvent(item);
         }
 
         void SetEvent(IValidatable view)
@@ -54,7 +71,7 @@ namespace Plugin.InputKit.Shared.Controls
                 return (bool)GetValue(IsValidatedProperty);
             }
 
-            set { }
+            set { /* To make visible in XAML pages */ }
         }
         /// <summary>
         /// Checks and element is validated or not
@@ -63,11 +80,23 @@ namespace Plugin.InputKit.Shared.Controls
         /// <returns></returns>
         public static bool CheckValidation(Layout<View> view)
         {
-            foreach (var item in view.Children)
-                if (item is IValidatable)
-                    if (!(item as IValidatable).IsValidated)
-                        return false;
+            foreach (var item in GetChildIValidatables(view))
+                if (!item.IsValidated)
+                    return false;
             return true;
+        }
+
+        static IEnumerable<IValidatable> GetChildIValidatables(Layout<View> layout)
+        {
+            foreach (var item in layout.Children)
+            {
+                if (item is IValidatable validatable)
+                    yield return validatable;
+
+                else if (item is Layout<View> la)
+                    foreach (var child in GetChildIValidatables(la))
+                        yield return child;
+            }
         }
 
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
