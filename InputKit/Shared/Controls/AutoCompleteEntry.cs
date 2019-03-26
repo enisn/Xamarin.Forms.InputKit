@@ -35,7 +35,7 @@ namespace Plugin.InputKit.Shared.Controls
             };
             txtInput.SortingAlgorithm = (text, options) => 
                 options
-                .Where(x => x.Contains(text, StringComparison.CurrentCultureIgnoreCase))
+                .Where(x => x.ToLowerInvariant().Contains(text.ToLowerInvariant()))
                 .OrderBy(o => o.StartsWith(text, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
                 .ThenBy(t => t)
                 .ToList();

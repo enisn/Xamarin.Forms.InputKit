@@ -24,10 +24,10 @@ namespace Plugin.InputKit.Shared.Controls
         {
             BackgroundColor = Color.White,
             CornerRadius = 20,
-            BorderColor = (Color)Frame.BorderColorProperty.DefaultValue,
+            BorderColor = Color.Gray,
             Color = Color.Accent,
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
-            Size = -1,
+            Size = -1, /* This is not supported for this control*/
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
         };
         #endregion
@@ -37,7 +37,7 @@ namespace Plugin.InputKit.Shared.Controls
         public const string REGEX_NONDIGITS = "[^0-9]";
         public const string REGEX_DIGITSONLY = "[0-9]";
         public const string REGEX_DECIMAL = "\\d+(\\.|,\\d{1,2})?";
-        public const string REGEX_EMAIL = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+        public const string REGEX_EMAIL = @"^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$";
         public const string REGEX_PASSWORD = "^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})";
         public const string REGEX_PHONE = "^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\\s\\./0-9]*$";
         #endregion
@@ -45,9 +45,9 @@ namespace Plugin.InputKit.Shared.Controls
         #region Fields
         Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
-        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = 0 };
+        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
         Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
-        IconView imgIcon = new IconView { InputTransparent = true, Margin = 10, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
+        IconView imgIcon = new IconView { InputTransparent = true, IsVisible = false, Margin = new Thickness(5, 10, 10, 10), VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         Entry txtInput;
         #endregion
 
@@ -116,7 +116,15 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Icons of this Entry
         /// </summary>
-        public string IconImage { get => imgIcon.Source.ToString(); set => imgIcon.Source = value; }
+        public string IconImage
+        {
+            get => imgIcon.Source.ToString();
+            set
+            {
+                imgIcon.IsVisible = !string.IsNullOrEmpty(value);
+                imgIcon.Source = value;
+            }
+        }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Color of Icon
@@ -349,6 +357,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
+        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).BackgroundColor = (Color)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -483,14 +492,41 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public enum AnnotationType
         {
+            /// <summary>
+            /// None of check. Allows all inputs and returns IsValidated as true.
+            /// </summary>
             None,
+            /// <summary>
+            /// Letter chars only
+            /// </summary>
             LettersOnly,
+            /// <summary>
+            /// Digits characters only. Also that means 'Integer' numbers.
+            /// </summary>
             DigitsOnly,
+            /// <summary>
+            /// NonDigits characters only.
+            /// </summary>
             NonDigitsOnly,
+            /// <summary>
+            /// Standard decimal check with coma or dot (depends on culture).
+            /// </summary>
             Decimal,
+            /// <summary>
+            /// Standard email check.
+            /// </summary>
             Email,
+            /// <summary>
+            /// Standard password check (at least a number and at least a char). MinLength should be set seperately.
+            /// </summary>
             Password,
+            /// <summary>
+            /// Standard phone number check. Also you should use MinLength property with this type.
+            /// </summary>
             Phone,
+            /// <summary>
+            /// You need to set RegexPattern property as your regex query to use this.
+            /// </summary>
             RegexPattern
         }
     }

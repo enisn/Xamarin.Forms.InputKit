@@ -471,7 +471,6 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     internal class SelectableRadioButton : RadioButton, ISelection
     {
-        private bool _isDisabled;
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor

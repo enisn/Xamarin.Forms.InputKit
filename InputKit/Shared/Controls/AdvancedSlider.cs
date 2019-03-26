@@ -102,22 +102,22 @@ namespace Plugin.InputKit.Shared.Controls
         public string ValuePrefix { get => _valuePrefix; set { _valuePrefix = value; UpdateValueText(); } }
         //---------------------------------------------------------------------
         /// <summary>
-        /// This will be displayed start of MinValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// This will be displayed start of MinValue Text if <see cref="DisplayMinMaxValue"/> is true/>
         /// </summary>
         public string MinValuePrefix { get => _minValuePrefix; set { _minValuePrefix = value; UpdateMinMaxValueText(); } }
         //---------------------------------------------------------------------
         /// <summary>
-        /// This will be displayed start of MaxValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// This will be displayed start of MaxValue Text if <see cref="DisplayMinMaxValue"/> is true/>
         /// </summary>
         public string MaxValuePrefix { get => _maxValuePrefix; set { _maxValuePrefix = value; UpdateMinMaxValueText(); } }
         //---------------------------------------------------------------------
         /// <summary>
-        /// This will be displayed end of MinValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// This will be displayed end of MinValue Text if <see cref="DisplayMinMaxValue"/> is true/>
         /// </summary>
         public string MinValueSuffix { get => _minValueSuffix; set { _minValueSuffix = value; UpdateMinMaxValueText(); } }
         //---------------------------------------------------------------------
         /// <summary>
-        /// This will be displayed end of MaxValue Text if <see cref="DisplayMinMaxValue"/> is <see cref="true"/>
+        /// This will be displayed end of MaxValue Text if <see cref="DisplayMinMaxValue"/> is"true/>
         /// </summary>
         public string MaxValueSuffix { get => _maxValueSuffix; set { _maxValueSuffix = value; UpdateMinMaxValueText(); } }
         ///---------------------------------------------------------------------
@@ -182,7 +182,7 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
         ///---------------------------------------------------------------------
         /// <summary>
-        /// doesn't effect
+        /// doesn't affect
         /// </summary>
         public event EventHandler ValidationChanged;
 

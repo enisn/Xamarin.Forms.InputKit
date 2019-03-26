@@ -20,7 +20,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public RadioButtonGroupView()
         {
-            this.ChildAdded += RadioButtonGroupView_ChildAdded;
+            this.ChildAdded += OnChildAdded;
             this.ChildrenReordered += RadioButtonGroupView_ChildrenReordered;
         }
         //-----------------------------------------------------------------------------
@@ -42,46 +42,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// Command Parameter will be sent in SelectedItemChangedCommand
         /// </summary>
         public object CommandParameter { get; set; }
-        private void RadioButtonGroupView_ChildrenReordered(object sender, EventArgs e)
-        {
-            UpdateAllEvent();
-        }
-        private void UpdateAllEvent()
-        {
-            foreach (var item in this.Children)
-            {
-                if (item is RadioButton)
-                {
-                    (item as RadioButton).Clicked -= UpdateSelected;
-                    (item as RadioButton).Clicked += UpdateSelected;
-                }
-            }
-        }
-        private void RadioButtonGroupView_ChildAdded(object sender, ElementEventArgs e)
-        {
-            if (e.Element is RadioButton)
-            {
-                (e.Element as RadioButton).Clicked -= UpdateSelected;
-                (e.Element as RadioButton).Clicked += UpdateSelected;
-            }
-        }
-        void UpdateSelected(object selected, EventArgs e)
-        {
-            foreach (var item in this.Children)
-            {
-                if (item is RadioButton)
-                    (item as RadioButton).IsChecked = item.Equals(selected);
-            }
 
-            SetValue(SelectedItemProperty, this.SelectedItem);
-            OnPropertyChanged(nameof(SelectedItem));
-            SetValue(SelectedIndexProperty, this.SelectedIndex);
-            OnPropertyChanged(nameof(SelectedIndex));
-            SelectedItemChanged?.Invoke(this, new EventArgs());
-            if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
-                SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
-            ValidationChanged?.Invoke(this, new EventArgs());
-        }
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// this will be added later
         /// </summary>
@@ -92,6 +54,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.BackgroundColor = Color.Transparent;
         }
 
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Returns selected radio button's index from inside of this.
         /// </summary>
@@ -100,27 +63,21 @@ namespace Plugin.InputKit.Shared.Controls
             get
             {
                 int index = 0;
-                foreach (var item in this.Children)
+                foreach (var rb in GetChildRadioButtons(this))
                 {
-                    if (item is RadioButton)
-                    {
-                        if ((item as RadioButton).IsChecked)
-                            return index;
-                        index++;
-                    }
+                    if (rb.IsChecked)
+                        return index;
+                    index++;
                 }
                 return -1;
             }
             set
             {
                 int index = 0;
-                foreach (var item in this.Children)
+                foreach (var rb in GetChildRadioButtons(this))
                 {
-                    if (item is RadioButton)
-                    {
-                        (item as RadioButton).IsChecked = index == value;
-                        index++;
-                    }
+                    rb.IsChecked = index == value;
+                    index++;
                 }
             }
         }
@@ -133,19 +90,18 @@ namespace Plugin.InputKit.Shared.Controls
         {
             get
             {
-                foreach (var item in this.Children)
+                foreach (var rb in GetChildRadioButtons(this))
                 {
-                    if (item is RadioButton && (item as RadioButton).IsChecked)
-                        return (item as RadioButton).Value;
+                    if (rb.IsChecked)
+                        return rb.Value;
                 }
                 return null;
             }
             set
             {
-                foreach (var item in this.Children)
+                foreach (var rb in GetChildRadioButtons(this))
                 {
-                    if (item is RadioButton)
-                        (item as RadioButton).IsChecked = (item as RadioButton).Value.Equals(value);
+                    rb.IsChecked = rb.Value.Equals(value);
                 }
             }
         }
@@ -164,12 +120,80 @@ namespace Plugin.InputKit.Shared.Controls
         /// It will be added later
         /// </summary>
         public string ValidationMessage { get; set; }
+
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItem = nv);
         public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedIndex = (int)nv);
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        #endregion
+
+        #region Methods
+        private void RadioButtonGroupView_ChildrenReordered(object sender, EventArgs e)
+        {
+            UpdateAllEvent();
+        }
+        private void UpdateAllEvent()
+        {
+            foreach (var item in GetChildRadioButtons(this))
+            {
+                if (item is RadioButton rb)
+                {
+                    rb.Clicked -= UpdateSelected;
+                    rb.Clicked += UpdateSelected;
+                }
+            }
+        }
+        private void OnChildAdded(object sender, ElementEventArgs e)
+        {
+            if (e.Element is RadioButton rb)
+            {
+                rb.Clicked -= UpdateSelected;
+                rb.Clicked += UpdateSelected;
+            }
+            else if(e.Element is Layout<View> la)
+            {
+                la.ChildAdded -= OnChildAdded;
+                la.ChildAdded += OnChildAdded;
+                foreach (var radioButton in GetChildRadioButtons(la))
+                {
+                    radioButton.Clicked -= UpdateSelected;
+                    radioButton.Clicked += UpdateSelected;
+                }
+            }
+        }
+        void UpdateSelected(object selected, EventArgs e)
+        {
+            foreach (var rb in GetChildRadioButtons(this))
+            {
+                rb.IsChecked = rb.Equals(selected);
+            }
+
+            SetValue(SelectedItemProperty, this.SelectedItem);
+            OnPropertyChanged(nameof(SelectedItem));
+            SetValue(SelectedIndexProperty, this.SelectedIndex);
+            OnPropertyChanged(nameof(SelectedIndex));
+            SelectedItemChanged?.Invoke(this, new EventArgs());
+            if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+                SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
+            ValidationChanged?.Invoke(this, new EventArgs());
+        }
+        private IEnumerable<RadioButton> GetChildRadioButtons(Layout<View> layout)
+        {
+            foreach (var view in layout.Children)
+            {
+                if (view is RadioButton)
+                {
+                    yield return view as RadioButton;
+                }
+                else if (view is Layout<View> la)
+                {
+                    foreach (var chk in GetChildRadioButtons(la))
+                        yield return chk;
+                }
+            }
+        }
         #endregion
     }
 }

@@ -20,7 +20,7 @@ namespace Plugin.InputKit.Shared.Controls
             BorderColor = Color.Black,
             TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = 25,
-            CornerRadius = -1,
+            CornerRadius = 4,
             FontSize = 14,
         };
 
@@ -82,12 +82,12 @@ namespace Plugin.InputKit.Shared.Controls
         #region Properties
         //-----------------------------------------------------------------------------
         /// <summary>
-        /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
+        /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
         /// </summary>
         public Action<CheckBox, bool> ApplyIsCheckedAction { get; set; }
         //-----------------------------------------------------------------------------
         /// <summary>
-        /// Applies pressed effect. Default value is <see cref="ApplyIsPressed(bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
+        /// Applies pressed effect. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
         /// </summary>
         public Action<CheckBox, bool> ApplyIsPressedAction { get; set; }
         /// <summary>
@@ -331,6 +331,8 @@ namespace Plugin.InputKit.Shared.Controls
         public static async void ApplyIsPressed(CheckBox checkBox, bool isPressed)
         {
             await checkBox.frmBackground.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
+            var radiusVal = isPressed ? checkBox.frmBackground.CornerRadius * 2f : checkBox.CornerRadius;
+            checkBox.frmBackground.CornerRadius = radiusVal;
         }
         #endregion
 
