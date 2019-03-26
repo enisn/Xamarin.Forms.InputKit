@@ -40,7 +40,7 @@ namespace Plugin.InputKit.Shared.Controls
         #region Fields
         internal IconView iconCircle = new IconView { Source = ImageSource.FromResource(RESOURCE_CIRCLE), FillColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
         internal IconView iconChecked = new IconView { Source = ImageSource.FromResource(RESOURCE_DOT), FillColor = GlobalSetting.Color, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
-        internal Label lblText = new Label { Text = "", VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+        internal Label lblText = new Label { IsVisible = false ,VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
         private bool _isDisabled;
         #endregion
 
@@ -152,7 +152,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Text Description of Radio Button. It will be displayed right of Radio Button
         /// </summary>
-        public string Text { get => lblText.Text; set => lblText.Text = value; }
+        public string Text { get => lblText.Text; set { lblText.Text = value; lblText.IsVisible = !string.IsNullOrEmpty(value); } }
         /// <summary>
         /// Fontsize of Description Text
         /// </summary>
