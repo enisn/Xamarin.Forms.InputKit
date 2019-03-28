@@ -204,6 +204,7 @@ namespace Plugin.InputKit.Shared.Controls
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsCheckedAction((bool)nv));
+        public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsDisabled = (bool) nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextFontSize = (double)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
@@ -215,6 +216,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
+        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), 12d, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double) nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
