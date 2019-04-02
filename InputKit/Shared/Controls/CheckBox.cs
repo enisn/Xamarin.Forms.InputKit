@@ -22,7 +22,7 @@ namespace Plugin.InputKit.Shared.Controls
             Size = 25,
             CornerRadius = 4,
             FontSize = 14,
-            LabelPosition = LabelPosition.Before
+            LabelPosition = LabelPosition.After
         };
 
         #region Constants

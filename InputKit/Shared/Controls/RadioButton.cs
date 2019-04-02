@@ -30,7 +30,7 @@ namespace Plugin.InputKit.Shared.Controls
             Size = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Large : NamedSize.Medium, typeof(Label)) * 1.2,
             CornerRadius = -1,
             FontSize = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Medium : NamedSize.Small, typeof(Label)),
-            LabelPosition = LabelPosition.Before
+            LabelPosition = LabelPosition.After
         };
         #endregion
 
