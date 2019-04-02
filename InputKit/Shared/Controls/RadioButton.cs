@@ -229,7 +229,6 @@ namespace Plugin.InputKit.Shared.Controls
             IsChecked = !IsChecked;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(CommandParameter ?? Value);
-
         }
 
         //-----------------------------------------------------------------------------

@@ -65,8 +65,10 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 Children =
                 {
-                    new StackLayout { Orientation = StackOrientation.Horizontal,
-                    Children =
+                    new StackLayout
+                    {
+                        Orientation = StackOrientation.Horizontal,
+                        Children =
                         {
                             imgIcon,
                             txtInput
