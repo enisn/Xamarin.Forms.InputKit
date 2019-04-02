@@ -51,8 +51,6 @@ namespace Plugin.InputKit.Shared.Controls
             this.Padding = new Thickness(0, 10);
             this.Spacing = 10;
             this.frmBackground.Content = boxSelected;
-            //this.Children.Add(frmBackground);
-            //this.Children.Add(lblOption);
 
             ApplyLabelPosition(LabelPosition);
 
