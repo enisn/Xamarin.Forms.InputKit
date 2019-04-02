@@ -150,4 +150,7 @@
 
   <Import Project="inputkit.targets" Condition="Exists('inputkit.targets')" />
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  <ItemGroup>
+    <None Remove="Shared\LabelPosition.cs" />
+  </ItemGroup>
 </Project>

@@ -22,6 +22,7 @@ namespace Plugin.InputKit.Shared.Controls
             Size = 25,
             CornerRadius = 4,
             FontSize = 14,
+            LabelPosition = LabelPosition.Before
         };
 
         #region Constants
@@ -50,8 +51,11 @@ namespace Plugin.InputKit.Shared.Controls
             this.Padding = new Thickness(0, 10);
             this.Spacing = 10;
             this.frmBackground.Content = boxSelected;
-            this.Children.Add(frmBackground);
-            this.Children.Add(lblOption);
+            //this.Children.Add(frmBackground);
+            //this.Children.Add(lblOption);
+
+            ApplyLabelPosition(LabelPosition);
+
             this.ApplyIsCheckedAction = ApplyIsChecked;
             this.ApplyIsPressedAction = ApplyIsPressed;
             this.GestureRecognizers.Add(new TapGestureRecognizer
@@ -181,6 +185,11 @@ namespace Plugin.InputKit.Shared.Controls
         /// Corner radius of Box of CheckBox.
         /// </summary>
         public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+        public LabelPosition LabelPosition
+        {
+            get => (LabelPosition)GetValue(LabelPositionProperty);
+            set => SetValue(LabelPositionProperty, value);
+        }
         #endregion
 
         #region BindableProperties
@@ -199,10 +208,32 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction((bo as CheckBox), (bool)nv));
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).frmBackground.CornerRadius = (float)nv);
+        public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
+            propertyName: nameof(LabelPosition), declaringType: typeof(CheckBox),
+            returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
+            defaultValue: GlobalSetting.LabelPosition,
+            propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyLabelPosition((LabelPosition)nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
         #region Methods
+        private void ApplyLabelPosition(LabelPosition position)
+        {
+            Children.Clear();
+            if (position == LabelPosition.After)
+            {
+                lblOption.HorizontalOptions = LayoutOptions.Start;
+                Children.Add(frmBackground);
+                Children.Add(lblOption);
+            }
+            else
+            {
+                lblOption.HorizontalOptions = LayoutOptions.StartAndExpand;
+                Children.Add(lblOption);
+                Children.Add(frmBackground);
+            }
+        }
+
         void ExecuteCommand()
         {
             if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)

@@ -31,5 +31,20 @@ namespace Sample.InputKit.Views
                 }
             }
         }
+
+        private void ChangePosition(object sender, EventArgs e)
+        {
+            if (sender is RadioButton rb)
+            {
+                if (rb.LabelPosition == Plugin.InputKit.Shared.LabelPosition.After)
+                {
+                    rb.LabelPosition = Plugin.InputKit.Shared.LabelPosition.Before;
+                }
+                else
+                {
+                    rb.LabelPosition = Plugin.InputKit.Shared.LabelPosition.After;
+                }
+            }
+        }
     }
 }
