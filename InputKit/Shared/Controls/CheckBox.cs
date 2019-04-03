@@ -183,6 +183,9 @@ namespace Plugin.InputKit.Shared.Controls
         /// Corner radius of Box of CheckBox.
         /// </summary>
         public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+        /// <summary>
+        /// Gets or sets the label position.
+        /// </summary>
         public LabelPosition LabelPosition
         {
             get => (LabelPosition)GetValue(LabelPositionProperty);

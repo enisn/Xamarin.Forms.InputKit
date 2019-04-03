@@ -205,6 +205,9 @@ namespace Plugin.InputKit.Shared.Controls
         [Browsable(false)]
 #endif
         public bool IsPressed { get => (bool)GetValue(IsPressedProperty); set => SetValue(IsPressedProperty, value); }
+        /// <summary>
+        /// Gets or sets the label position.
+        /// </summary>
         public LabelPosition LabelPosition
         {
             get => (LabelPosition)GetValue(LabelPositionProperty);
@@ -260,7 +263,7 @@ namespace Plugin.InputKit.Shared.Controls
         void Tapped()
         {
             if (IsDisabled) return;
-            IsChecked = !IsChecked;
+            IsChecked = true;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(CommandParameter ?? Value);
 
