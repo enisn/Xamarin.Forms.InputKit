@@ -22,7 +22,7 @@ namespace Plugin.InputKit.Shared.Controls
             Size = 25,
             CornerRadius = 4,
             FontSize = 14,
-            LabelPosition = LabelPosition.After
+            LabelPosition = LabelPosition.Before
         };
 
         #region Constants
@@ -36,7 +36,7 @@ namespace Plugin.InputKit.Shared.Controls
         internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
         internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, IsVisible = false };
         internal Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
-        private CheckType _type = CheckType.Box;
+        private CheckType _type = CheckType.Box
         private bool _isEnabled;
         #endregion
 
@@ -52,7 +52,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.Spacing = 10;
             this.frmBackground.Content = boxSelected;
 
-            ApplyLabelPosition(LabelPosition);
+            ApplyLabelPosition(GlobalSetting.LabelPosition);
 
             this.ApplyIsCheckedAction = ApplyIsChecked;
             this.ApplyIsPressedAction = ApplyIsPressed;
