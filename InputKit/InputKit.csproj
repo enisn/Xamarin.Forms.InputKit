@@ -112,6 +112,7 @@
 
 
   <ItemGroup>
+    <None Remove="Shared\*.cs" />
     <None Remove="Shared\Abstraction\**\*.cs" />
     <None Remove="Shared\Configuration\GlobalSetting.cs" />
     <None Remove="Shared\Controls\**\*.cs" />
@@ -150,7 +151,4 @@
 
   <Import Project="inputkit.targets" Condition="Exists('inputkit.targets')" />
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
-  <ItemGroup>
-    <None Remove="Shared\LabelPosition.cs" />
-  </ItemGroup>
 </Project>
