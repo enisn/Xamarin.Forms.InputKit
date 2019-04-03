@@ -29,6 +29,7 @@ namespace Plugin.InputKit.Shared.Controls
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1, /* This is not supported for this control*/
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
+            LabelPosition = LabelPosition.After
         };
         #endregion
 
@@ -60,7 +61,9 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput = GetInputEntry();
             this.Children.Add(lblTitle);
             this.Children.Add(frmBackground);
-            this.Children.Add(lblAnnotation);
+
+            ApplyValidationPosition(GlobalSetting.LabelPosition);
+
             frmBackground.Content = new Grid
             {
                 Children =
@@ -337,6 +340,15 @@ namespace Plugin.InputKit.Shared.Controls
         /// Gets and sets keyboard type of this entry
         /// </summary>
         public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; }
+        //----------------------------------------- -------------------------------
+        /// <summary>
+        /// Position of Annotation Label for AdvancedEntry
+        /// </summary>
+        public LabelPosition ValidationPosition
+        {
+            get => (LabelPosition)GetValue(ValidationPositionProperty);
+            set => SetValue(ValidationPositionProperty, value);
+        }
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -351,7 +363,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), Color.Default, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
         public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
         public static readonly BindableProperty CompletedCommandProperty = BindableProperty.Create(nameof(CompletedCommand), typeof(ICommand), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CompletedCommand = (ICommand)nv);
-        public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AdvancedEntry.AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
+        public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ValidationMessage = (string)nv);
         public static readonly BindableProperty IgnoreValidationMessageProperty = BindableProperty.Create(nameof(IgnoreValidationMessage), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).DisplayValidation());
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
@@ -360,6 +372,11 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
         public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).BackgroundColor = (Color)nv);
+        public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
+                                propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
+                                returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
+                                defaultValue: GlobalSetting.LabelPosition,
+                                propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ApplyValidationPosition((LabelPosition)nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -471,10 +488,24 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
-        void UpdateWarning()
+        private void UpdateWarning()
         {
             ValidationChanged?.Invoke(this, new EventArgs());
             imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
+        }
+
+        private void ApplyValidationPosition(LabelPosition position)
+        {
+            this.Children.Remove(lblAnnotation);
+            switch (position)
+            {
+                case LabelPosition.Before:
+                    this.Children.Insert(1, lblAnnotation);
+                    break;
+                case LabelPosition.After:
+                    this.Children.Add(lblAnnotation);
+                    break;
+            }
         }
 
         private protected virtual Entry GetInputEntry()
@@ -489,47 +520,5 @@ namespace Plugin.InputKit.Shared.Controls
             };
         }
         #endregion
-        /// <summary>
-        /// Enum of Annotations. Detail will be added later.
-        /// </summary>
-        public enum AnnotationType
-        {
-            /// <summary>
-            /// None of check. Allows all inputs and returns IsValidated as true.
-            /// </summary>
-            None,
-            /// <summary>
-            /// Letter chars only
-            /// </summary>
-            LettersOnly,
-            /// <summary>
-            /// Digits characters only. Also that means 'Integer' numbers.
-            /// </summary>
-            DigitsOnly,
-            /// <summary>
-            /// NonDigits characters only.
-            /// </summary>
-            NonDigitsOnly,
-            /// <summary>
-            /// Standard decimal check with coma or dot (depends on culture).
-            /// </summary>
-            Decimal,
-            /// <summary>
-            /// Standard email check.
-            /// </summary>
-            Email,
-            /// <summary>
-            /// Standard password check (at least a number and at least a char). MinLength should be set seperately.
-            /// </summary>
-            Password,
-            /// <summary>
-            /// Standard phone number check. Also you should use MinLength property with this type.
-            /// </summary>
-            Phone,
-            /// <summary>
-            /// You need to set RegexPattern property as your regex query to use this.
-            /// </summary>
-            RegexPattern
-        }
     }
 }

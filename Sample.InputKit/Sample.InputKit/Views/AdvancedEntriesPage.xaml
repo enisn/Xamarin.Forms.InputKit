@@ -25,10 +25,11 @@
                         IsRequired="True"
                         MaxLength="50"
                         MinLength="10"
-                        TextColor="Black"
                         Placeholder="sample@domain.com"
                         Text="{Binding Email}"
-                        ValidationMessage="Please type a valid email address" />
+                        TextColor="Black"
+                        ValidationMessage="Please type a valid email address"
+                        ValidationPosition="Before" />
 
                     <input:AdvancedEntry
                         Title="Place your name below:"
@@ -38,10 +39,11 @@
                         IsRequired="True"
                         MaxLength="30"
                         MinLength="5"
-                        TextColor="Black"
                         Placeholder="John Doe"
                         Text="{Binding NameSurname}"
-                        ValidationMessage="Please type your name correctly" />
+                        TextColor="Black"
+                        ValidationMessage="Please type your name correctly"
+                        ValidationPosition="After" />
 
                     <input:AdvancedEntry
                         Title="Place your phone number below:"
@@ -51,9 +53,9 @@
                         IsRequired="True"
                         MaxLength="10"
                         MinLength="8"
-                        TextColor="Black"
                         Placeholder="5439998877"
                         Text="{Binding Phone}"
+                        TextColor="Black"
                         ValidationMessage="Please type your phone number correctly" />
                     <Label Text="Choose your subscription type:" />
                     <input:RadioButtonGroupView IsRequired="True">
