@@ -3,6 +3,7 @@ using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Helpers;
 using Plugin.InputKit.Shared.Layouts;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -22,7 +23,7 @@ namespace Plugin.InputKit.Shared.Controls
             Size = 25,
             CornerRadius = 4,
             FontSize = 14,
-            LabelPosition = LabelPosition.Before
+            LabelPosition = LabelPosition.After
         };
 
         #region Constants
@@ -52,7 +53,7 @@ namespace Plugin.InputKit.Shared.Controls
             this.Spacing = 10;
             this.frmBackground.Content = boxSelected;
 
-            ApplyLabelPosition(GlobalSetting.LabelPosition);
+            ApplyLabelPosition(LabelPosition);
 
             this.ApplyIsCheckedAction = ApplyIsChecked;
             this.ApplyIsPressedAction = ApplyIsPressed;
@@ -218,7 +219,7 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Methods
-        private void ApplyLabelPosition(LabelPosition position)
+        private void ApplyLabelPosition(LabelPosition position, [CallerMemberName]string member = null, [CallerFilePath]string file = null, [CallerLineNumber] int line = -1)
         {
             Children.Clear();
             if (position == LabelPosition.After)

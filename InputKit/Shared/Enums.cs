@@ -49,7 +49,7 @@ namespace Plugin.InputKit.Shared
 
     public enum LabelPosition
     {
-        Before,
-        After
+        After,
+        Before
     }
 }
