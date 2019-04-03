@@ -29,6 +29,7 @@ namespace Plugin.InputKit.Shared.Controls
             FontSize = Device.GetNamedSize(NamedSize.Default, typeof(Button)),
             Size = -1,
             TextColor = (Color)Button.TextColorProperty.DefaultValue,
+            LabelPosition = LabelPosition.After
         };
 
         #region Fields
@@ -151,6 +152,14 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as SelectableButton).UnselectedColor = value;
             }
         }
+        /// <summary>
+        /// Gets or sets the label position.
+        /// </summary>
+        public LabelPosition LabelPosition
+        {
+            get => (LabelPosition)GetValue(LabelPositionProperty);
+            set => SetValue(LabelPositionProperty, value);
+        }
         //-----------------------------------------------------------------------------
         /// <summary>
         ///         Gets or sets a binding that selects the property that will be displayed for each
@@ -168,6 +177,11 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndex = (int)nv);
         public static readonly BindableProperty SelectedIndexesProperty = BindableProperty.Create(nameof(SelectedIndexes), typeof(IEnumerable<int>), typeof(SelectionView), new int[0], BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SelectedIndexes = (IEnumerable<int>)nv);
         public static new readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(SelectionView), SelectionView.GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as SelectionView).BackgroundColor = (Color)nv);
+        public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
+            propertyName: nameof(LabelPosition), declaringType: typeof(SelectionView),
+            returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
+            defaultValue: GlobalSetting.LabelPosition,
+            propertyChanged: (bo, ov, nv) => (bo as SelectionView).UpdateView());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
@@ -263,14 +277,24 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 case SelectionType.Button:
                 case SelectionType.MultipleButton:
-                    var btn = new SelectableButton(obj, this.Color);
-                    btn.UnselectedColor = this.BackgroundColor;
-                    btn.CanChangeSelectedState = SelectionType == SelectionType.MultipleButton;
+                    var btn = new SelectableButton(obj, this.Color)
+                    {
+                        UnselectedColor = this.BackgroundColor,
+                        CanChangeSelectedState = SelectionType == SelectionType.MultipleButton
+                    };
                     return btn;
                 case SelectionType.RadioButton:
-                    return new SelectableRadioButton(obj, this.Color);
+                    var rb = new SelectableRadioButton(obj, this.Color)
+                    {
+                        LabelPosition = LabelPosition
+                    };
+                    return rb;
                 case SelectionType.CheckBox:
-                    return new SelectableCheckBox(obj, this.Color);
+                    var cb = new SelectableCheckBox(obj, this.Color)
+                    {
+                        LabelPosition = LabelPosition
+                    };
+                    return cb;
             }
             return null;
         }

@@ -10,9 +10,9 @@
             <Button Text="Randomize Colors" Clicked="RandomizeColors" />
 
             <input:RadioButtonGroupView x:Name="groupView">
-                <input:RadioButton Text="Option 1"/>
-                <input:RadioButton Text="Option 2"/>
-                <input:RadioButton Text="Option 3"/>
+                <input:RadioButton Text="Option 1" LabelPosition="After"/>
+                <input:RadioButton Text="Option 2" LabelPosition="Before"/>
+                <input:RadioButton Text="Option 3 (Click me ^_^)" Clicked="ChangePosition"/>
                 <input:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>
                 <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
                 <input:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>

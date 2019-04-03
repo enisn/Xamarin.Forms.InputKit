@@ -52,6 +52,10 @@ namespace Plugin.InputKit.Shared.Configuration
         /// Font family of control.
         /// </summary>
         public string FontFamily { get; set; }
+        /// <summary>
+        /// Label position of control.
+        /// </summary>
+        public LabelPosition LabelPosition { get; set; }
 
         ///------------------------------------------------------------------
         /// <summary>

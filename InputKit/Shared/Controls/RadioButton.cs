@@ -1,6 +1,7 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Layouts;
+using Plugin.InputKit.Shared;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -29,6 +30,7 @@ namespace Plugin.InputKit.Shared.Controls
             Size = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Large : NamedSize.Medium, typeof(Label)) * 1.2,
             CornerRadius = -1,
             FontSize = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Medium : NamedSize.Small, typeof(Label)),
+            LabelPosition = LabelPosition.After
         };
         #endregion
 
@@ -38,9 +40,10 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Fields
+        internal Grid IconLayout;
         internal IconView iconCircle = new IconView { Source = ImageSource.FromResource(RESOURCE_CIRCLE), FillColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
         internal IconView iconChecked = new IconView { Source = ImageSource.FromResource(RESOURCE_DOT), FillColor = GlobalSetting.Color, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
-        internal Label lblText = new Label { IsVisible = false ,VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+        internal Label lblText = new Label { IsVisible = false, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
         private bool _isDisabled;
         #endregion
 
@@ -56,8 +59,10 @@ namespace Plugin.InputKit.Shared.Controls
             this.ApplyIsPressedAction = ApplyIsPressed;
             if (Device.RuntimePlatform != Device.iOS)
                 lblText.FontSize = lblText.FontSize *= 1.5;
+
             Orientation = StackOrientation.Horizontal;
-            this.Children.Add(new Grid
+
+            IconLayout = new Grid
             {
                 VerticalOptions = LayoutOptions.CenterAndExpand,
                 Children =
@@ -66,8 +71,9 @@ namespace Plugin.InputKit.Shared.Controls
                     iconChecked
                 },
                 MinimumWidthRequest = GlobalSetting.Size * 1.66,
-            });
-            this.Children.Add(lblText);
+            };
+            ApplyLabelPosition(LabelPosition);
+
             this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
         }
         ///-----------------------------------------------------------------------------
@@ -199,11 +205,20 @@ namespace Plugin.InputKit.Shared.Controls
         [Browsable(false)]
 #endif
         public bool IsPressed { get => (bool)GetValue(IsPressedProperty); set => SetValue(IsPressedProperty, value); }
+        /// <summary>
+        /// Gets or sets the label position.
+        /// </summary>
+        public LabelPosition LabelPosition
+        {
+            get => (LabelPosition)GetValue(LabelPositionProperty);
+            set => SetValue(LabelPositionProperty, value);
+        }
         #endregion
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsCheckedAction((bool)nv));
+        public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsDisabled = (bool)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextFontSize = (double)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(RadioButton), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateColors());
@@ -215,10 +230,32 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
+        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), 12d, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
+        public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
+            propertyName: nameof(LabelPosition), declaringType: typeof(RadioButton),
+            returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
+            defaultValue: GlobalSetting.LabelPosition, 
+            propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyLabelPosition((LabelPosition)nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
         #region Methods
+        private void ApplyLabelPosition(LabelPosition position)
+        {
+            Children.Clear();
+            if (position == LabelPosition.After)
+            {
+                lblText.HorizontalOptions = LayoutOptions.Start;
+                Children.Add(IconLayout);
+                Children.Add(lblText);
+            }
+            else
+            {
+                lblText.HorizontalOptions = LayoutOptions.StartAndExpand;
+                Children.Add(lblText);
+                Children.Add(IconLayout);
+            }
+        }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// That handles tapps and triggers event, commands etc.
@@ -226,7 +263,7 @@ namespace Plugin.InputKit.Shared.Controls
         void Tapped()
         {
             if (IsDisabled) return;
-            IsChecked = !IsChecked;
+            IsChecked = true;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(CommandParameter ?? Value);
         }

@@ -17,6 +17,7 @@
                                  ColumnNumber="2" 
                                  RowSpacing="10" 
                                  ColumnSpacing="10"
+                                 LabelPosition="Before"
                                  SelectionType="Button" 
                                  ItemDisplayBinding="{Binding Name}" 
                                  ItemsSource="{Binding MyList}" />
