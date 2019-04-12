@@ -114,6 +114,12 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public event EventHandler Clicked;
 
+        /// <summary>
+        /// Event triggered when the Checked property changed, which may occur due to a click or setting the 
+        /// IsChecked property in code.
+        /// </summary>
+        public event EventHandler Checked;
+
         #region Properties
         //-----------------------------------------------------------------------------
         /// <summary>
@@ -291,8 +297,13 @@ namespace Plugin.InputKit.Shared.Controls
 
         public virtual void ApplyIsChecked(bool isChecked)
         {
+            var changed = iconChecked.IsVisible != isChecked;
             iconChecked.IsVisible = isChecked;
             UpdateColors();
+            if(changed)
+            {
+                Checked?.Invoke(this, null);
+            }
         }
         public virtual async void ApplyIsPressed(bool isPressed)
         {
