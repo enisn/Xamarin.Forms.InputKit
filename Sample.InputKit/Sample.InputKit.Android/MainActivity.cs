@@ -12,16 +12,16 @@ namespace Sample.InputKit.Droid
     [Activity(Label = "Sample.InputKit", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        protected override void OnCreate(Bundle bundle)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
             
-            base.OnCreate(bundle);
-
-            Plugin.InputKit.Platforms.Droid.Config.Init(this,bundle); // <-- Add this
+            base.OnCreate(savedInstanceState);
             
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Plugin.InputKit.Platforms.Droid.Config.Init(this,savedInstanceState); // <-- Add this
+            
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             LoadApplication(new App());
         }
     }
