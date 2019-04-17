@@ -260,7 +260,7 @@ namespace Plugin.InputKit.Shared.Controls
             else
             {
                 frmBackground.BorderColor = IsChecked ? Color : BorderColor;
-                frmBackground.BackgroundColor = BackgroundColor;
+                frmBackground.BackgroundColor = BoxBackgroundColor;
                 imgSelected.FillColor = Color;
             }
         }
