@@ -73,8 +73,8 @@
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.dll" target="lib\netstandard2.0\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\netstandard2.0\Plugin.InputKit.xml" target="lib\netstandard2.0\Plugin.InputKit.xml" />
 
-    <file src="InputKit\bin\Release\monoandroid81\90\Plugin.InputKit.dll" target="lib\monoandroid90\Plugin.InputKit.dll" />
-    <file src="InputKit\bin\Release\monoandroid81\90\Plugin.InputKit.xml" target="lib\monoandroid90\Plugin.InputKit.xml" />
+    <file src="InputKit\bin\Release\monoandroid90\90\Plugin.InputKit.dll" target="lib\monoandroid90\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\monoandroid90\90\Plugin.InputKit.xml" target="lib\monoandroid90\Plugin.InputKit.xml" />
 
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.dll" target="lib\xamarin.ios10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.xml" target="lib\xamarin.ios10\Plugin.InputKit.xml" />
