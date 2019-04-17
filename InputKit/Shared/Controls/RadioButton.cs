@@ -236,11 +236,11 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
-        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), 12d, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
+        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), -1, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
         public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
             propertyName: nameof(LabelPosition), declaringType: typeof(RadioButton),
             returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
-            defaultValue: GlobalSetting.LabelPosition, 
+            defaultValue: GlobalSetting.LabelPosition,
             propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyLabelPosition((LabelPosition)nv));
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
@@ -281,6 +281,8 @@ namespace Plugin.InputKit.Shared.Controls
         [Obsolete("This feature is obsolete. You can try to use 'CircleImage' to set your own image as circle", false)]
         void SetCircleSize(double value)
         {
+            if (value < 0)
+                return;
             iconCircle.HeightRequest = this.CircleSize;
             iconCircle.WidthRequest = this.CircleSize;
             iconChecked.WidthRequest = this.CircleSize;
@@ -300,7 +302,7 @@ namespace Plugin.InputKit.Shared.Controls
             var changed = iconChecked.IsVisible != isChecked;
             iconChecked.IsVisible = isChecked;
             UpdateColors();
-            if(changed)
+            if (changed)
             {
                 Checked?.Invoke(this, null);
             }
