@@ -62,7 +62,7 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid81' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid90' ">
     <Compile Include="Platforms\Droid\**\*.cs" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
