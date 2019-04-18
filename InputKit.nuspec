@@ -5,7 +5,7 @@
     <id>Xamarin.Forms.InputKit</id>
 
     <!-- The package version number that is used when resolving dependencies -->
-    <version>3.0.8</version>
+    <version>3.0.8.1</version>
 
     <!-- Authors contain text that appears directly on the gallery -->
     <authors>enisn</authors>
@@ -52,7 +52,7 @@
       <group>
         <dependency id="Xamarin.Forms" version="3.2.0.839982" />
       </group>
-      <group targetFramework="MonoAndroid81">
+      <group targetFramework="MonoAndroid90">
         <dependency id="Xamarin.Forms" version="3.2.0.839982" />
       </group>
       <group targetFramework="Xamarin.iOS10">
