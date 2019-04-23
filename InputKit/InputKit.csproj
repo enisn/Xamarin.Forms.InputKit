@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <!-- <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;uap10.0.16299;</TargetFrameworks> -->
-    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid90;Xamarin.iOS10;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid81;Xamarin.iOS10;</TargetFrameworks>
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
@@ -62,7 +62,7 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid90' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid90' OR '$(TargetFramework)' == 'MonoAndroid81' ">
     <Compile Include="Platforms\Droid\**\*.cs" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
@@ -109,17 +109,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
     <Compile Include="Platforms\macOS\**\*.cs" />
   </ItemGroup>
-
-
-  <ItemGroup>
-    <None Remove="Shared\*.cs" />
-    <None Remove="Shared\Abstraction\**\*.cs" />
-    <None Remove="Shared\Configuration\GlobalSetting.cs" />
-    <None Remove="Shared\Controls\**\*.cs" />
-    <None Remove="Shared\Helpers\**\*.cs" />
-    <None Remove="Shared\Utils\**\*.cs" />
-  </ItemGroup>
-
 
 
   <ItemGroup>
