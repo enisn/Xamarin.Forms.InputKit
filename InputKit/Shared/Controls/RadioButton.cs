@@ -236,7 +236,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
-        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), -1, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
+        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), -1d, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
         public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
             propertyName: nameof(LabelPosition), declaringType: typeof(RadioButton),
             returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
