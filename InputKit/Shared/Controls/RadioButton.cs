@@ -100,6 +100,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         /// <param name="text">Text to display right of Radio button </param>
         /// <param name="isChecked">IsSelected situation</param>
+        [Obsolete("This variation of constructor is obsolete and this'll be romev closest major update. You can use Parameterless constructor instead of")]
         public RadioButton(string text, bool isChecked = false) : this()
         {
             Value = text;
