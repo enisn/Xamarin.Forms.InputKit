@@ -24,6 +24,7 @@
                             Placeholder="Choose one" 
                             ItemsSource="{Binding MyList}" 
                             SelectedItem="{Binding SelectedItem}"
+                            FontSize="15"
                             />
         </StackLayout>
     </ContentPage.Content>
