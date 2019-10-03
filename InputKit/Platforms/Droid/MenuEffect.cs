@@ -15,6 +15,11 @@ namespace Plugin.InputKit.Platforms.Droid
     {
         PopupMenu ToggleMenu;
         InternalPopupEffect Effect;
+        
+        public MenuEffect()
+        {
+        }
+        
         protected override void OnAttached()
         {
             Effect = (InternalPopupEffect)Element.Effects.FirstOrDefault(e => e is InternalPopupEffect);
