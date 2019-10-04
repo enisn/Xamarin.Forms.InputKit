@@ -23,16 +23,16 @@
 
  ## Available Platforms
 
-
 | Platform | Version | Supported |
 | --- | --- | --- |
-| Android | MonoAndroid81 | YES |
-| iOS | Xamarin.iOS10 | YES |
+| Android | MonoAndroid90 | ✅ |
+| Android | MonoAndroid81 | ❌ |
+| iOS | Xamarin.iOS10 | ✅ |
 | UWP | - | **EXPERIMENTAL** |
-| MAC | Xamarin.Mac20 | YES |
-| WatchOS | Xamarin.WatchOS10 | YES |
-| .NET Standard | 2.0 | YES |
-| .NET Standard | 1.0 | YES |
+| MAC | Xamarin.Mac20 | ✅ |
+| WatchOS | Xamarin.WatchOS10 | ⚠ |
+| .NET Standard | 2.0 | ✅ |
+| .NET Standard | 1.0 | ✅ |
 
 <hr/>
 
