@@ -8,9 +8,9 @@
     <PackageId>Xamarin.Forms.InputKit</PackageId>
 
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>3.0.12.0</AssemblyVersion>
+    <AssemblyVersion>3.0.14.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>3.0.13.0</Version>
+    <Version>3.0.14</Version>
     <PackageVersion>3.0.12.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
@@ -22,7 +22,7 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
     <!--TODO: Fill these in-->
-    <PackageLicenseUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
     <PackageReleaseNotes>IsDisabled properties added. SelectionView RadioButons added</PackageReleaseNotes>
@@ -44,6 +44,7 @@
     <Copyright>Copyright 2018</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
