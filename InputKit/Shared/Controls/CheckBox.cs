@@ -141,7 +141,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Gets or sets icon color of checked state. If you leave null, checkbox will make a decision between Black and White depending on Color.
         /// </summary>
-        public Color? IconColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
+        public Color? IconColor { get => (Color?)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
 
         /// <summary>
         /// Which icon will be shown when checkbox is checked
