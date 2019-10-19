@@ -83,6 +83,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <param name="value">Value to keep in radio button</param>
         /// <param name="displayMember">If you send an ojbect as value. Which property will be displayed. Or override .ToString() inside of your object.</param>
         /// <param name="isChecked"> Checked or not situation</param>
+        [Obsolete("This variation of constructor is obsolete and this'll be romev closest major update. You can use Parameterless constructor with object initializer  instead of this one")]
         public RadioButton(object value, string displayMember, bool isChecked = false) : this()
         {
             this.Value = value;
@@ -100,7 +101,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         /// <param name="text">Text to display right of Radio button </param>
         /// <param name="isChecked">IsSelected situation</param>
-        [Obsolete("This variation of constructor is obsolete and this'll be romev closest major update. You can use Parameterless constructor instead of")]
+        [Obsolete("This variation of constructor is obsolete and this'll be romev closest major update. You can use Parameterless constructor with object initializer instead of this one", true)]
         public RadioButton(string text, bool isChecked = false) : this()
         {
             Value = text;
