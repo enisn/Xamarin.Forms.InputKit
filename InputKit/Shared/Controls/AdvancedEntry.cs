@@ -61,7 +61,7 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput = GetInputEntry();
             this.Children.Add(lblTitle);
             this.Children.Add(frmBackground);
-
+            
             ApplyValidationPosition(GlobalSetting.LabelPosition);
 
             frmBackground.Content = new Grid
@@ -393,6 +393,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual new void Focus()
         {
+            this.Focus(); // To trigger base.Focused event
             txtInput.Focus();
         }
         /// <summary>
@@ -400,6 +401,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual new void Unfocus()
         {
+            this.Unfocus(); // To trigger base.Unfocused event
             txtInput.Unfocus();
         }
         /// <summary>
