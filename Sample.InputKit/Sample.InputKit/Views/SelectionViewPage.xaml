@@ -13,14 +13,14 @@
         <StackLayout Padding="25" Spacing="15">
             <Picker x:Name="picker" SelectedIndexChanged="Picker_SelectedIndexChanged"/>
 
-            <input:SelectionView x:Name="selectionView"
-                                 ColumnNumber="2" 
-                                 RowSpacing="10" 
-                                 ColumnSpacing="10"
-                                 LabelPosition="Before"
-                                 SelectionType="Button" 
-                                 ItemDisplayBinding="{Binding Name}" 
-                                 ItemsSource="{Binding MyList}" />
+            <input:SelectionView
+                x:Name="selectionView"
+                ColumnNumber="1"
+                ColumnSpacing="10"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding MyList}"
+                RowSpacing="10"
+                SelectionType="CheckBox" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
