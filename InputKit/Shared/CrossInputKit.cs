@@ -32,13 +32,7 @@ namespace Plugin.InputKit
 
         static IInputKit CreateInputKit()
         {
-#if NETSTANDARD1_0 || NETSTANDARD2_0
             return null;
-#else
-#pragma warning disable IDE0022 // Use expression body for methods
-            return new InputKitImplementation();
-#pragma warning restore IDE0022 // Use expression body for methods
-#endif
         }
 
         internal static Exception NotImplementedInReferenceAssembly() =>

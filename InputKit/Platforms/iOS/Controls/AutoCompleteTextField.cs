@@ -11,7 +11,7 @@ using Xamarin.Forms.Platform.iOS;
 
 namespace Plugin.InputKit.Platforms.iOS.Controls
 {
-    [Register("MbAutoCompleteTextField")]
+    [Register("UIAutoCompleteTextField")]
     public class AutoCompleteTextField : UITextField, IUITextFieldDelegate
     {
         private AutoCompleteViewSource _autoCompleteViewSource;
@@ -47,14 +47,9 @@ namespace Plugin.InputKit.Platforms.iOS.Controls
 
         public void Draw(UIViewController viewController, CALayer layer, UIScrollView scrollView, nfloat y)
         {
-            if (viewController == null)
-            {
-                throw new ArgumentNullException(nameof(viewController), @"View cannot be null");
-            }
-
             _scrollView = scrollView;
             _drawnFrame = layer.Frame;
-            _parentViewController = viewController;
+            _parentViewController = viewController ?? throw new ArgumentNullException(nameof(viewController), "View cannot be null");
 
 
             //Make new tableview and do some settings

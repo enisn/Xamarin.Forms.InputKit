@@ -13,7 +13,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/st6lcbts9bkhxqub?svg=true)](https://ci.appveyor.com/project/enisn/xamarin-forms-inputkit)
 [![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
-<a href="https://www.nuget.org/packages/Xamarin.Forms.InputKit/"><img src="https://img.shields.io/badge/Nuget-3.0.5-blue.svg" /></a>
+[![Nuget](https://img.shields.io/nuget/v/Xamarin.Forms.InputKit)](https://www.nuget.org/packages/Xamarin.Forms.InputKit/)
+![Nuget](https://img.shields.io/nuget/dt/Xamarin.Forms.InputKit?logo=nuget)
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
 
 
@@ -22,16 +23,16 @@
 
  ## Available Platforms
 
-
 | Platform | Version | Supported |
 | --- | --- | --- |
-| Android | MonoAndroid81 | YES |
-| iOS | Xamarin.iOS10 | YES |
+| Android | MonoAndroid90 | ✅ |
+| Android | MonoAndroid81 | ❌ |
+| iOS | Xamarin.iOS10 | ✅ |
 | UWP | - | **EXPERIMENTAL** |
-| MAC | Xamarin.Mac20 | YES |
-| WatchOS | Xamarin.WatchOS10 | YES |
-| .NET Standard | 2.0 | YES |
-| .NET Standard | 1.0 | YES |
+| MAC | Xamarin.Mac20 | ✅ |
+| WatchOS | Xamarin.WatchOS10 | ⚠ |
+| .NET Standard | 2.0 | ✅ |
+| .NET Standard | 1.0 | ✅ |
 
 <hr/>
 

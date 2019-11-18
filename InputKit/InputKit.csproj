@@ -1,17 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras/2.0.41">
 
   <PropertyGroup>
     <!-- <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;uap10.0.16299;</TargetFrameworks> -->
-    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid81;Xamarin.iOS10;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid90;Xamarin.iOS10;</TargetFrameworks>
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
 
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <AssemblyVersion>3.0.14.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>1.0.0.0</Version>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <Version>3.0.15</Version>
+    <PackageVersion>3.0.12.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>7.3</LangVersion>
@@ -22,7 +22,7 @@
     <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
 
     <!--TODO: Fill these in-->
-    <PackageLicenseUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
     <RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
     <PackageReleaseNotes>IsDisabled properties added. SelectionView RadioButons added</PackageReleaseNotes>
@@ -44,6 +44,7 @@
     <Copyright>Copyright 2018</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
@@ -53,16 +54,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="MSBuild.Sdk.Extras" Version="1.6.55" PrivateAssets="All" />
     <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
+  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid81' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid90' OR '$(TargetFramework)' == 'MonoAndroid81' ">
     <Compile Include="Platforms\Droid\**\*.cs" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
@@ -109,17 +110,6 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
     <Compile Include="Platforms\macOS\**\*.cs" />
   </ItemGroup>
-
-
-  <ItemGroup>
-    <None Remove="Shared\*.cs" />
-    <None Remove="Shared\Abstraction\**\*.cs" />
-    <None Remove="Shared\Configuration\GlobalSetting.cs" />
-    <None Remove="Shared\Controls\**\*.cs" />
-    <None Remove="Shared\Helpers\**\*.cs" />
-    <None Remove="Shared\Utils\**\*.cs" />
-  </ItemGroup>
-
 
 
   <ItemGroup>

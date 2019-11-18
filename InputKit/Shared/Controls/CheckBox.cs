@@ -3,6 +3,7 @@ using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Helpers;
 using Plugin.InputKit.Shared.Layouts;
 using System;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -32,9 +33,9 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Fields
-        internal Frame frmBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
-        internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, IsVisible = false };
+        protected internal Frame frmBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
+        protected internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
+        protected internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, IsVisible = false };
         internal Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
@@ -114,10 +115,7 @@ namespace Plugin.InputKit.Shared.Controls
         public bool IsChecked
         {
             get => (bool)GetValue(IsCheckedProperty);
-            set
-            {
-                SetValue(IsCheckedProperty, value);
-            }
+            set => SetValue(IsCheckedProperty, value);
         }
         /// <summary>
         /// Checkbox box background color. Default is LightGray
@@ -139,6 +137,12 @@ namespace Plugin.InputKit.Shared.Controls
         /// Color of text
         /// </summary>
         public Color TextColor { get => lblOption.TextColor; set => lblOption.TextColor = value; }
+
+        /// <summary>
+        /// Gets or sets icon color of checked state. If you leave null, checkbox will make a decision between Black and White depending on Color.
+        /// </summary>
+        public Color? IconColor { get => (Color?)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
+
         /// <summary>
         /// Which icon will be shown when checkbox is checked
         /// </summary>
@@ -192,11 +196,12 @@ namespace Plugin.InputKit.Shared.Controls
             set => SetValue(LabelPositionProperty, value);
         }
         #endregion
-
+        
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
+        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color?), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction((bo as CheckBox), (bool)nv));
         public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
@@ -218,7 +223,7 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Methods
-        private void ApplyLabelPosition(LabelPosition position)
+        void ApplyLabelPosition(LabelPosition position, [CallerMemberName]string member = null, [CallerFilePath]string file = null, [CallerLineNumber] int line = -1)
         {
             Children.Clear();
             if (position == LabelPosition.After)
@@ -240,6 +245,7 @@ namespace Plugin.InputKit.Shared.Controls
             if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
                 CheckChangedCommand?.Execute(CommandParameter ?? this);
         }
+
         void UpdateBoxBackground()
         {
             if (this.Type == CheckType.Material)
@@ -247,6 +253,7 @@ namespace Plugin.InputKit.Shared.Controls
 
             frmBackground.BackgroundColor = BoxBackgroundColor;
         }
+
         void UpdateColors()
         {
             boxSelected.Color = Color;
@@ -254,15 +261,16 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 frmBackground.BorderColor = Color;
                 frmBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
-                imgSelected.FillColor = Color.ToSurfaceColor();
+                imgSelected.FillColor = IconColor ?? Color.ToSurfaceColor();
             }
             else
             {
                 frmBackground.BorderColor = IsChecked ? Color : BorderColor;
-                frmBackground.BackgroundColor = BackgroundColor;
-                imgSelected.FillColor = Color;
+                frmBackground.BackgroundColor = BoxBackgroundColor;
+                imgSelected.FillColor = IconColor ?? Color;
             }
         }
+
         void UpdateBorderColor()
         {
             if (this.Type == CheckType.Material)
@@ -270,12 +278,7 @@ namespace Plugin.InputKit.Shared.Controls
 
             frmBackground.BorderColor = this.BorderColor;
         }
-        void UpdateAllColors()
-        {
-            UpdateColors();
-            //UpdateBoxBackground();
-            //UpdateBorderColor();
-        }
+
         void SetBoxSize(double value)
         {
             frmBackground.WidthRequest = value;
@@ -285,6 +288,7 @@ namespace Plugin.InputKit.Shared.Controls
             //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
             this.Children[0].MinimumWidthRequest = value * 1.4;
         }
+
         void UpdateType(CheckType _Type)
         {
             switch (_Type)
@@ -314,8 +318,10 @@ namespace Plugin.InputKit.Shared.Controls
                     frmBackground.Content = imgSelected;
                     break;
             }
-            UpdateAllColors();
+            
+            UpdateColors();
         }
+
         protected virtual void InitVisualStates()
         {
             VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList

@@ -2,6 +2,7 @@
 using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -60,26 +61,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public int SelectedIndex
         {
-            get
-            {
-                int index = 0;
-                foreach (var rb in GetChildRadioButtons(this))
-                {
-                    if (rb.IsChecked)
-                        return index;
-                    index++;
-                }
-                return -1;
-            }
-            set
-            {
-                int index = 0;
-                foreach (var rb in GetChildRadioButtons(this))
-                {
-                    rb.IsChecked = index == value;
-                    index++;
-                }
-            }
+            get => (int)GetValue(RadioButtonGroupView.SelectedIndexProperty);
+            set => SetValue(RadioButtonGroupView.SelectedIndexProperty, value);
         }
         //-----------------------------------------------------------------------------
         /// <summary>
@@ -88,22 +71,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public object SelectedItem
         {
-            get
-            {
-                foreach (var rb in GetChildRadioButtons(this))
-                {
-                    if (rb.IsChecked)
-                        return rb.Value;
-                }
-                return null;
-            }
-            set
-            {
-                foreach (var rb in GetChildRadioButtons(this))
-                {
-                    rb.IsChecked = rb.Value.Equals(value);
-                }
-            }
+            get => GetValue(RadioButtonGroupView.SelectedItemProperty);
+            set => SetValue(RadioButtonGroupView.SelectedItemProperty, value);
         }
         //-----------------------------------------------------------------------------
         /// <summary>
@@ -123,8 +92,8 @@ namespace Plugin.InputKit.Shared.Controls
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItem = nv);
-        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedIndex = (int)nv);
+        public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).UpdateToSelectedItem());
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).UpdateToSelectedIndex());
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
@@ -140,8 +109,8 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 if (item is RadioButton rb)
                 {
-                    rb.Clicked -= UpdateSelected;
-                    rb.Clicked += UpdateSelected;
+                    rb.Checked -= UpdateSelected;
+                    rb.Checked += UpdateSelected;
                 }
             }
         }
@@ -149,8 +118,8 @@ namespace Plugin.InputKit.Shared.Controls
         {
             if (e.Element is RadioButton rb)
             {
-                rb.Clicked -= UpdateSelected;
-                rb.Clicked += UpdateSelected;
+                rb.Checked -= UpdateSelected;
+                rb.Checked += UpdateSelected;
             }
             else if(e.Element is Layout<View> la)
             {
@@ -158,25 +127,52 @@ namespace Plugin.InputKit.Shared.Controls
                 la.ChildAdded += OnChildAdded;
                 foreach (var radioButton in GetChildRadioButtons(la))
                 {
-                    radioButton.Clicked -= UpdateSelected;
-                    radioButton.Clicked += UpdateSelected;
+                    radioButton.Checked -= UpdateSelected;
+                    radioButton.Checked += UpdateSelected;
                 }
             }
         }
-        void UpdateSelected(object selected, EventArgs e)
+
+        void UpdateToSelectedItem()
         {
             foreach (var rb in GetChildRadioButtons(this))
             {
-                rb.IsChecked = rb.Equals(selected);
+                rb.IsChecked = rb.Value?.Equals(SelectedItem) ?? false;
             }
+        }
 
-            SetValue(SelectedItemProperty, this.SelectedItem);
-            OnPropertyChanged(nameof(SelectedItem));
-            SetValue(SelectedIndexProperty, this.SelectedIndex);
-            OnPropertyChanged(nameof(SelectedIndex));
-            SelectedItemChanged?.Invoke(this, new EventArgs());
-            if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
-                SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
+        void UpdateToSelectedIndex()
+        {
+            int index = 0;
+            foreach (var rb in GetChildRadioButtons(this))
+            {
+                rb.IsChecked = index == SelectedIndex;
+                index++;
+            }
+        }
+
+        void UpdateSelected(object selected, EventArgs e)
+        {
+            var asRadioButton = (RadioButton)selected;
+            
+            // if the selected item is checked, uncheck all others
+            if(asRadioButton.IsChecked)
+            {
+                foreach (var rb in GetChildRadioButtons(this))
+                {
+                    if(rb != asRadioButton)
+                    {
+                        rb.IsChecked = false;
+                    }
+                }
+                SetValue(SelectedItemProperty, asRadioButton.Value);
+
+                var index = GetChildRadioButtons(this).ToList().IndexOf(asRadioButton);
+                SetValue(SelectedIndexProperty, index);
+                SelectedItemChanged?.Invoke(this, new EventArgs());
+                if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+                    SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
+            }
             ValidationChanged?.Invoke(this, new EventArgs());
         }
         private IEnumerable<RadioButton> GetChildRadioButtons(Layout<View> layout)

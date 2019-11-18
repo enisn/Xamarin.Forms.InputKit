@@ -120,6 +120,8 @@ namespace Plugin.InputKit.Shared.Controls
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
         [TypeConverter(typeof(FontSizeConverter))]
         public double TitleFontSize { get => lblTitle.FontSize; set => lblTitle.FontSize = value; }
+        [TypeConverter(typeof(FontSizeConverter))]
+        public double FontSize { get => txtInput.FontSize; set => txtInput.FontSize = value; }
         public ImageSource IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
