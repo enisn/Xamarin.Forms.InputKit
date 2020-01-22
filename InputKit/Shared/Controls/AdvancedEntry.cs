@@ -393,7 +393,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual new void Focus()
         {
-            this.Focus(); // To trigger base.Focused event
+            base.Focus(); // To trigger base.Focused event
             txtInput.Focus();
         }
         /// <summary>
@@ -401,7 +401,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual new void Unfocus()
         {
-            this.Unfocus(); // To trigger base.Unfocused event
+            base.Unfocus(); // To trigger base.Unfocused event
             txtInput.Unfocus();
         }
         /// <summary>
