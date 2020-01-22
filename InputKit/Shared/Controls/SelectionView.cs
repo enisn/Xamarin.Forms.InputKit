@@ -271,7 +271,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
-        private ISelection GetInstance(object obj)
+        public virtual ISelection GetInstance(object obj)
         {
             switch (SelectionType)
             {
@@ -283,6 +283,7 @@ namespace Plugin.InputKit.Shared.Controls
                         CanChangeSelectedState = SelectionType == SelectionType.MultipleButton
                     };
                     return btn;
+                case SelectionType.MultipleRadioButton:
                 case SelectionType.RadioButton:
                     var rb = new SelectableRadioButton(obj, this.Color)
                     {
@@ -290,6 +291,7 @@ namespace Plugin.InputKit.Shared.Controls
                     };
                     return rb;
                 case SelectionType.CheckBox:
+                case SelectionType.SingleCheckBox:
                     var cb = new SelectableCheckBox(obj, this.Color)
                     {
                         LabelPosition = LabelPosition
@@ -314,6 +316,7 @@ namespace Plugin.InputKit.Shared.Controls
                     (control as SelectableRadioButton).SetBinding(SelectableRadioButton.TextProperty, _binding);
                     break;
                 case SelectionType.CheckBox:
+                case SelectionType.SingleCheckBox:
                     (control as SelectableCheckBox).SetBinding(SelectableCheckBox.TextProperty, _binding);
                     break;
             }
@@ -385,6 +388,8 @@ namespace Plugin.InputKit.Shared.Controls
         RadioButton = 3,
         CheckBox = 2,
         MultipleButton = 4,
+        SingleCheckBox = 5,
+        MultipleRadioButton = 6,
     }
 
     /// <summary>
