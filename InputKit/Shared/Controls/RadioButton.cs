@@ -170,7 +170,9 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Fontsize of Description Text
         /// </summary>
-        public double TextFontSize { get => lblText.FontSize; set { lblText.FontSize = value; } }
+
+        [Xamarin.Forms.TypeConverter(typeof(FontSizeConverter))]
+        public double TextFontSize { get => lblText.FontSize; set => lblText.FontSize = value; }
         //-----------------------------------------------------------------------------
         /// <summary>
         /// Size of Radio Button
