@@ -8,9 +8,9 @@
     <PackageId>Xamarin.Forms.InputKit</PackageId>
 
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>3.0.14.0</AssemblyVersion>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>3.0.15</Version>
+    <Version>3.1.0-pre1</Version>
     <PackageVersion>3.0.12.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
@@ -31,13 +31,7 @@
 
     <Title>Common controls mostly required</Title>
     <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
-    <Description>
-      FormView was added!
-      It helps to gel validation from multiple elements inside from its at once.
-      You can create your own Validatable elements, Just inherit IValidatable interface and put them into FormView
-
-      Controls in this package are fully bindable and ready to use.
-    </Description>
+    <Description>Added two new types to SelectionView</Description>
 
     <Owners>Enis Necipoglu</Owners>
     <Authors>Enis Necipoglu</Authors>
