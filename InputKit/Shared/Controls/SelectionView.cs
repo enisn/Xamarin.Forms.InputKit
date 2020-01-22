@@ -4,6 +4,7 @@ using Plugin.InputKit.Shared.Helpers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
@@ -250,15 +251,27 @@ namespace Plugin.InputKit.Shared.Controls
         {
             if ((int)this.SelectionType % 2 == 0)
             {
-                var query = Children.Where(x => x is ISelection selection && selection.IsSelected);
-                var selecteds = query
-                                .Select(s => (s as ISelection).Value)
-                                .ToList();
+                if (sender is ISelection selection)
+                {
+                    if (selection.IsSelected)
+                    {
+                        if (this.SelectedItems == null)
+                            this.SelectedItems = Activator.CreateInstance(typeof(ObservableCollection<>).MakeGenericType(selection.Value.GetType())) as IList;
+
+                        this.SelectedItems.Add(selection.Value);
+                    }
+                    else
+                    {
+                        this.SelectedItems.Remove(selection.Value);
+                    }
+                }
+
+                var query = Children.Where(x => x is ISelection s && s.IsSelected);
 
                 var selectedIndexes = query
                                         .Select(s => ItemsSource.IndexOf((s as ISelection).Value))
                                         .ToList();
-                SetValue(SelectedItemsProperty, selecteds);
+
                 SetValue(SelectedIndexesProperty, selectedIndexes);
             }
             else
@@ -370,7 +383,27 @@ namespace Plugin.InputKit.Shared.Controls
             foreach (var item in this.Children)
                 if (item is ISelection selection)
                     (item as ISelection).IsSelected = value.Contains(selection.Value);
+
+            if (value is INotifyCollectionChanged observable)
+                observable.CollectionChanged += SelectedItemsChanged;
         }
+
+        private void SelectedItemsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                    foreach (var item in e.NewItems)
+                        (this.Children.FirstOrDefault(x => x is ISelection s && s.Value.Equals(item)) as ISelection).IsSelected = true;
+                    break;
+                case NotifyCollectionChangedAction.Remove:
+                    foreach (var item in e.OldItems)
+                        (this.Children.FirstOrDefault(x => x is ISelection s && s.Value.Equals(item)) as ISelection).IsSelected = false;
+
+                    break;
+            }
+        }
+
         private void SetItemsSource(IList value)
         {
             UpdateEvents(value);
