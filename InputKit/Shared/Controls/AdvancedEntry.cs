@@ -149,7 +149,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Text Color of this Control
         /// </summary>
-        public Color TextColor { get => txtInput.TextColor; set => txtInput.TextColor = value; }
+        public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// BackgroundColor of this Control
@@ -371,6 +371,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
         public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).BackgroundColor = (Color)nv);
         public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
                                 propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
