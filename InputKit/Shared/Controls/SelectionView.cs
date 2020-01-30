@@ -381,7 +381,7 @@ namespace Plugin.InputKit.Shared.Controls
         private void SetSelectedItems(IList value)
         {
             foreach (var item in this.Children)
-                if (item is ISelection selection)
+                if (item is ISelection selection && value != null)
                     (item as ISelection).IsSelected = value.Contains(selection.Value);
 
             if (value is INotifyCollectionChanged observable)
