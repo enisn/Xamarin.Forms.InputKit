@@ -44,7 +44,55 @@ namespace Plugin.InputKit.Shared
         /// <summary>
         /// You need to set RegexPattern property as your regex query to use this.
         /// </summary>
-        RegexPattern
+        RegexPattern,
+        /// <summary>
+        /// Short Type only
+        /// </summary>
+        ShortType,
+        /// <summary>
+        /// Int Type only
+        /// </summary>
+        IntType,
+        /// <summary>
+        /// Long Type only
+        /// </summary>
+        LongType,
+        /// <summary>
+        /// Float Type only
+        /// </summary>
+        FloatType,
+        /// <summary>
+        /// Double Type only
+        /// </summary>
+        DoubleType,
+        /// <summary>
+        /// Decimal Type only
+        /// </summary>
+        DecimalType,
+        /// <summary>
+        /// Byte Type only
+        /// </summary>
+        ByteType,
+        /// <summary>
+        /// SByte Type only
+        /// </summary>
+        SByteType,
+        /// <summary>
+        /// Char Type only
+        /// </summary>
+        CharType,
+        /// <summary>
+        /// UInt Type only
+        /// </summary>
+        UIntType,
+        /// <summary>
+        /// ULong Type only
+        /// </summary>
+        ULongType,
+        /// <summary>
+        /// UShort Type only
+        /// </summary>
+        UShortType
     }
 
     public enum LabelPosition

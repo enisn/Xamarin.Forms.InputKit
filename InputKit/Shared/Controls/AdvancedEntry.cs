@@ -275,7 +275,42 @@ namespace Plugin.InputKit.Shared.Controls
 
                     case AnnotationType.Phone:
                         return Regex.Match(Text, REGEX_PHONE).Success;
+                    
+                    case AnnotationType.ShortType:
+                        return short.TryParse(Text, out _);
 
+                    case AnnotationType.IntType:
+                        return int.TryParse(Text, out _);
+
+                    case AnnotationType.LongType:
+                        return long.TryParse(Text, out _);
+
+                    case AnnotationType.FloatType:
+                        return float.TryParse(Text, out _);
+
+                    case AnnotationType.DoubleType:
+                        return double.TryParse(Text, out _);
+
+                    case AnnotationType.DecimalType:
+                        return decimal.TryParse(Text, out _);
+
+                    case AnnotationType.ByteType:
+                        return byte.TryParse(Text, out _);
+
+                    case AnnotationType.SByteType:
+                        return sbyte.TryParse(Text, out _);
+
+                    case AnnotationType.CharType:
+                        return char.TryParse(Text, out _);
+
+                    case AnnotationType.UIntType:
+                        return uint.TryParse(Text, out _);
+
+                    case AnnotationType.ULongType:
+                        return ulong.TryParse(Text, out _);
+
+                    case AnnotationType.UShortType:
+                        return ushort.TryParse(Text, out _);
 
                     case AnnotationType.RegexPattern:
                         return Regex.Match(Text, RegexPattern).Success;
@@ -454,13 +489,23 @@ namespace Plugin.InputKit.Shared.Controls
                     txtInput.Keyboard = Keyboard.Plain;
                     break;
                 case AnnotationType.DigitsOnly:
+                case AnnotationType.ShortType:
+                case AnnotationType.IntType:
+                case AnnotationType.LongType:
+                case AnnotationType.FloatType:
+                case AnnotationType.DoubleType:
+                case AnnotationType.DecimalType:
+                case AnnotationType.ByteType:
+                case AnnotationType.SByteType:
+                case AnnotationType.CharType:
+                case AnnotationType.UIntType:
+                case AnnotationType.ULongType:
+                case AnnotationType.UShortType:
+                case AnnotationType.Decimal:
                     txtInput.Keyboard = Keyboard.Numeric;
                     break;
                 case AnnotationType.NonDigitsOnly:
                     txtInput.Keyboard = Keyboard.Text;
-                    break;
-                case AnnotationType.Decimal:
-                    txtInput.Keyboard = Keyboard.Numeric;
                     break;
                 case AnnotationType.Email:
                     txtInput.Keyboard = Keyboard.Email;
