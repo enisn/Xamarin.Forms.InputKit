@@ -245,7 +245,16 @@ namespace Plugin.InputKit.Shared.Controls
                     return true;
 
                 if (String.IsNullOrEmpty(Text))
-                    return false;
+                {
+                    if (Nullable)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
 
                 if (Text.Length < MinLength)
                     return false;
@@ -384,6 +393,11 @@ namespace Plugin.InputKit.Shared.Controls
             get => (LabelPosition)GetValue(ValidationPositionProperty);
             set => SetValue(ValidationPositionProperty, value);
         }
+        //----------------------------------------- -------------------------------
+        /// <summary>
+        /// Sets if an Empty Entry is Valid
+        /// </summary>
+        public bool Nullable { get => (bool)GetValue(NullableProperty); set => SetValue(NullableProperty, value); }
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -407,6 +421,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
+        public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry),  false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
         public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).BackgroundColor = (Color)nv);
         public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
                                 propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
