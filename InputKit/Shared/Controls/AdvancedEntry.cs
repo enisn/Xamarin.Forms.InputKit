@@ -245,7 +245,16 @@ namespace Plugin.InputKit.Shared.Controls
                     return true;
 
                 if (String.IsNullOrEmpty(Text))
-                    return false;
+                {
+                    if (Nullable)
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
 
                 if (Text.Length < MinLength)
                     return false;
@@ -275,7 +284,42 @@ namespace Plugin.InputKit.Shared.Controls
 
                     case AnnotationType.Phone:
                         return Regex.Match(Text, REGEX_PHONE).Success;
+                    
+                    case AnnotationType.ShortType:
+                        return short.TryParse(Text, out _);
 
+                    case AnnotationType.IntType:
+                        return int.TryParse(Text, out _);
+
+                    case AnnotationType.LongType:
+                        return long.TryParse(Text, out _);
+
+                    case AnnotationType.FloatType:
+                        return float.TryParse(Text, out _);
+
+                    case AnnotationType.DoubleType:
+                        return double.TryParse(Text, out _);
+
+                    case AnnotationType.DecimalType:
+                        return decimal.TryParse(Text, out _);
+
+                    case AnnotationType.ByteType:
+                        return byte.TryParse(Text, out _);
+
+                    case AnnotationType.SByteType:
+                        return sbyte.TryParse(Text, out _);
+
+                    case AnnotationType.CharType:
+                        return char.TryParse(Text, out _);
+
+                    case AnnotationType.UIntType:
+                        return uint.TryParse(Text, out _);
+
+                    case AnnotationType.ULongType:
+                        return ulong.TryParse(Text, out _);
+
+                    case AnnotationType.UShortType:
+                        return ushort.TryParse(Text, out _);
 
                     case AnnotationType.RegexPattern:
                         return Regex.Match(Text, RegexPattern).Success;
@@ -349,6 +393,11 @@ namespace Plugin.InputKit.Shared.Controls
             get => (LabelPosition)GetValue(ValidationPositionProperty);
             set => SetValue(ValidationPositionProperty, value);
         }
+        //----------------------------------------- -------------------------------
+        /// <summary>
+        /// Sets if an Empty Entry is Valid
+        /// </summary>
+        public bool Nullable { get => (bool)GetValue(NullableProperty); set => SetValue(NullableProperty, value); }
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -372,6 +421,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
+        public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry),  false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
         public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).BackgroundColor = (Color)nv);
         public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
                                 propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
@@ -454,13 +504,23 @@ namespace Plugin.InputKit.Shared.Controls
                     txtInput.Keyboard = Keyboard.Plain;
                     break;
                 case AnnotationType.DigitsOnly:
+                case AnnotationType.ShortType:
+                case AnnotationType.IntType:
+                case AnnotationType.LongType:
+                case AnnotationType.FloatType:
+                case AnnotationType.DoubleType:
+                case AnnotationType.DecimalType:
+                case AnnotationType.ByteType:
+                case AnnotationType.SByteType:
+                case AnnotationType.CharType:
+                case AnnotationType.UIntType:
+                case AnnotationType.ULongType:
+                case AnnotationType.UShortType:
+                case AnnotationType.Decimal:
                     txtInput.Keyboard = Keyboard.Numeric;
                     break;
                 case AnnotationType.NonDigitsOnly:
                     txtInput.Keyboard = Keyboard.Text;
-                    break;
-                case AnnotationType.Decimal:
-                    txtInput.Keyboard = Keyboard.Numeric;
                     break;
                 case AnnotationType.Email:
                     txtInput.Keyboard = Keyboard.Email;
