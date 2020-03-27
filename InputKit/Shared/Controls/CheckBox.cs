@@ -242,7 +242,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         void ExecuteCommand()
         {
-            if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+            if (CheckChangedCommand?.CanExecute(CommandParameter ?? this) ?? true)
                 CheckChangedCommand?.Execute(CommandParameter ?? this);
         }
 

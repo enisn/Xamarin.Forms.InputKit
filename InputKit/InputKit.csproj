@@ -8,10 +8,10 @@
     <PackageId>Xamarin.Forms.InputKit</PackageId>
 
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>3.2.2.0</AssemblyVersion>
+    <AssemblyVersion>3.3.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>3.2.2</Version>
-    <PackageVersion>3.2.2</PackageVersion>
+    <Version>3.3.0</Version>
+    <PackageVersion>3.3.0-pre.2</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>7.3</LangVersion>
