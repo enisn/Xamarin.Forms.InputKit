@@ -31,14 +31,14 @@ namespace Plugin.InputKit.Shared.Controls
         public const string RESOURCE_ARROWDOWN = "Plugin.InputKit.Shared.Resources.arrow_down.png";
         #endregion
 
-        IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10, 5, 5, 5) };
-        IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = ImageSource.FromResource(RESOURCE_ARROWDOWN), HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(5, 5, 10, 5) };
-        Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
-        Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
-        Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
-        Entry txtInput = new EmptyEntry { TextColor = Color.Blue, PlaceholderColor = Color.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
+        protected IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10, 5, 5, 5) };
+        protected IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = ImageSource.FromResource(RESOURCE_ARROWDOWN), HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(5, 5, 10, 5) };
+        protected Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
+        protected Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
+        protected Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
+        protected Entry txtInput = new EmptyEntry { TextColor = Color.Blue, PlaceholderColor = Color.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
 
-        PopupMenu pMenu = new PopupMenu();
+        private protected PopupMenu pMenu = new PopupMenu();
         private string _placeholder;
         private string _validationMessage;
         private bool _isRequired;
@@ -123,6 +123,7 @@ namespace Plugin.InputKit.Shared.Controls
         [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize { get => txtInput.FontSize; set => txtInput.FontSize = value; }
         public ImageSource IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
+        public ImageSource ArrowImage { get => GetValue(ArrowImageProperty) as ImageSource; set => SetValue(ArrowImageProperty, value); }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
         public Color Color { get => imgIcon.FillColor; set => UpdateColors(value); }
@@ -170,6 +171,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(TextProperty), typeof(string), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).txtInput.Text = (string)nv);
         public static readonly BindableProperty IsEditableProperty = BindableProperty.Create(nameof(IsEditable), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsEditable = (bool)nv);
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
+        public static readonly BindableProperty ArrowImageProperty = BindableProperty.Create(nameof(ArrowImage), typeof(ImageSource), typeof(Dropdown), ImageSource.FromResource(RESOURCE_ARROWDOWN), propertyChanged: (bo, ov, nv) => (bo as Dropdown).imgArrow.Source = (ImageSource)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
     }
