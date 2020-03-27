@@ -11,7 +11,7 @@
     <AssemblyVersion>3.3.0.0</AssemblyVersion>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <Version>3.3.0</Version>
-    <PackageVersion>3.3.0-pre.2</PackageVersion>
+    <PackageVersion>3.3.0-pre.3</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>7.3</LangVersion>

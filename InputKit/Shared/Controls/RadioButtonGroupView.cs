@@ -170,7 +170,7 @@ namespace Plugin.InputKit.Shared.Controls
                 var index = GetChildRadioButtons(this).ToList().IndexOf(asRadioButton);
                 SetValue(SelectedIndexProperty, index);
                 SelectedItemChanged?.Invoke(this, new EventArgs());
-                if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? false)
+                if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? true)
                     SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
             }
             ValidationChanged?.Invoke(this, new EventArgs());
