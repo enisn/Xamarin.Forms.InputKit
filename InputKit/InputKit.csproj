@@ -8,10 +8,10 @@
     <PackageId>Xamarin.Forms.InputKit</PackageId>
 
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>3.3.0.0</AssemblyVersion>
-    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <Version>3.3.0</Version>
-    <PackageVersion>3.3.0</PackageVersion>
+    <AssemblyVersion>3.4.1.0</AssemblyVersion>
+    <AssemblyFileVersion>3.4.1.0</AssemblyFileVersion>
+    <Version>3.4.1</Version>
+    <PackageVersion>3.4.1</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>7.3</LangVersion>
@@ -48,7 +48,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" PrivateAssets="All" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.800" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 

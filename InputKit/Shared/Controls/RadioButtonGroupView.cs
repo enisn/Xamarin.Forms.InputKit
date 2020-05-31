@@ -121,7 +121,7 @@ namespace Plugin.InputKit.Shared.Controls
                 rb.Checked -= UpdateSelected;
                 rb.Checked += UpdateSelected;
             }
-            else if(e.Element is Layout<View> la)
+            else if (e.Element is Layout<View> la)
             {
                 la.ChildAdded -= OnChildAdded;
                 la.ChildAdded += OnChildAdded;
@@ -154,13 +154,13 @@ namespace Plugin.InputKit.Shared.Controls
         void UpdateSelected(object selected, EventArgs e)
         {
             var asRadioButton = (RadioButton)selected;
-            
+
             // if the selected item is checked, uncheck all others
-            if(asRadioButton.IsChecked)
+            if (asRadioButton.IsChecked)
             {
                 foreach (var rb in GetChildRadioButtons(this))
                 {
-                    if(rb != asRadioButton)
+                    if (rb != asRadioButton)
                     {
                         rb.IsChecked = false;
                     }
@@ -170,8 +170,7 @@ namespace Plugin.InputKit.Shared.Controls
                 var index = GetChildRadioButtons(this).ToList().IndexOf(asRadioButton);
                 SetValue(SelectedIndexProperty, index);
                 SelectedItemChanged?.Invoke(this, new EventArgs());
-                if (SelectedItemChangedCommand?.CanExecute(CommandParameter ?? this) ?? true)
-                    SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
+                SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
             }
             ValidationChanged?.Invoke(this, new EventArgs());
         }
