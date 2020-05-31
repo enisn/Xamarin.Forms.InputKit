@@ -2,16 +2,16 @@
 
   <PropertyGroup>
     <!-- <TargetFrameworks>netstandard2.0;MonoAndroid81;Xamarin.iOS10;Xamarin.TVOS10;Xamarin.WatchOS10;Xamarin.Mac20;uap10.0.16299;</TargetFrameworks> -->
-    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid90;Xamarin.iOS10;</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;netstandard1.0;MonoAndroid90;Xamarin.iOS10</TargetFrameworks>
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
 
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <AssemblyVersion>3.4.1.0</AssemblyVersion>
-    <AssemblyFileVersion>3.4.1.0</AssemblyFileVersion>
-    <Version>3.4.1</Version>
-    <PackageVersion>3.4.1</PackageVersion>
+    <AssemblyVersion>3.3.1.0</AssemblyVersion>
+    <AssemblyFileVersion>3.3.1.0</AssemblyFileVersion>
+    <Version>3.3.1</Version>
+    <PackageVersion>3.3.1</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en</NeutralLanguage>
     <LangVersion>7.3</LangVersion>
