@@ -14,7 +14,6 @@ namespace Sample.InputKit.Views
 		{
 			InitializeComponent ();
             BindingContext = new RadioButtonsViewModel();
-
         }
 
         private void RandomizeColors(object sender, EventArgs e)
@@ -44,7 +43,5 @@ namespace Sample.InputKit.Views
                 }
             }
         }
-
-    
     }
 }
