@@ -3,7 +3,6 @@ using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -38,11 +37,19 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Executes when tapped on RadioButton
         /// </summary>
-        public ICommand SelectedItemChangedCommand { get; set; }
+        public ICommand SelectedItemChangedCommand
+        {
+            get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
+            set => SetValue(SelectedItemChangedCommandProperty,value);
+        }
         /// <summary>
         /// Command Parameter will be sent in SelectedItemChangedCommand
         /// </summary>
-        public object CommandParameter { get; set; }
+        public object CommandParameter 
+        {
+            get => GetValue(CommandParameterProperty);
+            set => SetValue(CommandParameterProperty, value); 
+        }
 
         //-----------------------------------------------------------------------------
         /// <summary>
@@ -89,12 +96,34 @@ namespace Plugin.InputKit.Shared.Controls
         /// It will be added later
         /// </summary>
         public string ValidationMessage { get; set; }
+        public static object UpdateCommandParamater { get; private set; }
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).UpdateToSelectedItem());
-        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).UpdateToSelectedIndex());
+        public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(RadioButtonGroupView), -1, BindingMode.TwoWay, propertyChanged: UpdateSelectedIndex);
+
+        private static void UpdateSelectedIndex(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is RadioButtonGroupView rg)
+            {
+                rg.UpdateToSelectedIndex();
+                rg.SelectedIndex = (int)newValue;
+            }
+
+        }
+
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
+        public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: OnCommandParameterChanged,defaultBindingMode:BindingMode.TwoWay);
+
+        private static void OnCommandParameterChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            if (bindable is RadioButtonGroupView rg)
+            {
+                rg.CommandParameter = newValue;
+            }
+        }
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
@@ -149,6 +178,7 @@ namespace Plugin.InputKit.Shared.Controls
                 rb.IsChecked = index == SelectedIndex;
                 index++;
             }
+            
         }
 
         void UpdateSelected(object selected, EventArgs e)
@@ -166,11 +196,11 @@ namespace Plugin.InputKit.Shared.Controls
                     }
                 }
                 SetValue(SelectedItemProperty, asRadioButton.Value);
-
                 var index = GetChildRadioButtons(this).ToList().IndexOf(asRadioButton);
                 SetValue(SelectedIndexProperty, index);
+
                 SelectedItemChanged?.Invoke(this, new EventArgs());
-                SelectedItemChangedCommand?.Execute(CommandParameter ?? this);
+                SelectedItemChangedCommand?.Execute(CommandParameter);
             }
             ValidationChanged?.Invoke(this, new EventArgs());
         }

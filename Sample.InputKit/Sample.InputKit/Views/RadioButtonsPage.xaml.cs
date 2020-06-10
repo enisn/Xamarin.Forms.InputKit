@@ -1,23 +1,21 @@
-﻿using Plugin.InputKit.Shared.Controls;
+﻿using Sample.InputKit.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 
 namespace Sample.InputKit.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class RadioButtonsPage : ContentPage
 	{
         static readonly Random rnd = new Random();
 		public RadioButtonsPage ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = new RadioButtonsViewModel();
+
+        }
 
         private void RandomizeColors(object sender, EventArgs e)
         {
@@ -46,5 +44,7 @@ namespace Sample.InputKit.Views
                 }
             }
         }
+
+    
     }
 }
