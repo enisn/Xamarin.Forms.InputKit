@@ -96,7 +96,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// It will be added later
         /// </summary>
         public string ValidationMessage { get; set; }
-        public static object UpdateCommandParamater { get; private set; }
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
