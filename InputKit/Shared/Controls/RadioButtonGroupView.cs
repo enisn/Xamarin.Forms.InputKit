@@ -110,7 +110,6 @@ namespace Plugin.InputKit.Shared.Controls
                 rg.UpdateToSelectedIndex();
                 rg.SelectedIndex = (int)newValue;
             }
-
         }
 
         public static readonly BindableProperty SelectedItemChangedCommandProperty = BindableProperty.Create(nameof(SelectedItemChangedCommand), typeof(ICommand), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).SelectedItemChangedCommand = (ICommand)nv);
@@ -178,7 +177,6 @@ namespace Plugin.InputKit.Shared.Controls
                 rb.IsChecked = index == SelectedIndex;
                 index++;
             }
-            
         }
 
         void UpdateSelected(object selected, EventArgs e)
