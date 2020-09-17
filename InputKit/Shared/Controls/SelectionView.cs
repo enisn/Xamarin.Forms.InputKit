@@ -410,6 +410,197 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateView();
         }
         #endregion
+
+        #region Nested Classes
+        /// <summary>
+        /// A Button which ISelection Implemented
+        /// </summary>
+        public class SelectableButton : Button, ISelection
+        {
+            private bool _isSelected = false;
+            private object _value;
+            private Color _selectionColor = Color.Accent;
+            private Color _unselectedColor;
+
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Default constructor
+            /// </summary>
+            public SelectableButton()
+            {
+                //this.Margin = new Thickness(0);
+                UpdateColors();
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Generates with its value
+            /// </summary>
+            /// <param name="value">Value to keep</param>
+            public SelectableButton(object value) : this()
+            {
+                this.Value = value;
+                this.FontFamily = SelectionView.GlobalSetting.FontFamily;
+                this.TextColor = SelectionView.GlobalSetting.TextColor;
+                this.FontSize = SelectionView.GlobalSetting.FontSize;
+                this.CornerRadius = (int)SelectionView.GlobalSetting.CornerRadius;
+                this.BorderColor = SelectionView.GlobalSetting.BorderColor;
+                this.UnselectedColor = SelectionView.GlobalSetting.BackgroundColor;
+                this.BorderWidth = 2;
+                this.Clicked += (s, args) => UpdateSelection();
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Colored Constructor
+            /// </summary>
+            /// <param name="value"></param>
+            /// <param name="selectionColor">Color of selected situation</param>
+            public SelectableButton(object value, Color selectionColor) : this(value)
+            {
+                this.SelectedColor = selectionColor;
+            }
+            public Color UnselectedColor { get => _unselectedColor; set { _unselectedColor = value; UpdateColors(); } }
+            public Color SelectedColor
+            {
+                get => _selectionColor;
+                set
+                {
+                    _selectionColor = value;
+                    UpdateColors();
+                }
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// This button is selected or not
+            /// </summary>
+            public bool IsSelected
+            {
+                get => _isSelected;
+                set { _isSelected = value; UpdateColors(); }
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Updates colors, Triggered when color property changed
+            /// </summary>
+            private void UpdateColors()
+            {
+                if (IsSelected)
+                {
+                    this.BackgroundColor = SelectedColor;
+                    this.TextColor = SelectedColor.ToSurfaceColor();
+                }
+                else
+                {
+                    this.BackgroundColor = UnselectedColor;
+                    this.TextColor = (Color)SelectionView.GlobalSetting.TextColor;
+                }
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Value is stored on this control
+            /// </summary>
+            public object Value { get => _value; set { _value = value; this.Text = value?.ToString(); } }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// This button is disabled or not. Disabled buttons(if it's true) can not be choosen.
+            /// </summary>
+            public bool IsDisabled { get; set; } = false;
+            /// <summary>
+            /// Defines Can Selected State Change by itself
+            /// </summary>
+            public bool CanChangeSelectedState { get; set; }
+            private void UpdateSelection()
+            {
+                if (CanChangeSelectedState)
+                    IsSelected = !IsSelected;
+            }
+        }
+
+        /// <summary>
+        /// A Radio Button which ISelection Implemented
+        /// </summary>
+        public class SelectableRadioButton : RadioButton, ISelection
+        {
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Default Constructor
+            /// </summary>
+            public SelectableRadioButton() { }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Constructor with value
+            /// </summary>
+            /// <param name="value">Value to keep</param>
+            public SelectableRadioButton(object value)
+            {
+                this.Value = value;
+                this.Text = value?.ToString();
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Colored Constructor
+            /// </summary>
+            public SelectableRadioButton(object value, Color color) : this(value)
+            {
+                this.Color = color;
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// ISelection interface property
+            /// </summary>
+            public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
+        }
+
+        /// <summary>
+        /// A CheckBox which ISelection Implemented
+        /// </summary>
+        public class SelectableCheckBox : CheckBox, ISelection
+        {
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Default Constructor
+            /// </summary>
+            public SelectableCheckBox()
+            {
+                this.Type = CheckType.Check;
+                this.CheckChanged += (s, e) => this.Clicked?.Invoke(s, e);
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Constructor with Value
+            /// </summary>
+            /// <param name="value">Parameter too keep</param>
+            public SelectableCheckBox(object value) : this()
+            {
+                this.Value = value;
+                this.Text = value?.ToString();
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Constructor with Value
+            /// </summary>
+            /// <param name="value">Parameter too keep</param>
+            /// <param name="color">Color of control</param>
+            public SelectableCheckBox(object value, Color color) : this(value)
+            {
+                this.Color = color;
+            }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Capsulated IsChecked
+            /// </summary>
+            public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Parameter to keep
+            /// </summary>
+            public object Value { get; set; }
+            //-----------------------------------------------------------------------------
+            /// <summary>
+            /// Triggers when CheckChanged
+            /// </summary>
+            public event EventHandler Clicked;
+        }
+        #endregion
     }
 
     /// <summary>
@@ -423,194 +614,5 @@ namespace Plugin.InputKit.Shared.Controls
         MultipleButton = 4,
         SingleCheckBox = 5,
         MultipleRadioButton = 6,
-    }
-
-    /// <summary>
-    /// A Button which ISelection Implemented
-    /// </summary>
-    internal class SelectableButton : Button, ISelection
-    {
-        private bool _isSelected = false;
-        private object _value;
-        private Color _selectionColor = Color.Accent;
-        private Color _unselectedColor;
-
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public SelectableButton()
-        {
-            //this.Margin = new Thickness(0);
-            UpdateColors();
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Generates with its value
-        /// </summary>
-        /// <param name="value">Value to keep</param>
-        public SelectableButton(object value) : this()
-        {
-            this.Value = value;
-            this.FontFamily = SelectionView.GlobalSetting.FontFamily;
-            this.TextColor = SelectionView.GlobalSetting.TextColor;
-            this.FontSize = SelectionView.GlobalSetting.FontSize;
-            this.CornerRadius = (int)SelectionView.GlobalSetting.CornerRadius;
-            this.BorderColor = SelectionView.GlobalSetting.BorderColor;
-            this.UnselectedColor = SelectionView.GlobalSetting.BackgroundColor;
-            this.BorderWidth = 2;
-            this.Clicked += (s, args) => UpdateSelection();
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Colored Constructor
-        /// </summary>
-        /// <param name="value"></param>
-        /// <param name="selectionColor">Color of selected situation</param>
-        public SelectableButton(object value, Color selectionColor) : this(value)
-        {
-            this.SelectedColor = selectionColor;
-        }
-        public Color UnselectedColor { get => _unselectedColor; set { _unselectedColor = value; UpdateColors(); } }
-        public Color SelectedColor
-        {
-            get => _selectionColor;
-            set
-            {
-                _selectionColor = value;
-                UpdateColors();
-            }
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// This button is selected or not
-        /// </summary>
-        public bool IsSelected
-        {
-            get => _isSelected;
-            set { _isSelected = value; UpdateColors(); }
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Updates colors, Triggered when color property changed
-        /// </summary>
-        private void UpdateColors()
-        {
-            if (IsSelected)
-            {
-                this.BackgroundColor = SelectedColor;
-                this.TextColor = SelectedColor.ToSurfaceColor();
-            }
-            else
-            {
-                this.BackgroundColor = UnselectedColor;
-                this.TextColor = (Color)SelectionView.GlobalSetting.TextColor;
-            }
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Value is stored on this control
-        /// </summary>
-        public object Value { get => _value; set { _value = value; this.Text = value?.ToString(); } }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// This button is disabled or not. Disabled buttons(if it's true) can not be choosen.
-        /// </summary>
-        public bool IsDisabled { get; set; } = false;
-        /// <summary>
-        /// Defines Can Selected State Change by itself
-        /// </summary>
-        public bool CanChangeSelectedState { get; set; }
-        private void UpdateSelection()
-        {
-            if (CanChangeSelectedState)
-                IsSelected = !IsSelected;
-        }
-    }
-
-    /// <summary>
-    /// A Radio Button which ISelection Implemented
-    /// </summary>
-    internal class SelectableRadioButton : RadioButton, ISelection
-    {
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public SelectableRadioButton() { }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructor with value
-        /// </summary>
-        /// <param name="value">Value to keep</param>
-        public SelectableRadioButton(object value)
-        {
-            this.Value = value;
-            this.Text = value?.ToString();
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Colored Constructor
-        /// </summary>
-        public SelectableRadioButton(object value, Color color) : this(value)
-        {
-            this.Color = color;
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// ISelection interface property
-        /// </summary>
-        public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
-    }
-
-    /// <summary>
-    /// A CheckBox which ISelection Implemented
-    /// </summary>
-    internal class SelectableCheckBox : CheckBox, ISelection
-    {
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public SelectableCheckBox()
-        {
-            this.Type = CheckType.Check;
-            this.CheckChanged += (s, e) => this.Clicked?.Invoke(s, e);
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructor with Value
-        /// </summary>
-        /// <param name="value">Parameter too keep</param>
-        public SelectableCheckBox(object value) : this()
-        {
-            this.Value = value;
-            this.Text = value?.ToString();
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Constructor with Value
-        /// </summary>
-        /// <param name="value">Parameter too keep</param>
-        /// <param name="color">Color of control</param>
-        public SelectableCheckBox(object value, Color color) : this(value)
-        {
-            this.Color = color;
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Capsulated IsChecked
-        /// </summary>
-        public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Parameter to keep
-        /// </summary>
-        public object Value { get; set; }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Triggers when CheckChanged
-        /// </summary>
-        public event EventHandler Clicked;
     }
 }
