@@ -50,13 +50,16 @@
     <!-- Dependencies are automatically installed when the package is installed -->
     <dependencies>
       <group>
-        <dependency id="Xamarin.Forms" version="3.2.0.839982" />
+        <dependency id="Xamarin.Forms" version="4.5.0.356" />
       </group>
       <group targetFramework="MonoAndroid90">
-        <dependency id="Xamarin.Forms" version="3.2.0.839982" />
+        <dependency id="Xamarin.Forms" version="4.5.0.356" />
+      </group>
+      <group targetFramework="MonoAndroid10.0">
+        <dependency id="Xamarin.Forms" version="4.5.0.356" />
       </group>
       <group targetFramework="Xamarin.iOS10">
-        <dependency id="Xamarin.Forms" version="3.2.0.839982" />
+        <dependency id="Xamarin.Forms" version="4.5.0.356" />
       </group>
     </dependencies>
   </metadata>
@@ -75,6 +78,9 @@
 
     <file src="InputKit\bin\Release\monoandroid90\Plugin.InputKit.dll" target="lib\monoandroid90\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\monoandroid90\Plugin.InputKit.xml" target="lib\monoandroid90\Plugin.InputKit.xml" />
+
+    <file src="InputKit\bin\Release\monoandroid10.0\Plugin.InputKit.dll" target="lib\monoandroid10.0\Plugin.InputKit.dll" />
+    <file src="InputKit\bin\Release\monoandroid10.0\Plugin.InputKit.xml" target="lib\monoandroid10.0\Plugin.InputKit.xml" />
 
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.dll" target="lib\xamarin.ios10\Plugin.InputKit.dll" />
     <file src="InputKit\bin\Release\xamarin.ios10\Plugin.InputKit.xml" target="lib\xamarin.ios10\Plugin.InputKit.xml" />
