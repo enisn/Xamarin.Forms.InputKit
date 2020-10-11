@@ -25,6 +25,7 @@
 
 | Platform | Version | Supported |
 | --- | --- | --- |
+| Android | MonoAndroid10.0 | ✅ |
 | Android | MonoAndroid90 | ✅ |
 | Android | MonoAndroid81 | ❌ |
 | iOS | Xamarin.iOS10 | ✅ |
