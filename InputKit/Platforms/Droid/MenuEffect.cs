@@ -1,6 +1,10 @@
 ﻿using Android.Content;
 using Android.OS;
+#if MONOANDROID10_0
+using AndroidX.AppCompat.Widget;
+#else
 using Android.Support.V7.Widget;
+#endif
 using Plugin.InputKit.Platforms.Droid;
 using System.Linq;
 using Xamarin.Forms;
@@ -27,8 +31,12 @@ namespace Plugin.InputKit.Platforms.Droid
             if (Effect != null)
                 Effect.Parent.OnPopupRequest += OnPopupRequest;
             
-            Context context = Config.CurrentActivity;            
+            Context context = Config.CurrentActivity;         
+#if MONOANDROID10_0
+            Context wrapper = new Android.Views.ContextThemeWrapper(context, Resource.Style.MyPopupMenu);
+#else
             Context wrapper = new Android.Support.V7.View.ContextThemeWrapper(context, Resource.Style.MyPopupMenu);
+#endif
 
             if (Control != null)
             {

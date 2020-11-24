@@ -1,16 +1,12 @@
-﻿using Plugin.InputKit.Shared.Controls;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 
 namespace Sample.InputKit.Views
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
+    [XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class CheckBoxesPage : ContentPage
 	{
         static readonly Random rnd = new Random();

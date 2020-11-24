@@ -3,10 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>7.2</LangVersion>
+    <AssemblyVersion>1.0.0.1</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" />
   </ItemGroup>
 
   <ItemGroup>

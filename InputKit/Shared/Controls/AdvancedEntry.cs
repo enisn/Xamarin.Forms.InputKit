@@ -44,12 +44,12 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Fields
-        Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
-        Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
-        Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
-        Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
-        IconView imgIcon = new IconView { InputTransparent = true, IsVisible = false, Margin = new Thickness(5, 10, 10, 10), VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
-        Entry txtInput;
+        readonly Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
+        readonly Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
+        readonly Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
+        readonly Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
+        readonly IconView imgIcon = new IconView { InputTransparent = true, IsVisible = false, Margin = new Thickness(5, 10, 10, 10), VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color};
+        readonly Entry txtInput;
         #endregion
 
         #region Ctor
@@ -66,11 +66,13 @@ namespace Plugin.InputKit.Shared.Controls
 
             frmBackground.Content = new Grid
             {
+                BackgroundColor = Color.Transparent,
                 Children =
                 {
                     new StackLayout
                     {
                         Orientation = StackOrientation.Horizontal,
+                        BackgroundColor = Color.Transparent,
                         Children =
                         {
                             imgIcon,
@@ -118,6 +120,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
         ///------------------------------------------------------------------------
+        public Color TitleColor { get => (Color)GetValue(TitleColorProperty); set => SetValue(TitleColorProperty, value); }
+        ///------------------------------------------------------------------------
         /// <summary>
         /// Icons of this Entry
         /// </summary>
@@ -134,17 +138,17 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Color of Icon
         /// </summary>
-        public Color IconColor { get => imgIcon.FillColor; set => imgIcon.FillColor = value; }
+        public Color IconColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// BackgroundColor of this Control
         /// </summary>
-        public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
+        public new Color BackgroundColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Bordercolor of this control
         /// </summary>
-        public Color BorderColor { get => frmBackground.BorderColor; set => frmBackground.BorderColor = value; }
+        public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Text Color of this Control
@@ -183,7 +187,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Corner radius of Entry.
         /// </summary>
-        public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
+        public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, Value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// To be added.
@@ -403,6 +407,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// Sets if an Empty Entry is Valid
         /// </summary>
         public bool Nullable { get => (bool)GetValue(NullableProperty); set => SetValue(NullableProperty, value); }
+
+        public int CursorPosition { get => (int)GetValue(CursorPositionProperty); set => SetValue(CursorPositionProperty, value); }
         #endregion
 
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -410,9 +416,17 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(AdvancedEntry), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Text = (string)nv);
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Title = (string)nv);
-        public static readonly BindableProperty PlaceHolderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Placeholder = (string)nv);
+        public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(AdvancedEntry), ((Color)Label.TextColorProperty.DefaultValue), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).lblTitle.TextColor = (Color)nv);
         public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).IconImage = (string)nv);
-        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
+        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(AdvancedEntry), Color.Black, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).imgIcon.FillColor = (Color)nv);
+        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BackgroundColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BackgroundColor = (Color)nv);
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BorderColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BorderColor = (Color)nv);
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
+        public static readonly BindableProperty PlaceHolderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Placeholder = (string)nv);
+        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), int.MaxValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
+        public static readonly BindableProperty MinLengthProperty = BindableProperty.Create(nameof(MinLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MinLength = (int)nv);
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(AdvancedEntry), (float)Frame.CornerRadiusProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.CornerRadius = (float)nv);
         public static readonly BindableProperty IsAnnotatedProperty = BindableProperty.Create(nameof(IsAnnotated), typeof(bool), typeof(AdvancedEntry), false, BindingMode.OneWayToSource);
         public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), Color.Default, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
         public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
@@ -421,19 +435,17 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ValidationMessage = (string)nv);
         public static readonly BindableProperty IgnoreValidationMessageProperty = BindableProperty.Create(nameof(IgnoreValidationMessage), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).DisplayValidation());
         public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
-        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
         public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(AdvancedEntry), TextAlignment.Start , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.HorizontalTextAlignment = (TextAlignment)nv);
         public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry),  false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
-        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).BackgroundColor = (Color)nv);
         public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
                                 propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
                                 returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
                                 defaultValue: GlobalSetting.LabelPosition,
                                 propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ApplyValidationPosition((LabelPosition)nv));
+        public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.CursorPosition = (int)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
@@ -585,7 +597,8 @@ namespace Plugin.InputKit.Shared.Controls
                 PlaceholderColor = Color.LightGray,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Center,
-                FontFamily = GlobalSetting.FontFamily
+                FontFamily = GlobalSetting.FontFamily,
+                BackgroundColor = Color.Transparent,
             };
         }
         #endregion

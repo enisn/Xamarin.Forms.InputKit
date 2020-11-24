@@ -1,9 +1,14 @@
 ﻿using System.ComponentModel;
 using Android.Content;
 using Android.Content.Res;
+#if MONOANDROID10_0
+using AndroidX.AppCompat.Widget;
+using Google.Android.Material.TextField;
+#else
 using Android.Support.Design.Widget;
 using Android.Support.V4.View;
 using Android.Support.V7.Widget;
+#endif
 using Android.Text;
 using Android.Text.Method;
 using Android.Util;

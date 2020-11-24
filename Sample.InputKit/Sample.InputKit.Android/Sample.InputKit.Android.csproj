@@ -54,12 +54,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.2.0.839982" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="27.0.2.1" />
-    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="27.0.2.1" />
-    <PackageReference Include="Xamarin.Android.Support.v4" Version="27.0.2.1" />
-    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="27.0.2.1" />
-    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="27.0.2.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" />
+    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v4" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.CardView" Version="28.0.0.3" />
+    <PackageReference Include="Xamarin.Android.Support.v7.MediaRouter" Version="28.0.0.3" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -118,4 +118,9 @@
     <AndroidResource Include="Resources\drawable\circle_check.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <UserProperties TriggeredFromHotReload="False" />
+    </VisualStudio>
+  </ProjectExtensions>
 </Project>
