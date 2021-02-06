@@ -141,7 +141,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Gets or sets icon color of checked state. If you leave null, checkbox will make a decision between Black and White depending on Color.
         /// </summary>
-        public Color? IconColor { get => (Color?)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
+        public Color IconColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
 
         /// <summary>
         /// Which icon will be shown when checkbox is checked
@@ -201,7 +201,7 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
-        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color?), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction((bo as CheckBox), (bool)nv));
         public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
@@ -262,13 +262,13 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 frmBackground.BorderColor = Color;
                 frmBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
-                imgSelected.FillColor = IconColor ?? Color.ToSurfaceColor();
+                imgSelected.FillColor = IconColor;
             }
             else
             {
                 frmBackground.BorderColor = IsChecked ? Color : BorderColor;
                 frmBackground.BackgroundColor = BoxBackgroundColor;
-                imgSelected.FillColor = IconColor ?? Color;
+                imgSelected.FillColor = IconColor;
             }
         }
 
