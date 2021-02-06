@@ -63,11 +63,6 @@ namespace Plugin.InputKit.Shared.Controls
             });
         }
 
-        private void GlobalSetting_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            UpdateColors();
-        }
-
         /// <summary>
         /// Quick generator constructor
         /// </summary>
@@ -217,7 +212,7 @@ namespace Plugin.InputKit.Shared.Controls
             set => SetValue(LabelPositionProperty, value);
         }
         #endregion
-        
+
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
@@ -279,18 +274,22 @@ namespace Plugin.InputKit.Shared.Controls
         void UpdateColors()
         {
             boxSelected.Color = Color;
+
             if (Type == CheckType.Material)
             {
                 frmBackground.BorderColor = Color;
                 frmBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
-                imgSelected.FillColor = IconColor;
             }
             else
             {
                 frmBackground.BorderColor = IsChecked ? Color : BorderColor;
                 frmBackground.BackgroundColor = BoxBackgroundColor;
-                imgSelected.FillColor = IconColor;
             }
+
+            imgSelected.FillColor = 
+                IconColor == frmBackground.BackgroundColor ? 
+                    IconColor.ToSurfaceColor() : 
+                    IconColor;
         }
 
         void UpdateBorderColor()
@@ -340,7 +339,7 @@ namespace Plugin.InputKit.Shared.Controls
                     frmBackground.Content = imgSelected;
                     break;
             }
-            
+
             UpdateColors();
         }
 
