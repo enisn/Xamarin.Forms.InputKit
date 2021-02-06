@@ -14,7 +14,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public partial class CheckBox : StatefulStackLayout, IValidatable
     {
-        public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
+        public static GlobalSetting GlobalSetting { get; } = new GlobalSetting
         {
             BackgroundColor = Color.Transparent,
             Color = Color.Accent,
@@ -62,6 +62,12 @@ namespace Plugin.InputKit.Shared.Controls
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
         }
+
+        private void GlobalSetting_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            UpdateColors();
+        }
+
         /// <summary>
         /// Quick generator constructor
         /// </summary>
@@ -83,32 +89,36 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Properties
-        //-----------------------------------------------------------------------------
         /// <summary>
         /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
         /// </summary>
         public Action<CheckBox, bool> ApplyIsCheckedAction { get; set; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Applies pressed effect. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
         /// </summary>
         public Action<CheckBox, bool> ApplyIsPressedAction { get; set; }
+
         /// <summary>
         /// Executed when check changed
         /// </summary>
         public ICommand CheckChangedCommand { get; set; }
+
         /// <summary>
         /// Command Parameter for Commands. If this is null, CommandParameter will be sent as itself of CheckBox
         /// </summary>
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
+
         /// <summary>
         /// You can set a Unique key for each control
         /// </summary>
         public int Key { get; set; }
+
         /// <summary>
         /// Text to display right of CheckBox
         /// </summary>
         public string Text { get => lblOption.Text; set { lblOption.Text = value; lblOption.IsVisible = !String.IsNullOrEmpty(value); } }
+
         /// <summary>
         /// IsChecked Property
         /// </summary>
@@ -117,14 +127,17 @@ namespace Plugin.InputKit.Shared.Controls
             get => (bool)GetValue(IsCheckedProperty);
             set => SetValue(IsCheckedProperty, value);
         }
+
         /// <summary>
         /// Checkbox box background color. Default is LightGray
         /// </summary>
         public Color BoxBackgroundColor { get => (Color)GetValue(BoxBackgroundColorProperty); set => SetValue(BoxBackgroundColorProperty, value); }
+
         /// <summary>
         /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
         /// </summary>
         public bool IsDisabled { get => _isEnabled; set { _isEnabled = value; this.Opacity = value ? 0.6 : 1; } }
+
         /// <summary>
         /// Color of Checkbox checked
         /// </summary>
@@ -133,6 +146,7 @@ namespace Plugin.InputKit.Shared.Controls
             get => (Color)GetValue(ColorProperty);
             set => SetValue(ColorProperty, value);
         }
+
         /// <summary>
         /// Color of text
         /// </summary>
@@ -147,26 +161,32 @@ namespace Plugin.InputKit.Shared.Controls
         /// Which icon will be shown when checkbox is checked
         /// </summary>
         public CheckType Type { get => _type; set { _type = value; UpdateType(value); } }
+
         /// <summary>
         /// Size of Checkbox
         /// </summary>
         public double BoxSize { get => frmBackground.Width; }
+
         /// <summary>
         /// SizeRequest of CheckBox
         /// </summary>
         public double BoxSizeRequest { get => frmBackground.WidthRequest; set => SetBoxSize(value); }
+
         /// <summary>
         /// Fontsize of Checkbox text
         /// </summary>
         public double TextFontSize { get => lblOption.FontSize; set => lblOption.FontSize = value; }
+
         /// <summary>
         /// Border color of around CheckBox
         /// </summary>
         public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
+
         /// <summary>
         /// WARNING! : If you set this as required, user must set checked this control to be validated!
         /// </summary>
         public bool IsRequired { get; set; }
+
         /// <summary>
         /// Checks if entry required and checked
         /// </summary>
@@ -175,6 +195,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// Not available for this control
         /// </summary>
         public string ValidationMessage { get; set; }
+
         /// <summary>
         /// Fontfamily of CheckBox Text
         /// </summary>
@@ -201,7 +222,7 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
-        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color?), typeof(CheckBox), null, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color?), typeof(CheckBox), GlobalSetting.Color.ToSurfaceColor(), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction((bo as CheckBox), (bool)nv));
         public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
@@ -224,7 +245,7 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Methods
-        void ApplyLabelPosition(LabelPosition position, [CallerMemberName]string member = null, [CallerFilePath]string file = null, [CallerLineNumber] int line = -1)
+        void ApplyLabelPosition(LabelPosition position)
         {
             Children.Clear();
             if (position == LabelPosition.After)
