@@ -27,14 +27,5 @@ namespace Sample.InputKit.Views
                 }
             }
         }
-
-        private void ChangePosition(object sender, EventArgs e)
-        {
-            if (sender is CheckBox cb)
-            {
-                cb.LabelPosition = cb.IsChecked ? Plugin.InputKit.Shared.LabelPosition.After :
-                                                  Plugin.InputKit.Shared.LabelPosition.Before;
-            }
-        }
     }
 }

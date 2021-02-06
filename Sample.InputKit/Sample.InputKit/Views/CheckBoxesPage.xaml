@@ -17,7 +17,9 @@
             <input:CheckBox Text="Option 3 with Custom Type" Type="Custom" CustomIcon="ic_account_balance_black"/>
             <input:CheckBox Text="Option 4 with Material Type" Type="Material"/>
             <input:CheckBox Text="Option 5 with Star Type" Type="Star"/>
-            <input:CheckBox Text="Option 6 (Position)" Type="Check" CheckChanged="ChangePosition"/>
+            <input:CheckBox Text="Option 6 (Position)" Type="Check" LabelPosition="Before"/>
+
         </StackLayout>
+        
     </ContentPage.Content>
 </ContentPage>
