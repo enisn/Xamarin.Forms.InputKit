@@ -7,11 +7,10 @@
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <Version>3.4.4</Version>
-    <PackageVersion>3.4.4</PackageVersion>
+    <Version>3.5.0</Version>
+    <PackageVersion>3.5.0</PackageVersion>
     <PackOnBuild>true</PackOnBuild>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <LangVersion>7.3</LangVersion>
     <DefineConstants>$(DefineConstants);</DefineConstants>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
