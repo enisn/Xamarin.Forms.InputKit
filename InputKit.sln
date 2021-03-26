@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiki", "Wiki", "{AA39162B-B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sample.InputKit.Android", "Sample.InputKit\Sample.InputKit.Android\Sample.InputKit.Android.csproj", "{BB4B11C4-B014-4D02-A014-5A29F694A392}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputKit", "InputKit\InputKit.csproj", "{0D4EDD99-6439-48E9-8F9A-8B4DC0CA5431}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputKit", "InputKit\InputKit.csproj", "{0D4EDD99-6439-48E9-8F9A-8B4DC0CA5431}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ADC7C69D-0749-4C60-82AE-6385D4CDD940}"
 	ProjectSection(SolutionItems) = preProject
