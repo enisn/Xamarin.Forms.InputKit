@@ -32,7 +32,7 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         protected IconView imgIcon = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, HorizontalOptions = LayoutOptions.Start, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(10, 5, 5, 5) };
-            protected IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = ImageSource.FromResource(RESOURCE_ARROWDOWN), HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(5, 5, 10, 5) , WidthRequest = 15, HeightRequest = 15};
+        protected IconView imgArrow = new IconView { InputTransparent = true, FillColor = GlobalSetting.Color, Source = ImageSource.FromResource(RESOURCE_ARROWDOWN), HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.CenterAndExpand, Margin = new Thickness(5, 5, 10, 5), WidthRequest = 15, HeightRequest = 15 };
         protected Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         protected Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         protected Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
@@ -126,7 +126,7 @@ namespace Plugin.InputKit.Shared.Controls
         public ImageSource ArrowImage { get => GetValue(ArrowImageProperty) as ImageSource; set => SetValue(ArrowImageProperty, value); }
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
-        public Color Color { get => imgIcon.FillColor; set => UpdateColors(value); }
+        public Color Color { get => (Color)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
         public Color AnnotationColor { get => lblAnnotation.TextColor; set => lblAnnotation.TextColor = value; }
         public Color TitleColor { get => lblTitle.TextColor; set => lblTitle.TextColor = value; }
@@ -139,16 +139,19 @@ namespace Plugin.InputKit.Shared.Controls
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
         public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
-        private void UpdateColors(Color color)
+
+        private void UpdateColors()
         {
-            imgIcon.FillColor = color;
-            imgArrow.FillColor = color;
+            imgIcon.FillColor = Color;
+            imgArrow.FillColor = Color;
         }
+
         private void UpdateMainText()
         {
             txtInput.Text = SelectedItem == null ? Placeholder : SelectedItem.ToString();
             txtInput.TextColor = SelectedItem == null ? PlaceholderColor : TextColor;
         }
+
         public void DisplayValidation()
         {
             lblAnnotation.Text = IsValidated ? null : ValidationMessage;
@@ -159,6 +162,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).ItemsSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateSelected());
         public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Dropdown), Color.White, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BackgroundColor = (Color)nv);
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(Dropdown), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Dropdown), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateMainText());
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).Title = (string)nv);
         public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(ImageSource), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).IconImage = (ImageSource)nv);
