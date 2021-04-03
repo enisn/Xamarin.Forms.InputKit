@@ -143,7 +143,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// BackgroundColor of this Control
         /// </summary>
-        public new Color BackgroundColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
+        public new Color BackgroundColor { get => (Color)GetValue(BackgroundColorProperty); set => SetValue(BackgroundColorProperty, value); }
         ///------------------------------------------------------------------------
         /// <summary>
         /// Bordercolor of this control
@@ -169,7 +169,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Placeholder of entry
         /// </summary>
-        public string Placeholder { get => txtInput.Placeholder; set { txtInput.Placeholder = value; OnPropertyChanged(nameof(Placeholder)); } }
+        public string Placeholder { get => (string)GetValue(PlaceholderProperty); set => SetValue(PlaceholderProperty, value); }
         /// <summary>
         /// Maximum length of this Entry
         /// </summary>
@@ -423,7 +423,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BorderColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BorderColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
-        public static readonly BindableProperty PlaceHolderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Placeholder = (string)nv);
+        public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), default(string), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.Placeholder = (string)nv);
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), int.MaxValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
         public static readonly BindableProperty MinLengthProperty = BindableProperty.Create(nameof(MinLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MinLength = (int)nv);
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(AdvancedEntry), (float)Frame.CornerRadiusProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.CornerRadius = (float)nv);
