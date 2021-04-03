@@ -446,8 +446,6 @@ namespace Plugin.InputKit.Shared.Controls
                                 defaultValue: GlobalSetting.LabelPosition,
                                 propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ApplyValidationPosition((LabelPosition)nv));
         public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.CursorPosition = (int)nv);
-
-      
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
         //--------------------------------------------------------------------------------------------------------------------------------------------------
