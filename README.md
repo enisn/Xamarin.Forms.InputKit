@@ -25,9 +25,10 @@
 
 | Platform | Version | Supported |
 | --- | --- | --- |
+| Android | MonoAndroid 11.0 | ✅ |
 | Android | MonoAndroid10.0 | ✅ |
 | Android | MonoAndroid90 | ✅ |
-| Android | MonoAndroid81 | ❌ |
+| Android | MonoAndroid81 | ❌ \| InputKit v2.x |
 | iOS | Xamarin.iOS10 | ✅ |
 | UWP | - | **EXPERIMENTAL** |
 | MAC | Xamarin.Mac20 | ✅ |
