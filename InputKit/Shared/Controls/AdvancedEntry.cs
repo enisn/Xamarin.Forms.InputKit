@@ -85,6 +85,8 @@ namespace Plugin.InputKit.Shared.Controls
 
             txtInput.TextChanged += TxtInput_TextChanged;
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
+            txtInput.Focused += (s, args) => { var arg = new FocusEventArgs(this, true); FocusedCommand?.Execute(arg); Focused?.Invoke(this, arg); };
+            txtInput.Unfocused += (s, args) => { var arg = new FocusEventArgs(this, false); UnfocusedCommand?.Execute(arg); Unfocused?.Invoke(this, arg); };
             imgWarning.IsVisible = this.IsRequired;
             Reset();
         }
@@ -107,6 +109,8 @@ namespace Plugin.InputKit.Shared.Controls
         public event EventHandler<TextChangedEventArgs> TextChanged;
         public event EventHandler Clicked;
         public event EventHandler ValidationChanged;
+        public new event EventHandler<FocusEventArgs> Unfocused;
+        public new event EventHandler<FocusEventArgs> Focused;
         #endregion
         #region Properties
         ///------------------------------------------------------------------------
@@ -374,6 +378,16 @@ namespace Plugin.InputKit.Shared.Controls
         public ICommand CompletedCommand { get; set; }
         ///----------------------------------------- -------------------------------
         /// <summary>
+        /// Executed when entry focused.
+        /// </summary>
+        public Command<FocusEventArgs> FocusedCommand { get; set; }
+        ///----------------------------------------- -------------------------------
+        /// <summary>
+        /// Executed when entry unfocused.
+        /// </summary>
+        public Command<FocusEventArgs> UnfocusedCommand { get; set; }
+        ///----------------------------------------- -------------------------------
+        /// <summary>
         /// Parameter to send with CompletedCommand
         /// </summary>
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
@@ -462,7 +476,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual new void Focus()
         {
-            base.Focus(); // To trigger base.Focused event
+            Focused?.Invoke(this, new FocusEventArgs(this, true));
             txtInput.Focus();
         }
         /// <summary>
@@ -470,9 +484,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual new void Unfocus()
         {
-            base.Unfocus(); // To trigger base.Unfocused event
+            Focused?.Invoke(this, new FocusEventArgs(this, true));
             txtInput.Unfocus();
         }
+
         /// <summary>
         /// Automaticly finds next Advanced entry and focus it.
         /// </summary>
