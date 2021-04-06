@@ -8,9 +8,9 @@
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <Version>3.6.0</Version>
-    <PackageVersion>3.6.0</PackageVersion>
-    <PackOnBuild>true</PackOnBuild>
+    <Version>3.7.0</Version>
+    <PackageVersion>3.7.0</PackageVersion>
+    <PackOnBuild>false</PackOnBuild>
     <NeutralLanguage>en-US</NeutralLanguage>
     <DefineConstants>$(DefineConstants);</DefineConstants>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
