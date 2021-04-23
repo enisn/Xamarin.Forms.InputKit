@@ -1,6 +1,6 @@
 ﻿using Android.Content;
 using Android.OS;
-#if MONOANDROID10_0
+#if MONOANDROID10_0 || MONOANDROID11_0
 using AndroidX.AppCompat.Widget;
 #else
 using Android.Support.V7.Widget;
@@ -31,8 +31,8 @@ namespace Plugin.InputKit.Platforms.Droid
             if (Effect != null)
                 Effect.Parent.OnPopupRequest += OnPopupRequest;
             
-            Context context = Config.CurrentActivity;         
-#if MONOANDROID10_0
+            Context context = Config.CurrentActivity;
+#if MONOANDROID10_0 || MONOANDROID11_0
             Context wrapper = new Android.Views.ContextThemeWrapper(context, Resource.Style.MyPopupMenu);
 #else
             Context wrapper = new Android.Support.V7.View.ContextThemeWrapper(context, Resource.Style.MyPopupMenu);
