@@ -16,8 +16,8 @@
 [![Nuget](https://img.shields.io/nuget/v/Xamarin.Forms.InputKit)](https://www.nuget.org/packages/Xamarin.Forms.InputKit/)
 ![Nuget](https://img.shields.io/nuget/dt/Xamarin.Forms.InputKit?logo=nuget)
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
-
-
+<br />
+[![Sparkline](https://stars.medv.io/enisn/Xamarin.Forms.InputKit.svg)](https://stars.medv.io/enisn/Xamarin.Forms.InputKit)
 <hr/>
 
 
