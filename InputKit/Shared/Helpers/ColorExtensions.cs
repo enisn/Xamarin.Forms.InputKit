@@ -1,4 +1,4 @@
-﻿using Xamarin.Forms;
+﻿using Microsoft.Maui.Graphics;
 
 namespace Plugin.InputKit.Shared.Helpers
 {
@@ -11,10 +11,10 @@ namespace Plugin.InputKit.Shared.Helpers
         /// <returns>Surface color on background color</returns>
         public static Color ToSurfaceColor(this Color color)
         {
-            if ((color.R + color.G + color.B) >= 1.8)
-                return Color.Black;
+            if ((color.Red + color.Green + color.Blue) >= 1.8)
+                return Colors.Black;
             else
-                return Color.White;
+                return Colors.White;
         }
     }
 }

@@ -1,14 +1,12 @@
 ﻿using Foundation;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Shared.Layouts;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
-[assembly:ExportRenderer(typeof(StatefulStackLayout),typeof(StatefulStackLayoutRenderer))]
+[assembly: ExportRenderer(typeof(StatefulStackLayout), typeof(StatefulStackLayoutRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
 {
     public class StatefulStackLayoutRenderer : VisualElementRenderer<StackLayout>

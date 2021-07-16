@@ -1,9 +1,11 @@
 ﻿using Android.Content;
 using Android.Graphics.Drawables;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Controls.Platform;
 using Plugin.InputKit.Platforms.Droid;
 using Plugin.InputKit.Shared.Controls;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 
 [assembly:ExportRenderer(typeof(EmptyEntry),typeof(EmptyEntryRenderer))]
 namespace Plugin.InputKit.Platforms.Droid
@@ -17,8 +19,7 @@ namespace Plugin.InputKit.Platforms.Droid
         public EmptyEntryRenderer(Context context) : base(context)
         {
         }
-
-        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
             if (Control != null)

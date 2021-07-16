@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using Android.Content;
 using Android.Views;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
 using Plugin.InputKit.Platforms.Droid;
 using Plugin.InputKit.Shared.Controls;
 using Plugin.InputKit.Shared.Layouts;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
 
 [assembly:ExportRenderer(typeof(StatefulStackLayout),typeof(StatefulStackLayoutRenderer))]
 namespace Plugin.InputKit.Platforms.Droid

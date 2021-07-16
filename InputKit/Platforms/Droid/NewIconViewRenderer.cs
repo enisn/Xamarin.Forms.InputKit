@@ -1,20 +1,21 @@
-﻿using Plugin.InputKit.Platforms.Droid;
-using Plugin.InputKit.Shared.Controls;
-using Android.Content;
+﻿using Android.Content;
 using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Widget;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Graphics;
+using Plugin.InputKit.Platforms.Droid;
+using Plugin.InputKit.Shared.Controls;
 using System.ComponentModel;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using System;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 
 [assembly: ExportRenderer(typeof(IconView), typeof(NewIconViewRenderer))]
 namespace Plugin.InputKit.Platforms.Droid
 {
-    public class NewIconViewRenderer : ViewRenderer<IconView, ImageView>
+    public class NewIconViewRenderer : Microsoft.Maui.Controls.Compatibility.Platform.Android.AppCompat.ViewRenderer<IconView, ImageView>
     {
         private bool _isDisposed;
         Context _context;
@@ -23,6 +24,7 @@ namespace Plugin.InputKit.Platforms.Droid
             base.AutoPackage = false;
             _context = context;
         }
+
         protected override void Dispose(bool disposing)
         {
             if (_isDisposed)
@@ -32,7 +34,8 @@ namespace Plugin.InputKit.Platforms.Droid
             _isDisposed = true;
             base.Dispose(disposing);
         }
-        protected override void OnElementChanged(ElementChangedEventArgs<IconView> e)
+
+        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<IconView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement == null)
@@ -41,6 +44,7 @@ namespace Plugin.InputKit.Platforms.Droid
             }
             UpdateBitmap(e.OldElement);
         }
+
         protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
@@ -81,7 +85,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
                     d.SetTint(Element.FillColor.ToAndroid());
                 else
-                    d.SetColorFilter(new LightingColorFilter(Xamarin.Forms.Color.Black.ToAndroid(), Element.FillColor.ToAndroid()));
+                    d.SetColorFilter(new LightingColorFilter(Colors.Black.ToAndroid(), Element.FillColor.ToAndroid()));
 
                 d.Alpha = Element.FillColor.ToAndroid().A;
                 Control.SetImageDrawable(d);
@@ -117,7 +121,7 @@ namespace Plugin.InputKit.Platforms.Droid
                 if (Android.OS.Build.VERSION.SdkInt >= Android.OS.BuildVersionCodes.Lollipop)
                     d.SetTint(Element.FillColor.ToAndroid());
                 else
-                    d.SetColorFilter(new LightingColorFilter(Xamarin.Forms.Color.Black.ToAndroid(), Element.FillColor.ToAndroid()));
+                    d.SetColorFilter(new LightingColorFilter(Colors.Black.ToAndroid(), Element.FillColor.ToAndroid()));
 
                 d.Alpha = Element.FillColor.ToAndroid().A;
                 Control.SetImageDrawable(d);

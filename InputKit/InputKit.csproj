@@ -1,8 +1,9 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>
+    <!--<TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>-->
+    <TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
 
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
@@ -29,8 +30,8 @@
     <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
     <Description>Ready to use Input componenets such as Checkbox,  RadioButton, Dropdown, AdvancedEntry, Advanced Slider etc.</Description>
 
-    <Owners>Enis Necipoglu</Owners>
-    <Authors>Enis Necipoglu</Authors>
+    <Owners>enisn</Owners>
+    <Authors>enisn</Authors>
     <Copyright>Copyright 2018</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
@@ -38,23 +39,14 @@
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Plugin.InputKit.xml</DocumentationFile>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <NoWarn>1701;1702;CS1591</NoWarn>
-  </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" PrivateAssets="All" />
+    <!-- <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="4.8.0.1364" PrivateAssets="All" /> -->
+    <PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="6.0.100-preview.5.794" />
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
+  <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid11.0' OR '$(TargetFramework)' == 'MonoAndroid10.0' OR '$(TargetFramework)' == 'MonoAndroid90'">
     <Compile Include="Platforms\Droid\**\*.cs" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
@@ -66,7 +58,7 @@
     <AndroidResource Include="Resources\values\*.xml" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0-ios' ">
     <Compile Include="Platforms\iOS\**\*.cs" />
 
     <!--<Copy SourceFiles="$(NuSpecPath)" DestinationFolder="$(PackageSource)\Resources"/>-->
@@ -108,6 +100,14 @@
     <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
   </ItemGroup>
 
+  <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
+    <Compile Include="Platforms\Droid\AutoCompleteViewRenderer.cs" />
+    <Compile Include="Platforms\Droid\Config.cs" />
+    <Compile Include="Platforms\Droid\EmptyEntryRenderer.cs" />
+    <Compile Include="Platforms\Droid\MenuEffect.cs" />
+    <Compile Include="Platforms\Droid\NewIconViewRenderer.cs" />
+    <Compile Include="Platforms\Droid\StatefulStackLayoutRenderer.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <None Include="icon.png">

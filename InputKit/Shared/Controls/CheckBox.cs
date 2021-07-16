@@ -1,11 +1,12 @@
-﻿using Plugin.InputKit.Shared.Abstraction;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Helpers;
 using Plugin.InputKit.Shared.Layouts;
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -16,9 +17,9 @@ namespace Plugin.InputKit.Shared.Controls
     {
         public static GlobalSetting GlobalSetting { get; } = new GlobalSetting
         {
-            BackgroundColor = Color.Transparent,
-            Color = Color.Accent,
-            BorderColor = Color.Black,
+            BackgroundColor = Colors.Transparent,
+            Color = InputKitOptions.GetAccentColor(),
+            BorderColor = Colors.Black,
             TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = 25,
             CornerRadius = 4,
@@ -215,7 +216,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), InputKitOptions.GetAccentColor(), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
         public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction((bo as CheckBox), (bool)nv));
@@ -278,7 +279,7 @@ namespace Plugin.InputKit.Shared.Controls
             if (Type == CheckType.Material)
             {
                 frmBackground.BorderColor = Color;
-                frmBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
+                frmBackground.BackgroundColor = IsChecked ? Color : Colors.Transparent;
             }
             else
             {

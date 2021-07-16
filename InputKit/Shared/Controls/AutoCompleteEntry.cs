@@ -1,18 +1,17 @@
-﻿using Plugin.InputKit.Shared.Helpers;
+﻿using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     public class AutoCompleteEntry : AdvancedEntry
     {
         private AutoCompleteView txtInput;
+
         public AutoCompleteEntry()
         {
-
+            // Keep the ctor for linker.
         }
 
         public IEnumerable<string> ItemsSource { get => txtInput.ItemsSource; set => txtInput.ItemsSource = value; }
@@ -33,13 +32,13 @@ namespace Plugin.InputKit.Shared.Controls
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand,
             };
-            txtInput.SortingAlgorithm = (text, options) => 
+            txtInput.SortingAlgorithm = (text, options) =>
                 options
                 .Where(x => x.ToLowerInvariant().Contains(text.ToLowerInvariant()))
                 .OrderBy(o => o.StartsWith(text, StringComparison.CurrentCultureIgnoreCase) ? 0 : 1)
                 .ThenBy(t => t)
                 .ToList();
-            return txtInput ;
+            return txtInput;
         }
     }
 }

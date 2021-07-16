@@ -20,7 +20,7 @@ namespace Plugin.InputKit.Platforms.UWP
             {
                 var brush = new ImageBrush();
                 if (e?.NewElement != null)
-                    brush.ImageSource = new BitmapImage(new Uri(e.NewElement.Source, UriKind.Relative));
+                    brush.ImageSource = new BitmapImage(new Uri(e.NewElement.Source.ToString(), UriKind.Relative));
 
                 Control.Foreground = brush;
             }

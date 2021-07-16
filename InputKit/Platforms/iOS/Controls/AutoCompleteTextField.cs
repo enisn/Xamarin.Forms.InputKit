@@ -4,10 +4,10 @@ using System.Linq;
 using CoreAnimation;
 using CoreGraphics;
 using Foundation;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Plugin.InputKit.Platforms.iOS.Helpers;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
 namespace Plugin.InputKit.Platforms.iOS.Controls
 {

@@ -1,11 +1,12 @@
-﻿using Plugin.InputKit.Shared.Abstraction;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -57,9 +58,9 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public async void DisplayValidation()
         {
-            this.BackgroundColor = Color.Red;
+            this.BackgroundColor = Colors.Red;
             await Task.Delay(500);
-            this.BackgroundColor = Color.Transparent;
+            this.BackgroundColor = Colors.Transparent;
         }
 
         //-----------------------------------------------------------------------------

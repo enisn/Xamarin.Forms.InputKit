@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿
+using Microsoft.Maui.Graphics;
 
 namespace Plugin.InputKit.Shared.Configuration
 {
@@ -31,7 +32,7 @@ namespace Plugin.InputKit.Shared.Configuration
         /// If control has fontsize, this is it.
         /// </summary>
         public double FontSize { get; set; }
-        ///------------------------------------------------------------------
+
         /// <summary>
         /// Size of control. ( Like HeightRequest and WidthRequest )
         /// </summary>

@@ -1,4 +1,5 @@
-﻿using Xamarin.Forms;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -7,8 +8,11 @@ namespace Plugin.InputKit.Shared.Controls
     /// </summary>
     public partial class IconView : View
     {
+        public IconView()
+        {
+        }
 
-        public static readonly BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(IconView), Color.Black);
+        public static readonly BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(IconView), Colors.Black);
 
         public Color FillColor
         {

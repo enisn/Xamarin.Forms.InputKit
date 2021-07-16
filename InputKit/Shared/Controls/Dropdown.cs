@@ -1,13 +1,13 @@
-﻿using Plugin.InputKit.Shared.Abstraction;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Layouts;
 using Plugin.InputKit.Shared.Utils;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Text;
-using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -18,13 +18,13 @@ namespace Plugin.InputKit.Shared.Controls
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            BackgroundColor = Color.White,
+            BackgroundColor = Colors.White,
             CornerRadius = 20,
             BorderColor = (Color)Button.BorderColorProperty.DefaultValue,
-            Color = Color.Accent,
+            Color = InputKitOptions.GetAccentColor(),
             FontSize = Device.GetNamedSize(NamedSize.Default, typeof(Button)),
             Size = -1,
-            TextColor = Color.Black,
+            TextColor = Colors.Black,
         };
 
         #region Constants
@@ -36,7 +36,7 @@ namespace Plugin.InputKit.Shared.Controls
         protected Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         protected Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         protected Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
-        protected Entry txtInput = new EmptyEntry { TextColor = Color.Blue, PlaceholderColor = Color.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
+        protected Entry txtInput = new EmptyEntry { TextColor = Colors.Blue, PlaceholderColor = Colors.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
 
         private protected PopupMenu pMenu = new PopupMenu();
         private string _placeholder;
@@ -161,7 +161,7 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).ItemsSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateSelected());
-        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Dropdown), Color.White, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BackgroundColor = (Color)nv);
+        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Dropdown), Colors.White, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BackgroundColor = (Color)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(Dropdown), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Dropdown), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateMainText());
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).Title = (string)nv);
@@ -174,7 +174,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).ValidationMessage = (string)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(TextProperty), typeof(string), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).txtInput.Text = (string)nv);
         public static readonly BindableProperty IsEditableProperty = BindableProperty.Create(nameof(IsEditable), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsEditable = (bool)nv);
-        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Colors.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
         public static readonly BindableProperty ArrowImageProperty = BindableProperty.Create(nameof(ArrowImage), typeof(ImageSource), typeof(Dropdown), ImageSource.FromResource(RESOURCE_ARROWDOWN), propertyChanged: (bo, ov, nv) => (bo as Dropdown).imgArrow.Source = (ImageSource)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion

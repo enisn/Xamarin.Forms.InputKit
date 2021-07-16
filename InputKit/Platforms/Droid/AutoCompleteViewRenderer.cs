@@ -1,40 +1,28 @@
-﻿using System.ComponentModel;
-using Android.Content;
+﻿using Android.Content;
 using Android.Content.Res;
-#if MONOANDROID10_0 || MONOANDROID11_0
+using Android.Graphics.Drawables;
+using Android.Widget;
 using AndroidX.AppCompat.Widget;
 using Google.Android.Material.TextField;
-#else
-using Android.Support.Design.Widget;
-using Android.Support.V4.View;
-using Android.Support.V7.Widget;
-#endif
-using Android.Text;
-using Android.Text.Method;
-using Android.Util;
-using Android.Views;
-using Android.Views.InputMethods;
-using Android.Widget;
 using Java.Lang;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.Android;
-using Application = Android.App.Application;
-using Color = Xamarin.Forms.Color;
-using AColor = Android.Graphics.Color;
-using FormsAppCompat = Xamarin.Forms.Platform.Android.AppCompat;
-using Plugin.InputKit.Shared.Controls;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Controls.Platform;
 using Plugin.InputKit.Platforms.Droid;
-using System.Collections.Specialized;
-using System.Collections.Generic;
+using Plugin.InputKit.Shared.Controls;
 using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
-using System.Collections;
-using Android.Graphics.Drawables;
+using AColor = Android.Graphics.Color;
+using Color = Microsoft.Maui.Graphics.Color;
 
 [assembly: ExportRenderer(typeof(AutoCompleteView), typeof(AutoCompleteViewRenderer))]
 namespace Plugin.InputKit.Platforms.Droid
 {
-    public class AutoCompleteViewRenderer : FormsAppCompat.ViewRenderer<AutoCompleteView, TextInputLayout>
+    public class AutoCompleteViewRenderer : Microsoft.Maui.Controls.Compatibility.Platform.Android.AppCompat.ViewRenderer<AutoCompleteView, TextInputLayout>
     {
         public AutoCompleteViewRenderer(Context context) : base(context)
         {
@@ -64,7 +52,7 @@ namespace Plugin.InputKit.Platforms.Droid
             return textInputLayout;
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
+        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<AutoCompleteView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement != null)
@@ -105,7 +93,7 @@ namespace Plugin.InputKit.Platforms.Droid
         private void AutoCompleteOnItemSelected(object sender, AdapterView.ItemClickEventArgs args)
         {
             var view = (AutoCompleteTextView)sender;
-            var selectedItemArgs = new SelectedItemChangedEventArgs(view.Text);
+            var selectedItemArgs = new SelectedItemChangedEventArgs(view.Text, 0);
             var element = (AutoCompleteView)Element;
             element.OnItemSelectedInternal(Element, selectedItemArgs);
         }

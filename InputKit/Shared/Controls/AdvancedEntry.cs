@@ -1,13 +1,11 @@
-﻿using Plugin.InputKit.Shared.Abstraction;
+﻿using Microsoft.Maui;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
-using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -22,10 +20,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            BackgroundColor = Color.White,
+            BackgroundColor = Colors.White,
             CornerRadius = 20,
-            BorderColor = Color.Gray,
-            Color = Color.Accent,
+            BorderColor = Colors.Gray,
+            Color = InputKitOptions.GetAccentColor(),
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1, /* This is not supported for this control*/
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
@@ -66,13 +64,13 @@ namespace Plugin.InputKit.Shared.Controls
 
             frmBackground.Content = new Grid
             {
-                BackgroundColor = Color.Transparent,
+                BackgroundColor = Colors.Transparent,
                 Children =
                 {
                     new StackLayout
                     {
                         Orientation = StackOrientation.Horizontal,
-                        BackgroundColor = Color.Transparent,
+                        BackgroundColor = Colors.Transparent,
                         Children =
                         {
                             imgIcon,
@@ -98,7 +96,7 @@ namespace Plugin.InputKit.Shared.Controls
         public bool IsValidated => IsAnnotated;
         #endregion
         #region Fields
-        private Color _defaultAnnotationColor = Color.Gray;
+        private Color _defaultAnnotationColor = Colors.Gray;
         private AnnotationType _annotation;
         private bool _isDisabled;
         private int _minLength;
@@ -432,17 +430,17 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Title = (string)nv);
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(AdvancedEntry), ((Color)Label.TextColorProperty.DefaultValue), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).lblTitle.TextColor = (Color)nv);
         public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).IconImage = (string)nv);
-        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(AdvancedEntry), Color.Black, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).imgIcon.FillColor = (Color)nv);
-        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BackgroundColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BackgroundColor = (Color)nv);
-        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BorderColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BorderColor = (Color)nv);
+        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(AdvancedEntry), Colors.Black, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).imgIcon.FillColor = (Color)nv);
+        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), (Color)Microsoft.Maui.Controls.Frame.BackgroundColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BackgroundColor = (Color)nv);
+        public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AdvancedEntry), (Color)Microsoft.Maui.Controls.Frame.BorderColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BorderColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
-        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Colors.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), default(string), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.Placeholder = (string)nv);
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), int.MaxValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
         public static readonly BindableProperty MinLengthProperty = BindableProperty.Create(nameof(MinLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MinLength = (int)nv);
-        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(AdvancedEntry), (float)Frame.CornerRadiusProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.CornerRadius = (float)nv);
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(AdvancedEntry), (float)Microsoft.Maui.Controls.Frame.CornerRadiusProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.CornerRadius = (float)nv);
         public static readonly BindableProperty IsAnnotatedProperty = BindableProperty.Create(nameof(IsAnnotated), typeof(bool), typeof(AdvancedEntry), false, BindingMode.OneWayToSource);
-        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), Color.Default, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
+        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), InputKitOptions.GetAccentColor(), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
         public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
         public static readonly BindableProperty CompletedCommandProperty = BindableProperty.Create(nameof(CompletedCommand), typeof(ICommand), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CompletedCommand = (ICommand)nv);
         public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
@@ -609,11 +607,11 @@ namespace Plugin.InputKit.Shared.Controls
             return new EmptyEntry
             {
                 TextColor = GlobalSetting.TextColor,
-                PlaceholderColor = Color.LightGray,
+                PlaceholderColor = Colors.LightGray,
                 HorizontalOptions = LayoutOptions.FillAndExpand,
                 VerticalOptions = LayoutOptions.Center,
                 FontFamily = GlobalSetting.FontFamily,
-                BackgroundColor = Color.Transparent,
+                BackgroundColor = Colors.Transparent,
             };
         }
         #endregion

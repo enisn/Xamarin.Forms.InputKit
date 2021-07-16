@@ -1,10 +1,8 @@
-﻿using Plugin.InputKit.Platforms.iOS;
-using System;
-using System.Collections.Generic;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Plugin.InputKit.Platforms.iOS;
 using System.Linq;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 using static Plugin.InputKit.Shared.Utils.PopupMenu;
 
 [assembly: ResolutionGroupName("Plugin.InputKit.Platforms")]
@@ -76,8 +74,6 @@ namespace Plugin.InputKit.Platforms.iOS
             }
 
             RootViewController.PresentViewController(actionSheetAlert, true, null);
-            //UIApplication.SharedApplication.KeyWindow.RootViewController.PresentViewController(actionSheetAlert, true, null);
-
         }
 
         protected override void OnDetached()
