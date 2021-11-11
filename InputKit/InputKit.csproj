@@ -51,10 +51,23 @@
     <Compile Include="Shared\**\*.cs" />
   </ItemGroup>
 
-  <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
-
-    <Compile Include="Platforms\Droid\**\*.cs" />
-
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
+    <Compile Remove="**\**\*.iOS.cs" />
+    <None Include="**\**\*.iOS.cs" />
+    <Compile Remove="**\iOS\**\*.cs" />
+    <None Include="**\iOS\**\*.cs" />
+  </ItemGroup>
+  <!--<ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true ">
+    <Compile Remove="**\*.Mac.cs" />
+    <None Include="**\*.Mac.cs" />
+    <Compile Remove="**\Mac\**\*.cs" />
+    <None Include="**\Mac\**\*.cs" />
+  </ItemGroup>-->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.StartsWith('net6.0-android')) != true ">
+    <Compile Remove="**\**\*.Android.cs" />
+    <None Include="**\**\*.Android.cs" />
+    <Compile Remove="**\Android\**\*.cs" />
+    <None Include="**\Android\**\*.cs" />
     <AndroidResource Include="Resources\drawable\*.xml" />
     <AndroidResource Include="Resources\drawable\*.png" />
     <AndroidResource Include="Resources\drawable-hdpi\*.png" />
@@ -63,56 +76,40 @@
     <AndroidResource Include="Resources\drawable-xxxhdpi\*.png" />
     <AndroidResource Include="Resources\values\*.xml" />
   </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0-ios' ">
-    <Compile Include="Platforms\iOS\**\*.cs" />
-
-    <!--<Copy SourceFiles="$(NuSpecPath)" DestinationFolder="$(PackageSource)\Resources"/>-->
-
-    <!--<Content Include="Resources\*.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>-->
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard')) != true ">
+    <Compile Remove="**\*.Standard.cs" />
+    <None Include="**\*.Standard.cs" />
+    <Compile Remove="**\Standard\**\*.cs" />
+    <None Include="**\Standard\**\*.cs" />
   </ItemGroup>
-
+  <!--<ItemGroup Condition="$(TargetFramework.Contains('-windows')) != true ">
+    <Compile Remove="**\*.Windows.cs" />
+    <None Include="**\*.Windows.cs" />
+    <Compile Remove="**\Windows\**\*.cs" />
+    <None Include="**\Windows\**\*.cs" />
+    <Compile Remove="**\*.uwp.cs" />
+    <None Include="**\*.uwp.cs" />
+    <MauiXaml Remove="**\*.Windows.xaml" />
+    <None Include="**\*.Windows.xaml" />
+    <Compile Remove="**\*.Windows.xaml.cs" />
+    <None Include="**\*.Windows.xaml.cs" />
+    <MauiXaml Remove="**\Windows\**\*.xaml" />
+    <None Include="**\Windows\**\*.xaml" />
+    <Compile Remove="**\Windows\**\*.xaml.cs" />
+    <None Include="**\Windows\**\*.xaml.cs" />
+  </ItemGroup>
   <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.6" />
-    <Compile Include="Platforms\UWP\**\*.cs" />
-    <!--
-    If you need to add sdk references:
-     <SDKReference Include="WindowsMobile, Version=10.0.16299.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-    -->
+    <Compile Remove="**\*.uwp.cs" />
+    <None Include="**\*.uwp.cs" />
+  </ItemGroup>-->
+  <ItemGroup>
+    <Compile Remove="bin\**;obj\**" />
+    <None Remove="bin\**;obj\**" />
   </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.TVOS10' ">
-    <Compile Include="Platforms\TVOS\**\*.cs" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.WatchOS10' ">
-    <Compile Include="Platforms\WatchOS\**\*.cs" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
-    <Compile Include="Platforms\macOS\**\*.cs" />
-  </ItemGroup>
-
 
   <ItemGroup>
     <EmbeddedResource Include="Shared\Resources\**\*.png" />
     <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
-  </ItemGroup>
-
-  <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
-    <Compile Include="Platforms\Droid\AutoCompleteViewRenderer.cs" />
-    <Compile Include="Platforms\Droid\Config.cs" />
-    <Compile Include="Platforms\Droid\EmptyEntryRenderer.cs" />
-    <Compile Include="Platforms\Droid\MenuEffect.cs" />
-    <Compile Include="Platforms\Droid\NewIconViewRenderer.cs" />
-    <Compile Include="Platforms\Droid\StatefulStackLayoutRenderer.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -141,9 +138,4 @@
     <Compile Include="Platforms\DotNet\**\*.cs" />
   </ItemGroup>
   -->
-
-
-
-  <Import Project="inputkit.targets" Condition="Exists('inputkit.targets')" />
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>
