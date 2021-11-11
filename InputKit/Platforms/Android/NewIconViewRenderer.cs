@@ -5,6 +5,7 @@ using Android.Widget;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Controls.Platform;
 using Microsoft.Maui.Graphics;
 using Plugin.InputKit.Platforms.Droid;
 using Plugin.InputKit.Shared.Controls;
@@ -35,7 +36,7 @@ namespace Plugin.InputKit.Platforms.Droid
             base.Dispose(disposing);
         }
 
-        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<IconView> e)
+        protected override void OnElementChanged(ElementChangedEventArgs<IconView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement == null)

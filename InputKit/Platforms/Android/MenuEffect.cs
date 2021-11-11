@@ -3,6 +3,7 @@ using Android.OS;
 using AndroidX.AppCompat.Widget;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility.Platform.Android;
+using Microsoft.Maui.Controls.Platform;
 using Plugin.InputKit.Platforms.Droid;
 using System.Linq;
 using static Plugin.InputKit.Shared.Utils.PopupMenu;

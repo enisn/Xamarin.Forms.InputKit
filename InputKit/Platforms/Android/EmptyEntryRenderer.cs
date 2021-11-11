@@ -19,7 +19,8 @@ namespace Plugin.InputKit.Platforms.Droid
         public EmptyEntryRenderer(Context context) : base(context)
         {
         }
-        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<Entry> e)
+
+        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
             if (Control != null)
