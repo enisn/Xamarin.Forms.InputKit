@@ -135,7 +135,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// Fontsize of Description Text
         /// </summary>
 
-        [Microsoft.Maui.Controls.TypeConverter(typeof(FontSizeConverter))]
+        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double TextFontSize { get => lblText.FontSize; set => lblText.FontSize = value; }
 
         /// <summary>
