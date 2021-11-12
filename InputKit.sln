@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.1.31903.286
+# Visual Studio 15
+VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{12D59882-9FD8-4526-971D-CCFCB5FE6E9D}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiki", "Wiki", "{AA39162B-B
 		Wiki\SelectionView.md = Wiki\SelectionView.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputKit", "InputKit\InputKit.csproj", "{0D4EDD99-6439-48E9-8F9A-8B4DC0CA5431}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InputKit", "InputKit\InputKit.csproj", "{0D4EDD99-6439-48E9-8F9A-8B4DC0CA5431}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{ADC7C69D-0749-4C60-82AE-6385D4CDD940}"
 	ProjectSection(SolutionItems) = preProject
@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sandbox", "sandbox", "{AD673FBF-AF29-4156-B7FB-D9AF738D875D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SandboxMAUI", "sandbox\SandboxMAUI\SandboxMAUI.csproj", "{68B428F8-0B54-40A6-BA91-22637D58A27C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SandboxMAUI", "sandbox\SandboxMAUI\SandboxMAUI.csproj", "{68B428F8-0B54-40A6-BA91-22637D58A27C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -84,7 +84,6 @@ Global
 		{68B428F8-0B54-40A6-BA91-22637D58A27C}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
 		{68B428F8-0B54-40A6-BA91-22637D58A27C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{68B428F8-0B54-40A6-BA91-22637D58A27C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68B428F8-0B54-40A6-BA91-22637D58A27C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
 		{68B428F8-0B54-40A6-BA91-22637D58A27C}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{68B428F8-0B54-40A6-BA91-22637D58A27C}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{68B428F8-0B54-40A6-BA91-22637D58A27C}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU

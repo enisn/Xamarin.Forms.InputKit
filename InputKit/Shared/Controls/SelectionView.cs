@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
@@ -226,11 +225,7 @@ namespace Plugin.InputKit.Shared.Controls
                     if (DisabledSource?.Contains(item) ?? false)
                         _View.IsDisabled = true;
 
-                    var addedView = _View as View;
-                    this.Children.Add(addedView);
-
-                    Grid.SetColumn(addedView, this.Children.Count % ColumnNumber);
-                    Grid.SetRow(addedView, this.Children.Count % ColumnNumber);
+                    this.Children.Add(_View as View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
 
                     _View.IsSelected = this.Children.Count == _selectedIndex; //to keep selected index when content is changed
                 }
@@ -319,7 +314,7 @@ namespace Plugin.InputKit.Shared.Controls
             return null;
         }
 
-        private void SetTextBinding(IView control)
+        private void SetTextBinding(View control)
         {
             if (ItemDisplayBinding == null) return;
 
@@ -349,7 +344,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
-        private void SetInstanceColor(IView view, Color color)
+        private void SetInstanceColor(View view, Color color)
         {
             switch (SelectionType)
             {

@@ -149,7 +149,7 @@ namespace Plugin.InputKit.Shared.Controls
                 rb.Checked -= UpdateSelected;
                 rb.Checked += UpdateSelected;
             }
-            else if (e.Element is Layout la)
+            else if (e.Element is Layout<View> la)
             {
                 la.ChildAdded -= OnChildAdded;
                 la.ChildAdded += OnChildAdded;
@@ -202,7 +202,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
             ValidationChanged?.Invoke(this, new EventArgs());
         }
-        private IEnumerable<RadioButton> GetChildRadioButtons(Layout layout)
+        private IEnumerable<RadioButton> GetChildRadioButtons(Layout<View> layout)
         {
             foreach (var view in layout.Children)
             {
@@ -210,7 +210,7 @@ namespace Plugin.InputKit.Shared.Controls
                 {
                     yield return view as RadioButton;
                 }
-                else if (view is Layout la)
+                else if (view is Layout<View> la)
                 {
                     foreach (var chk in GetChildRadioButtons(la))
                         yield return chk;

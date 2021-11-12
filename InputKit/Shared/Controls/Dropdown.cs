@@ -42,7 +42,6 @@ namespace Plugin.InputKit.Shared.Controls
         private string _placeholder;
         private string _validationMessage;
         private bool _isRequired;
-
         public Dropdown()
         {
             this.Children.Add(lblTitle);
@@ -66,19 +65,14 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.TextChanged += (s, args) => Text = args.NewTextValue;
             UpdateMainText();
         }
-
         public event EventHandler ValidationChanged;
-
         public event EventHandler<SelectedItemChangedArgs> SelectedItemChanged;
-
         #region SelectionRegion
         private void Menu_Requested(object sender, EventArgs e)
         {
             ShowMenu();
         }
-
         private void ShowMenu() => pMenu.ShowPopup(imgArrow);
-
         private void Menu_Requested(object obj)
         {
             if (obj != txtInput || !IsEditable)
@@ -88,7 +82,6 @@ namespace Plugin.InputKit.Shared.Controls
                 txtInput.Focus();
             }
         }
-
         private void Menu_Item_Selected(string item, int index)
         {
             try
@@ -100,7 +93,6 @@ namespace Plugin.InputKit.Shared.Controls
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
         }
-
         public IList ItemsSource
         {
             get => pMenu.ItemsSource;
@@ -111,14 +103,12 @@ namespace Plugin.InputKit.Shared.Controls
                     (value as INotifyCollectionChanged).CollectionChanged += Dropdown_CollectionChanged;
             }
         }
-
         public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
-
         private void Dropdown_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             pMenu.ItemsSource = (IList)GetValue(ItemsSourceProperty);
         }
-        private void UpdateSelected()
+        void UpdateSelected()
         {
             UpdateMainText();
             DisplayValidation();
@@ -126,47 +116,28 @@ namespace Plugin.InputKit.Shared.Controls
             SelectedItemChanged?.Invoke(this, new SelectedItemChangedArgs(this.SelectedItem, this.ItemsSource?.IndexOf(this.SelectedItem) ?? -1));
         }
         #endregion
-
+        //public Label TitleLabel { get => lblTitle; }
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
-
-        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+        [TypeConverter(typeof(FontSizeConverter))]
         public double TitleFontSize { get => lblTitle.FontSize; set => lblTitle.FontSize = value; }
-
-        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+        [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize { get => txtInput.FontSize; set => txtInput.FontSize = value; }
-
         public ImageSource IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
-
         public ImageSource ArrowImage { get => GetValue(ArrowImageProperty) as ImageSource; set => SetValue(ArrowImageProperty, value); }
-
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
-
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
-
         public Color Color { get => (Color)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
-
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
-
         public Color AnnotationColor { get => lblAnnotation.TextColor; set => lblAnnotation.TextColor = value; }
-
         public Color TitleColor { get => lblTitle.TextColor; set => lblTitle.TextColor = value; }
-
         public Color BorderColor { get => frmBackground.BorderColor; set { frmBackground.BorderColor = value; } }
-
         public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
-
         public string Placeholder { get => _placeholder; set { _placeholder = value; UpdateMainText(); } }
-
         public Color PlaceholderColor { get => (Color)GetValue(PlaceholderColorProperty); set => SetValue(PlaceholderColorProperty, value); }
-
         public bool IsRequired { get => _isRequired; set { _isRequired = value; DisplayValidation(); } }
-
         public bool IsValidated => !IsRequired || SelectedItem != null;
-
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
-
         public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
-
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
 
         private void UpdateColors()
@@ -186,7 +157,6 @@ namespace Plugin.InputKit.Shared.Controls
             lblAnnotation.Text = IsValidated ? null : ValidationMessage;
             lblAnnotation.IsVisible = !String.IsNullOrEmpty(lblAnnotation.Text);
         }
-
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).ItemsSource = (IList)nv);

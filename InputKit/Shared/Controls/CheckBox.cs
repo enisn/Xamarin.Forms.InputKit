@@ -53,17 +53,9 @@ namespace Plugin.InputKit.Shared.Controls
             this.Padding = new Thickness(0, 10);
             this.Spacing = 10;
             this.frmBackground.Content = boxSelected;
-            try
-            {
 
-                ApplyLabelPosition(LabelPosition);
+            ApplyLabelPosition(LabelPosition);
 
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
             this.ApplyIsCheckedAction = ApplyIsChecked;
             this.ApplyIsPressedAction = ApplyIsPressed;
             this.GestureRecognizers.Add(new TapGestureRecognizer
@@ -316,9 +308,7 @@ namespace Plugin.InputKit.Shared.Controls
             boxSelected.WidthRequest = value * .6;  //old value 0.72
             boxSelected.HeightRequest = value * 0.6;
             //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
-
-            // TODO: Refactor after MAUI update
-            //this.Children[0].MinimumWidth = value * 1.4;
+            this.Children[0].MinimumWidthRequest = value * 1.4;
         }
 
         void UpdateType(CheckType _Type)
