@@ -52,7 +52,7 @@ namespace Plugin.InputKit.Platforms.Droid
             return textInputLayout;
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<AutoCompleteView> e)
+        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<AutoCompleteView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement != null)

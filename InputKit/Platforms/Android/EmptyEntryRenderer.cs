@@ -20,7 +20,7 @@ namespace Plugin.InputKit.Platforms.Droid
         {
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<Entry> e)
+        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<Entry> e)
         {
             base.OnElementChanged(e);
             if (Control != null)

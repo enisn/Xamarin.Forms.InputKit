@@ -36,7 +36,7 @@ namespace Plugin.InputKit.Platforms.Droid
             base.Dispose(disposing);
         }
 
-        protected override void OnElementChanged(ElementChangedEventArgs<IconView> e)
+        protected override void OnElementChanged(Microsoft.Maui.Controls.Compatibility.Platform.Android.ElementChangedEventArgs<IconView> e)
         {
             base.OnElementChanged(e);
             if (e.OldElement == null)
