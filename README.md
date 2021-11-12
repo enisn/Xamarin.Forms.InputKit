@@ -40,7 +40,24 @@
 
 ## Getting Started with InputKit
 
-There is no complicated steps for set-up, no Inits no implementation codes. Plug & Play.
+- Install package from NuGet
+
+- Go your **MauiProgram.cs** file and add following line:
+
+  ```csharp
+  builder
+  	.UseMauiApp<App>()
+  	.ConfigureMauiHandlers(handlers =>
+      {
+          // Add following line:
+  		handlers.AddInputKitHandlers();
+      })
+      //...
+  ```
+
+  
+
+
 
 Read [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started).
 
