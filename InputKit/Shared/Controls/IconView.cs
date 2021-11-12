@@ -1,13 +1,12 @@
 ﻿using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-using Plugin.InputKit.Shared.Abstraction;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     /// <summary>
     /// Default Constructor
     /// </summary>
-    public partial class IconView : View, IIConView
+    public partial class IconView : View
     {
         public IconView()
         {

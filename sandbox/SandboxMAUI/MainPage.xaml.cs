@@ -4,21 +4,21 @@ using Microsoft.Maui.Essentials;
 
 namespace SandboxMAUI
 {
-	public partial class MainPage : ContentPage
-	{
-		int count = 0;
+    public partial class MainPage : ContentPage
+    {
+        int count = 0;
 
-		public MainPage()
-		{
-			InitializeComponent();
-		}
+        public MainPage()
+        {
 
-		private void OnCounterClicked(object sender, EventArgs e)
-		{
-			count++;
-			CounterLabel.Text = $"Current count: {count}";
+            InitializeComponent();
+        }
 
-			SemanticScreenReader.Announce(CounterLabel.Text);
-		}
-	}
+        private void OnCounterClicked(object sender, EventArgs e)
+        {
+            count++;
+            CounterLabel.Text = $"Current count: {count}";
+            SemanticScreenReader.Announce(CounterLabel.Text);
+        }
+    }
 }

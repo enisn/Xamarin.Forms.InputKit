@@ -1,5 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
              x:Class="SandboxMAUI.MainPage"
              BackgroundColor="{DynamicResource SecondaryColor}">
 
@@ -7,12 +8,16 @@
         <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*"
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
-            <Label 
+            <StackLayout Grid.Row="0">
+
+                <input:CheckBox Text="Option 1" Type="Material"/>
+                
+                <Label 
                 Text="Hello, World!"
-                Grid.Row="0"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
                 HorizontalOptions="Center" />
+            </StackLayout>
 
             <Label 
                 Text="Welcome to .NET Multi-platform App UI"
