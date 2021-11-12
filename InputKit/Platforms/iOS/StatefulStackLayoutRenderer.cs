@@ -9,7 +9,7 @@ using UIKit;
 [assembly: ExportRenderer(typeof(StatefulStackLayout), typeof(StatefulStackLayoutRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
 {
-    public class StatefulStackLayoutRenderer : VisualElementRenderer<StackLayout>
+    public class StatefulStackLayoutRenderer : VisualElementRenderer<Microsoft.Maui.Controls.StackLayout>
     {
         public StatefulStackLayoutRenderer()
         {

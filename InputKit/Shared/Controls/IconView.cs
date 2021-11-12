@@ -6,7 +6,7 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// Default Constructor
     /// </summary>
-    public partial class IconView : View
+    public partial class IconView : View, IIconView
     {
         public IconView()
         {

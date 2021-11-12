@@ -13,7 +13,7 @@ using Plugin.InputKit.Shared.Layouts;
 [assembly:ExportRenderer(typeof(StatefulStackLayout),typeof(StatefulStackLayoutRenderer))]
 namespace Plugin.InputKit.Platforms.Droid
 {
-    public class StatefulStackLayoutRenderer : VisualElementRenderer<StackLayout>, Android.Views.View.IOnTouchListener
+    public class StatefulStackLayoutRenderer : VisualElementRenderer<Microsoft.Maui.Controls.StackLayout>, Android.Views.View.IOnTouchListener
     {
         public StatefulStackLayoutRenderer(Context context) : base(context)
         {
