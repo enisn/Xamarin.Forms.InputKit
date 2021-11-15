@@ -70,6 +70,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         {
             Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
         });
+        imgSelected.BackgroundColor = Colors.Cyan;
+
+        imgSelected.WidthRequest = 15;
     }
 
     /// <summary>
@@ -318,7 +321,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
 
         // TODO: Refactor after MAUI update
-        //this.Children[0].MinimumWidth = value * 1.4;
+        (this.Children[0] as View).MinimumWidthRequest = value * 1.4;
     }
 
     void UpdateType(CheckType _Type)
