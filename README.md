@@ -21,28 +21,37 @@
 <hr/>
 
 
- ## Available Platforms
-
-| Platform | Version | Supported |
-| --- | --- | --- |
-| Android | MonoAndroid 11.0 | ✅ |
-| Android | MonoAndroid10.0 | ✅ |
-| Android | MonoAndroid90 | ✅ |
-| Android | MonoAndroid81 | ❌ \| InputKit v2.x |
-| iOS | Xamarin.iOS10 | ✅ |
-| UWP | - | **EXPERIMENTAL** |
-| MAC | Xamarin.Mac20 | ✅ |
-| WatchOS | Xamarin.WatchOS10 | ⚠ |
-| .NET Standard | 2.0 | ✅ |
-| .NET Standard | 1.0 | ✅ |
-
 <hr/>
 
-## Getting Started with InputKit
+## Getting Started with InputKit on MAUI
+
+> Be careful. MAUI Compatibility is work in progress and experimental.
+> You can follow the progress with [this issue](https://github.com/enisn/Xamarin.Forms.InputKit/issues/221)
+
+- Install package from NuGet
+
+- Go your **MauiProgram.cs** file and add following line:
+
+  ```csharp
+  builder
+  	.UseMauiApp<App>()
+  	.ConfigureMauiHandlers(handlers =>
+      {
+          // Add following line:
+  		handlers.AddInputKitHandlers();
+      })
+      //...
+  ```
+
+<hr />
+
+## Getting Started with InputKit on Xamarin Forms
+
+> Be careful! Xamarin Forms will be no longer developed. XF support will continue with `3.X` versions. `4.X` and newer versions are targetting MAUI.
 
 There is no complicated steps for set-up, no Inits no implementation codes. Plug & Play.
 
-Read [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started).
+Read more on [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started).
 
 <hr />
 

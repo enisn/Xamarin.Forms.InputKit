@@ -1,11 +1,12 @@
-﻿using Plugin.InputKit.Shared.Abstraction;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
+using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Layouts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -57,9 +58,9 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public async void DisplayValidation()
         {
-            this.BackgroundColor = Color.Red;
+            this.BackgroundColor = Colors.Red;
             await Task.Delay(500);
-            this.BackgroundColor = Color.Transparent;
+            this.BackgroundColor = Colors.Transparent;
         }
 
         //-----------------------------------------------------------------------------
@@ -148,7 +149,7 @@ namespace Plugin.InputKit.Shared.Controls
                 rb.Checked -= UpdateSelected;
                 rb.Checked += UpdateSelected;
             }
-            else if (e.Element is Layout<View> la)
+            else if (e.Element is Layout la)
             {
                 la.ChildAdded -= OnChildAdded;
                 la.ChildAdded += OnChildAdded;
@@ -201,7 +202,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
             ValidationChanged?.Invoke(this, new EventArgs());
         }
-        private IEnumerable<RadioButton> GetChildRadioButtons(Layout<View> layout)
+        private IEnumerable<RadioButton> GetChildRadioButtons(Layout layout)
         {
             foreach (var view in layout.Children)
             {
@@ -209,7 +210,7 @@ namespace Plugin.InputKit.Shared.Controls
                 {
                     yield return view as RadioButton;
                 }
-                else if (view is Layout<View> la)
+                else if (view is Layout la)
                 {
                     foreach (var chk in GetChildRadioButtons(la))
                         yield return chk;

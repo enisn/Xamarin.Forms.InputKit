@@ -1,14 +1,18 @@
-﻿using Xamarin.Forms;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Graphics;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     /// <summary>
     /// Default Constructor
     /// </summary>
-    public partial class IconView : View
+    public partial class IconView : View, IIconView
     {
+        public IconView()
+        {
+        }
 
-        public static readonly BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(IconView), Color.Black);
+        public static readonly BindableProperty FillColorProperty = BindableProperty.Create(nameof(FillColor), typeof(Color), typeof(IconView), Colors.Black);
 
         public Color FillColor
         {

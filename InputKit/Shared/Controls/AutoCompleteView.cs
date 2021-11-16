@@ -1,19 +1,13 @@
-﻿using System;
+﻿using Microsoft.Maui.Controls;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     public class AutoCompleteView : Entry
     {
         private static readonly Func<string, ICollection<string>, ICollection<string>> _defaultSortingAlgorithm = (t, d) => d;
-        public AutoCompleteView()
-        {
-            
-        }
 
         public static readonly BindableProperty SortingAlgorithmProperty = BindableProperty.Create(nameof(SortingAlgorithm),
             typeof(Func<string, ICollection<string>, ICollection<string>>),
@@ -35,7 +29,12 @@ namespace Plugin.InputKit.Shared.Controls
             typeof(int),
             typeof(AutoCompleteView),
             2);
-            
+
+        public AutoCompleteView()
+        {
+            // Keep the ctor for linker.
+        }
+
         /// <summary>
         ///     Sorting Algorithm for the drop down list. This is a bindable property.
         /// </summary>
@@ -49,8 +48,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </example>
         public Func<string, ICollection<string>, ICollection<string>> SortingAlgorithm
         {
-            get { return (Func<string, ICollection<string>, ICollection<string>>)GetValue(SortingAlgorithmProperty); }
-            set { SetValue(SortingAlgorithmProperty, value); }
+            get => (Func<string, ICollection<string>, ICollection<string>>)GetValue(SortingAlgorithmProperty);
+            set => SetValue(SortingAlgorithmProperty, value);
         }
 
         /// <summary>
@@ -58,8 +57,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public int Threshold
         {
-            get { return (int)GetValue(ThresholdProperty); }
-            set { SetValue(ThresholdProperty, value); }
+            get => (int)GetValue(ThresholdProperty);
+            set => SetValue(ThresholdProperty, value);
         }
 
         /// <summary>
@@ -67,8 +66,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public object SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
 
         /// <summary>
@@ -76,8 +75,8 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public IEnumerable<string> ItemsSource
         {
-            get { return (IEnumerable<string>)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable<string>)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         public event EventHandler<SelectedItemChangedEventArgs> ItemSelected;
@@ -88,6 +87,7 @@ namespace Plugin.InputKit.Shared.Controls
             ItemSelected?.Invoke(sender, args);
             OnItemSelected(args);
         }
+
         private static void OnItemsSourcePropertyChangedInternal(BindableObject bindable, object oldvalue, object newvalue)
         {
             var combo = (AutoCompleteView)bindable;

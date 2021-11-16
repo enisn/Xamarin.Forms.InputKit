@@ -1,20 +1,19 @@
 ﻿using CoreGraphics;
 using Foundation;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Controls.Platform;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Platforms.iOS.Controls;
 using Plugin.InputKit.Platforms.iOS.Helpers;
 using Plugin.InputKit.Shared.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(AutoCompleteView), typeof(AutoCompleteViewRenderer))]
 namespace Plugin.InputKit.Platforms.iOS

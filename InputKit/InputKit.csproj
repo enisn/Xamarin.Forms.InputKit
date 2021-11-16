@@ -1,22 +1,28 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>
+    <!--<TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>-->
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT'">net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT'">net6.0;net6.0-android;net6.0-ios</TargetFrameworks>
+    <UseMaui>true</UseMaui>
+    <SingleProject>true</SingleProject>
 
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <Version>3.7.2</Version>
-    <PackageVersion>3.7.2</PackageVersion>
-    <PackOnBuild>false</PackOnBuild>
+    <Version>4.0.0</Version>
+    <PackageVersion>4.0.0</PackageVersion>
     <NeutralLanguage>en-US</NeutralLanguage>
     <DefineConstants>$(DefineConstants);</DefineConstants>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
-    <UseFullSemVerForNuGet>false</UseFullSemVerForNuGet>
-    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 
     <!--TODO: Fill these in-->
     <PackageLicenseUrl></PackageLicenseUrl>
@@ -29,8 +35,8 @@
     <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
     <Description>Ready to use Input componenets such as Checkbox,  RadioButton, Dropdown, AdvancedEntry, Advanced Slider etc.</Description>
 
-    <Owners>Enis Necipoglu</Owners>
-    <Authors>Enis Necipoglu</Authors>
+    <Owners>enisn</Owners>
+    <Authors>enisn</Authors>
     <Copyright>Copyright 2018</Copyright>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <SignAssembly>false</SignAssembly>
@@ -38,25 +44,7 @@
     <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>bin\Debug\netstandard2.0\Plugin.InputKit.xml</DocumentationFile>
-    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <NoWarn>1701;1702;CS1591</NoWarn>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" PrivateAssets="All" />
-    <Compile Include="Shared\**\*.cs" />
-  </ItemGroup>
-
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
-  </ItemGroup>
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid11.0' OR '$(TargetFramework)' == 'MonoAndroid10.0' OR '$(TargetFramework)' == 'MonoAndroid90'">
-    <Compile Include="Platforms\Droid\**\*.cs" />
-
+  <ItemGroup Condition="$(TargetFramework.Contains('-android'))">
     <AndroidResource Include="Resources\drawable\*.xml" />
     <AndroidResource Include="Resources\drawable\*.png" />
     <AndroidResource Include="Resources\drawable-hdpi\*.png" />
@@ -66,48 +54,10 @@
     <AndroidResource Include="Resources\values\*.xml" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.iOS10' ">
-    <Compile Include="Platforms\iOS\**\*.cs" />
-
-    <!--<Copy SourceFiles="$(NuSpecPath)" DestinationFolder="$(PackageSource)\Resources"/>-->
-
-    <!--<Content Include="Resources\*.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>-->
-  </ItemGroup>
-
-  <ItemGroup Condition=" $(TargetFramework.StartsWith('uap10.0')) ">
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform" Version="6.0.6" />
-    <Compile Include="Platforms\UWP\**\*.cs" />
-    <!--
-    If you need to add sdk references:
-     <SDKReference Include="WindowsMobile, Version=10.0.16299.0">
-      <Name>Windows Mobile Extensions for the UWP</Name>
-    </SDKReference>
-    -->
-  </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.TVOS10' ">
-    <Compile Include="Platforms\TVOS\**\*.cs" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.WatchOS10' ">
-    <Compile Include="Platforms\WatchOS\**\*.cs" />
-  </ItemGroup>
-
-
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Xamarin.Mac20' ">
-    <Compile Include="Platforms\macOS\**\*.cs" />
-  </ItemGroup>
-
-
   <ItemGroup>
     <EmbeddedResource Include="Shared\Resources\**\*.png" />
     <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
   </ItemGroup>
-
 
   <ItemGroup>
     <None Include="icon.png">
@@ -115,29 +65,4 @@
       <PackagePath></PackagePath>
     </None>
   </ItemGroup>
-
-  <!--
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
-    <Compile Include="Platforms\DotNet\**\*.cs" />
-  </ItemGroup>
-  -->
-
-
-  <!--
-  <ItemGroup Condition=" '$(TargetFramework)' == 'Tizen40' ">
-    <Compile Include="Platforms\Tizen\**\*.cs" />
-    <PackageReference Include="Tizen.NET" Version="4.0.0" />
-  </ItemGroup>
-  -->
-
-  <!--
-    <ItemGroup Condition=" '$(TargetFramework)' == 'net45' ">
-    <Compile Include="Platforms\DotNet\**\*.cs" />
-  </ItemGroup>
-  -->
-
-
-
-  <Import Project="inputkit.targets" Condition="Exists('inputkit.targets')" />
-  <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
 </Project>

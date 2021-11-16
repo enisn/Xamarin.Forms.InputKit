@@ -1,10 +1,12 @@
-﻿using Plugin.InputKit.Platforms.iOS;
+﻿using Microsoft.Maui.Controls;
+using Microsoft.Maui.Controls.Compatibility;
+using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using Microsoft.Maui.Controls.Platform;
+using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Shared.Controls;
 using UIKit;
-using Xamarin.Forms;
-using Xamarin.Forms.Platform.iOS;
-[assembly: ExportRenderer(typeof(EmptyEntry), typeof(EmptyEntryRenderer))]
 
+[assembly: ExportRenderer(typeof(EmptyEntry), typeof(EmptyEntryRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
 {
     public class EmptyEntryRenderer : EntryRenderer

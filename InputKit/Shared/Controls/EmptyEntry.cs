@@ -1,4 +1,4 @@
-﻿using Xamarin.Forms;
+﻿using Microsoft.Maui.Controls;
 
 namespace Plugin.InputKit.Shared.Controls
 {
