@@ -4,6 +4,28 @@
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
+		<PackageId>Xamarin.Forms.InputKit</PackageId>
+		<Version>4.0.0-pre.2</Version>
+
+		<!-- NuGet Package Info -->
+		 <PackageLicenseUrl></PackageLicenseUrl>
+		<PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
+		<PackageReleaseNotes>Android Target Framework issue resolved.</PackageReleaseNotes>
+		<PackageTags>xamarin, maui, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</PackageTags>
+		<Title>Common controls mostly required</Title>
+		<Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
+		<Description>Ready to use Input componenets such as Checkbox,  RadioButton, Dropdown, AdvancedEntry, Advanced Slider etc.</Description>
+		<Owners>enisn</Owners>
+		<Authors>enisn</Authors>
+		<Copyright>Copyright 2018</Copyright>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageIcon>icon512.png</PackageIcon>
+		<!-- NuGet Package Info End-->
+
+		<DefineConstants>$(DefineConstants);</DefineConstants>
+		<NeutralLanguage>en-US</NeutralLanguage>
+		<GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
 
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
@@ -18,10 +40,6 @@
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Shared\Resources\**\*.*" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Remove="Platforms\Android\Handlers\IconViewHandler.Android.cs" />
 	</ItemGroup>
 
 </Project>
