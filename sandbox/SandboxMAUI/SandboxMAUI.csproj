@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0-android</TargetFrameworks>
+		<TargetFrameworks>net6.0-android;net6.0-ios</TargetFrameworks>
 		<OutputType>Exe</OutputType>
 		<RootNamespace>SandboxMAUI</RootNamespace>
 		<UseMaui>true</UseMaui>

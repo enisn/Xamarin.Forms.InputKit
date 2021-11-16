@@ -16,7 +16,7 @@ namespace InputKit.Handlers.IconView
             return new UIImageView(CGRect.Empty)
             {
                 ContentMode = UIViewContentMode.ScaleAspectFit,
-                ClipsToBounds = true
+                ClipsToBounds = false
             };
         }
 
@@ -32,7 +32,6 @@ namespace InputKit.Handlers.IconView
 
         private static void SetUIImage(IIconViewHandler handler, IIconView view)
         {
-            System.Diagnostics.Debug.WriteLine("[IconView] Source updated as : " + view?.Source);
             if (view?.Source == null) return;
 
             UIImage uiImage = default;
@@ -59,7 +58,7 @@ namespace InputKit.Handlers.IconView
             uiImage = uiImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
             handler.TypedNativeView.TintColor = view.FillColor.ToUIColor();
             handler.TypedNativeView.Image = uiImage;
-
+ 
             ((IVisualElementController)view).NativeSizeChanged();
         }
     }

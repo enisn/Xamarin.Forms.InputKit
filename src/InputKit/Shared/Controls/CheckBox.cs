@@ -53,17 +53,8 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         Padding = new Thickness(0, 10);
         Spacing = 10;
         frmBackground.Content = boxSelected;
-        try
-        {
 
-            ApplyLabelPosition(LabelPosition);
-
-        }
-        catch (Exception ex)
-        {
-
-            throw;
-        }
+        ApplyLabelPosition(LabelPosition);
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
         GestureRecognizers.Add(new TapGestureRecognizer

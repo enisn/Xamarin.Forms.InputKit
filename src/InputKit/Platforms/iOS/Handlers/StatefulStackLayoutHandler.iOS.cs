@@ -1,8 +1,11 @@
-﻿using Microsoft.Maui;
+﻿using Foundation;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using UIKit;
@@ -11,30 +14,65 @@ namespace InputKit.Handlers
 {
     public partial class StatefulStackLayoutHandler
     {
-        protected override LayoutView CreateNativeView()
+        protected override void ConnectHandler(LayoutView nativeView)
         {
-            var nativeView = base.CreateNativeView();
+            nativeView.AddGestureRecognizer(new UIContinousGestureRecognizer(Tapped));
 
-            // TODO: Implement for iOS
-            nativeView.GestureRecognizers.Append(new UITapGestureRecognizer(Tapped));
-
-            return nativeView;
+            base.ConnectHandler(nativeView);
         }
 
-        private void Tapped(UITapGestureRecognizer recognizer)
+        private void Tapped(UIGestureRecognizer recognizer)
         {
             var element = VirtualView as View;
             switch (recognizer.State)
             {
                 case UIGestureRecognizerState.Began:
                     VisualStateManager.GoToState(element, "Pressed");
+                    
                     break;
                 case UIGestureRecognizerState.Ended:
-                case UIGestureRecognizerState.Cancelled:
-                case UIGestureRecognizerState.Failed:
+                    // TODO: Fix working of native gesture recognizers of MAUI
+                    foreach (var item in element.GestureRecognizers)
+                    {
+                        Debug.WriteLine(item.GetType().Name);
+                        if (item is TapGestureRecognizer tgr)
+                        {
+                            tgr.Command.Execute(element);
+                        }
+                    }
+
                     VisualStateManager.GoToState(element, "Normal");
+              
                     break;
             }
+        }
+    }
+
+    internal class UIContinousGestureRecognizer : UIGestureRecognizer
+    {
+        private readonly Action<UIGestureRecognizer> action;
+
+        public UIContinousGestureRecognizer(Action<UIGestureRecognizer> action)
+        {
+            this.action = action;
+        }
+
+        public override void TouchesBegan(NSSet touches, UIEvent evt)
+        {
+            State = UIGestureRecognizerState.Began;
+
+            action(this);
+
+            base.TouchesBegan(touches, evt);
+        }
+
+        public override void TouchesEnded(NSSet touches, UIEvent evt)
+        {
+            State = UIGestureRecognizerState.Ended;
+
+            action(this);
+
+            base.TouchesEnded(touches, evt);
         }
     }
 }

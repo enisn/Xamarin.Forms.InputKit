@@ -6,7 +6,6 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{12D59882-9FD8-4526-971D-CCFCB5FE6E9D}"
 	ProjectSection(SolutionItems) = preProject
 		InputKit.nuspec = InputKit.nuspec
-		Pack.bat = Pack.bat
 		README.md = README.md
 	EndProjectSection
 EndProject

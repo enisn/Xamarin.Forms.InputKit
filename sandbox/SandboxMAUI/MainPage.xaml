@@ -9,7 +9,7 @@
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
             <StackLayout Grid.Row="0">
-                <input:CheckBox Text="Option 1" IsChecked="True" Type="Material" Color="Blue"/>
+                <input:CheckBox Text="Option 1" Type="Material" Color="Blue" IconColor="Red" />
                 <Label 
                 Text="Hello, World!"
                 SemanticProperties.HeadingLevel="Level1"
@@ -42,6 +42,7 @@
                 HorizontalOptions="Center" />
 
             <Image Grid.Row="4"
+                   IsVisible="False"
                 Source="dotnet_bot.png"
                 SemanticProperties.Description="Cute dot net bot waving hi to you!"
                 WidthRequest="250"
