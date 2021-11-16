@@ -36,10 +36,14 @@
 
 	<ItemGroup>
 	  <None Remove="Shared\Resources\**\*.*" />
+	  <None Remove="icon512.png" />
 	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Shared\Resources\**\*.*" />
 	</ItemGroup>
 
+  <ItemGroup>
+      <None Include="icon512.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 </Project>
