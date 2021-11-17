@@ -32,17 +32,17 @@
 
 - Go your **MauiProgram.cs** file and add following line:
 
-  ```csharp
-  builder
-  	.UseMauiApp<App>()
-  	.ConfigureMauiHandlers(handlers =>
-	{
-  		// Add following line:
-  		handlers.AddInputKitHandlers(); // <---
-	})
-      //...
-  ```
-
+```csharp
+builder
+  .UseMauiApp<App>()
+  .ConfigureMauiHandlers(handlers =>
+  {
+  	// Add following line:
+  	handlers.AddInputKitHandlers(); // <---
+  })
+						
+```
+						
 <hr />
 
 ## Getting Started with InputKit on Xamarin Forms
