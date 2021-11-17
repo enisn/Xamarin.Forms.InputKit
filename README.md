@@ -25,7 +25,7 @@
 
 ## Getting Started with InputKit on MAUI
 
-> Be careful. MAUI Compatibility is work in progress and experimental.
+> Be careful. MAUI Compatibility work in progress and experimental.
 > You can follow the progress with [this issue](https://github.com/enisn/Xamarin.Forms.InputKit/issues/221)
 
 - Install package from NuGet
