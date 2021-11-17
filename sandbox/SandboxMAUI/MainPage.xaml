@@ -1,54 +1,44 @@
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<TabbedPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SandboxMAUI.MainPage"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit"
              BackgroundColor="{DynamicResource SecondaryColor}">
+    <TabbedPage.Children>
+        <ContentPage Title="CheckBoxes">
+            <ScrollView>
+                <StackLayout Spacing="25" Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
 
-    <ScrollView>
-        <Grid RowSpacing="25" RowDefinitions="Auto,Auto,Auto,Auto,*"
-              Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
+                    <input:IconView x:Name="iconView"/>
 
-            <StackLayout Grid.Row="0">
-                <input:CheckBox Text="Option 1" Type="Material" Color="Blue" IconColor="Red" />
-                <Label 
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-            </StackLayout>
+                    <input:CheckBox Text="Option 0 with Box Type" Type="Box" LabelPosition="After"/>
+                    <input:CheckBox Text="Option 1 with Check Type" Type="Check"/>
+                    <input:CheckBox Text="Option 2 wity Cross Type" Type="Cross"/>
+                    <!--<input:CheckBox Text="Option 3 with Custom Type" Type="Custom" CustomIcon="ic_account_balance_black"/>-->
+                    <input:CheckBox Text="Option 4 with Material Type" Type="Material"/>
+                    <input:CheckBox Text="Option 5 with Star Type" Type="Star"/>
+                    <input:CheckBox Text="Option 6 (Position)" Type="Check" LabelPosition="Before"/>
+                </StackLayout>
+            </ScrollView>
+        </ContentPage>
 
-            <Label 
-                Text="Welcome to .NET Multi-platform App UI"
-                Grid.Row="1"
-                SemanticProperties.HeadingLevel="Level1"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+        <ContentPage Title="RadioButtons">
+            <ScrollView>
+                <StackLayout Spacing="25" Padding="{OnPlatform iOS='30,60,30,30', Default='30'}">
+                     <Button Text="Randomize Colors" Clicked="RandomizeColors" />
 
-            <Label 
-                Text="Current count: 0"
-                Grid.Row="2"
-                FontSize="18"
-                FontAttributes="Bold"
-                x:Name="CounterLabel"
-                HorizontalOptions="Center" />
+                    <input:RadioButtonGroupView x:Name="groupView"
+                                                SelectedItemChangedCommand="{Binding SelectionChangedLocalCommand}"
+                                                CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=SelectedIndex, Mode=TwoWay}">
+                        <input:RadioButton Text="Option 1" LabelPosition="After"/>
+                        <input:RadioButton Text="Option 2" LabelPosition="Before"/>
+                        <input:RadioButton Text="Option 3 (Click me ^_^)" Clicked="ChangePosition"/>
+                        <!--<input:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>-->
+                        <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
+                        <input:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
+                    </input:RadioButtonGroupView>
+                </StackLayout>
+            </ScrollView>
+        </ContentPage>
 
-            <Button 
-                Text="Click me"
-                FontAttributes="Bold"
-                Grid.Row="3"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-            <Image Grid.Row="4"
-                   IsVisible="False"
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                WidthRequest="250"
-                HeightRequest="310"
-                HorizontalOptions="Center" />
-
-        </Grid>
-    </ScrollView>
-</ContentPage>
+    </TabbedPage.Children>
+</TabbedPage>
