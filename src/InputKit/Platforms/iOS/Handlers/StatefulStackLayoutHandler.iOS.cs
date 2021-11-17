@@ -34,15 +34,13 @@ namespace InputKit.Handlers
                     // TODO: Fix working of native gesture recognizers of MAUI
                     foreach (var item in element.GestureRecognizers)
                     {
-                        Debug.WriteLine(item.GetType().Name);
                         if (item is TapGestureRecognizer tgr)
                         {
-                            tgr.Command.Execute(element);
+                            tgr.Command?.Execute(element);
                         }
                     }
 
                     VisualStateManager.GoToState(element, "Normal");
-              
                     break;
             }
         }
