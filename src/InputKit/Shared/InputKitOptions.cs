@@ -5,5 +5,5 @@ namespace InputKit.Shared;
 
 public class InputKitOptions
 {
-    public static Func<Color> GetAccentColor { get; set; } = () => new Color(81, 43, 212);
+    public static Func<Color> GetAccentColor { get; set; } = () => Color.FromHex("#512bdf");
 }
