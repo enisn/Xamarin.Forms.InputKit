@@ -36,10 +36,10 @@
   builder
   	.UseMauiApp<App>()
   	.ConfigureMauiHandlers(handlers =>
-      {
-          // Add following line:
-  		handlers.AddInputKitHandlers();
-      })
+	{
+  		// Add following line:
+  		handlers.AddInputKitHandlers(); // <---
+	})
       //...
   ```
 
