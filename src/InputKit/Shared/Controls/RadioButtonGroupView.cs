@@ -4,6 +4,7 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,18 +14,34 @@ namespace InputKit.Shared.Controls;
 /// <summary>
 /// Groups radiobuttons, Inherited StackLayout.
 /// </summary>
-public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
+public partial class RadioButtonGroupView : StackLayout, IValidatable
 {
-    //-----------------------------------------------------------------------------
     /// <summary>
     /// Default constructor of RadioButtonGroupView
     /// </summary>
     public RadioButtonGroupView()
     {
-        ChildAdded += OnChildAdded;
         ChildrenReordered += RadioButtonGroupView_ChildrenReordered;
+
     }
-    //-----------------------------------------------------------------------------
+
+    protected override void OnAdd(int index, Microsoft.Maui.IView view)
+    {
+        RegisterAllEvents();
+
+        base.OnAdd(index, view);
+    }
+
+    protected override void OnRemove(int index, Microsoft.Maui.IView view)
+    {
+        if (view is RadioButton rb)
+        {
+            rb.Clicked -= UpdateSelected;
+        }
+
+        base.OnRemove(index, view);
+    }
+
     /// <summary>
     /// Invokes when tapped on RadioButon
     /// </summary>
@@ -34,7 +51,6 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     /// </summary>
     public event EventHandler ValidationChanged;
 
-    //-----------------------------------------------------------------------------
     /// <summary>
     /// Executes when tapped on RadioButton
     /// </summary>
@@ -43,6 +59,7 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         get => (ICommand)GetValue(SelectedItemChangedCommandProperty);
         set => SetValue(SelectedItemChangedCommandProperty, value);
     }
+
     /// <summary>
     /// Command Parameter will be sent in SelectedItemChangedCommand
     /// </summary>
@@ -52,7 +69,6 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         set => SetValue(CommandParameterProperty, value);
     }
 
-    //-----------------------------------------------------------------------------
     /// <summary>
     /// this will be added later
     /// </summary>
@@ -63,7 +79,6 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         BackgroundColor = Colors.Transparent;
     }
 
-    //-----------------------------------------------------------------------------
     /// <summary>
     /// Returns selected radio button's index from inside of this.
     /// </summary>
@@ -72,7 +87,7 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         get => (int)GetValue(SelectedIndexProperty);
         set => SetValue(SelectedIndexProperty, value);
     }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// Returns selected radio button's Value from inside of this.
     /// You can change the selectedItem too by sending a Value which matches ones of radio button's value
@@ -82,17 +97,17 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         get => GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// It will be added later
     /// </summary>
     public bool IsRequired { get; set; }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// It will be added later
     /// </summary>
     public bool IsValidated { get => !IsRequired || SelectedIndex >= 0; }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// It will be added later
     /// </summary>
@@ -129,9 +144,10 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     #region Methods
     private void RadioButtonGroupView_ChildrenReordered(object sender, EventArgs e)
     {
-        UpdateAllEvent();
+        RegisterAllEvents();
     }
-    private void UpdateAllEvent()
+
+    private void RegisterAllEvents()
     {
         foreach (var item in GetChildRadioButtons(this))
         {
@@ -139,24 +155,6 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
             {
                 rb.Checked -= UpdateSelected;
                 rb.Checked += UpdateSelected;
-            }
-        }
-    }
-    private void OnChildAdded(object sender, ElementEventArgs e)
-    {
-        if (e.Element is RadioButton rb)
-        {
-            rb.Checked -= UpdateSelected;
-            rb.Checked += UpdateSelected;
-        }
-        else if (e.Element is Layout la)
-        {
-            la.ChildAdded -= OnChildAdded;
-            la.ChildAdded += OnChildAdded;
-            foreach (var radioButton in GetChildRadioButtons(la))
-            {
-                radioButton.Checked -= UpdateSelected;
-                radioButton.Checked += UpdateSelected;
             }
         }
     }
@@ -202,6 +200,7 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         }
         ValidationChanged?.Invoke(this, new EventArgs());
     }
+
     private IEnumerable<RadioButton> GetChildRadioButtons(Layout layout)
     {
         foreach (var view in layout.Children)

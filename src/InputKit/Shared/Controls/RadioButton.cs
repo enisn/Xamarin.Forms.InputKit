@@ -228,7 +228,7 @@ public partial class RadioButton : StatefulStackLayout
             Children.Add(IconLayout);
         }
     }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// That handles tapps and triggers event, commands etc.
     /// </summary>
@@ -240,7 +240,6 @@ public partial class RadioButton : StatefulStackLayout
         ClickCommand?.Execute(CommandParameter ?? Value);
     }
 
-    //-----------------------------------------------------------------------------
     /// <summary>
     /// Sets size of Circle
     /// </summary>
@@ -277,6 +276,7 @@ public partial class RadioButton : StatefulStackLayout
     {
         await iconCircle.ScaleTo(isPressed ? .5 : 1, 100);
     }
+
     void InitVisualStates()
     {
         VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
