@@ -1,8 +1,8 @@
 <table>
 <tr>
-	<td> <img src="http://enisnecipoglu.com/Plugins/inputkit.png" width="120" /></td>
+	<td> <img src="art/icon512.png" width="120" /></td>
 	<td> 
-		<h1> Xamarin.Forms.InputKit </h1>
+		<h1> InputKit </h1>
 		<p><a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">CheckBox</a>, Radio Button, Advanced Entry, Advanced Slider, Dropdown etc.  </p> 
 	</td>
 </tr>
