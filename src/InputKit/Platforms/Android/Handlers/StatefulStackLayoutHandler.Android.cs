@@ -2,6 +2,7 @@
 using Java.Interop;
 using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui.Platform;
 using System;
 
 namespace InputKit.Handlers
