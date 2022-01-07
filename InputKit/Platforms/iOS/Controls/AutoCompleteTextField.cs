@@ -6,6 +6,7 @@ using CoreGraphics;
 using Foundation;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
+using ObjCRuntime;
 using Plugin.InputKit.Platforms.iOS.Helpers;
 using UIKit;
 
