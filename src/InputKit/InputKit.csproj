@@ -4,9 +4,9 @@
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;</TargetFrameworks>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<MauiVersion>6.0.101-preview.11.2349</MauiVersion>
+		<MauiVersion>6.0.200-preview.12.2441</MauiVersion>
 		<PackageId>Xamarin.Forms.InputKit</PackageId>
-		<Version>4.0.0-pre.3.1</Version>
+		<Version>4.0.0-pre.4</Version>
 
 		<!-- NuGet Package Info -->
 		 <PackageLicenseUrl></PackageLicenseUrl>
@@ -45,6 +45,6 @@
 	</ItemGroup>
 
   <ItemGroup>
-      <None Include="icon512.png" Pack="true" PackagePath=""/>
+      <None Include="icon512.png" Pack="true" PackagePath="" />
   </ItemGroup>
 </Project>
