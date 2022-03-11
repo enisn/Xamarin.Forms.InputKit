@@ -6,7 +6,7 @@
 		<SingleProject>true</SingleProject>
 		<MauiVersion>6.0.200-preview.13.2865</MauiVersion>
 		<PackageId>Xamarin.Forms.InputKit</PackageId>
-		<Version>4.0.0-pre.4</Version>
+		<Version>4.0.0-pre.5</Version>
 
 		<!-- NuGet Package Info -->
 		 <PackageLicenseUrl></PackageLicenseUrl>
