@@ -21,5 +21,10 @@ namespace SandboxMAUI
 		{
 			await Navigation.PushAsync(new RadioButtonPage());
 		}
+
+        async void GoToAdvancedEntryPage(System.Object sender, System.EventArgs e)
+		{
+			await Navigation.PushAsync(new AdvancedEntryPage());
+		}
     }
 }
