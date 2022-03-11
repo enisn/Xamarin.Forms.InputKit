@@ -44,7 +44,6 @@ namespace InputKit.Handlers
                         }
                     }
 
-
                     break;
             }
         }
