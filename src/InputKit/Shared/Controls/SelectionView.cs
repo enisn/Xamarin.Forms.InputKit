@@ -227,10 +227,9 @@ public partial class SelectionView : Grid
                     _View.IsDisabled = true;
 
                 var addedView = _View as View;
-                Children.Add(addedView);
-
-                GridLayout.SetColumn(addedView, Children.Count % ColumnNumber);
-                GridLayout.SetRow(addedView, Children.Count % ColumnNumber);
+                this.Add(addedView,
+                    column: Children.Count % ColumnNumber,
+                    row: Children.Count % ColumnNumber);
 
                 _View.IsSelected = Children.Count == _selectedIndex; //to keep selected index when content is changed
             }

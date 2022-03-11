@@ -277,6 +277,7 @@ public partial class RadioButton : StatefulStackLayout
     {
         await iconCircle.ScaleTo(isPressed ? .5 : 1, 100);
     }
+
     void InitVisualStates()
     {
         VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
