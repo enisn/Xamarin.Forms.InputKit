@@ -1,12 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;</TargetFrameworks>
-		<UseMaui>true</UseMaui>
+    <TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<MauiVersion>6.0.200-preview.13.2865</MauiVersion>
 		<PackageId>Xamarin.Forms.InputKit</PackageId>
 		<Version>4.0.0-pre.5</Version>
+ 
 
 		<!-- NuGet Package Info -->
 		 <PackageLicenseUrl></PackageLicenseUrl>
@@ -34,11 +37,6 @@
 		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
-
-	<ItemGroup>
-	  <None Remove="Shared\Resources\**\*.*" />
-	  <None Remove="icon512.png" />
-	</ItemGroup>
 
 	<ItemGroup>
 	  <EmbeddedResource Include="Shared\Resources\**\*.*" />
