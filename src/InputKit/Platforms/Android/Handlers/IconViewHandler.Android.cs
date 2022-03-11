@@ -33,6 +33,12 @@ namespace InputKit.Handlers.IconView
             UpdateBitmap(handler, view);
         }
 
+        // TODO: Remove after following issue closed https://github.com/dotnet/maui/issues/3410
+        public static void MapIsVisible(IIconViewHandler handler, IIconView view)
+        {
+            ViewHandler.MapVisibility(handler, view);
+        }
+
         public static void UpdateBitmap(IIconViewHandler handler, IIconView view)
         {
             if (view.Source == null)

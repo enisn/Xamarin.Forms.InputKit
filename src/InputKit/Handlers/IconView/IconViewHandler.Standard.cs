@@ -16,12 +16,16 @@ namespace InputKit.Handlers.IconView
 
         static void MapSource(IIconViewHandler handler, IIconView view)
         {
-
         }
 
         static void MapFillColor(IIconViewHandler handler, IIconView view)
         {
+        }
 
+
+        // TODO: Remove after following issue closed https://github.com/dotnet/maui/issues/3410
+        static void MapIsVisible(IIconViewHandler handler, IIconView view)
+        {
         }
     }
 }

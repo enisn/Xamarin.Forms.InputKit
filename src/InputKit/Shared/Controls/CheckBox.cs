@@ -53,7 +53,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         Padding = new Thickness(0, 10);
         Spacing = 10;
         frmBackground.Content = boxSelected;
-
         ApplyLabelPosition(LabelPosition);
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
@@ -61,6 +60,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         {
             Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
         });
+
         imgSelected.BackgroundColor = Colors.Cyan;
 
         imgSelected.WidthRequest = 15;
@@ -218,9 +218,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), InputKitOptions.GetAccentColor(), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+    public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
-    public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+    public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), Colors.Transparent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
     public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction(bo as CheckBox, (bool)nv));
     public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
     public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
@@ -282,17 +282,14 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         {
             frmBackground.BorderColor = Color;
             frmBackground.BackgroundColor = IsChecked ? Color : Colors.Transparent;
+            imgSelected.FillColor = Color.ToSurfaceColor();
         }
         else
         {
             frmBackground.BorderColor = IsChecked ? Color : BorderColor;
             frmBackground.BackgroundColor = BoxBackgroundColor;
+            imgSelected.FillColor = IconColor == Colors.Transparent ? Color : IconColor;
         }
-
-        imgSelected.FillColor =
-            IconColor == frmBackground.BackgroundColor ?
-                IconColor.ToSurfaceColor() :
-                IconColor;
     }
 
     void UpdateBorderColor()

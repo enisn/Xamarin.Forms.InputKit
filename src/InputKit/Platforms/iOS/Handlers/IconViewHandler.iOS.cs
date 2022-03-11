@@ -30,6 +30,12 @@ namespace InputKit.Handlers.IconView
             SetUIImage(handler, view);
         }
 
+        // TODO: Remove after following issue closed https://github.com/dotnet/maui/issues/3410
+        public static void MapIsVisible(IIconViewHandler handler, IIconView view)
+        {
+            ViewHandler.MapVisibility(handler, view);
+        }
+
         private static void SetUIImage(IIconViewHandler handler, IIconView view)
         {
             if (view?.Source == null) return;
