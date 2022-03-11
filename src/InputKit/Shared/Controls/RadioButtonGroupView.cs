@@ -21,6 +21,7 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     /// </summary>
     public RadioButtonGroupView()
     {
+        Spacing = 10;
         ChildAdded += OnChildAdded;
         ChildrenReordered += RadioButtonGroupView_ChildrenReordered;
     }
