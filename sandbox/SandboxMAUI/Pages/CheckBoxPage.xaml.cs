@@ -23,5 +23,10 @@ public partial class CheckBoxPage : ContentPage
                 chk.Color = color;
             }
         }
+
+        if(sender is Button button)
+        {
+            button.BackgroundColor = color;
+        }
     }
 }
