@@ -494,7 +494,7 @@ namespace Plugin.InputKit.Shared.Controls
             if (this.Parent is Layout parent)
             {
                 int index = parent.Children.IndexOf(this);
-                for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
+                for (int i = index + 1; i < Math.Clamp(index + 4, 0, parent.Children.Count); i++)
                 {
                     if (parent.Children[i] is AdvancedEntry)
                     {
