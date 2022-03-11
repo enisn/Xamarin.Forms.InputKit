@@ -13,6 +13,8 @@
 
             <Button Text="Radio Button" Clicked="GoToRadioButtonPage" />
 
+            <Button Text="Advanced Entry &amp; FormView" Clicked="GoToAdvancedEntryPage" />
+
         </StackLayout>
     </ScrollView>
 </ContentPage>
