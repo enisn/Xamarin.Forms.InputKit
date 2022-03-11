@@ -1,5 +1,6 @@
 ﻿using InputKit.Shared.Controls;
 using Microsoft.Maui;
+using Microsoft.Maui.Controls;
 using System;
 
 #if __IOS__ || MACCATALYST
@@ -21,6 +22,9 @@ namespace InputKit.Handlers.IconView
         {
             [nameof(IIconView.Source)] = MapSource,
             [nameof(IIconView.FillColor)] = MapFillColor,
+
+            // TODO: Remove after following issue closed https://github.com/dotnet/maui/issues/3410
+            [nameof(View.IsVisible)] = MapIsVisible,
 
         };
 
