@@ -25,5 +25,10 @@ public partial class RadioButtonPage : ContentPage
                 rb.Color = color;
             }
         }
+
+        if (sender is Button button)
+        {
+            button.BackgroundColor = color;
+        }
     }
 }
