@@ -32,7 +32,9 @@ namespace InputKit.Handlers
                     
                     break;
                 case UIGestureRecognizerState.Ended:
-                    // TODO: Fix working of native gesture recognizers of MAUI
+                    VisualStateManager.GoToState(element, "Normal");
+
+                    //// TODO: Fix working of native gesture recognizers of MAUI
                     foreach (var item in element.GestureRecognizers)
                     {
                         Debug.WriteLine(item.GetType().Name);
@@ -42,8 +44,7 @@ namespace InputKit.Handlers
                         }
                     }
 
-                    VisualStateManager.GoToState(element, "Normal");
-              
+
                     break;
             }
         }

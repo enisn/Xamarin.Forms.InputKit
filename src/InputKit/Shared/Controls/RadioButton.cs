@@ -41,7 +41,7 @@ public partial class RadioButton : StatefulStackLayout
     internal Grid IconLayout;
     internal IconView iconCircle = new IconView { Source = ImageSource.FromResource(RESOURCE_CIRCLE), FillColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
     internal IconView iconChecked = new IconView { Source = ImageSource.FromResource(RESOURCE_DOT), FillColor = GlobalSetting.Color, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
-    internal Label lblText = new Label { IsVisible = false, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+    internal Label lblText = new Label { VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Fill, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, MaxLines=3, LineBreakMode = LineBreakMode.WordWrap };
     private bool _isDisabled;
     #endregion
 
@@ -52,16 +52,18 @@ public partial class RadioButton : StatefulStackLayout
     public RadioButton()
     {
         InitVisualStates();
-        ApplyIsCheckedAction = ApplyIsChecked;
-        ApplyIsPressedAction = ApplyIsPressed;
+
+        Orientation = StackOrientation.Horizontal;
         if (Device.RuntimePlatform != Device.iOS)
             lblText.FontSize = lblText.FontSize *= 1.5;
 
-        Orientation = StackOrientation.Horizontal;
+
+        ApplyIsCheckedAction = ApplyIsChecked;
+        ApplyIsPressedAction = ApplyIsPressed;
 
         IconLayout = new Grid
         {
-            VerticalOptions = LayoutOptions.CenterAndExpand,
+            VerticalOptions = LayoutOptions.Center,
             Children =
                 {
                     iconCircle,
@@ -69,6 +71,7 @@ public partial class RadioButton : StatefulStackLayout
                 },
             MinimumWidthRequest = GlobalSetting.Size * 1.66,
         };
+
         ApplyLabelPosition(LabelPosition);
 
         GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
@@ -217,13 +220,13 @@ public partial class RadioButton : StatefulStackLayout
         Children.Clear();
         if (position == LabelPosition.After)
         {
-            lblText.HorizontalOptions = LayoutOptions.Start;
+            IconLayout.HorizontalOptions = LayoutOptions.Center;
             Children.Add(IconLayout);
             Children.Add(lblText);
         }
         else
         {
-            lblText.HorizontalOptions = LayoutOptions.StartAndExpand;
+            IconLayout.HorizontalOptions = LayoutOptions.Center;
             Children.Add(lblText);
             Children.Add(IconLayout);
         }
@@ -273,9 +276,10 @@ public partial class RadioButton : StatefulStackLayout
             Checked?.Invoke(this, null);
         }
     }
+
     public virtual async void ApplyIsPressed(bool isPressed)
     {
-        await iconCircle.ScaleTo(isPressed ? .5 : 1, 100);
+        await IconLayout.ScaleTo(isPressed ? .8 : 1, 100);
     }
 
     void InitVisualStates()

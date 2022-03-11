@@ -16,5 +16,10 @@ namespace SandboxMAUI
         {
 			await Navigation.PushAsync(new CheckBoxPage());
         }
+
+        async void GoToRadioButtonPage(System.Object sender, System.EventArgs e)
+		{
+			await Navigation.PushAsync(new RadioButtonPage());
+		}
     }
 }
