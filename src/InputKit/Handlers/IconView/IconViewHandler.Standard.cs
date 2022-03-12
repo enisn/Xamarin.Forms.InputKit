@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD || (NET6_0 && !IOS && !ANDROID)
+﻿#if NETSTANDARD || (NET6_0 && !IOS && !MACCATALYST && !ANDROID && !UWP)
 using InputKit.Shared.Controls;
 using Microsoft.Maui.Handlers;
 using InputKit.Shared.Controls;

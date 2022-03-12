@@ -1,9 +1,11 @@
-﻿using Android.Views;
+﻿#if ANDROID
+using Android.Views;
 using Java.Interop;
 using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Platform;
 using System;
+using View = Android.Views.View;
 
 namespace InputKit.Handlers
 {
@@ -33,3 +35,4 @@ namespace InputKit.Handlers
         }
     }
 }
+#endif

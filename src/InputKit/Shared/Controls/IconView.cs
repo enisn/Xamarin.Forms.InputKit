@@ -38,4 +38,13 @@ public partial class IconView : View, IIconView
             SetValue(SourceProperty, value);
         }
     }
+
+    IImageSource IImageSourcePart.Source => Source;
+
+    public bool IsAnimationPlaying { get; }
+
+    public void UpdateIsLoading(bool isLoading)
+    {
+        //throw new NotImplementedException();
+    }
 }

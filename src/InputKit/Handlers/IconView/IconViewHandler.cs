@@ -7,8 +7,8 @@ using System;
 using NativeView = UIKit.UIImageView;
 #elif ANDROID
 using NativeView = Android.Widget.ImageView;
-#elif WINDOWS
-using NativeView = Microsoft.Maui.MauiButton;
+#elif UWP
+using NativeView = Microsoft.UI.Xaml.Controls.Image;
 #elif NETSTANDARD || (NET6_0 && !IOS && !ANDROID)
 using NativeView = System.Object;
 #endif

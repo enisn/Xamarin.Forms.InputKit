@@ -1,11 +1,9 @@
-﻿#if IOS
+﻿#if MACCATALYST
 using CoreGraphics;
 using Foundation;
 using InputKit.Shared.Controls;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
 using Microsoft.Maui.Handlers;
-using System.Threading;
 using UIKit;
 
 namespace InputKit.Handlers.IconView;
