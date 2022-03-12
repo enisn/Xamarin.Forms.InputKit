@@ -14,6 +14,7 @@
             <Button Text="Radio Button" Clicked="GoToRadioButtonPage" />
 
             <Button Text="Advanced Entry &amp; FormView" Clicked="GoToAdvancedEntryPage" />
+            <Button Text="Advanced Slider" Clicked="GoToAdvancedSliderPage" />
 
         </StackLayout>
     </ScrollView>

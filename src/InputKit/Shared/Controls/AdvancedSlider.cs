@@ -202,10 +202,17 @@ public partial class AdvancedSlider : StackLayout, IValidatable
     {
         var totalLength = MaxValue - MinValue;
         var normalizedValue = Value - MinValue;
-        lblValue.TranslateTo(
-            normalizedValue * ((slider.Width - 30) / totalLength), //pos X  /* -30 is used to make smaller label horizontal movable region and prevent touching minValue and maxValue labels*/
-            slider.TranslationY - lblValue.Height * 0.9, //pos Y
-            40 //Latency
-            );
+
+
+        // TODO: Keep animation disabled until resolution of https://github.com/dotnet/maui/issues/3353
+
+        lblValue.TranslationX = normalizedValue * ((slider.Width - 30) / totalLength);
+        lblValue.TranslationY = slider.TranslationY - lblValue.Height * 0.9;
+
+        //lblValue.TranslateTo(
+        //    normalizedValue * ((slider.Width - 30) / totalLength), //pos X  /* -30 is used to make smaller label horizontal movable region and prevent touching minValue and maxValue labels*/
+        //    slider.TranslationY - lblValue.Height * 0.9, //pos Y
+        //    40 //Latency
+        //    );
     }
 }
