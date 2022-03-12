@@ -44,4 +44,8 @@
   <ItemGroup>
       <None Include="icon512.png" Pack="true" PackagePath="" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Plainer.Maui" Version="1.2.0" />
+  </ItemGroup>
 </Project>
