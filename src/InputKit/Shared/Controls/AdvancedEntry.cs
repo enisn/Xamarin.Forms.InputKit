@@ -1,9 +1,6 @@
 ﻿using InputKit.Shared.Abstraction;
 using InputKit.Shared.Configuration;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
+using Plainer.Maui.Controls;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -604,11 +601,11 @@ namespace InputKit.Shared.Controls
 
         private protected virtual Entry GetInputEntry()
         {
-            return new EmptyEntry
+            return new EntryView
             {
                 TextColor = GlobalSetting.TextColor,
                 PlaceholderColor = Colors.LightGray,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Center,
                 FontFamily = GlobalSetting.FontFamily,
                 BackgroundColor = Colors.Transparent,
