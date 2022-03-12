@@ -1,4 +1,5 @@
-﻿using Android.Graphics;
+﻿#if ANDROID
+using Android.Graphics;
 using Android.Graphics.Drawables;
 using Android.Widget;
 using InputKit.Shared.Controls;
@@ -74,3 +75,4 @@ namespace InputKit.Handlers.IconView
         }
     }
 }
+#endif

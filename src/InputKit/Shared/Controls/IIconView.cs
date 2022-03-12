@@ -4,8 +4,7 @@ using Microsoft.Maui.Graphics;
 
 namespace InputKit.Shared.Controls;
 
-public interface IIconView : IView
+public interface IIconView : IView, IImageSourcePart
 {
     Color FillColor { get; set; }
-    ImageSource Source { get; set; }
 }
