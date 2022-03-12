@@ -1,10 +1,5 @@
 ﻿using InputKit.Shared.Layouts;
-using Microsoft.Maui.Hosting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Plainer.Maui;
 
 namespace InputKit.Handlers
 {
@@ -13,6 +8,7 @@ namespace InputKit.Handlers
         public static IMauiHandlersCollection AddInputKitHandlers(this IMauiHandlersCollection collection)
         {
             return collection
+                .AddPlainer()
                 .AddHandler(typeof(Shared.Controls.IconView), typeof(InputKit.Handlers.IconView.IconViewHandler))
                 .AddHandler(typeof(StatefulStackLayout), typeof(InputKit.Handlers.StatefulStackLayoutHandler));
         }
