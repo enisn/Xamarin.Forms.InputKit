@@ -11,9 +11,9 @@ namespace InputKit.Handlers
 {
     public partial class StatefulStackLayoutHandler
     {
-        protected override LayoutViewGroup CreateNativeView()
+        protected override LayoutViewGroup CreatePlatformView()
         {
-            var nativeView = base.CreateNativeView();
+            var nativeView = base.CreatePlatformView();
 
             nativeView.Touch += NativeView_Touch;
 

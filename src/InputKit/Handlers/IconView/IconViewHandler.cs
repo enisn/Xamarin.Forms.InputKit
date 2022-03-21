@@ -13,7 +13,6 @@ using NativeView = Microsoft.UI.Xaml.Controls.Image;
 using NativeView = System.Object;
 #endif
 
-
 namespace InputKit.Handlers.IconView
 {
     public partial class IconViewHandler : IIconViewHandler
@@ -39,6 +38,6 @@ namespace InputKit.Handlers.IconView
 
         IIconView IIconViewHandler.TypedVirtualView => VirtualView;
 
-        NativeView IIconViewHandler.TypedNativeView => NativeView;
+        NativeView IIconViewHandler.TypedPlatformView => PlatformView;
     }
 }

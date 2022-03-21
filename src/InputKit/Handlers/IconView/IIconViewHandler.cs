@@ -16,6 +16,6 @@ namespace InputKit.Handlers.IconView
     public interface IIconViewHandler : IViewHandler
     {
         IIconView TypedVirtualView { get; }
-        NativeView TypedNativeView { get; }
+        NativeView TypedPlatformView { get; }
     }
 }

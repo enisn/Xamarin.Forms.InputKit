@@ -10,7 +10,7 @@ namespace InputKit.Handlers.IconView;
 
 public partial class IconViewHandler : ViewHandler<IIconView, UIImageView>
 {
-    protected override UIImageView CreateNativeView()
+    protected override UIImageView CreatePlatformView()
     {
         return new UIImageView(CGRect.Empty)
         {
@@ -61,10 +61,10 @@ public partial class IconViewHandler : ViewHandler<IIconView, UIImageView>
         }
 
         uiImage = uiImage.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate);
-        handler.TypedNativeView.TintColor = view.FillColor.ToUIColor();
-        handler.TypedNativeView.Image = uiImage;
+        handler.TypedPlatformView.TintColor = view.FillColor.ToUIColor();
+        handler.TypedPlatformView.Image = uiImage;
 
-        ((IVisualElementController)view).NativeSizeChanged();
+        ((IVisualElementController)view).PlatformSizeChanged();
     }
 }
 #endif

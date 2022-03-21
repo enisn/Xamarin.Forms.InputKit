@@ -19,7 +19,7 @@ namespace InputKit.Handlers.IconView
 {
     public partial class IconViewHandler : ViewHandler<IIconView, ImageView>
     {
-        protected override ImageView CreateNativeView()
+        protected override ImageView CreatePlatformView()
         {
             return new ImageView(Context);
         }
@@ -71,7 +71,7 @@ namespace InputKit.Handlers.IconView
                 d.SetColorFilter(new LightingColorFilter(Colors.Black.ToAndroid(), view.FillColor.ToAndroid()));
 
             d.Alpha = view.FillColor.ToAndroid().A;
-            handler.TypedNativeView.SetImageDrawable(d);
+            handler.TypedPlatformView.SetImageDrawable(d);
         }
     }
 }
