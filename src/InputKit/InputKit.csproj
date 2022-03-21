@@ -6,9 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
-		<MauiVersion>6.0.200-preview.13.2865</MauiVersion>
+		<MauiVersion>6.0.200-preview.14.5099</MauiVersion>
 		<PackageId>Xamarin.Forms.InputKit</PackageId>
-		<Version>4.0.0-pre.5</Version>
+		<Version>4.0.0-pre.7</Version>
     <DefineConstants Condition="$(TargetFramework.Contains('-windows'))">$(DefineConstants);UWP</DefineConstants>
 
     <!-- NuGet Package Info -->

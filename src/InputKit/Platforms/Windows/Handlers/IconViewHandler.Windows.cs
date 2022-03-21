@@ -7,7 +7,7 @@ namespace InputKit.Handlers.IconView;
 
 public partial class IconViewHandler : ViewHandler<IIconView, Microsoft.UI.Xaml.Controls.Image>
 {
-    protected override Microsoft.UI.Xaml.Controls.Image CreateNativeView()
+    protected override Microsoft.UI.Xaml.Controls.Image CreatePlatformView()
     {
         return new Microsoft.UI.Xaml.Controls.Image();
     }
@@ -38,10 +38,10 @@ public partial class IconViewHandler : ViewHandler<IIconView, Microsoft.UI.Xaml.
 
     public static Task MapSourceAsync(IIconViewHandler handler, IIconView image)
     {
-        if (handler.TypedNativeView == null)
+        if (handler.TypedPlatformView == null)
             return Task.CompletedTask;
 
-        handler.TypedNativeView.Clear();
+        handler.TypedPlatformView.Clear();
         return (handler as IconViewHandler).SourceLoader.UpdateImageSourceAsync();
     }
 }
