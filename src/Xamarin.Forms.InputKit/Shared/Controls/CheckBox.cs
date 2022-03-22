@@ -12,12 +12,16 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
     /// </summary>
+
+    /// <summary>
+    /// A checkbox for boolean inputs. It Includes a text inside
+    /// </summary>
     public partial class CheckBox : StatefulStackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; } = new GlobalSetting
         {
             BackgroundColor = Color.Transparent,
-            Color = Color.Accent,
+            Color = InputKitOptions.GetAccentColor(),
             BorderColor = Color.Black,
             TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = 25,
@@ -27,9 +31,9 @@ namespace Plugin.InputKit.Shared.Controls
         };
 
         #region Constants
-        public const string RESOURCE_CHECK = "Plugin.InputKit.Shared.Resources.check.png";
-        public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
-        public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
+        public const string RESOURCE_CHECK = "InputKit.Shared.Resources.check.png";
+        public const string RESOURCE_CROSS = "InputKit.Shared.Resources.cross.png";
+        public const string RESOURCE_STAR = "InputKit.Shared.Resources.star.png";
         #endregion
 
         #region Fields
@@ -48,19 +52,21 @@ namespace Plugin.InputKit.Shared.Controls
         public CheckBox()
         {
             InitVisualStates();
-            this.Orientation = StackOrientation.Horizontal;
-            this.Padding = new Thickness(0, 10);
-            this.Spacing = 10;
-            this.frmBackground.Content = boxSelected;
-
+            Orientation = StackOrientation.Horizontal;
+            Padding = new Thickness(0, 10);
+            Spacing = 10;
+            frmBackground.Content = boxSelected;
             ApplyLabelPosition(LabelPosition);
-
-            this.ApplyIsCheckedAction = ApplyIsChecked;
-            this.ApplyIsPressedAction = ApplyIsPressed;
-            this.GestureRecognizers.Add(new TapGestureRecognizer
+            ApplyIsCheckedAction = ApplyIsChecked;
+            ApplyIsPressedAction = ApplyIsPressed;
+            GestureRecognizers.Add(new TapGestureRecognizer
             {
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
+
+            imgSelected.BackgroundColor = Color.Cyan;
+
+            imgSelected.WidthRequest = 15;
         }
 
         /// <summary>
@@ -112,7 +118,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Text to display right of CheckBox
         /// </summary>
-        public string Text { get => lblOption.Text; set { lblOption.Text = value; lblOption.IsVisible = !String.IsNullOrEmpty(value); } }
+        public string Text { get => lblOption.Text; set { lblOption.Text = value; lblOption.IsVisible = !string.IsNullOrEmpty(value); } }
 
         /// <summary>
         /// IsChecked Property
@@ -131,7 +137,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Gets or sets the checkbutton enabled or not. If checkbox is disabled, checkbox can not be interacted.
         /// </summary>
-        public bool IsDisabled { get => _isEnabled; set { _isEnabled = value; this.Opacity = value ? 0.6 : 1; } }
+        public bool IsDisabled { get => _isEnabled; set { _isEnabled = value; Opacity = value ? 0.6 : 1; } }
 
         /// <summary>
         /// Color of Checkbox checked
@@ -185,7 +191,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Checks if entry required and checked
         /// </summary>
-        public bool IsValidated => !this.IsRequired || this.IsChecked;
+        public bool IsValidated => !IsRequired || IsChecked;
         /// <summary>
         /// Not available for this control
         /// </summary>
@@ -215,10 +221,10 @@ namespace Plugin.InputKit.Shared.Controls
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), Color.Accent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+        public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
-        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
-        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction((bo as CheckBox), (bool)nv));
+        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), Color.Transparent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+        public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction(bo as CheckBox, (bool)nv));
         public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(CheckBox), false, propertyChanged: (bo, ov, nv) => (bo as CheckBox).IsDisabled = (bool)nv);
         public static readonly BindableProperty KeyProperty = BindableProperty.Create(nameof(Key), typeof(int), typeof(CheckBox), 0, propertyChanged: (bo, ov, nv) => (bo as CheckBox).Key = (int)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(CheckBox), "", propertyChanged: (bo, ov, nv) => (bo as CheckBox).Text = (string)nv);
@@ -229,7 +235,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(CheckBox), Label.FontFamilyProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateFontFamily(nv?.ToString()));
         public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
-        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction((bo as CheckBox), (bool)nv));
+        public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction(bo as CheckBox, (bool)nv));
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).frmBackground.CornerRadius = (float)nv);
         public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
             propertyName: nameof(LabelPosition), declaringType: typeof(CheckBox),
@@ -265,7 +271,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         void UpdateBoxBackground()
         {
-            if (this.Type == CheckType.Material)
+            if (Type == CheckType.Material)
                 return;
 
             frmBackground.BackgroundColor = BoxBackgroundColor;
@@ -279,25 +285,22 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 frmBackground.BorderColor = Color;
                 frmBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
+                imgSelected.FillColor = Color.ToSurfaceColor();
             }
             else
             {
                 frmBackground.BorderColor = IsChecked ? Color : BorderColor;
                 frmBackground.BackgroundColor = BoxBackgroundColor;
+                imgSelected.FillColor = IconColor == Color.Transparent ? Color : IconColor;
             }
-
-            imgSelected.FillColor = 
-                IconColor == frmBackground.BackgroundColor ? 
-                    IconColor.ToSurfaceColor() : 
-                    IconColor;
         }
 
         void UpdateBorderColor()
         {
-            if (this.Type == CheckType.Material)
+            if (Type == CheckType.Material)
                 return;
 
-            frmBackground.BorderColor = this.BorderColor;
+            frmBackground.BorderColor = BorderColor;
         }
 
         void SetBoxSize(double value)
@@ -307,7 +310,9 @@ namespace Plugin.InputKit.Shared.Controls
             boxSelected.WidthRequest = value * .6;  //old value 0.72
             boxSelected.HeightRequest = value * 0.6;
             //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
-            this.Children[0].MinimumWidthRequest = value * 1.4;
+
+            // TODO: Refactor after MAUI update
+            (this.Children[0] as View).MinimumWidthRequest = value * 1.4;
         }
 
         void UpdateType(CheckType _Type)
@@ -364,7 +369,7 @@ namespace Plugin.InputKit.Shared.Controls
                             TargetType = typeof(CheckBox),
                             Setters =
                             {
-                                new Setter { Property = CheckBox.IsPressedProperty, Value = true }
+                                new Setter { Property = IsPressedProperty, Value = true }
                             }
                         },
                         new VisualState
@@ -373,7 +378,7 @@ namespace Plugin.InputKit.Shared.Controls
                             TargetType = typeof(RadioButton),
                             Setters =
                             {
-                                new Setter { Property = CheckBox.IsPressedProperty, Value = false }
+                                new Setter { Property = IsPressedProperty, Value = false }
                             }
                         }
                     }

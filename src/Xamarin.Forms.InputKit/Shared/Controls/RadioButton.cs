@@ -12,11 +12,10 @@ using Xamarin.Forms.Internals;
 
 namespace Plugin.InputKit.Shared.Controls
 {
-    ///-----------------------------------------------------------------------------
     /// <summary>
     /// Radio Button with Text
     /// </summary>
-    public partial class RadioButton : StatefulStackLayout
+    public class RadioButton : StatefulStackLayout
     {
         #region Statics
         /// <summary>
@@ -24,7 +23,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            Color = Color.Accent,
+            Color = InputKitOptions.GetAccentColor(),
             BorderColor = Color.Black,
             TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Large : NamedSize.Medium, typeof(Label)) * 1.2,
@@ -35,36 +34,37 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Constants
-        public const string RESOURCE_CIRCLE = "Plugin.InputKit.Shared.Resources.circle.png";
-        public const string RESOURCE_DOT = "Plugin.InputKit.Shared.Resources.dot.png";
+        public const string RESOURCE_CIRCLE = "InputKit.Shared.Resources.circle.png";
+        public const string RESOURCE_DOT = "InputKit.Shared.Resources.dot.png";
         #endregion
 
         #region Fields
         internal Grid IconLayout;
         internal IconView iconCircle = new IconView { Source = ImageSource.FromResource(RESOURCE_CIRCLE), FillColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
         internal IconView iconChecked = new IconView { Source = ImageSource.FromResource(RESOURCE_DOT), FillColor = GlobalSetting.Color, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size };
-        internal Label lblText = new Label { IsVisible = false, VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily };
+        internal Label lblText = new Label { VerticalTextAlignment = TextAlignment.Center, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Fill, TextColor = GlobalSetting.TextColor, FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, MaxLines = 3, LineBreakMode = LineBreakMode.WordWrap };
         private bool _isDisabled;
         #endregion
 
         #region Ctor
-        //-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
         /// </summary>
         public RadioButton()
         {
             InitVisualStates();
-            this.ApplyIsCheckedAction = ApplyIsChecked;
-            this.ApplyIsPressedAction = ApplyIsPressed;
+
+            Orientation = StackOrientation.Horizontal;
             if (Device.RuntimePlatform != Device.iOS)
                 lblText.FontSize = lblText.FontSize *= 1.5;
 
-            Orientation = StackOrientation.Horizontal;
+
+            ApplyIsCheckedAction = ApplyIsChecked;
+            ApplyIsPressedAction = ApplyIsPressed;
 
             IconLayout = new Grid
             {
-                VerticalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.Center,
                 Children =
                 {
                     iconCircle,
@@ -72,45 +72,14 @@ namespace Plugin.InputKit.Shared.Controls
                 },
                 MinimumWidthRequest = GlobalSetting.Size * 1.66,
             };
+
             ApplyLabelPosition(LabelPosition);
 
-            this.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
-        }
-        ///-----------------------------------------------------------------------------
-        /// <summary>
-        /// Quick generating constructor.
-        /// </summary>
-        /// <param name="value">Value to keep in radio button</param>
-        /// <param name="displayMember">If you send an ojbect as value. Which property will be displayed. Or override .ToString() inside of your object.</param>
-        /// <param name="isChecked"> Checked or not situation</param>
-        [Obsolete("This variation of constructor is obsolete and this'll be romev closest major update. You can use Parameterless constructor with object initializer  instead of this one")]
-        public RadioButton(object value, string displayMember, bool isChecked = false) : this()
-        {
-            this.Value = value;
-            this.IsChecked = isChecked;
-            string text;
-            if (!String.IsNullOrEmpty(displayMember))
-                text = value.GetType().GetProperty(displayMember)?.GetValue(value).ToString();
-            else
-                text = value.ToString();
-            lblText.Text = text ?? " ";
-        }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Quick generating constructor.
-        /// </summary>
-        /// <param name="text">Text to display right of Radio button </param>
-        /// <param name="isChecked">IsSelected situation</param>
-        [Obsolete("This variation of constructor is obsolete and this'll be romev closest major update. You can use Parameterless constructor with object initializer instead of this one", true)]
-        public RadioButton(string text, bool isChecked = false) : this()
-        {
-            Value = text;
-            lblText.Text = text;
-            this.IsChecked = isChecked;
+            GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
         }
         #endregion
 
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Click event, triggered when clicked
         /// </summary>
@@ -123,32 +92,31 @@ namespace Plugin.InputKit.Shared.Controls
         public event EventHandler Checked;
 
         #region Properties
-        //-----------------------------------------------------------------------------
         /// <summary>
         /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
         /// </summary>
         public Action<bool> ApplyIsCheckedAction { get; set; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Applies pressed effect. Default value is <see cref="ApplyIsPressed(bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
         /// </summary>
         public Action<bool> ApplyIsPressedAction { get; set; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Click command, executed when clicked.  Parameter will be Value property if CommandParameter is not set
         /// </summary>
         public ICommand ClickCommand { get; set; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// A command parameter will be sent to commands.
         /// </summary>
         public object CommandParameter { get; set; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Value to keep inside of Radio Button
         /// </summary>
         public object Value { get; set; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Gets or Sets, is that Radio Button selected/choosed/Checked
         /// </summary>
@@ -157,12 +125,12 @@ namespace Plugin.InputKit.Shared.Controls
             get => (bool)GetValue(IsCheckedProperty);
             set => SetValue(IsCheckedProperty, value);
         }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// this control if is Disabled
         /// </summary>
-        public bool IsDisabled { get => _isDisabled; set { _isDisabled = value; this.Opacity = value ? 0.6 : 1; } }
-        //-----------------------------------------------------------------------------
+        public bool IsDisabled { get => _isDisabled; set { _isDisabled = value; Opacity = value ? 0.6 : 1; } }
+
         /// <summary>
         /// Text Description of Radio Button. It will be displayed right of Radio Button
         /// </summary>
@@ -171,38 +139,31 @@ namespace Plugin.InputKit.Shared.Controls
         /// Fontsize of Description Text
         /// </summary>
 
-        [Xamarin.Forms.TypeConverter(typeof(FontSizeConverter))]
+        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double TextFontSize { get => lblText.FontSize; set => lblText.FontSize = value; }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Size of Radio Button
-        /// </summary>
-        [Obsolete("This feature is obsolete. You can try to use 'CircleImage' to set your own image as circle", false)]
-        public double CircleSize { get => iconCircle.Height; set => SetCircleSize(value); }
 
-        //-----------------------------------------------------------------------------
         /// <summary>
         /// Set your own background image instead of default circle.
         /// </summary>
         public ImageSource CircleImage { get => (ImageSource)GetValue(CircleImageProperty); set => SetValue(CircleImageProperty, value); }
-        //-----------------------------------------------------------------------------
+
         public ImageSource CheckedImage { get => (ImageSource)GetValue(CheckedImageProperty); set => SetValue(CheckedImageProperty, value); }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// To be added.
         /// </summary>
         public string FontFamily { get => lblText.FontFamily; set => lblText.FontFamily = value; }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Color of Radio Button's checked.
         /// </summary>
         public Color Color { get => (Color)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Color of radio button's outline border 
         /// </summary>
         public Color CircleColor { get => (Color)GetValue(CircleColorProperty); set => SetValue(CircleColorProperty, value); }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// Color of description text of Radio Button
         /// </summary>
@@ -211,9 +172,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// Internal use only. Applies effect when pressed.
         /// </summary>
 
-#if netstandard20
         [Browsable(false)]
-#endif
         public bool IsPressed { get => (bool)GetValue(IsPressedProperty); set => SetValue(IsPressedProperty, value); }
         /// <summary>
         /// Gets or sets the label position.
@@ -240,7 +199,6 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
-        public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), -1d, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
         public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
             propertyName: nameof(LabelPosition), declaringType: typeof(RadioButton),
             returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
@@ -255,43 +213,31 @@ namespace Plugin.InputKit.Shared.Controls
             Children.Clear();
             if (position == LabelPosition.After)
             {
-                lblText.HorizontalOptions = LayoutOptions.Start;
+                IconLayout.HorizontalOptions = LayoutOptions.Center;
                 Children.Add(IconLayout);
                 Children.Add(lblText);
             }
             else
             {
-                lblText.HorizontalOptions = LayoutOptions.StartAndExpand;
+                IconLayout.HorizontalOptions = LayoutOptions.Center;
                 Children.Add(lblText);
                 Children.Add(IconLayout);
             }
         }
-        //-----------------------------------------------------------------------------
+
         /// <summary>
         /// That handles tapps and triggers event, commands etc.
         /// </summary>
         void Tapped()
         {
-            if (IsDisabled) return;
+            if (IsDisabled)
+            {
+                return;
+            }
+
             IsChecked = true;
             Clicked?.Invoke(this, new EventArgs());
             ClickCommand?.Execute(CommandParameter ?? Value);
-        }
-
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// Sets size of Circle
-        /// </summary>
-        [Obsolete("This feature is obsolete. You can try to use 'CircleImage' to set your own image as circle", false)]
-        void SetCircleSize(double value)
-        {
-            if (value < 0)
-                return;
-            iconCircle.HeightRequest = this.CircleSize;
-            iconCircle.WidthRequest = this.CircleSize;
-            iconChecked.WidthRequest = this.CircleSize;
-            iconChecked.WidthRequest = this.CircleSize;
-            Debug.WriteLine("[InputKit] [RadioButton] - CircleSize is obsolete and doesn't affect now. You can try to set a image source to CircleImage to change circle");
         }
 
         void UpdateColors()
@@ -311,10 +257,12 @@ namespace Plugin.InputKit.Shared.Controls
                 Checked?.Invoke(this, null);
             }
         }
+
         public virtual async void ApplyIsPressed(bool isPressed)
         {
-            await iconCircle.ScaleTo(isPressed ? .5 : 1, 100);
+            await IconLayout.ScaleTo(isPressed ? .8 : 1, 100);
         }
+
         void InitVisualStates()
         {
             VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
@@ -331,7 +279,7 @@ namespace Plugin.InputKit.Shared.Controls
                             TargetType = typeof(RadioButton),
                             Setters =
                             {
-                                new Setter { Property = RadioButton.IsPressedProperty, Value = true }
+                                new Setter { Property = IsPressedProperty, Value = true }
                             }
                         },
                         new VisualState
@@ -340,7 +288,7 @@ namespace Plugin.InputKit.Shared.Controls
                             TargetType = typeof(RadioButton),
                             Setters =
                             {
-                                new Setter { Property = RadioButton.IsPressedProperty, Value = false }
+                                new Setter { Property = IsPressedProperty, Value = false }
                             }
                         }
                     }
