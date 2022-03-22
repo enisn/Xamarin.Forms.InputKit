@@ -3,12 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.31903.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugin", "Plugin", "{12D59882-9FD8-4526-971D-CCFCB5FE6E9D}"
-	ProjectSection(SolutionItems) = preProject
-		InputKit.nuspec = InputKit.nuspec
-		README.md = README.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Wiki", "Wiki", "{AA39162B-B93C-48CF-9566-8A04CCFF987C}"
 	ProjectSection(SolutionItems) = preProject
 		DropdownColoring.md = DropdownColoring.md
@@ -21,8 +15,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SandboxMAUI", "sandbox\SandboxMAUI\SandboxMAUI.csproj", "{2673366B-4B8D-4110-882A-3DFCF983A2C2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{04AF3245-D32D-4A16-9136-654E69D8E98A}"
-EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "InputKit", "InputKit\InputKit.csproj", "{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InputKit.Maui", "src\InputKit.Maui\InputKit.Maui.csproj", "{3CCCC21B-868D-41D2-86F3-4EE3D999BCD2}"
 EndProject
@@ -90,30 +82,6 @@ Global
 		{2673366B-4B8D-4110-882A-3DFCF983A2C2}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{2673366B-4B8D-4110-882A-3DFCF983A2C2}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{2673366B-4B8D-4110-882A-3DFCF983A2C2}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.AppStore|Any CPU.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.AppStore|iPhone.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Debug|iPhone.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Debug|iPhone.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Release|iPhone.ActiveCfg = Release|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Release|iPhone.Build.0 = Release|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{3CCCC21B-868D-41D2-86F3-4EE3D999BCD2}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
 		{3CCCC21B-868D-41D2-86F3-4EE3D999BCD2}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
 		{3CCCC21B-868D-41D2-86F3-4EE3D999BCD2}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
@@ -252,7 +220,6 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{2673366B-4B8D-4110-882A-3DFCF983A2C2} = {5C90769C-5C4F-40E0-901C-7D9E298AD159}
-		{DEB29FCB-0AD4-4116-A7C5-DAD8A012F9CB} = {12D59882-9FD8-4526-971D-CCFCB5FE6E9D}
 		{3CCCC21B-868D-41D2-86F3-4EE3D999BCD2} = {04AF3245-D32D-4A16-9136-654E69D8E98A}
 		{312E32B9-5B5E-4A5F-B060-3EE5ED84E95E} = {04AF3245-D32D-4A16-9136-654E69D8E98A}
 		{FCF92521-F61B-4BE1-9976-53094C1F24E8} = {58D6F816-1FD8-4B78-BEE2-34EEC52F15EC}
