@@ -1,6 +1,6 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              x:Class="SandboxMAUI.Pages.CheckBoxPage"
              Title="CheckBoxPage"
              BackgroundColor="White">
