@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             x:Class="SandboxXF.Views.RadioButtonsPage"
+             Title="RadioButtons">
+    <ContentPage.Content>
+        <StackLayout Padding="25" Spacing="15">
+
+            <Button Text="Randomize Colors" Clicked="RandomizeColors" />
+
+            <input:RadioButtonGroupView x:Name="groupView"
+                                        SelectedItemChangedCommand="{Binding SelectionChangedLocalCommand}"
+                                        CommandParameter="{Binding Source={RelativeSource Mode=Self}, Path=SelectedIndex, Mode=TwoWay}">
+                <input:RadioButton Text="Option 1" LabelPosition="After"/>
+                <input:RadioButton Text="Option 2" LabelPosition="Before"/>
+                <input:RadioButton Text="Option 3 (Click me ^_^)" Clicked="ChangePosition"/>
+                <input:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>
+                <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
+                <input:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
+            </input:RadioButtonGroupView>
+
+            
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

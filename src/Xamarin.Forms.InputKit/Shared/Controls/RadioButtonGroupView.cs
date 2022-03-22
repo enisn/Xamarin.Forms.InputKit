@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using RadioButton = Plugin.InputKit.Shared.Controls.RadioButton;
 
 namespace Plugin.InputKit.Shared.Controls
 {

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="SandboxXF.Views.CheckBoxesPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    Title="CheckBoxes">
+    <ContentPage.Content>
+        <StackLayout
+            x:Name="mainLayout"
+            Padding="25"
+            Spacing="15">
+
+            <input:CheckBox Text="Option 0 with Box Type" Type="Box" LabelPosition="After"/>
+            <input:CheckBox Text="Option 1 with Check Type" Type="Check"/>
+            <input:CheckBox Text="Option 2 wity Cross Type" Type="Cross"/>
+            <input:CheckBox Text="Option 3 with Custom Type" Type="Custom" CustomIcon="ic_account_balance_black"/>
+            <input:CheckBox Text="Option 4 with Material Type" Type="Material"/>
+            <input:CheckBox Text="Option 5 with Star Type" Type="Star"/>
+            <input:CheckBox Text="Option 6 (Position)" Type="Check" LabelPosition="Before"/>
+
+        </StackLayout>
+        
+    </ContentPage.Content>
+</ContentPage>

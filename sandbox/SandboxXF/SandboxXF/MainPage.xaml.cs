@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace SandboxXF.InputKit
+namespace SandboxXF
 {
     public partial class MainPage : ContentPage
     {
