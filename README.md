@@ -47,8 +47,6 @@ builder
 
 ## Getting Started with InputKit on Xamarin Forms
 
-> Be careful! Xamarin Forms will be no longer developed. XF support will continue with `3.X` versions. `4.X` and newer versions are targetting MAUI.
-
 There is no complicated steps for set-up, no Inits no implementation codes. Plug & Play.
 
 Read more on [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started).
