@@ -8,8 +8,7 @@
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <Version>3.7.2</Version>
-    <PackageVersion>3.7.2</PackageVersion>
+    <Version>4.0.0-pre.8</Version>
     <PackOnBuild>false</PackOnBuild>
     <NeutralLanguage>en-US</NeutralLanguage>
     <DefineConstants>$(DefineConstants);</DefineConstants>
@@ -107,7 +106,6 @@
     <EmbeddedResource Include="Shared\Resources\**\*.png" />
     <EmbeddedResource Include="Shared\Resources\**\*.jpg" />
   </ItemGroup>
-
 
   <ItemGroup>
     <None Include="icon.png">

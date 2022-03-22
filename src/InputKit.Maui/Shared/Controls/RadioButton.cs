@@ -1,20 +1,15 @@
 ﻿using InputKit.Shared.Configuration;
 using InputKit.Shared.Layouts;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows.Input;
 
 namespace InputKit.Shared.Controls;
 
-///-----------------------------------------------------------------------------
 /// <summary>
 /// Radio Button with Text
 /// </summary>
-public partial class RadioButton : StatefulStackLayout
+public class RadioButton : StatefulStackLayout
 {
     #region Statics
     /// <summary>
@@ -142,34 +137,27 @@ public partial class RadioButton : StatefulStackLayout
     public double TextFontSize { get => lblText.FontSize; set => lblText.FontSize = value; }
 
     /// <summary>
-    /// Size of Radio Button
-    /// </summary>
-    [Obsolete("This feature is obsolete. You can try to use 'CircleImage' to set your own image as circle", false)]
-    public double CircleSize { get => iconCircle.Height; set => SetCircleSize(value); }
-
-
-    /// <summary>
     /// Set your own background image instead of default circle.
     /// </summary>
     public ImageSource CircleImage { get => (ImageSource)GetValue(CircleImageProperty); set => SetValue(CircleImageProperty, value); }
 
     public ImageSource CheckedImage { get => (ImageSource)GetValue(CheckedImageProperty); set => SetValue(CheckedImageProperty, value); }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// To be added.
     /// </summary>
     public string FontFamily { get => lblText.FontFamily; set => lblText.FontFamily = value; }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// Color of Radio Button's checked.
     /// </summary>
     public Color Color { get => (Color)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// Color of radio button's outline border 
     /// </summary>
     public Color CircleColor { get => (Color)GetValue(CircleColorProperty); set => SetValue(CircleColorProperty, value); }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// Color of description text of Radio Button
     /// </summary>
@@ -205,7 +193,6 @@ public partial class RadioButton : StatefulStackLayout
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
     public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
-    public static readonly BindableProperty CircleSizeProperty = BindableProperty.Create(nameof(CircleSize), typeof(double), typeof(RadioButton), -1d, propertyChanged: (bo, ov, nv) => (bo as RadioButton).SetCircleSize((double)nv));
     public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
         propertyName: nameof(LabelPosition), declaringType: typeof(RadioButton),
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
@@ -231,32 +218,20 @@ public partial class RadioButton : StatefulStackLayout
             Children.Add(IconLayout);
         }
     }
-    //-----------------------------------------------------------------------------
+
     /// <summary>
     /// That handles tapps and triggers event, commands etc.
     /// </summary>
     void Tapped()
     {
-        if (IsDisabled) return;
+        if (IsDisabled)
+        {
+            return;
+        }
+
         IsChecked = true;
         Clicked?.Invoke(this, new EventArgs());
         ClickCommand?.Execute(CommandParameter ?? Value);
-    }
-
-    //-----------------------------------------------------------------------------
-    /// <summary>
-    /// Sets size of Circle
-    /// </summary>
-    [Obsolete("This feature is obsolete. You can try to use 'CircleImage' to set your own image as circle", false)]
-    void SetCircleSize(double value)
-    {
-        if (value < 0)
-            return;
-        iconCircle.HeightRequest = CircleSize;
-        iconCircle.WidthRequest = CircleSize;
-        iconChecked.WidthRequest = CircleSize;
-        iconChecked.WidthRequest = CircleSize;
-        Debug.WriteLine("[InputKit] [RadioButton] - CircleSize is obsolete and doesn't affect now. You can try to set a image source to CircleImage to change circle");
     }
 
     void UpdateColors()
