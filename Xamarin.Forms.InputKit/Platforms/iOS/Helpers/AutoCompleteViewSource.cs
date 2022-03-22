@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Foundation;
-using Microsoft.Maui.Controls;
 using Plugin.InputKit.Platforms.iOS.Controls;
 using UIKit;
+using Xamarin.Forms;
 
 namespace Plugin.InputKit.Platforms.iOS.Helpers
 {
@@ -31,9 +31,8 @@ namespace Plugin.InputKit.Platforms.iOS.Helpers
             if (indexPath.Row < Suggestions.Count)
                 AutoCompleteTextField.Text = Suggestions.ElementAt(indexPath.Row);
             AutoCompleteTextField.ResignFirstResponder();
-            var index = (int)indexPath.Item;
-            var item = Suggestions.ToList()[index];
-            Selected?.Invoke(tableView, new SelectedItemChangedEventArgs(item, index));
+            var item = Suggestions.ToList()[(int)indexPath.Item];
+            Selected?.Invoke(tableView, new SelectedItemChangedEventArgs(item));
             // don't call base.RowSelected
         }
     }

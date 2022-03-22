@@ -1,13 +1,13 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using Plugin.InputKit.Shared.Abstraction;
+﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Layouts;
 using Plugin.InputKit.Shared.Utils;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Text;
+using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -18,13 +18,13 @@ namespace Plugin.InputKit.Shared.Controls
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            BackgroundColor = Colors.White,
+            BackgroundColor = Color.White,
             CornerRadius = 20,
             BorderColor = (Color)Button.BorderColorProperty.DefaultValue,
-            Color = InputKitOptions.GetAccentColor(),
+            Color = Color.Accent,
             FontSize = Device.GetNamedSize(NamedSize.Default, typeof(Button)),
             Size = -1,
-            TextColor = Colors.Black,
+            TextColor = Color.Black,
         };
 
         #region Constants
@@ -36,13 +36,12 @@ namespace Plugin.InputKit.Shared.Controls
         protected Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
         protected Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         protected Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
-        protected Entry txtInput = new EmptyEntry { TextColor = Colors.Blue, PlaceholderColor = Colors.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
+        protected Entry txtInput = new EmptyEntry { TextColor = Color.Blue, PlaceholderColor = Color.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
 
         private protected PopupMenu pMenu = new PopupMenu();
         private string _placeholder;
         private string _validationMessage;
         private bool _isRequired;
-
         public Dropdown()
         {
             this.Children.Add(lblTitle);
@@ -66,19 +65,14 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.TextChanged += (s, args) => Text = args.NewTextValue;
             UpdateMainText();
         }
-
         public event EventHandler ValidationChanged;
-
         public event EventHandler<SelectedItemChangedArgs> SelectedItemChanged;
-
         #region SelectionRegion
         private void Menu_Requested(object sender, EventArgs e)
         {
             ShowMenu();
         }
-
         private void ShowMenu() => pMenu.ShowPopup(imgArrow);
-
         private void Menu_Requested(object obj)
         {
             if (obj != txtInput || !IsEditable)
@@ -88,7 +82,6 @@ namespace Plugin.InputKit.Shared.Controls
                 txtInput.Focus();
             }
         }
-
         private void Menu_Item_Selected(string item, int index)
         {
             try
@@ -100,7 +93,6 @@ namespace Plugin.InputKit.Shared.Controls
                 System.Diagnostics.Debug.WriteLine(ex.ToString());
             }
         }
-
         public IList ItemsSource
         {
             get => pMenu.ItemsSource;
@@ -111,14 +103,12 @@ namespace Plugin.InputKit.Shared.Controls
                     (value as INotifyCollectionChanged).CollectionChanged += Dropdown_CollectionChanged;
             }
         }
-
         public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
-
         private void Dropdown_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             pMenu.ItemsSource = (IList)GetValue(ItemsSourceProperty);
         }
-        private void UpdateSelected()
+        void UpdateSelected()
         {
             UpdateMainText();
             DisplayValidation();
@@ -126,47 +116,28 @@ namespace Plugin.InputKit.Shared.Controls
             SelectedItemChanged?.Invoke(this, new SelectedItemChangedArgs(this.SelectedItem, this.ItemsSource?.IndexOf(this.SelectedItem) ?? -1));
         }
         #endregion
-
+        //public Label TitleLabel { get => lblTitle; }
         public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
-
-        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+        [TypeConverter(typeof(FontSizeConverter))]
         public double TitleFontSize { get => lblTitle.FontSize; set => lblTitle.FontSize = value; }
-
-        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
+        [TypeConverter(typeof(FontSizeConverter))]
         public double FontSize { get => txtInput.FontSize; set => txtInput.FontSize = value; }
-
         public ImageSource IconImage { get => imgIcon.Source; set => imgIcon.Source = value; }
-
         public ImageSource ArrowImage { get => GetValue(ArrowImageProperty) as ImageSource; set => SetValue(ArrowImageProperty, value); }
-
         public string FontFamily { get => txtInput.FontFamily; set { txtInput.FontFamily = value; lblTitle.FontFamily = value; lblAnnotation.FontFamily = value; } }
-
         public new Color BackgroundColor { get => frmBackground.BackgroundColor; set => frmBackground.BackgroundColor = value; }
-
         public Color Color { get => (Color)GetValue(ColorProperty); set => SetValue(ColorProperty, value); }
-
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
-
         public Color AnnotationColor { get => lblAnnotation.TextColor; set => lblAnnotation.TextColor = value; }
-
         public Color TitleColor { get => lblTitle.TextColor; set => lblTitle.TextColor = value; }
-
         public Color BorderColor { get => frmBackground.BorderColor; set { frmBackground.BorderColor = value; } }
-
         public float CornerRadius { get => frmBackground.CornerRadius; set => frmBackground.CornerRadius = value; }
-
         public string Placeholder { get => _placeholder; set { _placeholder = value; UpdateMainText(); } }
-
         public Color PlaceholderColor { get => (Color)GetValue(PlaceholderColorProperty); set => SetValue(PlaceholderColorProperty, value); }
-
         public bool IsRequired { get => _isRequired; set { _isRequired = value; DisplayValidation(); } }
-
         public bool IsValidated => !IsRequired || SelectedItem != null;
-
         public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
-
         public bool IsEditable { get => txtInput.IsEnabled; set => txtInput.IsEnabled = value; }
-
         public string ValidationMessage { get => _validationMessage; set { _validationMessage = value; DisplayValidation(); } }
 
         private void UpdateColors()
@@ -186,12 +157,11 @@ namespace Plugin.InputKit.Shared.Controls
             lblAnnotation.Text = IsValidated ? null : ValidationMessage;
             lblAnnotation.IsVisible = !String.IsNullOrEmpty(lblAnnotation.Text);
         }
-
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ItemsSourceProperty = BindableProperty.Create(nameof(ItemsSource), typeof(IList), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).ItemsSource = (IList)nv);
         public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateSelected());
-        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Dropdown), Colors.White, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BackgroundColor = (Color)nv);
+        public new static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(Dropdown), Color.White, propertyChanged: (bo, ov, nv) => (bo as Dropdown).BackgroundColor = (Color)nv);
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(Dropdown), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateColors());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(Dropdown), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as Dropdown).UpdateMainText());
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(Dropdown), propertyChanged: (bo, ov, nv) => (bo as Dropdown).Title = (string)nv);
@@ -204,7 +174,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(Dropdown), null, propertyChanged: (bo, ov, nv) => (bo as Dropdown).ValidationMessage = (string)nv);
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(TextProperty), typeof(string), typeof(Dropdown), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as Dropdown).txtInput.Text = (string)nv);
         public static readonly BindableProperty IsEditableProperty = BindableProperty.Create(nameof(IsEditable), typeof(bool), typeof(Dropdown), false, propertyChanged: (bo, ov, nv) => (bo as Dropdown).IsEditable = (bool)nv);
-        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Colors.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
+        public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(Dropdown), Color.LightGray, propertyChanged: (bo, ov, nv) => { (bo as Dropdown).txtInput.PlaceholderColor = (Color)nv; (bo as Dropdown).UpdateMainText(); });
         public static readonly BindableProperty ArrowImageProperty = BindableProperty.Create(nameof(ArrowImage), typeof(ImageSource), typeof(Dropdown), ImageSource.FromResource(RESOURCE_ARROWDOWN), propertyChanged: (bo, ov, nv) => (bo as Dropdown).imgArrow.Source = (ImageSource)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion

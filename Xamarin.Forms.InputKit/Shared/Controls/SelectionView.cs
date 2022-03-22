@@ -1,7 +1,4 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using Plugin.InputKit.Shared.Abstraction;
+﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Helpers;
 using System;
@@ -10,6 +7,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Text;
+using Xamarin.Forms;
+using Xamarin.Forms.Internals;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -23,7 +23,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            Color = InputKitOptions.GetAccentColor(),
+            Color = Color.Accent,
             BackgroundColor = (Color)Button.BackgroundColorProperty.DefaultValue,
             BorderColor = (Color)Button.BorderColorProperty.DefaultValue,
             CornerRadius = 20,
@@ -40,7 +40,7 @@ namespace Plugin.InputKit.Shared.Controls
         private BindingBase _itemDisplayBinding;
         private int _selectedIndex = 0;
         #endregion
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Default Constructor
         /// </summary>
@@ -51,42 +51,42 @@ namespace Plugin.InputKit.Shared.Controls
         }
 
         #region Properties
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Selection Type, More types will be added later
         /// </summary>
         public SelectionType SelectionType { get => _selectionType; set { _selectionType = value; UpdateView(); } }
-
+        ///----------------------------------------------------------
         /// <summary>
         /// Added later
         /// </summary>
         public string IsDisabledPropertyName { get; set; }
-
+        ///----------------------------------------------------------
         /// <summary>
         /// Column of this view
         /// </summary>
         public int ColumnNumber { get => _columnNumber; set { _columnNumber = value; UpdateView(); } }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Disables these options. They can not be choosen
         /// </summary>
         public IList DisabledSource { get => (IList)GetValue(DisabledSourceProperty); set => SetValue(DisabledSourceProperty, value); }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Color of selections
         /// </summary>
         public Color Color { get => _color; set { _color = value; UpdateColor(); OnPropertyChanged(); } }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Items Source of selections
         /// </summary>
         public IList ItemsSource { get => (IList)GetValue(ItemsSourceProperty); set => SetValue(ItemsSourceProperty, value); }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Sets or Gets SelectedItem of SelectionView
         /// </summary>
         public object SelectedItem { get => GetValue(SelectedItemProperty); set => SetValue(SelectedItemProperty, value); }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Sets or Gets SelectedItem of SelectionView
         /// </summary>
@@ -111,9 +111,9 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
-        /// Gets and Sets selected items with indexes.
+        /// To be added....
         /// </summary>
         public IEnumerable<int> SelectedIndexes
         {
@@ -134,12 +134,12 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             }
         }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
-        /// Selected Items for the multiple selections.
+        /// Selected Items for the multiple selections, 
         /// </summary>
         public IList SelectedItems { get => (IList)GetValue(SelectedItemsProperty); set => SetValue(SelectedItemsProperty, value); }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Changes all <see cref="SelectableButton.UnselectedColor"/> in <see cref="SelectionView"/>
         /// </summary>
@@ -153,7 +153,6 @@ namespace Plugin.InputKit.Shared.Controls
                         (item as SelectableButton).UnselectedColor = value;
             }
         }
-
         /// <summary>
         /// Gets or sets the label position.
         /// </summary>
@@ -162,7 +161,7 @@ namespace Plugin.InputKit.Shared.Controls
             get => (LabelPosition)GetValue(LabelPositionProperty);
             set => SetValue(LabelPositionProperty, value);
         }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         ///         Gets or sets a binding that selects the property that will be displayed for each
         ///object in the list of items.
@@ -200,7 +199,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             UpdateView();
         }
-
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Updates views when data changed
         /// </summary>
@@ -226,11 +225,7 @@ namespace Plugin.InputKit.Shared.Controls
                     if (DisabledSource?.Contains(item) ?? false)
                         _View.IsDisabled = true;
 
-                    var addedView = _View as View;
-                    this.Children.Add(addedView);
-
-                    Grid.SetColumn(addedView, this.Children.Count % ColumnNumber);
-                    Grid.SetRow(addedView, this.Children.Count % ColumnNumber);
+                    this.Children.Add(_View as View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
 
                     _View.IsSelected = this.Children.Count == _selectedIndex; //to keep selected index when content is changed
                 }
@@ -241,6 +236,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
+        //-----------------------------------------------------------------------------
         /// <summary>
         /// Updates colors of inside, when color property changed on runtime
         /// </summary>
@@ -251,7 +247,6 @@ namespace Plugin.InputKit.Shared.Controls
                 SetInstanceColor(item, this.Color);
             }
         }
-
         private void Element_Clicked(object sender, EventArgs e)
         {
             if ((int)this.SelectionType % 2 == 0)
@@ -319,7 +314,7 @@ namespace Plugin.InputKit.Shared.Controls
             return null;
         }
 
-        private void SetTextBinding(IView control)
+        private void SetTextBinding(View control)
         {
             if (ItemDisplayBinding == null) return;
 
@@ -349,7 +344,7 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
-        private void SetInstanceColor(IView view, Color color)
+        private void SetInstanceColor(View view, Color color)
         {
             switch (SelectionType)
             {
@@ -424,10 +419,10 @@ namespace Plugin.InputKit.Shared.Controls
         {
             private bool _isSelected = false;
             private object _value;
-            private Color _selectionColor = InputKitOptions.GetAccentColor();
+            private Color _selectionColor = Color.Accent;
             private Color _unselectedColor;
 
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Default constructor
             /// </summary>
@@ -436,7 +431,7 @@ namespace Plugin.InputKit.Shared.Controls
                 //this.Margin = new Thickness(0);
                 UpdateColors();
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Generates with its value
             /// </summary>
@@ -453,7 +448,7 @@ namespace Plugin.InputKit.Shared.Controls
                 this.BorderWidth = 2;
                 this.Clicked += (s, args) => UpdateSelection();
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Colored Constructor
             /// </summary>
@@ -463,9 +458,7 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 this.SelectedColor = selectionColor;
             }
-
             public Color UnselectedColor { get => _unselectedColor; set { _unselectedColor = value; UpdateColors(); } }
-
             public Color SelectedColor
             {
                 get => _selectionColor;
@@ -475,7 +468,7 @@ namespace Plugin.InputKit.Shared.Controls
                     UpdateColors();
                 }
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// This button is selected or not
             /// </summary>
@@ -484,7 +477,7 @@ namespace Plugin.InputKit.Shared.Controls
                 get => _isSelected;
                 set { _isSelected = value; UpdateColors(); }
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Updates colors, Triggered when color property changed
             /// </summary>
@@ -501,23 +494,20 @@ namespace Plugin.InputKit.Shared.Controls
                     this.TextColor = (Color)SelectionView.GlobalSetting.TextColor;
                 }
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Value is stored on this control
             /// </summary>
             public object Value { get => _value; set { _value = value; this.Text = value?.ToString(); } }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// This button is disabled or not. Disabled buttons(if it's true) can not be choosen.
-            /// Default Value: <see langword="false"/>
             /// </summary>
-            public bool IsDisabled { get; set; }
-
+            public bool IsDisabled { get; set; } = false;
             /// <summary>
             /// Defines Can Selected State Change by itself
             /// </summary>
             public bool CanChangeSelectedState { get; set; }
-
             private void UpdateSelection()
             {
                 if (CanChangeSelectedState)
@@ -530,11 +520,12 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public class SelectableRadioButton : RadioButton, ISelection
         {
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Default Constructor
             /// </summary>
             public SelectableRadioButton() { }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Constructor with value
             /// </summary>
@@ -544,7 +535,7 @@ namespace Plugin.InputKit.Shared.Controls
                 this.Value = value;
                 this.Text = value?.ToString();
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Colored Constructor
             /// </summary>
@@ -552,7 +543,7 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 this.Color = color;
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// ISelection interface property
             /// </summary>
@@ -564,7 +555,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public class SelectableCheckBox : CheckBox, ISelection
         {
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Default Constructor
             /// </summary>
@@ -573,7 +564,7 @@ namespace Plugin.InputKit.Shared.Controls
                 this.Type = CheckType.Check;
                 this.CheckChanged += (s, e) => this.Clicked?.Invoke(s, e);
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Constructor with Value
             /// </summary>
@@ -583,7 +574,7 @@ namespace Plugin.InputKit.Shared.Controls
                 this.Value = value;
                 this.Text = value?.ToString();
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Constructor with Value
             /// </summary>
@@ -593,22 +584,35 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 this.Color = color;
             }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Capsulated IsChecked
             /// </summary>
             public bool IsSelected { get => this.IsChecked; set => this.IsChecked = value; }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Parameter to keep
             /// </summary>
             public object Value { get; set; }
-
+            //-----------------------------------------------------------------------------
             /// <summary>
             /// Triggers when CheckChanged
             /// </summary>
             public event EventHandler Clicked;
         }
         #endregion
+    }
+
+    /// <summary>
+    /// Types of selectionlist
+    /// </summary>
+    public enum SelectionType
+    {
+        Button = 1,
+        RadioButton = 3,
+        CheckBox = 2,
+        MultipleButton = 4,
+        SingleCheckBox = 5,
+        MultipleRadioButton = 6,
     }
 }

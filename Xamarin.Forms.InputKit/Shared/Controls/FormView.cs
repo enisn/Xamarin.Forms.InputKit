@@ -1,14 +1,15 @@
-﻿using Microsoft.Maui.Controls;
-using Plugin.InputKit.Shared.Abstraction;
+﻿using Plugin.InputKit.Shared.Abstraction;
 using System;
 using System.Collections.Generic;
+using System.Text;
+using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
     /// <summary>
     /// Quickly gets last result of all IValidatable elements inside of this
     /// </summary>
-    public partial class FormView : Microsoft.Maui.Controls.StackLayout
+    public partial class FormView : StackLayout
     {
         /// <summary>
         /// Default constructor
@@ -17,7 +18,7 @@ namespace Plugin.InputKit.Shared.Controls
         {
             DeclareEvents();
             this.ChildAdded += FormView_ChildAdded;
-            this.ChildRemoved += FormView_ChildRemoved;
+            this.ChildRemoved += FormView_ChildRemoved; ;
         }
 
         private void FormView_ChildRemoved(object sender, ElementEventArgs e)
@@ -32,13 +33,13 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 SetEvent(validatable);
             }
-            else if (e.Element is Layout layout)
+            else if (e.Element is Layout<View> la)
             {
-                layout.ChildAdded -= FormView_ChildAdded;
-                layout.ChildAdded += FormView_ChildAdded;
-                layout.ChildRemoved -= FormView_ChildRemoved;
-                layout.ChildRemoved += FormView_ChildRemoved;
-                foreach (var child in GetChildIValidatables(layout))
+                la.ChildAdded -= FormView_ChildAdded;
+                la.ChildAdded += FormView_ChildAdded;
+                la.ChildRemoved -= FormView_ChildRemoved;
+                la.ChildRemoved += FormView_ChildRemoved;
+                foreach (var child in GetChildIValidatables(la))
                     SetEvent(child);
             }
         }
@@ -77,7 +78,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         /// <param name="view">A view which IValidated implemented</param>
         /// <returns></returns>
-        public static bool CheckValidation(Layout view)
+        public static bool CheckValidation(Layout<View> view)
         {
             foreach (var item in GetChildIValidatables(view))
                 if (!item.IsValidated)
@@ -85,14 +86,14 @@ namespace Plugin.InputKit.Shared.Controls
             return true;
         }
 
-        static IEnumerable<IValidatable> GetChildIValidatables(Layout layout)
+        static IEnumerable<IValidatable> GetChildIValidatables(Layout<View> layout)
         {
             foreach (var item in layout.Children)
             {
                 if (item is IValidatable validatable)
                     yield return validatable;
 
-                else if (item is Layout la)
+                else if (item is Layout<View> la)
                     foreach (var child in GetChildIValidatables(la))
                         yield return child;
             }

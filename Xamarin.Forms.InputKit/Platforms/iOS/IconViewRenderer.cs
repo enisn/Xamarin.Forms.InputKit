@@ -1,15 +1,13 @@
 ﻿using CoreGraphics;
 using Foundation;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Controls.Compatibility;
-using Microsoft.Maui.Controls.Compatibility.Platform.iOS;
-using Microsoft.Maui.Controls.Platform;
 using Plugin.InputKit.Platforms.iOS;
 using Plugin.InputKit.Shared.Controls;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 using UIKit;
+using Xamarin.Forms;
+using Xamarin.Forms.Platform.iOS;
 
 [assembly: ExportRenderer(typeof(IconView), typeof(IconViewRenderer))]
 namespace Plugin.InputKit.Platforms.iOS
