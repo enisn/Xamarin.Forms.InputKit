@@ -1,8 +1,8 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
 
   <PropertyGroup>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
-    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>
 
     <AssemblyName>Plugin.InputKit</AssemblyName>
     <RootNamespace>Plugin.InputKit</RootNamespace>
