@@ -33,7 +33,7 @@ public partial class IconViewHandler : ViewHandler<IIconView, Microsoft.UI.Xaml.
 
     void OnSetImageSource(Microsoft.UI.Xaml.Media.ImageSource obj)
     {
-        NativeView.Source = obj;
+        PlatformView.Source = obj;
     }
 
     public static Task MapSourceAsync(IIconViewHandler handler, IIconView image)
