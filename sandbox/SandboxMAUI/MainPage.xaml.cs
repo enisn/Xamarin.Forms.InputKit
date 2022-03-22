@@ -1,13 +1,9 @@
-﻿using Plugin.InputKit.Shared.Controls;
-using SandboxXF.Views;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xamarin.Forms;
+﻿using System;
+using Microsoft.Maui.Controls;
+using Microsoft.Maui.Essentials;
+using SandboxMAUI.Pages;
 
-namespace SandboxXF.InputKit
+namespace SandboxMAUI
 {
     public partial class MainPage : ContentPage
     {
@@ -16,24 +12,24 @@ namespace SandboxXF.InputKit
             InitializeComponent();
         }
 
-        private void AdvancedEntry_TextChanged(object sender, TextChangedEventArgs e)
+        async void GoToCheckBoxPage(System.Object sender, System.EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine(e.NewTextValue);
+            await Navigation.PushAsync(new CheckBoxPage());
         }
 
-        private void CheckBoxes_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new CheckBoxesPage());
+        async void GoToRadioButtonPage(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new RadioButtonPage());
+        }
 
-        private void RadioButons_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new RadioButtonsPage());
+        async void GoToAdvancedEntryPage(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new AdvancedEntryPage());
+        }
 
-        private void AutoCompleteEntries_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AutoCompleteEntriesPage());
-
-        private void Dropdowns_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new DropdownsPage());
-
-        private void AdvancedEntries_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AdvancedEntriesPage());
-
-        private void AdvancedSliders_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new AdvancedSlidersPage());
-
-        private void SelectionView_Clicked(object sender, EventArgs e) => Navigation.PushAsync(new SelectionViewPage());
-        
+        async void GoToAdvancedSliderPage(System.Object sender, System.EventArgs e)
+        {
+            await Navigation.PushAsync(new AdvancedSliderPage());
+        }
     }
 }
