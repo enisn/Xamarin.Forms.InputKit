@@ -5,6 +5,8 @@
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;netstandard1.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>-->
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT'">net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT'">net6.0;net6.0-android;net6.0-ios</TargetFrameworks>
+    
+		<RootNamespace>InputKit</RootNamespace>
     <UseMaui>true</UseMaui>
     <SingleProject>true</SingleProject>
 
