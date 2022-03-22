@@ -1,12 +1,9 @@
 ﻿using Plugin.InputKit.Platforms.UWP;
 using Plugin.InputKit.Shared.Controls;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
-using Xamarin.Forms;
 using Xamarin.Forms.Platform.UWP;
 
 [assembly: ExportRenderer(typeof(IconView), typeof(IconViewRenderer))]
@@ -20,7 +17,7 @@ namespace Plugin.InputKit.Platforms.UWP
             {
                 var brush = new ImageBrush();
                 if (e?.NewElement != null)
-                    brush.ImageSource = new BitmapImage(new Uri(e.NewElement.Source, UriKind.Relative));
+                    brush.ImageSource = new BitmapImage(new Uri(e.NewElement.Source.ToString(), UriKind.Relative));
 
                 Control.Foreground = brush;
             }

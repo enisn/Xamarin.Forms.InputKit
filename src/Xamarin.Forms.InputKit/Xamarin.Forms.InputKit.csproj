@@ -24,7 +24,6 @@
     <RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
     <PackageReleaseNotes>Android Target Framework issue resolved.</PackageReleaseNotes>
     <PackageTags>xamarin, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</PackageTags>
-    
 
     <Title>Common controls mostly required</Title>
     <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
