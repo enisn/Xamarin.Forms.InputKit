@@ -168,11 +168,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// Color of description text of Radio Button
         /// </summary>
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
+
         /// <summary>
         /// Internal use only. Applies effect when pressed.
         /// </summary>
-
-        [Browsable(false)]
         public bool IsPressed { get => (bool)GetValue(IsPressedProperty); set => SetValue(IsPressedProperty, value); }
         /// <summary>
         /// Gets or sets the label position.
