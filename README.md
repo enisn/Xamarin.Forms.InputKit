@@ -23,12 +23,12 @@
 
 <hr/>
 
-## Getting Started with InputKit on MAUI
+## Getting Started with InputKit on **MAUI**
 
 > Be careful. MAUI Compatibility work in progress and experimental.
 > You can follow the progress with [this issue](https://github.com/enisn/Xamarin.Forms.InputKit/issues/221)
 
-- Install package from NuGet
+- Install [InputKit.Maui](https://www.nuget.org/packages/InputKit.Maui) package from NuGet.
 
 - Go your **MauiProgram.cs** file and add following line:
 
@@ -45,11 +45,11 @@ builder
 						
 <hr />
 
-## Getting Started with InputKit on Xamarin Forms
+## Getting Started with InputKit on **Xamarin Forms**
 
-There is no complicated steps for set-up, no Inits no implementation codes. Plug & Play.
+- Install [Xamarin.Forms.InputKit](https://www.nuget.org/packages/Xamarin.Forms.InputKit) package from NuGet.
 
-Read more on [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started).
+- Follow the [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started) for each platform.
 
 <hr />
 
