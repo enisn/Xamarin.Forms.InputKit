@@ -4,10 +4,11 @@
     <TargetFrameworks>net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
     <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
+		<RootNamespace>InputKit</RootNamespace>
     <UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<MauiVersion>6.0.200-preview.14.5099</MauiVersion>
-		<PackageId>Xamarin.Forms.InputKit</PackageId>
+		<PackageId>InputKit.Maui</PackageId>
 		<Version>4.0.0-pre.7</Version>
     <DefineConstants Condition="$(TargetFramework.Contains('-windows'))">$(DefineConstants);UWP</DefineConstants>
 
