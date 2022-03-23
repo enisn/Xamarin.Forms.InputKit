@@ -1,7 +1,7 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras/2.1.2">
 
   <PropertyGroup>
-    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(OS)' == 'Windows_NT' ">netstandard2.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;MonoAndroid12.0;Xamarin.iOS10;uap10.0.19041</TargetFrameworks>
     <TargetFrameworks Condition=" '$(OS)' != 'Windows_NT' ">netstandard2.0;MonoAndroid90;MonoAndroid10.0;MonoAndroid11.0;Xamarin.iOS10</TargetFrameworks>
 
     <AssemblyName>Plugin.InputKit</AssemblyName>
@@ -53,7 +53,7 @@
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0' ">
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'MonoAndroid11.0' OR '$(TargetFramework)' == 'MonoAndroid10.0' OR '$(TargetFramework)' == 'MonoAndroid90'">
+  <ItemGroup Condition="$(TargetFramework.Contains('MonoAndroid'))">
     <Compile Include="Platforms\Droid\**\*.cs" />
 
     <AndroidResource Include="Resources\drawable\*.xml" />
