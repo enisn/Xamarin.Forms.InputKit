@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using Android.Content;
 using Android.Content.Res;
-#if MONOANDROID10_0 || MONOANDROID11_0
+#if MONOANDROID10_0 || MONOANDROID11_0 || MONOANDROID12_0
 using AndroidX.AppCompat.Widget;
 using Google.Android.Material.TextField;
 #else
