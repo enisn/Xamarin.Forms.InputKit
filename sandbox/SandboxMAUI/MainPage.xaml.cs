@@ -1,7 +1,4 @@
-﻿using System;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Essentials;
-using SandboxMAUI.Pages;
+﻿using SandboxMAUI.Pages;
 
 namespace SandboxMAUI
 {
