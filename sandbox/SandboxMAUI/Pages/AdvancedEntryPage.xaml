@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:vm="clr-namespace:SandboxMAUI.ViewModels"
+             x:Class="SandboxMAUI.Pages.AdvancedEntryPage"
+             Title="AdvancedEntryPage"
+             BackgroundColor="White">
+<ContentPage.BindingContext>
+    <vm:AdvancedEntryPageViewModel />
+</ContentPage.BindingContext>
+        <ScrollView>
+            <StackLayout Padding="30">
+                <Label Text="You can see FormView Below:" />
+                <BoxView HeightRequest="1" Color="LightGray" />
+                <input:FormView IsValidated="{Binding IsValidated}">
+
+                    <input:AdvancedEntry
+                        Title="Place your email below:"
+                        Annotation="Email"
+                        AnnotationColor="{StaticResource PrimaryColor}"
+                        IconImage="email.png"
+                        IsRequired="True"
+                        MaxLength="50"
+                        MinLength="10"
+                        Placeholder="sample@domain.com"
+                        Text="{Binding Email}"
+                        TextColor="Black"
+                        ValidationMessage="Please type a valid email address"
+                        ValidationPosition="Before" />
+
+                    <input:AdvancedEntry
+                        Title="Place your name below:"
+                        Annotation="NonDigitsOnly"
+                        AnnotationColor="{StaticResource PrimaryColor}"
+                        IconImage="account.png"
+                        IsRequired="True"
+                        MaxLength="30"
+                        MinLength="5"
+                        Placeholder="John Doe"
+                        Text="{Binding NameSurname}"
+                        TextColor="Black"
+                        ValidationMessage="Please type your name correctly"
+                        ValidationPosition="After" />
+
+                    <input:AdvancedEntry
+                        Title="Place your phone number below:"
+                        Annotation="Phone"
+                        AnnotationColor="{StaticResource PrimaryColor}"
+                        IconImage="phone.png"
+                        IsRequired="True"
+                        MaxLength="10"
+                        MinLength="8"
+                        Placeholder="5439998877"
+                        Text="{Binding Phone}"
+                        TextColor="Black"
+                        ValidationMessage="Please type your phone number correctly" />
+                    <Label Text="Choose your subscription type:" />
+                    <input:RadioButtonGroupView IsRequired="True">
+                        <input:RadioButton Text="Free" />
+                        <input:RadioButton Text="Bronze" />
+                        <input:RadioButton Text="Gold" />
+                        <input:RadioButton Text="Platinium" />
+                    </input:RadioButtonGroupView>
+
+                    <input:CheckBox
+                        IsRequired="True"
+                        Text="I Accept User Agreement"
+                        Type="Material" />
+                    <Button
+                        Margin="0,20"
+                        BackgroundColor="{StaticResource PrimaryColor}"
+                        Command="{Binding SubmitCommand}"
+                        CornerRadius="20"
+                        Text="Submit"
+                        TextColor="White" />
+                </input:FormView>
+            </StackLayout>
+        </ScrollView>
+</ContentPage>

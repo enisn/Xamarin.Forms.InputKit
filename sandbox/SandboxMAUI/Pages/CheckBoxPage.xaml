@@ -1,0 +1,27 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             x:Class="SandboxMAUI.Pages.CheckBoxPage"
+             Title="CheckBoxPage"
+             BackgroundColor="White">
+    <ScrollView>
+        <StackLayout
+            x:Name="mainLayout"
+            Padding="25"
+            Spacing="15">
+
+            <Button Text="Randomize colors" Clicked="Button_Clicked" />
+
+            <BoxView Color="Black" HeightRequest="1" HorizontalOptions="Fill" Margin="5,10" />
+
+            <input:CheckBox Text="Option 0 with Box Type" Type="Box" LabelPosition="After"/>
+            <input:CheckBox Text="Option 1 with Check Type" Type="Check" />
+            <input:CheckBox Text="Option 2 wity Cross Type" Type="Cross" />
+            <input:CheckBox Text="Option 3 with Custom Type" Type="Custom" CustomIcon="ic_account_balance_black"/>
+            <input:CheckBox Text="Option 4 with Material Type" Type="Material" />
+            <input:CheckBox Text="Option 5 with Star Type" Type="Star"/>
+            <input:CheckBox Text="Option 6 (Position)" Type="Check" LabelPosition="Before"/>
+
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

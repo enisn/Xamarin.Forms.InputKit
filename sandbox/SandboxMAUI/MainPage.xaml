@@ -2,40 +2,20 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SandboxMAUI.MainPage">
-			 
+
     <ScrollView>
-        <VerticalStackLayout 
-            Spacing="25" 
-            Padding="30,0" 
-            VerticalOptions="Center">
+        <StackLayout
+              Padding="{OnPlatform iOS='30,60,30,30', Default='30'}" Spacing="10">
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-                
-            <Label 
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+            <Button Text="CheckBox" Clicked="GoToCheckBoxPage" />
+
+            <Button Text="Radio Button" Clicked="GoToRadioButtonPage" />
+
+            <Button Text="Advanced Entry &amp; FormView" Clicked="GoToAdvancedEntryPage" />
             
-            <Label 
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+            <Button Text="Advanced Slider" Clicked="GoToAdvancedSliderPage" />
 
-            <Button 
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
+        </StackLayout>
     </ScrollView>
- 
+
 </ContentPage>

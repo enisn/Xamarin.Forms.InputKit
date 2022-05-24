@@ -48,4 +48,16 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Resources\Images\account.png" />
+	  <None Remove="Resources\Images\circle_check.png" />
+	  <None Remove="Resources\Images\email.png" />
+	  <None Remove="Resources\Images\ic_account_balance_black.png" />
+	  <None Remove="Resources\Images\phone.png" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\InputKit.Maui\InputKit.Maui.csproj" />
+	</ItemGroup>
+
 </Project>
