@@ -47,6 +47,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Plainer.Maui" Version="1.3.0" />
+    <PackageReference Include="Plainer.Maui" Version="1.4.0" />
   </ItemGroup>
 </Project>
