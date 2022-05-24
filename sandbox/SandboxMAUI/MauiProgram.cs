@@ -1,6 +1,4 @@
-﻿using InputKit.Handlers;
-
-namespace SandboxMAUI;
+﻿namespace SandboxMAUI;
 
 public static class MauiProgram
 {
@@ -12,12 +10,8 @@ public static class MauiProgram
 			.ConfigureFonts(fonts =>
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
-
-		builder.ConfigureMauiHandlers(handlers =>
-		{
-			handlers.AddInputKitHandlers();
-		});
 
 		return builder.Build();
 	}

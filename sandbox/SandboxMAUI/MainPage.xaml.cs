@@ -1,32 +1,24 @@
-﻿using SandboxMAUI.Pages;
+﻿namespace SandboxMAUI;
 
-namespace SandboxMAUI
+public partial class MainPage : ContentPage
 {
-    public partial class MainPage : ContentPage
-    {
-        public MainPage()
-        {
-            InitializeComponent();
-        }
+	int count = 0;
 
-        async void GoToCheckBoxPage(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushAsync(new CheckBoxPage());
-        }
+	public MainPage()
+	{
+		InitializeComponent();
+	}
 
-        async void GoToRadioButtonPage(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushAsync(new RadioButtonPage());
-        }
+	private void OnCounterClicked(object sender, EventArgs e)
+	{
+		count++;
 
-        async void GoToAdvancedEntryPage(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushAsync(new AdvancedEntryPage());
-        }
+		if (count == 1)
+			CounterBtn.Text = $"Clicked {count} time";
+		else
+			CounterBtn.Text = $"Clicked {count} times";
 
-        async void GoToAdvancedSliderPage(System.Object sender, System.EventArgs e)
-        {
-            await Navigation.PushAsync(new AdvancedSliderPage());
-        }
-    }
+		SemanticScreenReader.Announce(CounterBtn.Text);
+	}
 }
+
