@@ -27,4 +27,9 @@ public partial class MainPage : ContentPage
     {
         await Navigation.PushAsync(new AdvancedSliderPage());
     }
+
+    private async void GoToSelectionViewPage(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new SelectionViewPage());
+    }
 }

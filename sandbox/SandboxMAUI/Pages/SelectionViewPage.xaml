@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SandboxMAUI.Pages.SelectionViewPage"
+             xmlns:vm="clr-namespace:SandboxMAUI.ViewModels"
+             xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             Title="SelectionViewPage">
+    <ContentPage.BindingContext>
+        <vm:SampleItemsViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <StackLayout Padding="25" Spacing="15">
+            <Picker x:Name="picker" SelectedIndexChanged="Picker_SelectedIndexChanged" />
+            <Picker x:Name="labelPositionPicker" SelectedIndexChanged="LabelPositionChanged" />
+
+            <input:SelectionView
+                 x:Name="selectionView"
+                 ColumnNumber="2"
+                 ColumnSpacing="10"
+                 ItemDisplayBinding="{Binding Name}"
+                 ItemsSource="{Binding Items}"
+                 RowSpacing="10"
+                 SelectionType="Button" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

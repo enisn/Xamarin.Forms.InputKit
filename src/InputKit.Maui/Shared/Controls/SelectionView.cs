@@ -24,12 +24,12 @@ public partial class SelectionView : Grid
     public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
     {
         Color = InputKitOptions.GetAccentColor(),
-        BackgroundColor = (Color)VisualElement.BackgroundColorProperty.DefaultValue,
+        BackgroundColor = Colors.LightGray,
         BorderColor = (Color)Button.BorderColorProperty.DefaultValue,
         CornerRadius = 20,
         FontSize = Device.GetNamedSize(NamedSize.Default, typeof(Button)),
         Size = -1,
-        TextColor = (Color)Button.TextColorProperty.DefaultValue,
+        TextColor = (Color)Label.TextColorProperty.DefaultValue,
         LabelPosition = LabelPosition.After
     };
 
@@ -209,6 +209,9 @@ public partial class SelectionView : Grid
         if (ItemsSource == null) return;
 
         Children.Clear();
+
+        SetRowAndColumnDefinitions();
+
         SetValue(SelectedItemProperty, null);
         foreach (var item in ItemsSource)
         {
@@ -227,9 +230,10 @@ public partial class SelectionView : Grid
                     _View.IsDisabled = true;
 
                 var addedView = _View as View;
-                this.Add(addedView,
-                    column: Children.Count % ColumnNumber,
-                    row: Children.Count % ColumnNumber);
+                var column = Children.Count % ColumnNumber;
+                var row = Children.Count / ColumnNumber;
+
+                this.Add(addedView, column, row);
 
                 _View.IsSelected = Children.Count == _selectedIndex; //to keep selected index when content is changed
             }
@@ -240,6 +244,21 @@ public partial class SelectionView : Grid
         }
     }
 
+
+    protected void SetRowAndColumnDefinitions()
+    {
+        this.ColumnDefinitions.Clear();
+        for (int i = 0; i < ColumnNumber; i++)
+        {
+            this.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
+        }
+
+        this.RowDefinitions.Clear();
+        for (int i = 0; i < ItemsSource.Count / ColumnNumber; i++)
+        {
+            this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
+        }
+    }
     /// <summary>
     /// Updates colors of inside, when color property changed on runtime
     /// </summary>
@@ -426,7 +445,6 @@ public partial class SelectionView : Grid
         private Color _selectionColor = InputKitOptions.GetAccentColor();
         private Color _unselectedColor;
 
-
         /// <summary>
         /// Default constructor
         /// </summary>
@@ -497,7 +515,7 @@ public partial class SelectionView : Grid
             else
             {
                 BackgroundColor = UnselectedColor;
-                TextColor = GlobalSetting.TextColor;
+                TextColor = GlobalSetting.TextColor ?? UnselectedColor?.ToSurfaceColor();
             }
         }
 
