@@ -70,33 +70,26 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateView();
             Debug.WriteLine($"[{this.GetType().Name}] UpdateView() triggered!");
         }
-        protected override void OnSizeAllocated(double width, double height)
-        {
-            base.OnSizeAllocated(width, height);
-            UpdateValueText();
-            UpdateView();
-            UpdateMinMaxValueText();
-        }
-        ///---------------------------------------------------------------------
+
         /// <summary>
         /// Value of slider which user selected
         /// </summary>
         public double Value { get => (double)GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
-        ///---------------------------------------------------------------------
+
         /// <summary>
         /// Title of slider, It'll be shown tp of slider
         /// </summary>
-        public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
-        ///---------------------------------------------------------------------
+        public string Title { get => (string)GetValue(TitleProperty); set => SetValue(TitleProperty, value); }
+
         /// <summary>
         /// It will be displayed start of value 
         /// </summary>
-        public string ValueSuffix { get => _valueSuffix; set { _valueSuffix = value; UpdateValueText(); } }
+        public string ValueSuffix { get => (string)GetValue(ValueSuffixProperty); set => SetValue(ValueSuffixProperty, value); }
 
         /// <summary>
         /// It'll be displayed end of value
         /// </summary>
-        public string ValuePrefix { get => _valuePrefix; set { _valuePrefix = value; UpdateValueText(); } }
+        public string ValuePrefix { get => (string)GetValue(ValuePrefixProperty); set => SetValue(ValuePrefixProperty, value); }
 
         /// <summary>
         /// This will be displayed start of MinValue Text if <see cref="DisplayMinMaxValue"/> is true/>
@@ -153,17 +146,17 @@ namespace Plugin.InputKit.Shared.Controls
                 lblValue.TextColor = value;
             }
         }
-        ///---------------------------------------------------------------------
+
         /// <summary>
         /// This is not available for this control
         /// </summary>
         public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
-        ///---------------------------------------------------------------------
+
         /// <summary>
         /// this always true, because this control value can not be null
         /// </summary>
         public bool IsValidated => true;
-        ///---------------------------------------------------------------------
+
         /// <summary>
         /// It's not available for this control
         /// </summary>
@@ -181,19 +174,17 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty MinValueSuffixProperty = BindableProperty.Create(nameof(MinValueSuffix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateMinMaxValueText());
         public static readonly BindableProperty MaxValuePrefixProperty = BindableProperty.Create(nameof(MaxValuePrefix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateMinMaxValueText());
         public static readonly BindableProperty MinValuePrefixProperty = BindableProperty.Create(nameof(MinValuePrefix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateMinMaxValueText());
-
-        // TODO: ValuePrefix
-        // TODO: ValueSuffix
-        // TODO: Title
+        public static readonly BindableProperty ValuePrefixProperty = BindableProperty.Create(nameof(ValuePrefix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateValueText());
+        public static readonly BindableProperty ValueSuffixProperty = BindableProperty.Create(nameof(ValueSuffix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateValueText());
+        public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnTitleChanged((string)nv));
 
         #endregion
-        ///---------------------------------------------------------------------
+
         /// <summary>
         /// doesn't affect
         /// </summary>
         public event EventHandler ValidationChanged;
 
-        ///---------------------------------------------------------------------
         /// <summary>
         /// It's not available for this control
         /// </summary>
@@ -203,10 +194,12 @@ namespace Plugin.InputKit.Shared.Controls
             lblMinValue.Text = $"{MinValuePrefix}{this.MinValue}{MinValueSuffix}";
             lblMaxValue.Text = $"{MaxValuePrefix}{this.MaxValue}{MaxValueSuffix}";
         }
+
         void UpdateValueText()
         {
             lblValue.Text = $"{this.ValuePrefix} {this.Value} {this.ValueSuffix}";
         }
+
         void UpdateView()
         {
             var totalLength = this.MaxValue - this.MinValue;
@@ -236,10 +229,23 @@ namespace Plugin.InputKit.Shared.Controls
             slider.Maximum = newValue;
             UpdateMinMaxValueText();
         }
-
         protected virtual void OnMinValueChanged(double newValue)
         {
             slider.Minimum = newValue;
+            UpdateMinMaxValueText();
+        }
+
+        protected virtual void OnTitleChanged(string newValue)
+        {
+            lblTitle.Text = newValue;
+            lblTitle.IsVisible = !string.IsNullOrEmpty(newValue);
+        }
+
+        protected override void OnSizeAllocated(double width, double height)
+        {
+            base.OnSizeAllocated(width, height);
+            UpdateValueText();
+            UpdateView();
             UpdateMinMaxValueText();
         }
     }
