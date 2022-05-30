@@ -6,7 +6,7 @@ using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
 {
-    public partial class AdvancedSlider : StackLayout, IValidatable
+    public class AdvancedSlider : StackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
@@ -19,11 +19,7 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, InputTransparent = true, TextColor = GlobalSetting.TextColor, };
         Label lblMinValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
         Label lblMaxValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
-        private string _valueSuffix;
-        private string _valuePrefix;
         private Color _textColor;
-        private string _minValuePrefix;
-        private string _maxValuePrefix;
 
         public AdvancedSlider()
         {
@@ -189,18 +185,19 @@ namespace Plugin.InputKit.Shared.Controls
         /// It's not available for this control
         /// </summary>
         public void DisplayValidation() { }
-        void UpdateMinMaxValueText()
+
+        protected void UpdateMinMaxValueText()
         {
             lblMinValue.Text = $"{MinValuePrefix}{this.MinValue}{MinValueSuffix}";
             lblMaxValue.Text = $"{MaxValuePrefix}{this.MaxValue}{MaxValueSuffix}";
         }
 
-        void UpdateValueText()
+        protected void UpdateValueText()
         {
             lblValue.Text = $"{this.ValuePrefix} {this.Value} {this.ValueSuffix}";
         }
 
-        void UpdateView()
+        protected void UpdateView()
         {
             var totalLength = this.MaxValue - this.MinValue;
             var normalizedValue = this.Value - this.MinValue;
