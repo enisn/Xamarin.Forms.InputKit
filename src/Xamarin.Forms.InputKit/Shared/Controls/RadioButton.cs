@@ -34,8 +34,8 @@ namespace Plugin.InputKit.Shared.Controls
         #endregion
 
         #region Constants
-        public const string RESOURCE_CIRCLE = "InputKit.Shared.Resources.circle.png";
-        public const string RESOURCE_DOT = "InputKit.Shared.Resources.dot.png";
+        public const string RESOURCE_CIRCLE = "Plugin.InputKit.Shared.Resources.circle.png";
+        public const string RESOURCE_DOT = "Plugin.InputKit.Shared.Resources.dot.png";
         #endregion
 
         #region Fields
