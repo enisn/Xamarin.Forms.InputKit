@@ -60,4 +60,10 @@
 	  <ProjectReference Include="..\..\src\InputKit.Maui\InputKit.Maui.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <MauiXaml Update="Pages\SelectionViewPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	</ItemGroup>
+
 </Project>

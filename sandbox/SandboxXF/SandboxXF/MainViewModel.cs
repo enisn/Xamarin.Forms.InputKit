@@ -13,10 +13,9 @@ namespace SandboxXF
         {
             FillData();
         }
+
         public IList<SampleClass> MyList { get; set; } = new ObservableCollection<SampleClass>();
         private SampleClass _selectedItem;
-        private int _selectedIndex;
-
         public SampleClass SelectedItem
         {
             get => _selectedItem;
