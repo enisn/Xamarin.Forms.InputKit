@@ -10,8 +10,10 @@ public partial class SelectionViewPage : ContentPage
         picker.ItemsSource = Enum.GetValues(typeof(SelectionType));
         picker.SelectedItem = SelectionType.Button;
 
-        labelPositionPicker.SelectedItem = LabelPosition.Before;
         labelPositionPicker.ItemsSource = Enum.GetValues(typeof(LabelPosition));
+        labelPositionPicker.SelectedItem = LabelPosition.Before;
+
+        columnNumberPicker.SelectedItem = columnNumberPicker.Items.FirstOrDefault(x => x == "2");
     }
 
     private void Picker_SelectedIndexChanged(object sender, EventArgs e)
@@ -24,6 +26,14 @@ public partial class SelectionViewPage : ContentPage
         if (sender is Picker pkr)
         {
             selectionView.LabelPosition = (LabelPosition)pkr.SelectedItem;
+        }
+    }
+
+    private void ColumnNumberPicker_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        if (sender is Picker picker)
+        {
+            selectionView.ColumnNumber = Convert.ToInt32(picker.SelectedItem);
         }
     }
 }

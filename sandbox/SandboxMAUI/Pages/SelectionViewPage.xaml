@@ -14,6 +14,14 @@
         <StackLayout Padding="25" Spacing="15">
             <Picker x:Name="picker" SelectedIndexChanged="Picker_SelectedIndexChanged" />
             <Picker x:Name="labelPositionPicker" SelectedIndexChanged="LabelPositionChanged" />
+            <Picker x:Name="columnNumberPicker" SelectedIndexChanged="ColumnNumberPicker_SelectedIndexChanged">
+                <Picker.Items>
+                    <x:String>1</x:String>
+                    <x:String>2</x:String>
+                    <x:String>3</x:String>
+                    <x:String>4</x:String>
+                </Picker.Items>
+            </Picker>
 
             <input:SelectionView
                  x:Name="selectionView"
