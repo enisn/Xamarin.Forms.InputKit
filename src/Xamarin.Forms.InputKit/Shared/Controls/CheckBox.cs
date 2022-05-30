@@ -31,9 +31,9 @@ namespace Plugin.InputKit.Shared.Controls
         };
 
         #region Constants
-        public const string RESOURCE_CHECK = "InputKit.Shared.Resources.check.png";
-        public const string RESOURCE_CROSS = "InputKit.Shared.Resources.cross.png";
-        public const string RESOURCE_STAR = "InputKit.Shared.Resources.star.png";
+        public const string RESOURCE_CHECK = "Plugin.InputKit.Shared.Resources.check.png";
+        public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
+        public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
         #endregion
 
         #region Fields
@@ -63,8 +63,6 @@ namespace Plugin.InputKit.Shared.Controls
             {
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
-
-            imgSelected.BackgroundColor = Color.Cyan;
 
             imgSelected.WidthRequest = 15;
         }
