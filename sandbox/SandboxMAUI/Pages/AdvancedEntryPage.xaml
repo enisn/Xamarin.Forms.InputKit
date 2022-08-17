@@ -18,7 +18,7 @@
                     <input:AdvancedEntry
                         Title="Place your email below:"
                         Annotation="Email"
-                        AnnotationColor="{StaticResource PrimaryColor}"
+                        AnnotationColor="{StaticResource Primary}"
                         IconImage="email.png"
                         IsRequired="True"
                         MaxLength="50"
@@ -32,7 +32,7 @@
                     <input:AdvancedEntry
                         Title="Place your name below:"
                         Annotation="NonDigitsOnly"
-                        AnnotationColor="{StaticResource PrimaryColor}"
+                        AnnotationColor="{StaticResource Primary}"
                         IconImage="account.png"
                         IsRequired="True"
                         MaxLength="30"
@@ -46,7 +46,7 @@
                     <input:AdvancedEntry
                         Title="Place your phone number below:"
                         Annotation="Phone"
-                        AnnotationColor="{StaticResource PrimaryColor}"
+                        AnnotationColor="{StaticResource Primary}"
                         IconImage="phone.png"
                         IsRequired="True"
                         MaxLength="10"
@@ -69,7 +69,7 @@
                         Type="Material" />
                     <Button
                         Margin="0,20"
-                        BackgroundColor="{StaticResource PrimaryColor}"
+                        BackgroundColor="{StaticResource Primary}"
                         Command="{Binding SubmitCommand}"
                         CornerRadius="20"
                         Text="Submit"
