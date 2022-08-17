@@ -1,0 +1,3 @@
+[submodule "Xamarin.Forms.Plainer"]
+	path = Xamarin.Forms.Plainer
+	url = https://github.com/enisn/Xamarin.Forms.Plainer
