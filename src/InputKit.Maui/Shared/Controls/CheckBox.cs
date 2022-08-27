@@ -25,7 +25,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         FontSize = 14,
         LabelPosition = LabelPosition.After
     };
-    protected static PathGeometryConverter PathGeometryConverter { get; } = new PathGeometryConverter();
 
     #region Constants
     public const string PATH_CHECK = "M 6.5212 16.4777 l -6.24 -6.24 c -0.3749 -0.3749 -0.3749 -0.9827 0 -1.3577 l 1.3576 -1.3577 c 0.3749 -0.3749 0.9828 -0.3749 1.3577 0 L 7.2 11.7259 L 16.2036 2.7224 c 0.3749 -0.3749 0.9828 -0.3749 1.3577 0 l 1.3576 1.3577 c 0.3749 0.3749 0.3749 0.9827 0 1.3577 l -11.04 11.04 c -0.3749 0.3749 -0.9828 0.3749 -1.3577 -0 z";
@@ -258,7 +257,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), GlobalSetting.FontSize, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(CheckBox), Label.FontFamilyProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateFontFamily(nv?.ToString()));
-    public static readonly BindableProperty CustomIconGeometryProperty = BindableProperty.Create(nameof(CustomIconGeometry), typeof(Geometry), typeof(CheckBox), defaultValue: GetGeometryFromString(PATH_CHECK), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType(CheckType.Custom));
+    public static readonly BindableProperty CustomIconGeometryProperty = BindableProperty.Create(nameof(CustomIconGeometry), typeof(Geometry), typeof(CheckBox), defaultValue: GeometryConverter.FromPath(PATH_CHECK), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType(CheckType.Custom));
     public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction(bo as CheckBox, (bool)nv));
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).outlineBox.RadiusX = (float)nv);
     public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
@@ -340,20 +339,20 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         switch (_Type)
         {
             case CheckType.Box:
-                selectedIcon.Data = GetGeometryFromString(PATH_SQUARE);
+                selectedIcon.Data = GeometryConverter.FromPath(PATH_SQUARE);
                 break;
             case CheckType.Line:
-                selectedIcon.Data = GetGeometryFromString(PATH_LINE);
+                selectedIcon.Data = GeometryConverter.FromPath(PATH_LINE);
                 break;
 
             case CheckType.Check:
             case CheckType.Star:
             case CheckType.Cross:
-                selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
+                selectedIcon.Data = GeometryConverter.FromPath(PATH_CHECK);
                 break;
             case CheckType.Material:
                 outlineBox.RadiusX = 5;
-                selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
+                selectedIcon.Data = GeometryConverter.FromPath(PATH_CHECK);
                 break;
             case CheckType.Custom:
                 selectedIcon.Data = CustomIconGeometry;
@@ -420,11 +419,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         await checkBox.outlineBox.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
         var radiusVal = isPressed ? checkBox.outlineBox.RadiusX * 2f : checkBox.CornerRadius;
         checkBox.outlineBox.RadiusX = radiusVal;
-    }
-
-    internal static Geometry GetGeometryFromString(string path)
-    {
-        return (Geometry)PathGeometryConverter.ConvertFromInvariantString(path);
     }
     #endregion
 
