@@ -2,8 +2,8 @@
 using InputKit.Shared.Configuration;
 using InputKit.Shared.Helpers;
 using InputKit.Shared.Layouts;
-using Microsoft.Maui.Controls;
 using Microsoft.Maui.Controls.Shapes;
+using System.ComponentModel;
 using System.Windows.Input;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
@@ -30,6 +30,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     #region Constants
     public const string PATH_CHECK = "M 6.5212 16.4777 l -6.24 -6.24 c -0.3749 -0.3749 -0.3749 -0.9827 0 -1.3577 l 1.3576 -1.3577 c 0.3749 -0.3749 0.9828 -0.3749 1.3577 0 L 7.2 11.7259 L 16.2036 2.7224 c 0.3749 -0.3749 0.9828 -0.3749 1.3577 0 l 1.3576 1.3577 c 0.3749 0.3749 0.3749 0.9827 0 1.3577 l -11.04 11.04 c -0.3749 0.3749 -0.9828 0.3749 -1.3577 -0 z";
     public const string PATH_SQUARE = "M12 12H0V0h12v12z";
+    public const string PATH_LINE = "M 17.2026 6.7911 H 0.9875 C 0.4422 6.7911 0 7.2332 0 7.7784 v 2.6331 c 0 0.5453 0.442 0.9873 0.9875 0.9873 h 16.2151 c 0.5453 0 0.9873 -0.442 0.9873 -0.9873 v -2.6331 C 18.1901 7.2332 17.7481 6.7911 17.2026 6.7911 z";
     internal const double CHECK_SIZE_RATIO = .65;
     #endregion
 
@@ -51,10 +52,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         WidthRequest = GlobalSetting.Size,
         MaximumHeightRequest = GlobalSetting.Size,
         MaximumWidthRequest = GlobalSetting.Size,
-        Data = GetGeometryFromString(PATH_CHECK),
         Scale = 0,
     };
-    internal Label lblOption = new Label { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Start , FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
+    internal Label lblOption = new Label { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Start, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
     private CheckType _type = CheckType.Box;
     private bool _isEnabled;
     #endregion
@@ -82,6 +82,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         };
 
         ApplyLabelPosition(LabelPosition);
+        UpdateType();
         GestureRecognizers.Add(new TapGestureRecognizer
         {
             Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
@@ -221,7 +222,11 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// </summary>
     public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-    public ImageSource CustomIcon { get => (ImageSource)GetValue(CustomIconProperty); set => SetValue(CustomIconProperty, value); }
+    [Obsolete("This option is removed. Use CustomIconGeometry")]
+    public ImageSource CustomIcon { get => default; set { } }
+
+    [TypeConverter(typeof(PathGeometryConverter))]
+    public Geometry CustomIconGeometry { get => (Geometry)GetValue(CustomIconGeometryProperty); set => SetValue(CustomIconGeometryProperty, value); }
 
     public bool IsPressed { get; set; }
     /// <summary>
@@ -253,7 +258,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), GlobalSetting.FontSize, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
     public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(CheckBox), Label.FontFamilyProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateFontFamily(nv?.ToString()));
-    public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
+    public static readonly BindableProperty CustomIconGeometryProperty = BindableProperty.Create(nameof(CustomIconGeometry), typeof(Geometry), typeof(CheckBox), defaultValue: GetGeometryFromString(PATH_CHECK), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType(CheckType.Custom));
     public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction(bo as CheckBox, (bool)nv));
     public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).outlineBox.RadiusX = (float)nv);
     public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
@@ -330,25 +335,28 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         //selectedIcon.MaximumWidthRequest = size * CHECK_SIZE_RATIO;
     }
 
-    void UpdateType(CheckType _Type)
+    void UpdateType(CheckType _Type = CheckType.Custom)
     {
         switch (_Type)
         {
             case CheckType.Box:
                 selectedIcon.Data = GetGeometryFromString(PATH_SQUARE);
                 break;
-            case CheckType.Check:
-                selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
+            case CheckType.Line:
+                selectedIcon.Data = GetGeometryFromString(PATH_LINE);
                 break;
 
+            case CheckType.Check:
             case CheckType.Star:
             case CheckType.Cross:
-            case CheckType.Custom:
                 selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
                 break;
             case CheckType.Material:
                 outlineBox.RadiusX = 5;
                 selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
+                break;
+            case CheckType.Custom:
+                selectedIcon.Data = CustomIconGeometry;
                 break;
         }
 
@@ -402,7 +410,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     public static void ApplyIsChecked(CheckBox checkBox, bool isChecked)
     {
-        //checkBox.selectedIcon.FadeTo(Convert.ToDouble(isChecked), 160);
         checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
 
         checkBox.UpdateColors();
@@ -425,9 +432,12 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     {
         Box,
         Check,
+        [Obsolete("This option is removed. Use another one.")]
         Cross,
+        [Obsolete("This option is removed. Use another one.")]
         Star,
         Material,
+        Line,
         Custom = 90
     }
 }
