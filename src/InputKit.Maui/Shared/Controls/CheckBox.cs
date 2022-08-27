@@ -2,11 +2,10 @@
 using InputKit.Shared.Configuration;
 using InputKit.Shared.Helpers;
 using InputKit.Shared.Layouts;
-using Microsoft.Maui;
 using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
+using Microsoft.Maui.Controls.Shapes;
 using System.Windows.Input;
+using Path = Microsoft.Maui.Controls.Shapes.Path;
 
 namespace InputKit.Shared.Controls;
 
@@ -26,18 +25,36 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         FontSize = 14,
         LabelPosition = LabelPosition.After
     };
+    protected static PathGeometryConverter PathGeometryConverter { get; } = new PathGeometryConverter();
 
     #region Constants
-    public const string RESOURCE_CHECK = "InputKit.Shared.Resources.check.png";
-    public const string RESOURCE_CROSS = "InputKit.Shared.Resources.cross.png";
-    public const string RESOURCE_STAR = "InputKit.Shared.Resources.star.png";
+    public const string PATH_CHECK = "M 6.5212 16.4777 l -6.24 -6.24 c -0.3749 -0.3749 -0.3749 -0.9827 0 -1.3577 l 1.3576 -1.3577 c 0.3749 -0.3749 0.9828 -0.3749 1.3577 0 L 7.2 11.7259 L 16.2036 2.7224 c 0.3749 -0.3749 0.9828 -0.3749 1.3577 0 l 1.3576 1.3577 c 0.3749 0.3749 0.3749 0.9827 0 1.3577 l -11.04 11.04 c -0.3749 0.3749 -0.9828 0.3749 -1.3577 -0 z";
+    public const string PATH_SQUARE = "M12 12H0V0h12v12z";
+    internal const double CHECK_SIZE_RATIO = .65;
     #endregion
 
     #region Fields
-    protected internal Frame frmBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
-    protected internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-    protected internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, IsVisible = false };
-    internal Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
+    protected internal Grid IconLayout;
+    protected Rectangle outlineBox = new Rectangle
+    {
+        Fill = GlobalSetting.BackgroundColor,
+        Stroke = GlobalSetting.BorderColor,
+        StrokeThickness = 2,
+        WidthRequest = GlobalSetting.Size,
+        HeightRequest = GlobalSetting.Size,
+    };
+    protected Path selectedIcon = new Path
+    {
+        Fill = GlobalSetting.Color,
+        Aspect = Stretch.Uniform,
+        HeightRequest = GlobalSetting.Size,
+        WidthRequest = GlobalSetting.Size,
+        MaximumHeightRequest = GlobalSetting.Size,
+        MaximumWidthRequest = GlobalSetting.Size,
+        Data = GetGeometryFromString(PATH_CHECK),
+        Scale = 0,
+    };
+    internal Label lblOption = new Label { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Start , FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
     private CheckType _type = CheckType.Box;
     private bool _isEnabled;
     #endregion
@@ -50,20 +67,25 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     {
         InitVisualStates();
         Orientation = StackOrientation.Horizontal;
-        Padding = new Thickness(0, 10);
         Spacing = 10;
-        frmBackground.Content = boxSelected;
-        ApplyLabelPosition(LabelPosition);
+        Padding = new Thickness(0, 10);
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
+
+        IconLayout = new Grid
+        {
+            Children =
+            {
+                outlineBox,
+                selectedIcon
+            }
+        };
+
+        ApplyLabelPosition(LabelPosition);
         GestureRecognizers.Add(new TapGestureRecognizer
         {
             Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
         });
-
-        imgSelected.BackgroundColor = Colors.Cyan;
-
-        imgSelected.WidthRequest = 15;
     }
 
     /// <summary>
@@ -163,12 +185,12 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Size of Checkbox
     /// </summary>
-    public double BoxSize { get => frmBackground.Width; }
+    public double BoxSize { get => outlineBox.Width; }
 
     /// <summary>
     /// SizeRequest of CheckBox
     /// </summary>
-    public double BoxSizeRequest { get => frmBackground.WidthRequest; set => SetBoxSize(value); }
+    public double BoxSizeRequest { get => outlineBox.WidthRequest; set => SetBoxSize(value); }
 
     /// <summary>
     /// Fontsize of Checkbox text
@@ -233,7 +255,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(CheckBox), Label.FontFamilyProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateFontFamily(nv?.ToString()));
     public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
     public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction(bo as CheckBox, (bool)nv));
-    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).frmBackground.CornerRadius = (float)nv);
+    public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).outlineBox.RadiusX = (float)nv);
     public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
         propertyName: nameof(LabelPosition), declaringType: typeof(CheckBox),
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
@@ -249,14 +271,14 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         if (position == LabelPosition.After)
         {
             lblOption.HorizontalOptions = LayoutOptions.Start;
-            Children.Add(frmBackground);
+            Children.Add(IconLayout);
             Children.Add(lblOption);
         }
         else
         {
-            lblOption.HorizontalOptions = LayoutOptions.StartAndExpand;
+            lblOption.HorizontalOptions = LayoutOptions.FillAndExpand;
             Children.Add(lblOption);
-            Children.Add(frmBackground);
+            Children.Add(IconLayout);
         }
     }
 
@@ -271,24 +293,24 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         if (Type == CheckType.Material)
             return;
 
-        frmBackground.BackgroundColor = BoxBackgroundColor;
+        outlineBox.Fill = BoxBackgroundColor;
     }
 
     void UpdateColors()
     {
-        boxSelected.Color = Color;
+        //selectedIcon.Fill = Color;
 
         if (Type == CheckType.Material)
         {
-            frmBackground.BorderColor = Color;
-            frmBackground.BackgroundColor = IsChecked ? Color : Colors.Transparent;
-            imgSelected.FillColor = Color.ToSurfaceColor();
+            outlineBox.Stroke = Color;
+            outlineBox.Fill = IsChecked ? Color : Colors.Transparent;
+            selectedIcon.Fill = Color.ToSurfaceColor();
         }
         else
         {
-            frmBackground.BorderColor = IsChecked ? Color : BorderColor;
-            frmBackground.BackgroundColor = BoxBackgroundColor;
-            imgSelected.FillColor = IconColor == Colors.Transparent ? Color : IconColor;
+            outlineBox.Stroke = IsChecked ? Color : BorderColor;
+            outlineBox.Fill = BoxBackgroundColor;
+            selectedIcon.Fill = IconColor == Colors.Transparent ? Color : IconColor;
         }
     }
 
@@ -297,19 +319,15 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         if (Type == CheckType.Material)
             return;
 
-        frmBackground.BorderColor = BorderColor;
+        outlineBox.Stroke = BorderColor;
     }
 
-    void SetBoxSize(double value)
+    void SetBoxSize(double size)
     {
-        frmBackground.WidthRequest = value;
-        frmBackground.HeightRequest = value;
-        boxSelected.WidthRequest = value * .6;  //old value 0.72
-        boxSelected.HeightRequest = value * 0.6;
-        //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
-
-        // TODO: Refactor after MAUI update
-        (this.Children[0] as View).MinimumWidthRequest = value * 1.4;
+        outlineBox.HeightRequest = size;
+        outlineBox.WidthRequest = size;
+        //selectedIcon.MaximumHeightRequest = size * CHECK_SIZE_RATIO;
+        //selectedIcon.MaximumWidthRequest = size * CHECK_SIZE_RATIO;
     }
 
     void UpdateType(CheckType _Type)
@@ -317,28 +335,20 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         switch (_Type)
         {
             case CheckType.Box:
-                frmBackground.Content = boxSelected;
+                selectedIcon.Data = GetGeometryFromString(PATH_SQUARE);
                 break;
             case CheckType.Check:
-                imgSelected.Source = ImageSource.FromResource(RESOURCE_CHECK);
-                frmBackground.Content = imgSelected;
+                selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
                 break;
-            case CheckType.Cross:
-                imgSelected.Source = ImageSource.FromResource(RESOURCE_CROSS);
-                frmBackground.Content = imgSelected;
-                break;
+
             case CheckType.Star:
-                imgSelected.Source = ImageSource.FromResource(RESOURCE_STAR);
-                frmBackground.Content = imgSelected;
+            case CheckType.Cross:
+            case CheckType.Custom:
+                selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
                 break;
             case CheckType.Material:
-                imgSelected.Source = ImageSource.FromResource(RESOURCE_CHECK);
-                frmBackground.CornerRadius = 5;
-                frmBackground.Content = imgSelected;
-                break;
-            case CheckType.Custom:
-                imgSelected.Source = CustomIcon;
-                frmBackground.Content = imgSelected;
+                outlineBox.RadiusX = 5;
+                selectedIcon.Data = GetGeometryFromString(PATH_CHECK);
                 break;
         }
 
@@ -389,16 +399,25 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     {
 
     }
+
     public static void ApplyIsChecked(CheckBox checkBox, bool isChecked)
     {
-        checkBox.frmBackground.Content.IsVisible = isChecked;
+        //checkBox.selectedIcon.FadeTo(Convert.ToDouble(isChecked), 160);
+        checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
+
         checkBox.UpdateColors();
     }
+
     public static async void ApplyIsPressed(CheckBox checkBox, bool isPressed)
     {
-        await checkBox.frmBackground.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
-        var radiusVal = isPressed ? checkBox.frmBackground.CornerRadius * 2f : checkBox.CornerRadius;
-        checkBox.frmBackground.CornerRadius = radiusVal;
+        await checkBox.outlineBox.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
+        var radiusVal = isPressed ? checkBox.outlineBox.RadiusX * 2f : checkBox.CornerRadius;
+        checkBox.outlineBox.RadiusX = radiusVal;
+    }
+
+    internal static Geometry GetGeometryFromString(string path)
+    {
+        return (Geometry)PathGeometryConverter.ConvertFromInvariantString(path);
     }
     #endregion
 
