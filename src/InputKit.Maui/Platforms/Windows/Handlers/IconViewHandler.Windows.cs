@@ -11,9 +11,9 @@ public partial class IconViewHandler : ViewHandler<IIconView, Microsoft.UI.Xaml.
     {
         return new Microsoft.UI.Xaml.Controls.Image();
     }
-    public static void MapSource(IIconViewHandler handler, IIconView view)
+    public static async void MapSource(IIconViewHandler handler, IIconView view)
     {
-        MapSourceAsync(handler, view).RunSynchronously();
+        await MapSourceAsync(handler, view);
     }
 
     public static void MapFillColor(IIconViewHandler handler, IIconView view)
@@ -41,7 +41,6 @@ public partial class IconViewHandler : ViewHandler<IIconView, Microsoft.UI.Xaml.
         if (handler.TypedPlatformView == null)
             return Task.CompletedTask;
 
-        handler.TypedPlatformView.Clear();
         return (handler as IconViewHandler).SourceLoader.UpdateImageSourceAsync();
     }
 }
