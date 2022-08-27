@@ -14,8 +14,8 @@
                 <input:RadioButton Text="Option 1" />
                 <input:RadioButton Text="Option 2" />
                 <input:RadioButton Text="Option 3 Label Position Before" LabelPosition="Before"/>
-                <input:RadioButton Text="Option 4 with Custom Image" CheckedImage="circle_check"/>
-                <input:RadioButton Text="Dolor ullamcorper sit justo magna luptatum at sit dolor sed accusam amet quod nostrud lobortis amet dolore et zzril et"/>
+                <input:RadioButton Text="Option 4 with Custom Image" SelectedIconGeomerty="M12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 Z M8,10 L6,12 L11,17 L18,10 L16,8 L11,13 L8,10 Z"/>
+                <input:RadioButton Text="Dolor ullamcorper sit justo magna "/>
                 <input:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
             </input:RadioButtonGroupView>
 
