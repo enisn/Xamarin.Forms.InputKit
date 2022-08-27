@@ -8,7 +8,8 @@
         <StackLayout
             x:Name="mainLayout"
             Padding="25"
-            Spacing="15">
+            Spacing="15"
+            MaximumWidthRequest="400">
 
             <Button Text="Randomize colors" Clicked="Button_Clicked" />
 

@@ -5,7 +5,7 @@
              x:Class="SandboxMAUI.Pages.RadioButtonPage"
              Title="RadioButtonPage">
     <ScrollView>
-        <StackLayout Padding="25" Spacing="15">
+        <StackLayout Padding="25" Spacing="15" MaximumWidthRequest="400">
 
             <Button Text="Randomize Colors" Clicked="RandomizeColors" />
             <BoxView Color="Black" HeightRequest="1" HorizontalOptions="Fill" Margin="5,10" />

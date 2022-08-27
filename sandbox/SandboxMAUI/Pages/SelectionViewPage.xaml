@@ -11,7 +11,7 @@
 
     <ContentPage.Content>
 
-        <StackLayout Padding="25" Spacing="15">
+        <StackLayout Padding="25" Spacing="15" MaximumWidthRequest="400">
             <Picker x:Name="picker" SelectedIndexChanged="Picker_SelectedIndexChanged" />
             <Picker x:Name="labelPositionPicker" SelectedIndexChanged="LabelPositionChanged" />
             <Picker x:Name="columnNumberPicker" SelectedIndexChanged="ColumnNumberPicker_SelectedIndexChanged">

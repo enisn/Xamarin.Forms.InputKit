@@ -5,7 +5,7 @@
              x:Class="SandboxMAUI.Pages.AdvancedSliderPage"
              Title="AdvancedSliderPage">
     <ScrollView>
-        <StackLayout Padding="25" Spacing="15">
+        <StackLayout Padding="25" Spacing="15" MaximumWidthRequest="400">
             
             <input:AdvancedSlider MaxValue="5000" 
                                   MinValue="50" 
