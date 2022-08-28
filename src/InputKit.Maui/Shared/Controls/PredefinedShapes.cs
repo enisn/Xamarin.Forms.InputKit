@@ -7,7 +7,7 @@ public static class PredefinedShapes
     public static Geometry Check = GeometryConverter.FromPath(Paths.Check);
     public static Geometry CheckCircle = GeometryConverter.FromPath(Paths.CheckCircle);
     public static Geometry Line = GeometryConverter.FromPath(Paths.LineHorizontal);
-    public static Geometry Square = GeometryConverter.FromPath(Paths.LineHorizontal);
+    public static Geometry Square = GeometryConverter.FromPath(Paths.Square);
     public static Geometry Dot = GeometryConverter.FromPath(Paths.Dot);
 }
 
