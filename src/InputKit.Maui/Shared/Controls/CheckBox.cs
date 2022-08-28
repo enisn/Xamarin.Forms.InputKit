@@ -53,7 +53,15 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         MaximumWidthRequest = GlobalSetting.Size,
         Scale = 0,
     };
-    internal Label lblOption = new Label { VerticalOptions = LayoutOptions.Center, HorizontalOptions = LayoutOptions.Start, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
+    protected internal Label lblOption = new Label
+    {
+        VerticalOptions = LayoutOptions.Center,
+        HorizontalOptions = LayoutOptions.Start,
+        FontSize = GlobalSetting.FontSize,
+        TextColor = GlobalSetting.TextColor,
+        FontFamily = GlobalSetting.FontFamily,
+        IsVisible = false
+    };
     private CheckType _type = CheckType.Box;
     private bool _isEnabled;
     #endregion
