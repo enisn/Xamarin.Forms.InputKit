@@ -10,8 +10,10 @@
             <Button Text="Randomize Colors" Clicked="RandomizeColors" />
             <BoxView Color="{AppThemeBinding Dark=White, Light=Black}" HeightRequest="1" HorizontalOptions="Fill" Margin="5,10" />
 
+            <input:RadioButton Text="Option 1" SelectedIconGeomerty="{x:Static input:PredefinedShapes.CheckCircle}" />
+
             <input:RadioButtonGroupView x:Name="groupView">
-                <input:RadioButton Text="Option 1" />
+                <input:RadioButton Text="Option 1" Color="Red" CircleColor="Orange" TextColor="Purple" />
                 <input:RadioButton Text="Option 2" />
                 <input:RadioButton Text="Option 3 with Check Shape" SelectedIconGeomerty="{x:Static input:PredefinedShapes.Check}" />
                 <input:RadioButton Text="Option 4 with CheckCircle Shape" SelectedIconGeomerty="{x:Static input:PredefinedShapes.CheckCircle}"/>

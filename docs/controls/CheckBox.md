@@ -52,8 +52,26 @@ Now you're ready to use it in your XAML page.
 <input:CheckBox Text="Hello World">
 ```
 
-![](../images/checkbox-usage-01.gif)
+![maui checkbox](../images/checkbox-usage-01.gif)
 
+### Data Binding
+
+All of the properties of the CheckBox control can be bound to any property of any object that supports data binding.
+
+
+- You can bind the `IsChecked` property to any property of ViewModel to handle the checkbox state.
+```xml
+<input:CheckBox Text="Hello World" IsChecked="{Binding IsChecked}">
+```
+
+- You can bind the `CheckChangedCommand` property to any command of ViewModel to handle the checkbox changes. This command is executed right after the checkbox is checked or unchecked.
+```xml
+<input:CheckBox Text="Hello World" CheckChangedCommand="{Binding OnCheckChangedCommand}">
+```
+
+> If you're looking for dynamic CheckBox list and want to get only selected item/items after selection. Check the [SelectionView](SelectionView.md)
+
+- Rest of the visual properties are bindable as well.
 
 ## Customization
 
@@ -139,7 +157,7 @@ CheckBox supports two label positions:
 
 ### Colors
 
-You can customize checkbox colors by setting `Color`, `BackgroundColor`, `BorderColor`, `BoxBackgroundColor`, `TextColor` and `IconColor` properties.
+You can customize CheckBox colors by setting `Color`, `BackgroundColor`, `BorderColor`, `BoxBackgroundColor`, `TextColor` and `IconColor` properties.
 
 ```xml
     <input:CheckBox 
