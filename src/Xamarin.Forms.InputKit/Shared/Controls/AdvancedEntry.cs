@@ -1,9 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -22,10 +19,10 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            BackgroundColor = Color.White,
+            BackgroundColor = Application.Current.RequestedTheme == OSAppTheme.Dark ? Color.Black : Color.White,
             CornerRadius = 20,
-            BorderColor = Color.Gray,
-            Color = Color.Accent,
+            BorderColor = Application.Current.RequestedTheme == OSAppTheme.Dark ? Color.WhiteSmoke : Color.Gray,
+            Color = InputKitOptions.GetAccentColor(),
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1, /* This is not supported for this control*/
             TextColor = (Color)Entry.TextColorProperty.DefaultValue,
@@ -48,7 +45,7 @@ namespace Plugin.InputKit.Shared.Controls
         readonly Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         readonly Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
         readonly Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
-        readonly IconView imgIcon = new IconView { InputTransparent = true, IsVisible = false, Margin = new Thickness(5, 10, 10, 10), VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color};
+        readonly IconView imgIcon = new IconView { InputTransparent = true, Margin = 5, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
         readonly Entry txtInput;
         #endregion
 
@@ -59,9 +56,14 @@ namespace Plugin.InputKit.Shared.Controls
         public AdvancedEntry()
         {
             txtInput = GetInputEntry();
-            this.Children.Add(lblTitle);
-            this.Children.Add(frmBackground);
-            
+            Children.Add(lblTitle);
+            Children.Add(frmBackground);
+
+            var inputGrid = new Grid();
+            inputGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
+            inputGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
+            inputGrid.Children.AddHorizontal(new View[] { imgIcon, txtInput });
+
             ApplyValidationPosition(GlobalSetting.LabelPosition);
 
             frmBackground.Content = new Grid
@@ -69,16 +71,7 @@ namespace Plugin.InputKit.Shared.Controls
                 BackgroundColor = Color.Transparent,
                 Children =
                 {
-                    new StackLayout
-                    {
-                        Orientation = StackOrientation.Horizontal,
-                        BackgroundColor = Color.Transparent,
-                        Children =
-                        {
-                            imgIcon,
-                            txtInput
-                        }
-                    },
+                    inputGrid,
                     imgWarning
                 }
             };
@@ -87,7 +80,7 @@ namespace Plugin.InputKit.Shared.Controls
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             txtInput.Focused += (s, args) => { var arg = new FocusEventArgs(this, true); FocusedCommand?.Execute(arg); Focused?.Invoke(this, arg); };
             txtInput.Unfocused += (s, args) => { var arg = new FocusEventArgs(this, false); UnfocusedCommand?.Execute(arg); Unfocused?.Invoke(this, arg); };
-            imgWarning.IsVisible = this.IsRequired;
+            imgWarning.IsVisible = IsRequired;
             Reset();
         }
         #endregion
@@ -113,19 +106,19 @@ namespace Plugin.InputKit.Shared.Controls
         public new event EventHandler<FocusEventArgs> Focused;
         #endregion
         #region Properties
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Text of this input
         /// </summary>
         public string Text { get => txtInput.Text; set { txtInput.Text = value; OnPropertyChanged(); } }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Title will be shown top of this control
         /// </summary>
-        public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !String.IsNullOrEmpty(value); } }
-        ///------------------------------------------------------------------------
+        public string Title { get => lblTitle.Text; set { lblTitle.Text = value; lblTitle.IsVisible = !string.IsNullOrEmpty(value); } }
+
         public Color TitleColor { get => (Color)GetValue(TitleColorProperty); set => SetValue(TitleColorProperty, value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Icons of this Entry
         /// </summary>
@@ -138,42 +131,42 @@ namespace Plugin.InputKit.Shared.Controls
                 imgIcon.Source = value;
             }
         }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Color of Icon
         /// </summary>
         public Color IconColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// BackgroundColor of this Control
         /// </summary>
         public new Color BackgroundColor { get => (Color)GetValue(BackgroundColorProperty); set => SetValue(BackgroundColorProperty, value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Bordercolor of this control
         /// </summary>
         public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Text Color of this Control
         /// </summary>
         public Color TextColor { get => (Color)GetValue(TextColorProperty); set => SetValue(TextColorProperty, value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// HorizontalTextAlignment of this Control
         /// </summary>
         public TextAlignment HorizontalTextAlignment { get => (TextAlignment)GetValue(HorizontalTextAlignmentProperty); set => SetValue(HorizontalTextAlignmentProperty, value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// BackgroundColor of this Control
         /// </summary>
         public Color PlaceholderColor { get => txtInput.PlaceholderColor; set => txtInput.PlaceholderColor = value; }
 
-        ///------------------------------------------------------------------------
         /// <summary>
         /// Placeholder of entry
         /// </summary>
         public string Placeholder { get => (string)GetValue(PlaceholderProperty); set => SetValue(PlaceholderProperty, value); }
+
         /// <summary>
         /// Maximum length of this Entry
         /// </summary>
@@ -182,17 +175,17 @@ namespace Plugin.InputKit.Shared.Controls
             get => txtInput.MaxLength;
             set => txtInput.MaxLength = value;
         }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Minimum length of this Entry
         /// </summary>
         public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Corner radius of Entry.
         /// </summary>
         public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, Value); }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// To be added.
         /// </summary>
@@ -206,7 +199,7 @@ namespace Plugin.InputKit.Shared.Controls
                 txtInput.FontFamily = value;
             }
         }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// This will be shown below title. This automaticly updating. If you set this manually you must set true IgnoreValidationMessage !!! 
         /// </summary>
@@ -216,10 +209,10 @@ namespace Plugin.InputKit.Shared.Controls
             set
             {
                 lblAnnotation.Text = value;
-                lblAnnotation.IsVisible = !String.IsNullOrEmpty(value);
+                lblAnnotation.IsVisible = !string.IsNullOrEmpty(value);
             }
         }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// AnnotationMessage's color.
         /// </summary>
@@ -228,12 +221,12 @@ namespace Plugin.InputKit.Shared.Controls
             get => lblAnnotation.TextColor;
             set { lblAnnotation.TextColor = value; _defaultAnnotationColor = value; }
         }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// will be added
         /// </summary>
         public AnnotationType Annotation { get => _annotation; set { _annotation = value; UpdateKeyboard(value); } }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// Disabled this control
         /// </summary>
@@ -242,11 +235,11 @@ namespace Plugin.InputKit.Shared.Controls
             get => _isDisabled; set
             {
                 _isDisabled = value;
-                this.Opacity = value ? 0.6 : 1;
+                Opacity = value ? 0.6 : 1;
                 txtInput.IsEnabled = !value;
             }
         }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// Finds this entry if Annotated
         /// </summary>
@@ -254,10 +247,10 @@ namespace Plugin.InputKit.Shared.Controls
         {
             get
             {
-                if (!this.IsRequired)
+                if (!IsRequired)
                     return true;
 
-                if (String.IsNullOrEmpty(Text))
+                if (string.IsNullOrEmpty(Text))
                 {
                     if (Nullable)
                     {
@@ -297,7 +290,7 @@ namespace Plugin.InputKit.Shared.Controls
 
                     case AnnotationType.Phone:
                         return Regex.Match(Text, REGEX_PHONE).Success;
-                    
+
                     case AnnotationType.ShortType:
                         return short.TryParse(Text, out _);
 
@@ -341,17 +334,17 @@ namespace Plugin.InputKit.Shared.Controls
             }
             set { /*to make visible in XAML pages*/ }
         }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// IsPassword situation of entry.
         /// </summary>
         public bool IsPassword { get => txtInput.IsPassword; set => txtInput.IsPassword = value; }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// Comes from IValidatable implementation. Shows this if Validated.
         /// </summary>
         public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// Validation message to update automaticly. This will be shown when entry is not validated
         /// </summary>
@@ -366,41 +359,42 @@ namespace Plugin.InputKit.Shared.Controls
                     DisplayValidation();
             }
         }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// Ignores automaticly update annotationmessage
         /// </summary>
         public bool IgnoreValidationMessage { get => (bool)GetValue(IgnoreValidationMessageProperty); set => SetValue(IgnoreValidationMessageProperty, value); }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// Executed when entry completed.
         /// </summary>
         public ICommand CompletedCommand { get; set; }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// Executed when entry focused.
         /// </summary>
         public Command<FocusEventArgs> FocusedCommand { get; set; }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// Executed when entry unfocused.
         /// </summary>
         public Command<FocusEventArgs> UnfocusedCommand { get; set; }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// Parameter to send with CompletedCommand
         /// </summary>
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// You need to set Annotation="RegexPattern" to use this.
         /// </summary>
         public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty, value); }
-        //------------------------------------------------------------------------
+
         /// <summary>
         /// Changes Font Size of Entry's Text
         /// </summary>
-        [TypeConverter(typeof(FontSizeConverter))]
+        /// 
+        [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double TextFontSize { get => (double)GetValue(TextFontSizeProperty); set => SetValue(TextFontSizeProperty, value); }
         ///----------------------------------------- -------------------------------
         /// <summary>
@@ -430,19 +424,19 @@ namespace Plugin.InputKit.Shared.Controls
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(AdvancedEntry), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Text = (string)nv);
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Title = (string)nv);
-        public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(AdvancedEntry), ((Color)Label.TextColorProperty.DefaultValue), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).lblTitle.TextColor = (Color)nv);
+        public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(AdvancedEntry), (Color)Label.TextColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).lblTitle.TextColor = (Color)nv);
         public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).IconImage = (string)nv);
         public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(AdvancedEntry), Color.Black, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).imgIcon.FillColor = (Color)nv);
-        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BackgroundColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BackgroundColor = (Color)nv);
+        public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), (Color)VisualElement.BackgroundColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BackgroundColor = (Color)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AdvancedEntry), (Color)Frame.BorderColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BorderColor = (Color)nv);
-        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
+        public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Color.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), default(string), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.Placeholder = (string)nv);
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), int.MaxValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
         public static readonly BindableProperty MinLengthProperty = BindableProperty.Create(nameof(MinLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MinLength = (int)nv);
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(AdvancedEntry), (float)Frame.CornerRadiusProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.CornerRadius = (float)nv);
         public static readonly BindableProperty IsAnnotatedProperty = BindableProperty.Create(nameof(IsAnnotated), typeof(bool), typeof(AdvancedEntry), false, BindingMode.OneWayToSource);
-        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), Color.Default, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
+        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), InputKitOptions.GetAccentColor(), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
         public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
         public static readonly BindableProperty CompletedCommandProperty = BindableProperty.Create(nameof(CompletedCommand), typeof(ICommand), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CompletedCommand = (ICommand)nv);
         public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
@@ -452,8 +446,8 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
         public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
-        public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(AdvancedEntry), TextAlignment.Start , propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.HorizontalTextAlignment = (TextAlignment)nv);
-        public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry),  false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
+        public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(AdvancedEntry), TextAlignment.Start, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.HorizontalTextAlignment = (TextAlignment)nv);
+        public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
         public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
                                 propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
                                 returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
@@ -462,7 +456,6 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.CursorPosition = (int)nv);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
-        //--------------------------------------------------------------------------------------------------------------------------------------------------
 
         #region Methods
         void ExecuteCommand()
@@ -493,7 +486,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public virtual void FocusNext()
         {
-            if (this.Parent is Layout<View> parent)
+            if (Parent is Layout parent)
             {
                 int index = parent.Children.IndexOf(this);
                 for (int i = index + 1; i < (index + 4).Clamp(0, parent.Children.Count); i++)
@@ -512,7 +505,7 @@ namespace Plugin.InputKit.Shared.Controls
         public void Reset()
         {
             txtInput.Text = null;
-            this.AnnotationMessage = null;
+            AnnotationMessage = null;
             imgWarning.IsVisible = false;
         }
         private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
@@ -566,13 +559,13 @@ namespace Plugin.InputKit.Shared.Controls
                     break;
             }
         }
-        ///------------------------------------------------------------------------
+
         /// <summary>
         /// Triggers to display annotation message
         /// </summary>
         public void DisplayValidation()
         {
-            if (!this.IsValidated)
+            if (!IsValidated)
             {
                 AnnotationMessage = ValidationMessage;
                 //AnnotationColor = Color.Red;
@@ -587,30 +580,30 @@ namespace Plugin.InputKit.Shared.Controls
         private void UpdateWarning()
         {
             ValidationChanged?.Invoke(this, new EventArgs());
-            imgWarning.IsVisible = this.IsRequired && !this.IsAnnotated;
+            imgWarning.IsVisible = IsRequired && !IsAnnotated;
         }
 
         private void ApplyValidationPosition(LabelPosition position)
         {
-            this.Children.Remove(lblAnnotation);
+            Children.Remove(lblAnnotation);
             switch (position)
             {
                 case LabelPosition.Before:
-                    this.Children.Insert(1, lblAnnotation);
+                    Children.Insert(1, lblAnnotation);
                     break;
                 case LabelPosition.After:
-                    this.Children.Add(lblAnnotation);
+                    Children.Add(lblAnnotation);
                     break;
             }
         }
 
         private protected virtual Entry GetInputEntry()
         {
-            return new EmptyEntry
+            return new Entry
             {
                 TextColor = GlobalSetting.TextColor,
                 PlaceholderColor = Color.LightGray,
-                HorizontalOptions = LayoutOptions.FillAndExpand,
+                HorizontalOptions = LayoutOptions.Fill,
                 VerticalOptions = LayoutOptions.Center,
                 FontFamily = GlobalSetting.FontFamily,
                 BackgroundColor = Color.Transparent,
