@@ -60,7 +60,7 @@
 A checkbox control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)
-- [Documentation](docs/Controls/CheckBox.md)
+- [Documentation](docs/controls/CheckBox.md)
 
 <br />
 <table>
@@ -85,7 +85,7 @@ A checkbox control that is useful, customizable, full-featured, fully-bindable a
 A radio button control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/RadioButtonPage.xaml)
-- [Documentation](docs/Controls/RadioButton.md)
+- [Documentation](docs/controls/RadioButton.md)
 
 <table>
 <tr>
@@ -177,7 +177,7 @@ This entry has many features to develop your applications quickly. When this ent
 You can set validation message and AnnotatinColor. Entry will automatically display your message when it's not validated.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/AdvancedEntryPage.xaml)
-- [Documentation](docs/Controls/AdvancedEntry.md)
+- [Documentation](docs/controls/AdvancedEntry.md)
 
 <a href="#"><img src="https://media.giphy.com/media/1zl0u7O2doNolIXnrT/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
 
