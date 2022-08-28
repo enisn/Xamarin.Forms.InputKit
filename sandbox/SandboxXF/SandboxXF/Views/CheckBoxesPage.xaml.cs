@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugin.InputKit.Shared.Helpers;
+using System;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -7,12 +8,12 @@ using CheckBox = Plugin.InputKit.Shared.Controls.CheckBox;
 namespace SandboxXF.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class CheckBoxesPage : ContentPage
-	{
+    public partial class CheckBoxesPage : ContentPage
+    {
         static readonly Random rnd = new Random();
-		public CheckBoxesPage()
-		{
-			InitializeComponent ();
+        public CheckBoxesPage()
+        {
+            InitializeComponent();
         }
 
         private void Button_Clicked(object sender, EventArgs e)
@@ -25,6 +26,12 @@ namespace SandboxXF.Views
                 {
                     chk.Color = color;
                 }
+            }
+
+            if (sender is Button button)
+            {
+                button.BackgroundColor = color;
+                button.TextColor = color.ToSurfaceColor();
             }
         }
     }

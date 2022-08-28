@@ -1,6 +1,4 @@
-using System;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
+using InputKit.Shared.Helpers;
 using CheckBox = InputKit.Shared.Controls.CheckBox;
 
 namespace SandboxMAUI.Pages;
@@ -27,6 +25,7 @@ public partial class CheckBoxPage : ContentPage
         if(sender is Button button)
         {
             button.BackgroundColor = color;
+            button.TextColor = color.ToSurfaceColor();
         }
     }
 }

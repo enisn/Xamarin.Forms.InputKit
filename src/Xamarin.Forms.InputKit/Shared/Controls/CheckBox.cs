@@ -3,9 +3,10 @@ using Plugin.InputKit.Shared.Configuration;
 using Plugin.InputKit.Shared.Helpers;
 using Plugin.InputKit.Shared.Layouts;
 using System;
-using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Xamarin.Forms.Shapes;
+using Rectangle = Xamarin.Forms.Shapes.Rectangle;
 
 namespace Plugin.InputKit.Shared.Controls
 {
@@ -22,25 +23,46 @@ namespace Plugin.InputKit.Shared.Controls
         {
             BackgroundColor = Color.Transparent,
             Color = InputKitOptions.GetAccentColor(),
-            BorderColor = Color.Black,
+            BorderColor = Application.Current.RequestedTheme == OSAppTheme.Dark ? Color.WhiteSmoke : Color.Black,
             TextColor = (Color)Label.TextColorProperty.DefaultValue,
             Size = 25,
-            CornerRadius = 4,
+            CornerRadius = 2,
             FontSize = 14,
             LabelPosition = LabelPosition.After
         };
 
         #region Constants
-        public const string RESOURCE_CHECK = "Plugin.InputKit.Shared.Resources.check.png";
-        public const string RESOURCE_CROSS = "Plugin.InputKit.Shared.Resources.cross.png";
-        public const string RESOURCE_STAR = "Plugin.InputKit.Shared.Resources.star.png";
+        internal const double CHECK_SIZE_RATIO = .65;
         #endregion
 
         #region Fields
-        protected internal Frame frmBackground = new Frame { Padding = 0, CornerRadius = GlobalSetting.CornerRadius, InputTransparent = true, HeightRequest = GlobalSetting.Size, WidthRequest = GlobalSetting.Size, BackgroundColor = GlobalSetting.BackgroundColor, MinimumWidthRequest = 35, BorderColor = GlobalSetting.BorderColor, VerticalOptions = LayoutOptions.CenterAndExpand, HasShadow = false };
-        protected internal BoxView boxSelected = new BoxView { IsVisible = false, HeightRequest = GlobalSetting.Size * .60, WidthRequest = GlobalSetting.Size * .60, Color = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center };
-        protected internal IconView imgSelected = new IconView { Source = ImageSource.FromResource(RESOURCE_CHECK), FillColor = GlobalSetting.Color, VerticalOptions = LayoutOptions.CenterAndExpand, HorizontalOptions = LayoutOptions.Center, IsVisible = false };
-        internal Label lblOption = new Label { VerticalOptions = LayoutOptions.CenterAndExpand, FontSize = GlobalSetting.FontSize, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily, IsVisible = false };
+        protected internal Grid IconLayout;
+        protected Rectangle outlineBox = new Rectangle
+        {
+            Fill = GlobalSetting.BackgroundColor.ToBrush(),
+            Stroke = GlobalSetting.BorderColor.ToBrush(),
+            StrokeThickness = 2,
+            WidthRequest = GlobalSetting.Size,
+            HeightRequest = GlobalSetting.Size,
+            RadiusX = GlobalSetting.CornerRadius,
+        };
+        protected Path selectedIcon = new Path
+        {
+            Fill = GlobalSetting.Color.ToBrush(),
+            Aspect = Stretch.Uniform,
+            HeightRequest = GlobalSetting.Size,
+            WidthRequest = GlobalSetting.Size,
+            Scale = 0,
+        };
+        protected internal Label lblOption = new Label
+        {
+            VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Start,
+            FontSize = GlobalSetting.FontSize,
+            TextColor = GlobalSetting.TextColor,
+            FontFamily = GlobalSetting.FontFamily,
+            IsVisible = false
+        };
         private CheckType _type = CheckType.Box;
         private bool _isEnabled;
         #endregion
@@ -53,18 +75,27 @@ namespace Plugin.InputKit.Shared.Controls
         {
             InitVisualStates();
             Orientation = StackOrientation.Horizontal;
-            Padding = new Thickness(0, 10);
             Spacing = 10;
-            frmBackground.Content = boxSelected;
-            ApplyLabelPosition(LabelPosition);
+            Padding = new Thickness(0, 10);
             ApplyIsCheckedAction = ApplyIsChecked;
             ApplyIsPressedAction = ApplyIsPressed;
+
+            IconLayout = new Grid
+            {
+                Children =
+            {
+                outlineBox,
+                selectedIcon
+            }
+            };
+
+            ApplyLabelPosition(LabelPosition);
+            UpdateType();
+            UpdateShape();
             GestureRecognizers.Add(new TapGestureRecognizer
             {
                 Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
             });
-
-            imgSelected.WidthRequest = 15;
         }
 
         /// <summary>
@@ -159,17 +190,17 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Which icon will be shown when checkbox is checked
         /// </summary>
-        public CheckType Type { get => _type; set { _type = value; UpdateType(value); } }
+        public CheckType Type { get => _type; set { _type = value; UpdateType(); } }
 
         /// <summary>
         /// Size of Checkbox
         /// </summary>
-        public double BoxSize { get => frmBackground.Width; }
+        public double BoxSize { get => outlineBox.Width; }
 
         /// <summary>
         /// SizeRequest of CheckBox
         /// </summary>
-        public double BoxSizeRequest { get => frmBackground.WidthRequest; set => SetBoxSize(value); }
+        public double BoxSizeRequest { get => outlineBox.WidthRequest; set => SetBoxSize(value); }
 
         /// <summary>
         /// Fontsize of Checkbox text
@@ -200,7 +231,11 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-        public ImageSource CustomIcon { get => (ImageSource)GetValue(CustomIconProperty); set => SetValue(CustomIconProperty, value); }
+        [Obsolete("This option is removed. Use CustomIconGeometry")]
+        public ImageSource CustomIcon { get => default; set { } }
+
+        [TypeConverter(typeof(PathGeometryConverter))]
+        public Geometry IconGeometry { get => (Geometry)GetValue(IconGeometryProperty); set => SetValue(IconGeometryProperty, value); }
 
         public bool IsPressed { get; set; }
         /// <summary>
@@ -232,9 +267,9 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(CheckBox), GlobalSetting.FontSize, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextFontSize = (double)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(CheckBox), GlobalSetting.BorderColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateBorderColor());
         public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(CheckBox), Label.FontFamilyProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateFontFamily(nv?.ToString()));
-        public static readonly BindableProperty CustomIconProperty = BindableProperty.Create(nameof(CustomIcon), typeof(ImageSource), typeof(CheckBox), default(ImageSource), propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType((bo as CheckBox).Type));
+        public static readonly BindableProperty IconGeometryProperty = BindableProperty.Create(nameof(IconGeometry), typeof(Geometry), typeof(CheckBox), defaultValue: PredefinedShapes.Check, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateShape());
         public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(CheckBox), propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsPressedAction(bo as CheckBox, (bool)nv));
-        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).frmBackground.CornerRadius = (float)nv);
+        public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(CheckBox), GlobalSetting.CornerRadius, propertyChanged: (bo, ov, nv) => (bo as CheckBox).outlineBox.RadiusX = (float)nv);
         public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
             propertyName: nameof(LabelPosition), declaringType: typeof(CheckBox),
             returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
@@ -250,14 +285,14 @@ namespace Plugin.InputKit.Shared.Controls
             if (position == LabelPosition.After)
             {
                 lblOption.HorizontalOptions = LayoutOptions.Start;
-                Children.Add(frmBackground);
+                Children.Add(IconLayout);
                 Children.Add(lblOption);
             }
             else
             {
-                lblOption.HorizontalOptions = LayoutOptions.StartAndExpand;
+                lblOption.HorizontalOptions = LayoutOptions.FillAndExpand;
                 Children.Add(lblOption);
-                Children.Add(frmBackground);
+                Children.Add(IconLayout);
             }
         }
 
@@ -272,24 +307,34 @@ namespace Plugin.InputKit.Shared.Controls
             if (Type == CheckType.Material)
                 return;
 
-            frmBackground.BackgroundColor = BoxBackgroundColor;
+            outlineBox.Fill = BoxBackgroundColor.ToBrush();
         }
 
         void UpdateColors()
         {
-            boxSelected.Color = Color;
+            //selectedIcon.Fill = Color;
 
-            if (Type == CheckType.Material)
+            switch (Type)
             {
-                frmBackground.BorderColor = Color;
-                frmBackground.BackgroundColor = IsChecked ? Color : Color.Transparent;
-                imgSelected.FillColor = Color.ToSurfaceColor();
-            }
-            else
-            {
-                frmBackground.BorderColor = IsChecked ? Color : BorderColor;
-                frmBackground.BackgroundColor = BoxBackgroundColor;
-                imgSelected.FillColor = IconColor == Color.Transparent ? Color : IconColor;
+                case CheckType.Regular:
+                    outlineBox.Stroke = IsChecked ? Color.ToBrush() : BorderColor.ToBrush();
+                    outlineBox.Fill = BoxBackgroundColor.ToBrush();
+                    selectedIcon.Fill = IconColor == Color.Transparent ? Color.ToBrush() : IconColor.ToBrush();
+                    break;
+                case CheckType.Filled:
+                    outlineBox.Fill = IsChecked ? BorderColor.ToBrush() : Color.Transparent.ToBrush();
+                    selectedIcon.Fill = IsChecked ? Color.ToBrush() : Color.Transparent.ToBrush();
+                    break;
+                case CheckType.Material:
+                    outlineBox.Stroke = Color.ToBrush();
+                    outlineBox.Fill = IsChecked ? Color.ToBrush() : Color.Transparent.ToBrush();
+                    selectedIcon.Fill = Color.ToSurfaceColor().ToBrush();
+                    break;
+                default:
+                    outlineBox.Stroke = IsChecked ? Color.ToBrush() : BorderColor.ToBrush();
+                    outlineBox.Fill = BoxBackgroundColor.ToBrush();
+                    selectedIcon.Fill = IconColor == Color.Transparent ? Color.ToBrush() : IconColor.ToBrush();
+                    break;
             }
         }
 
@@ -298,51 +343,24 @@ namespace Plugin.InputKit.Shared.Controls
             if (Type == CheckType.Material)
                 return;
 
-            frmBackground.BorderColor = BorderColor;
+            outlineBox.Stroke = BorderColor.ToBrush();
         }
 
-        void SetBoxSize(double value)
+        void SetBoxSize(double size)
         {
-            frmBackground.WidthRequest = value;
-            frmBackground.HeightRequest = value;
-            boxSelected.WidthRequest = value * .6;  //old value 0.72
-            boxSelected.HeightRequest = value * 0.6;
-            //lblSelected.FontSize = value * 0.72;       //old value 0.76 //TODO: Do something to resizing
-
-            // TODO: Refactor after MAUI update
-            (this.Children[0] as View).MinimumWidthRequest = value * 1.4;
+            outlineBox.HeightRequest = size;
+            outlineBox.WidthRequest = size;
+            //selectedIcon.MaximumHeightRequest = size * CHECK_SIZE_RATIO;
+            //selectedIcon.MaximumWidthRequest = size * CHECK_SIZE_RATIO;
         }
 
-        void UpdateType(CheckType _Type)
+        void UpdateShape()
         {
-            switch (_Type)
-            {
-                case CheckType.Box:
-                    frmBackground.Content = boxSelected;
-                    break;
-                case CheckType.Check:
-                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CHECK);
-                    frmBackground.Content = imgSelected;
-                    break;
-                case CheckType.Cross:
-                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CROSS);
-                    frmBackground.Content = imgSelected;
-                    break;
-                case CheckType.Star:
-                    imgSelected.Source = ImageSource.FromResource(RESOURCE_STAR);
-                    frmBackground.Content = imgSelected;
-                    break;
-                case CheckType.Material:
-                    imgSelected.Source = ImageSource.FromResource(RESOURCE_CHECK);
-                    frmBackground.CornerRadius = 5;
-                    frmBackground.Content = imgSelected;
-                    break;
-                case CheckType.Custom:
-                    imgSelected.Source = CustomIcon;
-                    frmBackground.Content = imgSelected;
-                    break;
-            }
+            selectedIcon.Data = IconGeometry;
+        }
 
+        void UpdateType()
+        {
             UpdateColors();
         }
 
@@ -390,27 +408,37 @@ namespace Plugin.InputKit.Shared.Controls
         {
 
         }
+
         public static void ApplyIsChecked(CheckBox checkBox, bool isChecked)
         {
-            checkBox.frmBackground.Content.IsVisible = isChecked;
+            checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
+
             checkBox.UpdateColors();
         }
+
         public static async void ApplyIsPressed(CheckBox checkBox, bool isPressed)
         {
-            await checkBox.frmBackground.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
-            var radiusVal = isPressed ? checkBox.frmBackground.CornerRadius * 2f : checkBox.CornerRadius;
-            checkBox.frmBackground.CornerRadius = radiusVal;
+            await checkBox.outlineBox.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
+            var radiusVal = isPressed ? checkBox.outlineBox.RadiusX * 2f : checkBox.CornerRadius;
+            checkBox.outlineBox.RadiusX = radiusVal;
         }
         #endregion
 
         public enum CheckType
         {
+            [Obsolete("This option is removed. Use IconGeometry instead.")]
             Box,
+            [Obsolete("This option is removed. Use IconGeometry instead")]
             Check,
+            [Obsolete("This option is removed. Use IconGeometry instead")]
             Cross,
+            [Obsolete("This option is removed. Use IconGeometry instead")]
             Star,
+            [Obsolete("This option is removed. Use IconGeometry instead")]
+            Custom = 90,
+            Regular,
+            Filled,
             Material,
-            Custom = 90
         }
     }
 }
