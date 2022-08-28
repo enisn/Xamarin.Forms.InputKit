@@ -16,9 +16,9 @@ namespace InputKit.Shared.Controls
         /// </summary>
         public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
         {
-            BackgroundColor = Colors.White,
+            BackgroundColor = Application.Current.PlatformAppTheme == AppTheme.Dark ? Colors.Black : Colors.White,
             CornerRadius = 20,
-            BorderColor = Colors.Gray,
+            BorderColor = Application.Current.PlatformAppTheme == AppTheme.Dark ? Colors.WhiteSmoke : Colors.Gray,
             Color = InputKitOptions.GetAccentColor(),
             FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)),
             Size = -1, /* This is not supported for this control*/

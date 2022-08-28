@@ -20,7 +20,7 @@ public class RadioButton : StatefulStackLayout
     public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
     {
         Color = InputKitOptions.GetAccentColor(),
-        BorderColor = Colors.Black,
+        BorderColor = Application.Current.PlatformAppTheme == AppTheme.Dark ? Colors.WhiteSmoke : Colors.Black,
         TextColor = (Color)Label.TextColorProperty.DefaultValue,
         Size = 25,
         CornerRadius = -1,
