@@ -96,7 +96,7 @@ All of the RadioButton properties are bindable.
 RadioButton icon can be customized in two different ways. You can use predefined shapes or you can use custom shape.
 InputKit provides a collection of predefined shapes that can be used as an icon.
 
-> Check all [Predefined Shapes](../../sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)
+> Check all [Predefined Shapes](../PredefinedShapes.md) for more info.
 
 - Predefined shapes can be used as parameter for `SelectedIconGeomerty` property.
 
