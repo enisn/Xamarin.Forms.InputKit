@@ -22,9 +22,9 @@ public class RadioButton : StatefulStackLayout
         Color = InputKitOptions.GetAccentColor(),
         BorderColor = Colors.Black,
         TextColor = (Color)Label.TextColorProperty.DefaultValue,
-        Size = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Large : NamedSize.Medium, typeof(Label)) * 1.2,
+        Size = 25,
         CornerRadius = -1,
-        FontSize = Device.GetNamedSize(Device.RuntimePlatform == Device.iOS ? NamedSize.Medium : NamedSize.Small, typeof(Label)),
+        FontSize = 14,
         LabelPosition = LabelPosition.After
     };
     #endregion
@@ -76,8 +76,6 @@ public class RadioButton : StatefulStackLayout
         InitVisualStates();
 
         Orientation = StackOrientation.Horizontal;
-        if (Device.RuntimePlatform != Device.iOS)
-            lblText.FontSize = lblText.FontSize *= 1.5;
 
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
