@@ -3,7 +3,7 @@
 	<td> <img src="art/icon512.png" width="120" /></td>
 	<td> 
 		<h1> InputKit </h1>
-		<p><a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">CheckBox</a>, Radio Button, Advanced Entry, Advanced Slider, Dropdown etc.  </p> 
+		<p><a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">CheckBox</a>, Radio Button, Advanced Entry, Advanced Slider etc.  </p> 
 	</td>
 </tr>
 </table>
@@ -25,23 +25,23 @@
 
 ## Getting Started with InputKit on **MAUI**
 
-> Be careful. MAUI Compatibility work in progress and experimental.
+> MAUI doesn't implement exactly same features as Xamarin.Forms.InputKit.
 > You can follow the progress with [this issue](https://github.com/enisn/Xamarin.Forms.InputKit/issues/221)
 
 - Install [InputKit.Maui](https://www.nuget.org/packages/InputKit.Maui) package from NuGet.
 
-- Go your **MauiProgram.cs** file and add following line:
+- Go to your **MauiProgram.cs** file and add following line:
 
-```csharp
-builder
-  .UseMauiApp<App>()
-  .ConfigureMauiHandlers(handlers =>
-  {
-  	// Add following line:
-  	handlers.AddInputKitHandlers(); // <---
-  })
-						
-```
+    ```csharp
+    builder
+    .UseMauiApp<App>()
+    .ConfigureMauiHandlers(handlers =>
+    {
+        // Add following line:
+        handlers.AddInputKitHandlers(); // 👈
+    })
+                            
+    ```
 						
 <hr />
 
@@ -56,9 +56,8 @@ builder
 <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">
 <h2>Checkbox</h2>
 </a>
-<p>As you know ther is no CheckBox in Xamarin Forms Library. You can use a custom renderer to use Native Checkbox in portable layer. This CheckBox is not a native one, It's created in Xamarin Forms Portable layer.</p>
+<p>A useful, customizable, full-featured, fully-bindable CheckBox.</p>
 
-<p>Also you can read more about Checkbox from <a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">here</a> </p>
 <h4>SAMPLE:</h4>
 
 ```xaml
