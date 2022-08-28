@@ -5,6 +5,7 @@
 
     <ScrollView>
         <StackLayout
+            x:Name="mainLayout"
               Padding="{OnPlatform iOS='30,60,30,30', Default='30'}" Spacing="10"
               MaximumWidthRequest="400">
 

@@ -29,10 +29,6 @@ public class RadioButton : StatefulStackLayout
     };
     #endregion
 
-    #region Constants
-    public const string PATH_DOT = "M12 18a6 6 0 100-12 6 6 0 000 12z";
-    #endregion
-
     #region Fields
     protected internal Grid IconLayout;
     protected internal Ellipse iconCircle = new Ellipse
@@ -92,7 +88,7 @@ public class RadioButton : StatefulStackLayout
         };
 
         ApplyLabelPosition(LabelPosition);
-        UpdateType();
+        UpdateShape();
 
         GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
     }
@@ -220,7 +216,7 @@ public class RadioButton : StatefulStackLayout
     public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).CommandParameter = nv);
     public static readonly BindableProperty IsPressedProperty = BindableProperty.Create(nameof(IsPressed), typeof(bool), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsPressedAction((bool)nv));
     public static readonly BindableProperty FontFamilyProperty = BindableProperty.Create(nameof(FontFamily), typeof(string), typeof(RadioButton), propertyChanged: (bo, ov, nv) => (bo as RadioButton).FontFamily = (string)nv);
-    public static readonly BindableProperty SelectedIconGeomertyProperty = BindableProperty.Create(nameof(SelectedIconGeomerty), typeof(Geometry), typeof(RadioButton), GeometryConverter.FromPath(PATH_DOT), propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateType());
+    public static readonly BindableProperty SelectedIconGeomertyProperty = BindableProperty.Create(nameof(SelectedIconGeomerty), typeof(Geometry), typeof(RadioButton), PredefinedShapes.Dot, propertyChanged: (bo, ov, nv) => (bo as RadioButton).UpdateShape());
     public static readonly BindableProperty LabelPositionProperty = BindableProperty.Create(
         propertyName: nameof(LabelPosition), declaringType: typeof(RadioButton),
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
@@ -235,19 +231,19 @@ public class RadioButton : StatefulStackLayout
         Children.Clear();
         if (position == LabelPosition.After)
         {
-            IconLayout.HorizontalOptions = LayoutOptions.Center;
+            lblText.HorizontalOptions = LayoutOptions.Start;
             Children.Add(IconLayout);
             Children.Add(lblText);
         }
         else
         {
-            IconLayout.HorizontalOptions = LayoutOptions.Center;
+            lblText.HorizontalOptions = LayoutOptions.FillAndExpand;
             Children.Add(lblText);
             Children.Add(IconLayout);
         }
     }
 
-    private protected virtual void UpdateType()
+    private protected virtual void UpdateShape()
     {
         iconChecked.Data = SelectedIconGeomerty;
     }
