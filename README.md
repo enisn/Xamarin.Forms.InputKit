@@ -103,75 +103,6 @@ A radio button control that is useful, customizable, full-featured, fully-bindab
 </table>
 <hr />
 
-
-## AutoCompleteEntry
-Alternative picker with dropdown menu. _( Xamarin Forms only )_
-
-```xaml
- <input:AutoCompleteEntry Title="Type something below:"
-                          ItemsSource="{Binding MyList}" 
-                          SelectedItem="{Binding SelectedItem}" />
-```
-
-<table>
-<tr>
-<td>
-<a href="#"><img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/autocompleteentries_android.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
-</td>
-<td>
-<a href="#"><img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/autocompleteentries_ios.png" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
-</td>
-</tr>
-</table>
-
-<h4>PROPERTIES:</h4>
-<ul>
-<li><strong>Placeholder:</strong> <em>(string)</em> Placehodler Text</li>
-<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
-<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
-<li><strong>Color:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
-<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
-<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
-<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
-<li><strong>ItemsSource:</strong> <em>(IList)</em> Suggestions items</li>
-</ul>
-
-To be added...
-<hr />
-
-<h2>Dropdown ( Experimental )</h2>
-<p>Alternative picker with dropdown menu. _(Xamarin Forms only)_
-</p>
-<h4>SAMPLE:</h4>
-
-```xaml
- <input:Dropdown Title="Chosse an option below:"
-                            TitleColor="Black"
-                            ValidationMessage="This field is required" 
-                            AnnotationColor="Accent" 
-                            IsRequired="True" 
-                            BorderColor="Black" 
-                            Color="BlueViolet"
-                            Placeholder="Choose one" 
-                            ItemsSource="{Binding MyList}" 
-                            SelectedItem="{Binding SelectedItem}" />
-```
-<a href="#"><img src="https://media.giphy.com/media/CjGR8p3HoeOup8r21J/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
-
-<h4>PROPERTIES:</h4>
-<ul>
-<li><strong>Placeholder:</strong> <em>(string)</em> Placehodler Text</li>
-<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
-<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
-<li><strong>Color:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
-<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
-<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
-<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
-</ul>
-
-<hr />
-
-
 ## Advanced Entry
 This entry has many features to develop your applications quickly. When this entry is completed, it finds the next entry in the Parent layout and focuses it. AdvancedEntry contains a validation system inside it. You can set some properties to validate it and you can handle whether all your entries are validated or not with **FormView**.
 You can set validation message and AnnotatinColor. Entry will automatically display your message when it's not validated.
@@ -202,43 +133,6 @@ You can set validation message and AnnotatinColor. Entry will automatically disp
 </ul>
 <hr />
 
-
-
-<h2>Advanced Slider</h2>
-<p>Xamarin Forms Slider works a Sticky label on it. Wonderful experience for your users.</p>
-<h4>SAMPLE:</h4>
-
-```xaml
-<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:Sample.InputKit"
-             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
-             x:Class="Sample.InputKit.MainPage">
-
-    <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
-
-        <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
-
-    </StackLayout>
-
-</ContentPage>
-```
-<a href="https://media.giphy.com/media/BoIPfRefA0Q9AtJ6mQ/giphy.gif"><img src="https://media.giphy.com/media/BoIPfRefA0Q9AtJ6mQ/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
-
-<h4>PROPERTIES:</h4>
-<ul>
-<li><strong>Value:</strong> <em>(double)</em> Current Selected Value, (this can be used TwoWayBinding)</li>
-<li><strong>Title:</strong> <em>(string)</em> Title of slider</li>
-<li><strong>ValueSuffix:</strong> <em>(string)</em> Suffix to be displayed near Value on Floating Label</li>
-<li><strong>ValuePrefix:</strong> <em>(string)</em> Prefix to be displayed near Value on Floating Label</li>
-<li><strong>MinValue:</strong> <em>(double)</em> Sliders' minimum value</li>
-<li><strong>MaxValue:</strong> <em>(double)</em> Sliders' maximum value</li>
-<li><strong>MaxValue:</strong> <em>(double)</em> Sliders' increment value</li>
-<li><strong>TextColor:</strong> <em>(Color)</em> Color of Texts</li>
-<li><strong>DisplayMinMaxValue:</strong> <em>(bool)</em> Visibility of Minimum and Maximum value</li>
-</ul>
-<hr />
 
 ## SelectionView
 Presents options to user to choose. This view didn't created to static usage. You should Bind a model List as ItemSource, or if you don't use MVVM you can set in page's cs file like below. (You can override ToString method to fix display value or I'll add displayMember property soon.)</p>
@@ -323,8 +217,111 @@ public partial class MainPage : ContentPage
 <li><strong>ColumnNumber:</strong> <em>(int)</em> Number of columng of this view</li>
 </ul>
 
+<hr />
 
-<br />
+
+## AutoCompleteEntry
+Alternative picker with dropdown menu. _( Xamarin Forms only )_
+
+```xaml
+ <input:AutoCompleteEntry Title="Type something below:"
+                          ItemsSource="{Binding MyList}" 
+                          SelectedItem="{Binding SelectedItem}" />
+```
+
+<table>
+<tr>
+<td>
+<a href="#"><img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/autocompleteentries_android.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+</td>
+<td>
+<a href="#"><img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/autocompleteentries_ios.png" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+</td>
+</tr>
+</table>
+
+<h4>PROPERTIES:</h4>
+<ul>
+<li><strong>Placeholder:</strong> <em>(string)</em> Placehodler Text</li>
+<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
+<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
+<li><strong>Color:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
+<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
+<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
+<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
+<li><strong>ItemsSource:</strong> <em>(IList)</em> Suggestions items</li>
+</ul>
+
+To be added...
+<hr />
+
+<h2>Dropdown ( Experimental )</h2>
+<p>Alternative picker with dropdown menu. _(Xamarin Forms only)_
+</p>
+<h4>SAMPLE:</h4>
+
+```xaml
+ <input:Dropdown Title="Chosse an option below:"
+                            TitleColor="Black"
+                            ValidationMessage="This field is required" 
+                            AnnotationColor="Accent" 
+                            IsRequired="True" 
+                            BorderColor="Black" 
+                            Color="BlueViolet"
+                            Placeholder="Choose one" 
+                            ItemsSource="{Binding MyList}" 
+                            SelectedItem="{Binding SelectedItem}" />
+```
+<a href="#"><img src="https://media.giphy.com/media/CjGR8p3HoeOup8r21J/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+
+<h4>PROPERTIES:</h4>
+<ul>
+<li><strong>Placeholder:</strong> <em>(string)</em> Placehodler Text</li>
+<li><strong>Title:</strong> <em>(string)</em> Title will be shown top of this control</li>
+<li><strong>IconImage:</strong> <em>(string)</em> Icons of this Entry. Icon will be shown left of this control</li>
+<li><strong>Color:</strong> <em>(Color)</em> Color of Icon Image. IconImage must be a PNG and have Alpha channels. This fills all not-Alpha channels one color. <i>Default is Accent</i></li>
+<li><strong>ValidationMessage:</strong> <em>(string)</em> This is message automaticly displayed when this is not validated. **Use this one instead of annotationmessage**</li>
+<li><strong>AnnotationColor:</strong> <em>(Color)</em> AnnotationMessage's color..</li>
+<li><strong>IsRequired:</strong> <em>(bool)</em> IValidation implementation. Same with IsAnnotated</li>
+</ul>
+
+<hr />
+
+
+<h2>Advanced Slider</h2>
+<p>Xamarin Forms Slider works a Sticky label on it. Wonderful experience for your users.</p>
+<h4>SAMPLE:</h4>
+
+```xaml
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Sample.InputKit"
+             xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             x:Class="Sample.InputKit.MainPage">
+
+    <StackLayout Spacing="12" Padding="10,0" VerticalOptions="CenterAndExpand">
+
+        <input:AdvancedSlider MaxValue="5000" MinValue="50" StepValue="50" ValuePrefix="Price:" ValueSuffix="€" Title="Choose Budget:"/>
+
+    </StackLayout>
+
+</ContentPage>
+```
+<a href="https://media.giphy.com/media/BoIPfRefA0Q9AtJ6mQ/giphy.gif"><img src="https://media.giphy.com/media/BoIPfRefA0Q9AtJ6mQ/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
+
+<h4>PROPERTIES:</h4>
+<ul>
+<li><strong>Value:</strong> <em>(double)</em> Current Selected Value, (this can be used TwoWayBinding)</li>
+<li><strong>Title:</strong> <em>(string)</em> Title of slider</li>
+<li><strong>ValueSuffix:</strong> <em>(string)</em> Suffix to be displayed near Value on Floating Label</li>
+<li><strong>ValuePrefix:</strong> <em>(string)</em> Prefix to be displayed near Value on Floating Label</li>
+<li><strong>MinValue:</strong> <em>(double)</em> Sliders' minimum value</li>
+<li><strong>MaxValue:</strong> <em>(double)</em> Sliders' maximum value</li>
+<li><strong>MaxValue:</strong> <em>(double)</em> Sliders' increment value</li>
+<li><strong>TextColor:</strong> <em>(Color)</em> Color of Texts</li>
+<li><strong>DisplayMinMaxValue:</strong> <em>(bool)</em> Visibility of Minimum and Maximum value</li>
+</ul>
 <hr />
 
 # Did you like ?
