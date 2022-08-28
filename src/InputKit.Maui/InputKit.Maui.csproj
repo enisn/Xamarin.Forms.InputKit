@@ -17,10 +17,10 @@
 		<PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
 		<PackageReleaseNotes>Android Target Framework issue resolved.</PackageReleaseNotes>
-		<PackageTags>xamarin, maui, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider, dropdown</PackageTags>
+		<PackageTags>xamarin, maui, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider</PackageTags>
 		<Title>Common controls mostly required</Title>
 		<Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
-		<Description>Ready to use Input componenets such as Checkbox,  RadioButton, Dropdown, AdvancedEntry, Advanced Slider etc.</Description>
+		<Description>Ready to use Input componenets such as Checkbox,  RadioButton, AdvancedEntry, Advanced Slider etc.</Description>
 		<Owners>enisn</Owners>
 		<Authors>enisn</Authors>
 		<Copyright>Copyright 2018</Copyright>
