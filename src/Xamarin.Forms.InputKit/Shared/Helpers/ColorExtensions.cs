@@ -16,5 +16,10 @@ namespace Plugin.InputKit.Shared.Helpers
             else
                 return Color.White;
         }
+
+        public static Brush ToBrush(this Color color)
+        {
+            return new SolidColorBrush(color);
+        }
     }
 }
