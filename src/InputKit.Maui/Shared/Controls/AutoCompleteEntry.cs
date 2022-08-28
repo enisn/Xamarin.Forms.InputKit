@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace InputKit.Shared.Controls;
 
-public class AutoCompleteEntry : AdvancedEntry
+internal class AutoCompleteEntry : AdvancedEntry
 {
     private AutoCompleteView txtInput;
 
-    public AutoCompleteEntry()
+    internal AutoCompleteEntry()
     {
         // Keep the ctor for linker.
     }

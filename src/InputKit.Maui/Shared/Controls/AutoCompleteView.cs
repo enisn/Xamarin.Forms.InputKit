@@ -5,7 +5,7 @@ using System.Collections.Specialized;
 
 namespace InputKit.Shared.Controls;
 
-public class AutoCompleteView : Entry
+internal class AutoCompleteView : Entry
 {
     private static readonly Func<string, ICollection<string>, ICollection<string>> _defaultSortingAlgorithm = (t, d) => d;
 
@@ -30,7 +30,7 @@ public class AutoCompleteView : Entry
         typeof(AutoCompleteView),
         2);
 
-    public AutoCompleteView()
+    internal AutoCompleteView()
     {
         // Keep the ctor for linker.
     }
