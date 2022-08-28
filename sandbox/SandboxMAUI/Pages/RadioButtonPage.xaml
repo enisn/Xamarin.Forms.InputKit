@@ -8,15 +8,16 @@
         <StackLayout Padding="25" Spacing="15" MaximumWidthRequest="400">
 
             <Button Text="Randomize Colors" Clicked="RandomizeColors" />
-            <BoxView Color="Black" HeightRequest="1" HorizontalOptions="Fill" Margin="5,10" />
+            <BoxView Color="{AppThemeBinding Dark=White, Light=Black}" HeightRequest="1" HorizontalOptions="Fill" Margin="5,10" />
 
             <input:RadioButtonGroupView x:Name="groupView">
                 <input:RadioButton Text="Option 1" />
                 <input:RadioButton Text="Option 2" />
-                <input:RadioButton Text="Option 3 Label Position Before" LabelPosition="Before"/>
-                <input:RadioButton Text="Option 4 with Custom Image" SelectedIconGeomerty="M12,22 C6.4771525,22 2,17.5228475 2,12 C2,6.4771525 6.4771525,2 12,2 C17.5228475,2 22,6.4771525 22,12 C22,17.5228475 17.5228475,22 12,22 Z M8,10 L6,12 L11,17 L18,10 L16,8 L11,13 L8,10 Z"/>
-                <input:RadioButton Text="Dolor ullamcorper sit justo magna "/>
-                <input:RadioButton Text="Option 5 Disabled" IsDisabled="True"/>
+                <input:RadioButton Text="Option 3 with Check Shape" SelectedIconGeomerty="{x:Static input:PredefinedShapes.Check}" />
+                <input:RadioButton Text="Option 4 with CheckCircle Shape" SelectedIconGeomerty="{x:Static input:PredefinedShapes.CheckCircle}"/>
+                <input:RadioButton Text="Option 5 with Custom Shape" SelectedIconGeomerty="M 15.6038 7.1366 v 5.8061 c 0 0.8669 -0.8266 1.6934 -1.6934 1.6934 h -5.0803 c -1.0547 0 -1.9094 -0.1302 -2.903 -0.4838 c -0.3068 -0.1092 -1.2096 -0.4838 -1.2096 -0.4838 V 6.8947 l 3.9939 -4.6913 L 9.072 0.121 h 0.7258 c 0.804 0 1.3703 0.6415 1.3703 1.4456 v 0.4522 c 0 1.0321 -0.0622 2.0633 -0.1862 3.0879 L 10.9412 5.4432 H 13.9104 C 14.7773 5.4432 15.6038 6.2698 15.6038 7.1366 z M 0.121 14.3942 h 3.6288 V 6.169 H 0.121 V 14.3942 z"/>
+                <input:RadioButton Text="Option 6 Label Position Before" LabelPosition="Before"/>
+                <input:RadioButton Text="Option 7 Disabled" IsDisabled="True"/>
             </input:RadioButtonGroupView>
 
         </StackLayout>
