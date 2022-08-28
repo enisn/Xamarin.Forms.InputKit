@@ -10,7 +10,6 @@ public partial class MainPage : ContentPage
         InitializeComponent();
     }
 
-
     async void GoToCheckBoxPage(System.Object sender, System.EventArgs e)
     {
         await Navigation.PushAsync(new CheckBoxPage());
