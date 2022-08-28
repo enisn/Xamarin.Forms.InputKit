@@ -5,7 +5,6 @@ using InputKit.Shared.Utils;
 using Microsoft.Maui;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
-using Plainer.Maui.Controls;
 using System;
 using System.Collections;
 using System.Collections.Specialized;
@@ -37,7 +36,7 @@ public partial class Dropdown : StatefulStackLayout, IValidatable
     protected Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
     protected Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
     protected Frame frmBackground = new Frame { Padding = 0, BackgroundColor = GlobalSetting.BackgroundColor, HasShadow = false, CornerRadius = (int)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor };
-    protected Entry txtInput = new EntryView { TextColor = Colors.Blue, PlaceholderColor = Colors.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
+    protected Entry txtInput = new Entry { TextColor = Colors.Blue, PlaceholderColor = Colors.Blue, HorizontalOptions = LayoutOptions.FillAndExpand, VerticalOptions = LayoutOptions.Center, FontFamily = GlobalSetting.FontFamily, IsEnabled = false };
 
     private protected PopupMenu pMenu = new PopupMenu();
     private string _placeholder;
@@ -52,11 +51,11 @@ public partial class Dropdown : StatefulStackLayout, IValidatable
         {
             Orientation = StackOrientation.Horizontal,
             Children =
-                        {
-                            imgIcon,
-                            txtInput,
-                            imgArrow
-                        }
+            {
+                imgIcon,
+                txtInput,
+                imgArrow
+            }
         };
         Children.Add(frmBackground);
         frmBackground.GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Menu_Requested), CommandParameter = frmBackground });
