@@ -13,7 +13,7 @@
         <StackLayout Padding="30" MaximumWidthRequest="400">
                 <Label Text="You can see FormView Below:" />
                 <BoxView HeightRequest="1" Color="LightGray" />
-                <input:FormView IsValidated="{Binding IsValidated}">
+                <input:FormView IsValidated="{Binding IsValidated}" Spacing="15">
 
                     <input:AdvancedEntry
                         Title="Place your email below:"
