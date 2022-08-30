@@ -131,8 +131,8 @@ You can customize RadioButton colors by setting `Color`, `CircleColor` and `Text
 ### Label Position
 
 RadioButton supports two label positions:
-    - Before - label is positioned before the control.
-    - After - label is positioned after the control. (default)
+- Before - label is positioned before the control.
+- After - label is positioned after the control. (default)
 
 ```xml
 <input:RadioButtonGroupView>
