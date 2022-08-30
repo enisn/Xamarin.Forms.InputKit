@@ -24,7 +24,7 @@ Welcome to the official documentation of InputKit. InputKit is an [open-source](
 
 - Getting Started
   - [Getting Started with InputKit on Xamarin.Forms](getting-started/getting-started-xamarin.md)
-  - [Getting Started with InputKit on MAUI](getting-started/getting-started-xamarin.md)🔥 <span class="badge bg-warning">New</span>
+  - [Getting Started with InputKit on MAUI](getting-started/getting-started-maui.md)🔥 <span class="badge bg-warning">New</span>
 - Controls
   - [CheckBox](components/controls/CheckBox.md)
   - [RadioButton](components/controls/RadioButton.md)
