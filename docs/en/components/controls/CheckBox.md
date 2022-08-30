@@ -2,6 +2,16 @@
 
 A checkbox control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
+
+
+| Dark - Desktop | Light - Mobile |
+| --- | --- |
+| <img src="../../images/checkbox-dark-windows.gif" height="480" /> | <img src="../../images/checkbox-light-android.gif" height="480"/> |
+
+
+> _You can visit entire code of this sample from [here](https://github.com/enisn/Xamarin.Forms.InputKit/tree/develop/sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)_
+
+
 ## Supported Platforms
 
 | - | MAUI | Xamarin Forms |
@@ -12,26 +22,6 @@ A checkbox control that is useful, customizable, full-featured, fully-bindable a
 | Android | ✅ | ✅ |
 | iOS | ✅ | ✅ |
 
-
-## Showcase
-
-```xml
- <input:CheckBox Text="Option 0 Plain Checkbox" />
- <input:CheckBox Text="Option 1 with Filled Type" Type="Filled" />
- <input:CheckBox Text="Option 2 with Material Type" Type="Material" />
- <input:CheckBox Text="Option 2 with Square Shape" IconGeometry="{x:Static input:PredefinedShapes.Square}" />
- <input:CheckBox Text="Option 3 with Line Shape" IconGeometry="{x:Static input:PredefinedShapes.Line}" />
- <input:CheckBox Text="Option 3 with Line Shape with Material Type" Type="Material" IconGeometry="{x:Static input:PredefinedShapes.Line}" />
- <input:CheckBox Text="Option 3 with Custom Type (X)" Type="Custom" IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
- <input:CheckBox Text="Option 5 with Material Custom Type (X)" Type="Material" IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
- <input:CheckBox Text="Option 6 (Position)" Type="Regular" LabelPosition="Before"/>
-```
-
-> _You can visit entire code from [here](../../../sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)_
-
-| Dark - Desktop | Light - Mobile |
-| --- | --- |
-| ![](../../images/checkbox-dark-windows.gif) | ![](../../images/checkbox-light-android.gif) |
 
 
 ## Usage

@@ -14,19 +14,6 @@
           ]
       },
       {
-        "text": "Examples",
-        "items":[
-            {
-                "text" : "Adding RadioButtons Dynamically",
-                "path": "examples/Adding-RadioButtons-Dynamically.md"
-            }
-        ]
-      },
-      {
-        "text": "Options",
-        "path": "options.md"
-      },
-      {
         "text": "Components",
         "items": [
             {
@@ -56,6 +43,19 @@
                 ]
             }
         ]
+      },
+      {
+        "text": "Examples",
+        "items":[
+            {
+                "text" : "Adding RadioButtons Dynamically",
+                "path": "examples/Adding-RadioButtons-Dynamically.md"
+            }
+        ]
+      },
+      {
+        "text": "Options",
+        "path": "Options.md"
       },
       {
         "text": "Migration Guides",

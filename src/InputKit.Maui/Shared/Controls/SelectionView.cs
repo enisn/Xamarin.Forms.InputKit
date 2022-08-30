@@ -1,15 +1,9 @@
-﻿using Microsoft.Maui;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Linq;
-using InputKit.Shared.Abstraction;
+﻿using InputKit.Shared.Abstraction;
 using InputKit.Shared.Configuration;
 using InputKit.Shared.Helpers;
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace InputKit.Shared.Controls;
 
@@ -60,7 +54,7 @@ public partial class SelectionView : Grid
     /// <summary>
     /// Added later
     /// </summary>
-    public string IsDisabledPropertyName { get; set; }
+    public string IsDisabledPropertyName { get; set; } = "IsDisabled";
 
     /// <summary>
     /// Column of this view
@@ -435,6 +429,7 @@ public partial class SelectionView : Grid
     #endregion
 
     #region Nested Classes
+
     /// <summary>
     /// A Button which ISelection Implemented
     /// </summary>
@@ -627,4 +622,41 @@ public partial class SelectionView : Grid
         public event EventHandler Clicked;
     }
     #endregion
+}
+
+
+public class MySwitch : ImageButton, ISelection
+{
+    public MySwitch()
+    {
+        this.Source = "turned_off.png";
+        this.Clicked += (s, e) =>
+        {
+            if (IsDisabled)
+                return;
+
+            IsSelected = !IsSelected;
+
+            if (IsSelected)
+            {
+                this.Source = "turned_on.png";
+            }
+            else
+            {
+                this.Source = "turned_off.png";
+            }
+        };
+    }
+
+    public bool IsSelected { get; set; }
+    public object Value { get; set; }
+    public bool IsDisabled { get; set; }
+}
+
+public class MySelectionView : SelectionView
+{
+    public override ISelection GetInstance(object obj)
+    {
+        return new MySwitch();
+    }
 }

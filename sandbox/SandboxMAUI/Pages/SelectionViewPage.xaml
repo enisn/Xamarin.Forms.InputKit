@@ -4,6 +4,7 @@
              x:Class="SandboxMAUI.Pages.SelectionViewPage"
              xmlns:vm="clr-namespace:SandboxMAUI.ViewModels"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+             xmlns:nputshared="clr-namespace:InputKit.Shared;assembly=InputKit.Maui"
              Title="SelectionViewPage">
     <ContentPage.BindingContext>
         <vm:SampleItemsViewModel />
@@ -29,8 +30,13 @@
                  ColumnSpacing="10"
                  ItemDisplayBinding="{Binding Name}"
                  ItemsSource="{Binding Items}"
-                 RowSpacing="10"
-                 SelectionType="Button" />
+                 RowSpacing="10">
+                <input:SelectionView.SelectionType>
+                    <nputshared:SelectionType>250</nputshared:SelectionType>
+                </input:SelectionView.SelectionType>
+            </input:SelectionView>
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

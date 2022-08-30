@@ -1,4 +1,5 @@
 ﻿using InputKit.Handlers;
+using InputKit.Shared.Controls;
 
 namespace SandboxMAUI;
 
@@ -19,6 +20,8 @@ public static class MauiProgram
 		{
 			handlers.AddInputKitHandlers();
 		});
+
+		SelectionView.GlobalSetting.CornerRadius = 0;
 
 		return builder.Build();
 	}

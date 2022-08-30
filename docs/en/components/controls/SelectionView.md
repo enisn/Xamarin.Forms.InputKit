@@ -1,146 +1,260 @@
 # SelectionView
 SelectionView is a dynamic control. It needs a **ItemsSource** to generate views.
-It can handle single selections nad multi selections. You can bind **SelectedItem** for single selection type,
-and bind  **SelectecItems** for multi selections.
+It can handle single selections and multi selections.
+
+
+| Dark - Desktop | Light - Mobile |
+| --- | --- |
+| ![maui selectionview](../../images/selectionview-dark-windows.gif) | ![maui radio button](../../images/selectionview-light-android.gif) |
 
 <hr />
 
-## SelectionType
-*Default value is Button*.
-### Button
-It's simple. Generates buttons for each object in your collection and able to select single of them.
-You can get selected object with binding **SelectedItem ** property.
+## Supported Platforms
 
-### RadioButton
-Same with Button. User able to select one of selection. You can get selected one with **SelectedItem**.
+SelectionView isn't a platform specific control. It generates other controls dynamically. Please check control's supported platform that you're using with SelectionView.
 
-### CheckBox
-Generates CheckBox for each object in ItemsSource and able to select multiple selections.
-You can get selected objects with binding **SelectedIems**.
+## Usage
+Make sure you defined InputKit namespace in your XAML file.
 
-<hr/>
-<hr />
-<br />
-<br />
-<br />
-<br />
-<hr />
+ | | |
+| --- | --- |
+| MAUI | `xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"` |
+| Xamarin Forms | `xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"` |
 
-## ColumnNumber
+SelectionView is designed to used with dynamic list of items. But still you can create a static list of items in XAML.
 
-*Default value is 2*. <br />
-That provides to decide inputs will be displayed in how many columns. 
-<hr />
-<br />
-<br />
-<br />
-<br />
-<hr />
-
-## IsDisabledPropertyName
-That is a propertyname. This property in your class must be a boolean, and decides that property is disabled or not.
-
- For example you have an class like that:
-
-
-```csharp
-    public class Product
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool OutOfStock { get; set; }
-        public override string ToString() => Name;
-    }
-```
-
-Just generate that list in a property:
-
-
-```csharp
-    public IList<Product> Products { get; set; } = new[]
-           {
-                new Product { Id = 1, Name ="Blue T-Shirt", OutOfStock = false },
-                new Product { Id = 2, Name ="Red Jacket", OutOfStock = false },
-                new Product { Id = 3, Name ="Black Pants", OutOfStock = true },
-                new Product { Id = 4, Name ="Yellow T-Shirt", OutOfStock = false },
-            };
-```
-
-Then bind it like, set **IsDisabledPropertyName** as *"OutOfStock"*, and when that property is true, it'll be disabled control. It can't be choosed.
-
+### Basic Usage
+- Basic usage is:
 
 ```xml
-      <input:SelectionView ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Products}" IsDisabledPropertyName="OutOfStock" />
-
+ <input:SelectionView>
+     <input:SelectionView.ItemsSource>
+         <x:Array Type="{x:Type x:String}">
+             <x:String>Option 1</x:String>
+             <x:String>Option 2</x:String>
+             <x:String>Option 3</x:String>
+         </x:Array>
+     </input:SelectionView.ItemsSource>
+ </input:SelectionView>
 ```
 
-And the result:
+### Regular Usage
+- In regular usage, you have to define items in a viewmodel.
 
-<img src="https://scontent-frx5-1.xx.fbcdn.net/v/t1.15752-0/p280x280/37340493_2014315578579545_5894925369189859328_n.png?_nc_cat=0&oh=d8942e7bb79f86ff32d54b6aa1e1eb7f&oe=5BC5875B" height="480" />
-
-<hr />
-<br />
-<br />
-<br />
-<br />
-<hr />
-
-## DisabledSource
-It's a source to disable controls. It must keep items from ItemsSource, and disables them.
-
-For example you have an class like that:
-
-
-```csharp
-    public class Product
+    ```csharp
+    public class MainViewModel
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
-        public bool OutOfStock { get; set; }
-        public override string ToString() => Name;
+        public ObservableCollection<string> Items { get; set; }
     }
-```
+    ```
 
-Just generate that list in a property:
+    ```xml
+    <input:SelectionView ItemsSource="{Binding Items}" />
+    ```
 
+- Also, ComplexType items are supported too.
 
-```csharp
-    public IList<Product> Products { get; set; } = new[]
-           {
-                new Product { Id = 1, Name ="Blue T-Shirt", OutOfStock = false },
-                new Product { Id = 2, Name ="Red Jacket", OutOfStock = false },
-                new Product { Id = 3, Name ="Black Pants", OutOfStock = true },
-                new Product { Id = 4, Name ="Yellow T-Shirt", OutOfStock = false },
-            };
-        
-    public IList<Product> DisabledProducts { get; set; }= new ObservableCollection<Product>();
-```
+    ```csharp
+    public class MainViewModel
+    {
+        public ObservableCollection<Item> Items { get; set; }
 
-And add some data to DisabledProducts from Products:
-
-
-```csharp
-     public MainViewModel() //Constructor
+        public class Item
         {
-            DisabledProducts.Add(Products[0]);
-            DisabledProducts.Add(Products[2]);
+            public string Name { get; set; }
+            public string Description { get; set; }
         }
-```
+    }
+    ```
 
-And just set DisabledSource from XAML:
+    ```xml
+    <input:SelectionView 
+        ItemsSource="{Binding Items}"
+        ItemDisplayBinding="{Binding Name}"/>
+    ```
+
+> **Tip:** `ItemDisplayBinding` is not the only way to display item's name. You can override `ToString()` method of your item class to display custom name.
+> ```csharp	
+> public override string ToString()
+> {
+>   return Name;
+> }
+
+
+### Data Binding
+SelectionView Supports single and multi selections. Selections are defined in `SelectionType` property. Some of selection types supports multiple selection and some them supports single selection. Default SelectionType is Button. Following selection types are supported:
+- `Button` : (Default) Regular button selection. Only one item can be selected at a time.
+- `RadioButton` : Radio button selection. Only one item can be selected at a time.
+- `CheckBox` : Check box selection. Multiple items can be selected at a time.
+- `MultipleButton` : Multiple button selection. Multiple items can be selected at a time.
+- `SingleCheckbox` : Single checkbox selection. Only one item can be selected at a time.
+- `MultipleRadioButton` : Multiple radio button selection. Multiple items can be selected at a time. _(But radiobuttons can't be unselected by their nature. This option isn't usuful much.)_
+
+Single selections can be handled with `SelectedItem` or `SelectedIndex` property.
+```csharp
+    public class MainViewModel
+    {
+        public ObservableCollection<string> Items { get; set; }
+        public string SelectedItem { get; set; }
+    }
+```
 
 ```xml
-         <input:SelectionView ColumnNumber="1" SelectionType="RadioButton" ItemsSource="{Binding Products}" DisabledSource="{Binding DisabledProducts}" />
+<input:SelectionView 
+    SelectionType="RadioButton"
+    ItemsSource="{Binding Items}" 
+    SelectedItem="{Binding SelectedItem}" />
 ```
 
-And the result:
+Multiple selections can be handled with `SelectedItems` or `SelectedIndexes` property.
 
-<img src="https://scontent.xx.fbcdn.net/v/t1.15752-0/p280x280/37242386_2014329231911513_6608474343640924160_n.png?_nc_cat=0&_nc_ad=z-m&_nc_cid=0&oh=9f45eb89a8bdb1f31b1641732c11b9e2&oe=5BDE9D13" height="480" />
-<hr />
-<br />
-<br />
-<br />
-<br />
+```csharp
+    public class MainViewModel
+    {
+        public ObservableCollection<string> Items { get; set; }
+        public ObservableCollection<string> SelectedItems { get; set; }
+    }
+```
+
+```xml
+<input:SelectionView 
+    SelectionType="CheckBox"
+    ItemsSource="{Binding Items}" 
+    SelectedItems="{Binding SelectedItems}" />
+```
+
+## Customizations
+SelectionView is a control that can be customized in many ways.
+
+### ColumnNumber
+SelectionView can be divided into multiple columns. This property defines the number of columns. Default value is `2`.
+
+*You can easily make a segmented control by setting this property to 3.*
+
+```xml
+<input:SelectionView 
+    ColumnNumber="3"
+    RowSpacing="0"
+    ItemsSource="{Binding Items}" />
+```
+
+![inputkit maui segmented control](../../images/selectionview-columnnumber.gif)
+
+
+### IsDisabledPropertyName
+
+SelectionView items can be disabled individually. This property defines the name of the property that is used to disable the control. Default value is `IsDisabled`.
+
+    ```csharp
+    public class MainViewModel
+    {
+        public ObservableCollection<Product> Items { get; set; }
+
+        public class Product
+        {
+            public string Name { get; set; }
+            public bool OutOfStock { get; set; }
+            public override string ToString() => Name;
+        }
+    }
+    ```
+
+    ```xml
+    <input:SelectionView
+        IsDisabledPropertyName="OutOfStock"
+        ItemsSource="{Binding Items}"
+        ColumnNumber="1"/>
+    ```
+
+![maui selectionview radiobutton disabled options](../../images/selectionview-isdisabledpropertyname.gif)
+
+
+### DisabledSource
+
+Items also can be disabled from a a list of disabled item list source. This property defines the source of the list of disabled items. Objects should be same reference.
+
+Otherwise;
+- Item class should implement IEquatable interface.
+- Item class should override `Equals` method inside and make manual check.
+
+```csharp
+    public class MainViewModel
+    {
+        public ObservableCollection<Product> Items { get; set; }
+        public ObservableCollection<Product> DisabledItems { get; set; }
+
+        public class Product : IEquatable<Product>
+        {
+            public string Name { get; set; }
+
+            // Objects will be compared with their Names,
+            // even they're not the same reference in memory.
+            public bool Equals(Product other) => Name == other.Name;
+        }
+    }
+```
+
+```xml
+    <input:SelectionView
+        ItemsSource="{Binding Items}"
+        DisabledSource="{Binding DisabledItems}"
+        ColumnNumber="1"/>
+        
+```
+
+## Overriding SelectionView Item
+
+You can implement your own control and use it in SelectionView instead of using built-in SelectionTypes.
+
+Firstly, you should create a new control that implements `ISelection` interface.
+
+```csharp
+public class MySwitch : ImageButton, ISelection
+{
+    public MySwitch()
+    {
+        this.Source = "turned_off.png";
+        this.Clicked += (s, e) =>
+        {
+            if (IsDisabled)
+                return;
+
+            IsSelected = !IsSelected;
+
+            if (IsSelected)
+            {
+                this.Source = "turned_on.png";
+            }
+            else
+            {
+                this.Source = "turned_off.png";
+            }
+        };
+    }
+
+    public bool IsSelected { get; set; }
+    public object Value { get; set; }
+    public bool IsDisabled { get; set; }
+}
+```
+
+Then you should override SelectionView's `CreateItem()` method to return your control.
+
+```csharp
+public class MySelectionView : SelectionView
+{
+    public override ISelection GetInstance(object obj)
+    {
+        return new MySwitch();
+    }
+}
+```
+
+Use your component in XAML page.
+
+```xml
+<custom:MySelectionView ItemsSource="{Binding Items}" />
+```
 
 
 
