@@ -46,6 +46,10 @@
                     {
                         "text": "Dropdown",
                         "path": "components/controls/Dropdown.md"
+                    },
+                    {
+                        "text": "AutoCompleteEntry",
+                        "path": "components/controls/AutoCompleteEntry.md"
                     }
                 ]
             },
