@@ -1,6 +1,8 @@
-# Adding RadioButtons Dynamically
+# Creating RadioButtons Dynamically
 
-To generate dynamicly radio buttons, you can use **SelectionView**. 
+Don't use RadioButtons or Checkbox in a ListView! It's not performant and it's not easy to find selected item.
+
+To generate radio buttons dynamically, you can use **SelectionView**. 
 SelectionView has 3 selection type. They're Button (*as default*), RadioButton, CheckBox.
 If you set **SelectionType** to **RadioButton** and Bind ItemsSource, you've created Radio Buttons dynamicly. 
 

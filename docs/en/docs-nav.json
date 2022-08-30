@@ -48,8 +48,8 @@
         "text": "Examples",
         "items":[
             {
-                "text" : "Adding RadioButtons Dynamically",
-                "path": "examples/Adding-RadioButtons-Dynamically.md"
+                "text" : "Creating RadioButtons Dynamically",
+                "path": "examples/Creating-RadioButtons-Dynamically.md"
             }
         ]
       },
