@@ -70,6 +70,10 @@
             {
                 "text" : "Creating RadioButtons Dynamically",
                 "path": "examples/Creating-RadioButtons-Dynamically.md"
+            },
+            {
+                "text" : "Community Contents",
+                "path" : "examples/Community-Contents.md"
             }
         ]
       },
