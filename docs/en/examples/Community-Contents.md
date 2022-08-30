@@ -3,6 +3,10 @@
 Check community articles about InputKit. All available articles are listed below. You can contribute this file if you have an article about InputKit or if there is a missing article on GitHub. 
 
 
+- [Join discussion on StackOverflow](https://stackoverflow.com/search?q=xamarin.forms.inputkit)
+
+- [Join discussion on MSDN](https://social.msdn.microsoft.com/Forums/en-US/home?category=&forum=&filter=&sort=relevancedesc&brandIgnore=true&searchTerm=Xamarin.Forms.InputKit)
+
 ## Contents
 
 - [Xamarin.Forms - CheckBox con InputKit](http://blog.hadsonpar.com/2020/04/xamarinforms-checkbox-con-inputkit.html)
