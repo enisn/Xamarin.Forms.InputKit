@@ -27,11 +27,11 @@ A checkbox control that is useful, customizable, full-featured, fully-bindable a
  <input:CheckBox Text="Option 6 (Position)" Type="Regular" LabelPosition="Before"/>
 ```
 
-> _You can visit entire code from [here](../../sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)_
+> _You can visit entire code from [here](../../../sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)_
 
 | Dark - Desktop | Light - Mobile |
 | --- | --- |
-| ![](../images/checkbox-dark-windows.gif) | ![](../images/checkbox-light-android.gif) |
+| ![](../../images/checkbox-dark-windows.gif) | ![](../../images/checkbox-light-android.gif) |
 
 
 ## Usage
@@ -52,7 +52,7 @@ Now you're ready to use it in your XAML page.
 <input:CheckBox Text="Hello World">
 ```
 
-![maui checkbox](../images/checkbox-usage-01.gif)
+![maui checkbox](../../images/checkbox-usage-01.gif)
 
 ### Data Binding
 
@@ -92,7 +92,7 @@ This is default value. If you don't specify any type, it will be regular type.
 <input:CheckBox Text="Hello World!" Type="Regular" />
 ```
 
-![inputkit maui checkbox regular](../images/checkbox-customization-types-regular.gif)
+![inputkit maui checkbox regular](../../images/checkbox-customization-types-regular.gif)
 
 
 #### Filled Type
@@ -102,7 +102,7 @@ This type is used when you want to fill the control with Border Color of the con
 <input:CheckBox Text="Hello World!" Type="Filled" />
 ```
 
-![inputkit maui checkbox regular](../images/checkbox-customization-types-filled.gif)
+![inputkit maui checkbox regular](../../images/checkbox-customization-types-filled.gif)
 
 #### Material Type
 This type is used when you want to fill the control with `Color` property color when it's selected.
@@ -112,7 +112,7 @@ This type is used when you want to fill the control with `Color` property color 
 <input:CheckBox Text="Hello World!" Type="Material" />
 ```
 
-![inputkit maui checkbox regular](../images/checkbox-customization-types-material.gif)
+![inputkit maui checkbox regular](../../images/checkbox-customization-types-material.gif)
 
 
 ### Icons
@@ -120,7 +120,7 @@ This type is used when you want to fill the control with `Color` property color 
 CheckBox icon can be customized in two different ways. You can use predefined shapes or you can use custom shape.
 InputKit provides a collection of predefined shapes that can be used as an icon.
 
-> Check all [Predefined Shapes](../PredefinedShapes.md) for more info.
+> Check all [Predefined Shapes](../../PredefinedShapes.md) for more info.
 
 - Predefined shapes can be used as parameter of `IconGeometry` property.
 
@@ -128,7 +128,7 @@ InputKit provides a collection of predefined shapes that can be used as an icon.
 <input:CheckBox Text="Option 2 with Square Shape" IconGeometry="{x:Static input:PredefinedShapes.Square}" />
 ```
 
-![inputkit maui checkbox square](../images/checkbox-customization-icons-square.gif)
+![inputkit maui checkbox square](../../images/checkbox-customization-icons-square.gif)
 
 
 - Custom shape can be used as parameter of `IconGeometry` property. A plain SVG path can be used as an icon.
@@ -140,7 +140,7 @@ InputKit provides a collection of predefined shapes that can be used as an icon.
     IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
 ```
 
-![inputkit maui checkbox material custom](../images/checkbox-customization-icons-custom-x.gif)
+![inputkit maui checkbox material custom](../../images/checkbox-customization-icons-custom-x.gif)
 
 ### Label Position
 
@@ -153,7 +153,7 @@ CheckBox supports two label positions:
 <input:CheckBox Text="Hello World! Before" LabelPosition="Before" />
 ```
 
-![](../images/checkbox-customization-labelposition.gif)
+![](../../images/checkbox-customization-labelposition.gif)
 
 ### Colors
 
@@ -171,7 +171,7 @@ You can customize CheckBox colors by setting `Color`, `BackgroundColor`, `Border
         />
 ```
 
-![inputkit checkbox color customization](../images/checkbox-customization-colors.gif)
+![inputkit checkbox color customization](../../images/checkbox-customization-colors.gif)
 
 Color property will be applied when you set `Type` to `Material`.
 
@@ -188,4 +188,11 @@ Color property will be applied when you set `Type` to `Material`.
     />
 ```
 
-![inputkit checkbox color customization](../images/checkbox-customization-colors-material.gif)
+![inputkit checkbox color customization](../../images/checkbox-customization-colors-material.gif)
+
+## Behaviors
+
+** *Work in progess...* **:
+-  _Actions to override_ 
+-  _VisualStates_
+-  _Make your own animation (?)_

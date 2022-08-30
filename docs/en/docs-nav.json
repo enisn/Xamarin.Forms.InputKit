@@ -1,0 +1,71 @@
+{
+    "items": [
+      {
+          "text":"Getting Started",
+          "items":[
+              {
+                  "text" : "Xamarin",
+                  "path" : "getting-started/getting-started-xamarin.md"
+              },
+              {
+                  "text" : "MAUI",
+                  "path" : "getting-started/getting-started-maui.md"
+              }
+          ]
+      },
+      {
+        "text": "Examples",
+        "items":[
+            {
+                "text" : "Adding RadioButtons Dynamically",
+                "path": "examples/Adding-RadioButtons-Dynamically.md"
+            }
+        ]
+      },
+      {
+        "text": "Options",
+        "path": "options.md"
+      },
+      {
+        "text": "Components",
+        "items": [
+            {
+                "text": "Controls",
+                "items" :[
+                    {
+                        "text": "CheckBox",
+                        "path": "components/controls/CheckBox.md"
+                    },
+                    {
+                        "text": "RadioButton",
+                        "path": "components/controls/RadioButton.md"
+                    },
+                    {
+                        "text": "SelectionView",
+                        "path": "components/controls/SelectionView.md"
+                    }
+                ]
+            },
+            {
+                "text": "Layouts",
+                "items":[
+                    {
+                        "text": "StatefulStackLayout",
+                        "path": "components/layouts/StatefulStackLayout.md"
+                    }
+                ]
+            }
+        ]
+      },
+      {
+        "text": "Migration Guides",
+        "items":[
+            {
+                "text": "Migrating to v4.0",
+                "path": "migration-guides/migrating-to-v4.0.md"
+            }
+        ]
+      }
+    ]
+  }
+  
