@@ -30,6 +30,22 @@
                     {
                         "text": "SelectionView",
                         "path": "components/controls/SelectionView.md"
+                    },
+                    {
+                        "text": "AdvancedEntry",
+                        "path": "components/controls/AdvancedEntry.md"
+                    },
+                    {
+                        "text": "AdvancedSlider",
+                        "path": "components/controls/AdvancedSlider.md"
+                    },
+                    {
+                        "text": "FormView",
+                        "path": "components/controls/FormView.md"
+                    },
+                    {
+                        "text": "Dropdown",
+                        "path": "components/controls/Dropdown.md"
                     }
                 ]
             },
