@@ -3,7 +3,7 @@
 	<td> <img src="art/icon512.png" width="120" /></td>
 	<td> 
 		<h1> InputKit </h1>
-		<p><a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">CheckBox</a>, Radio Button, Advanced Entry, Advanced Slider etc.  </p> 
+		<p><a href="https://enisn-projects.io/docs/en/inputkit/latest/components/controls/CheckBox">CheckBox</a>, <a href="https://enisn-projects.io/docs/en/inputkit/latest/components/controls/RadioButton">RadioButton</a>, Advanced Entry, Advanced Slider etc.  </p> 
 	</td>
 </tr>
 </table>
@@ -15,7 +15,7 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit/badge)](https://www.codefactor.io/repository/github/enisn/xamarin.forms.inputkit)
 [![Nuget](https://img.shields.io/nuget/v/Xamarin.Forms.InputKit)](https://www.nuget.org/packages/Xamarin.Forms.InputKit/)
 ![Nuget](https://img.shields.io/nuget/dt/Xamarin.Forms.InputKit?logo=nuget)
-<a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki"> <img src="https://img.shields.io/badge/Visit-WiKi-orange.svg"/></a>
+<a href="https://enisn-projects.io/docs/en/inputkit/latest"> <img src="https://img.shields.io/badge/Visit-Docs-orange.svg"/></a>
 <br />
 [![Sparkline](https://stars.medv.io/enisn/Xamarin.Forms.InputKit.svg)](https://stars.medv.io/enisn/Xamarin.Forms.InputKit)
 <hr/>
@@ -24,9 +24,6 @@
 <hr/>
 
 ## Getting Started with InputKit on **MAUI**
-
-> MAUI doesn't implement exactly same features as Xamarin.Forms.InputKit.
-> You can follow the progress with [this issue](https://github.com/enisn/Xamarin.Forms.InputKit/issues/221)
 
 - Install [InputKit.Maui](https://www.nuget.org/packages/InputKit.Maui) package from NuGet.
 
@@ -42,17 +39,18 @@
     })
                             
     ```
-						
-<hr />
+
+- Read the [documentation](https://enisn-projects.io/docs/en/inputkit/) for further information.
+
+---
 
 ## Getting Started with InputKit on **Xamarin Forms**
 
 - Install [Xamarin.Forms.InputKit](https://www.nuget.org/packages/Xamarin.Forms.InputKit) package from NuGet.
 
-- Follow the [Documentation of Getting Started](https://github.com/enisn/Xamarin.Forms.InputKit/wiki/Getting-Started) for each platform.
+- Follow the [Documentation of Getting Started](https://enisn-projects.io/docs/en/inputkit/latest/getting-started/getting-started-xamarin) for each platform.
 
 <hr />
-
 
 
 ## CheckBox
