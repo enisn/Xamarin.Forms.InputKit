@@ -1,7 +1,6 @@
 ﻿#if NETSTANDARD || (NET6_0 && !IOS && !MACCATALYST && !ANDROID && !UWP)
 using InputKit.Shared.Controls;
 using Microsoft.Maui.Handlers;
-using InputKit.Shared.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +11,6 @@ namespace InputKit.Handlers.IconView
 {
     public partial class IconViewHandler : ViewHandler<IIconView, object>
     {
-        protected override object CreateNativeView() => throw new NotImplementedException();
 
         static void MapSource(IIconViewHandler handler, IIconView view)
         {
@@ -26,6 +24,11 @@ namespace InputKit.Handlers.IconView
         // TODO: Remove after following issue closed https://github.com/dotnet/maui/issues/3410
         static void MapIsVisible(IIconViewHandler handler, IIconView view)
         {
+        }
+
+        protected override object CreatePlatformView()
+        {
+            throw new NotImplementedException();
         }
     }
 }
