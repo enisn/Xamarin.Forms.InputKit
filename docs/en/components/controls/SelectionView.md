@@ -145,26 +145,26 @@ SelectionView can be divided into multiple columns. This property defines the nu
 
 SelectionView items can be disabled individually. This property defines the name of the property that is used to disable the control. Default value is `IsDisabled`.
 
-    ```csharp
-    public class MainViewModel
+```csharp
+public class MainViewModel
+{
+    public ObservableCollection<Product> Items { get; set; }
+
+    public class Product
     {
-        public ObservableCollection<Product> Items { get; set; }
-
-        public class Product
-        {
-            public string Name { get; set; }
-            public bool OutOfStock { get; set; }
-            public override string ToString() => Name;
-        }
+        public string Name { get; set; }
+        public bool OutOfStock { get; set; }
+        public override string ToString() => Name;
     }
-    ```
+}
+```
 
-    ```xml
-    <input:SelectionView
-        IsDisabledPropertyName="OutOfStock"
-        ItemsSource="{Binding Items}"
-        ColumnNumber="1"/>
-    ```
+```xml
+<input:SelectionView
+    IsDisabledPropertyName="OutOfStock"
+    ItemsSource="{Binding Items}"
+    ColumnNumber="1"/>
+```
 
 ![maui selectionview radiobutton disabled options](../../images/selectionview-isdisabledpropertyname.gif)
 
