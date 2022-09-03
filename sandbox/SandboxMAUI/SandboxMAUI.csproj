@@ -49,19 +49,11 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiFont Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <None Remove="Resources\Images\account.png" />
 	  <None Remove="Resources\Images\circle_check.png" />
 	  <None Remove="Resources\Images\email.png" />
 	  <None Remove="Resources\Images\ic_account_balance_black.png" />
 	  <None Remove="Resources\Images\phone.png" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <AndroidResource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	</ItemGroup>
 
 	<ItemGroup>
