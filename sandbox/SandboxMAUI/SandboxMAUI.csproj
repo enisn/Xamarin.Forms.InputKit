@@ -50,7 +50,6 @@
 
 	<ItemGroup>
 	  <MauiFont Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
-	  <MauiFont Remove="Resources\Fonts\MaterialIconsTwoTone-Regular.otf" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -63,7 +62,6 @@
 
 	<ItemGroup>
 	  <AndroidResource Include="Resources\Fonts\MaterialIcons-Regular.ttf" />
-	  <AndroidResource Include="Resources\Fonts\MaterialIconsTwoTone-Regular.otf" />
 	</ItemGroup>
 
 	<ItemGroup>
