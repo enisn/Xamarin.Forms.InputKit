@@ -3,7 +3,7 @@
 	<td> <img src="images/icon512.png" width="120" /></td>
 	<td> 
 		<h1> InputKit </h1>
-		<p><a href="https://github.com/enisn/Xamarin.Forms.InputKit/wiki/CheckBox">CheckBox</a>, Radio Button, Advanced Entry, Advanced Slider etc.  </p> 
+		<p>CheckBox, Radio Button, Advanced Entry, Advanced Slider etc.  </p> 
 	</td>
 </tr>
 </table>
@@ -30,9 +30,16 @@ Welcome to the official documentation of InputKit. InputKit is an [open-source](
   - [RadioButton](components/controls/RadioButton.md)
 - Examples
   - [Creating RadioButtons Dynamically](examples/Adding-RadioButtons-Dynamically.md)
-- _... and more_
+- Migration Guides
+  - [Migrating to v4.0](migration-guides/migrating-to-v4.0.md) 
+- _...and more_
 
 _Use left menu for navigating on documents._
+
+## Source Code
+InputKit is an open-source project and contribution is always welcome. Visit the project repository on GitHub.
+
+- [InputKit - GitHub](https://github.com/enisn/Xamarin.Forms.InputKit)
 
 ## Did you like ?
 

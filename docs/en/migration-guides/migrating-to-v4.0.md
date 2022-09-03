@@ -23,8 +23,8 @@ InputKit version 4.0 is a major release. It has many new features and improvemen
 CheckBox got a major update.
 
 #### Colors
-Outline colors are changed. You may need to check change the color of the control if necessary.
-Now, outline colors can be Dark _(Black)_ or Light _(White)_ according to the app theme.
+- Default value of outline colors are changed. You may need to check change the color of the control if necessary.
+Now, outline colors can be Dark _(Black)_ or Light _(White)_ according to the app theme. If you already set the color, you can skip this step.
 #### Font Sizes
 - Font sizes are changed. It might be bigger or smaller according to the platform. You may need to check change the font size of the control if necessary.
 
@@ -92,8 +92,8 @@ New `Type` property has `Regular`, `Filled` and `Material` values.
 - Font sizes are changed. It might be bigger or smaller according to the platform. You may need to check change the font size of the control if necessary.
 
 #### Colors
-Outline colors are changed. You may need to check change the color of the control if necessary.
-Now, outline colors can be Dark _(Black)_ or Light _(White)_ according to the app theme.
+- Default value of outline colors are changed. You may need to check change the color of the control if necessary.
+Now, outline colors can be Dark _(Black)_ or Light _(White)_ by default according to the app theme. If you already set the color, you can skip this step.
 
 #### Icons
 
@@ -106,10 +106,3 @@ RadioButton also started to use svg icons. So if you are using custom icons, you
     ![InputKit Svg Icon selection](../images/migration-guide-icon-selection.gif)
 
     > **Tip:** You can use [PreDefined Shapes](../PredefinedShapes.md) of InputKit. Visit [Icons section](../components/controls/RadioButton.md#icons) of the RadioButton documentation.
-
-
-
-*TODO*
-
-Check breaking changes in 4.0 milestone until this documentation is completed
-https://github.com/enisn/Xamarin.Forms.InputKit/pulls?q=is%3Apr+is%3Aclosed+label%3Abreaking-change+milestone%3Av.4.0.0
