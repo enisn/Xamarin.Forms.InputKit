@@ -42,7 +42,7 @@ namespace InputKit.Shared.Controls
         readonly Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         readonly Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
         readonly Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
-        readonly IconView imgIcon = new IconView { InputTransparent = true, Margin = 5, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
+        readonly Image imgIcon = new Image { InputTransparent = true, Margin = 5, IsVisible = false, VerticalOptions = LayoutOptions.Center, HeightRequest = 30 };
         readonly Entry txtInput;
         #endregion
 
@@ -120,20 +120,15 @@ namespace InputKit.Shared.Controls
         /// <summary>
         /// Icons of this Entry
         /// </summary>
-        public string IconImage
+        public ImageSource IconImage
         {
-            get => imgIcon.Source.ToString();
+            get => imgIcon.Source;
             set
             {
-                imgIcon.IsVisible = !string.IsNullOrEmpty(value);
+                imgIcon.IsVisible = value != null;
                 imgIcon.Source = value;
             }
         }
-
-        /// <summary>
-        /// Color of Icon
-        /// </summary>
-        public Color IconColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
 
         /// <summary>
         /// BackgroundColor of this Control
@@ -424,7 +419,6 @@ namespace InputKit.Shared.Controls
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Title = (string)nv);
         public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(AdvancedEntry), (Color)Label.TextColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).lblTitle.TextColor = (Color)nv);
         public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).IconImage = (string)nv);
-        public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(AdvancedEntry), Colors.Black, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).imgIcon.FillColor = (Color)nv);
         public static readonly new BindableProperty BackgroundColorProperty = BindableProperty.Create(nameof(BackgroundColor), typeof(Color), typeof(AdvancedEntry), (Color)VisualElement.BackgroundColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BackgroundColor = (Color)nv);
         public static readonly BindableProperty BorderColorProperty = BindableProperty.Create(nameof(BorderColor), typeof(Color), typeof(AdvancedEntry), (Color)Microsoft.Maui.Controls.Frame.BorderColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.BorderColor = (Color)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);

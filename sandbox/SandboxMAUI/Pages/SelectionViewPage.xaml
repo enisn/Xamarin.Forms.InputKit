@@ -30,13 +30,7 @@
                  ColumnSpacing="10"
                  ItemDisplayBinding="{Binding Name}"
                  ItemsSource="{Binding Items}"
-                 RowSpacing="10">
-                <input:SelectionView.SelectionType>
-                    <nputshared:SelectionType>250</nputshared:SelectionType>
-                </input:SelectionView.SelectionType>
-            </input:SelectionView>
-
-
+                 RowSpacing="10"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
