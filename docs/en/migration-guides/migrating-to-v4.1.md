@@ -3,7 +3,7 @@ InputKit version 4.1 comes a couple of breaking-changes. Please check following 
 
 ## Breaking changes
 
-Xamarin Forms 4.1 isn't released. So there is no breaking-change for Xamarin Forms.
+This document applies both to MAUI and Xamarin Forms.
 
 ### AdvancedEntry
 - `IconColor` is removed from `AdvancedEntry`.
