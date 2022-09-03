@@ -42,7 +42,7 @@ namespace InputKit.Shared.Controls
         readonly Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         readonly Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
         readonly Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
-        readonly IconView imgIcon = new IconView { InputTransparent = true, Margin = 5, IsVisible = false, VerticalOptions = LayoutOptions.CenterAndExpand, HeightRequest = 30, FillColor = GlobalSetting.Color };
+        readonly Image imgIcon = new Image { InputTransparent = true, Margin = 5, IsVisible = false, VerticalOptions = LayoutOptions.Center, HeightRequest = 30 };
         readonly Entry txtInput;
         #endregion
 
@@ -120,20 +120,15 @@ namespace InputKit.Shared.Controls
         /// <summary>
         /// Icons of this Entry
         /// </summary>
-        public string IconImage
+        public ImageSource IconImage
         {
-            get => imgIcon.Source.ToString();
+            get => imgIcon.Source;
             set
             {
-                imgIcon.IsVisible = !string.IsNullOrEmpty(value);
+                imgIcon.IsVisible = value != null;
                 imgIcon.Source = value;
             }
         }
-
-        /// <summary>
-        /// Color of Icon
-        /// </summary>
-        public Color IconColor { get => (Color)GetValue(IconColorProperty); set => SetValue(IconColorProperty, value); }
 
         /// <summary>
         /// BackgroundColor of this Control
