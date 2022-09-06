@@ -63,7 +63,7 @@ namespace Plugin.InputKit.Shared.Controls
             FontFamily = GlobalSetting.FontFamily,
             IsVisible = false
         };
-        
+
         private bool _isEnabled;
         #endregion
 
@@ -305,9 +305,6 @@ namespace Plugin.InputKit.Shared.Controls
 
         void UpdateBoxBackground()
         {
-            if (Type == CheckType.Material)
-                return;
-
             outlineBox.Fill = BoxBackgroundColor.ToBrush();
         }
 
@@ -327,7 +324,7 @@ namespace Plugin.InputKit.Shared.Controls
                     selectedIcon.Fill = IsChecked ? Color.ToBrush() : Color.Transparent.ToBrush();
                     break;
                 case CheckType.Material:
-                    outlineBox.Stroke = Color.ToBrush();
+                    outlineBox.Stroke = IsChecked ? Color.ToBrush() : BorderColor.ToBrush();
                     outlineBox.Fill = IsChecked ? Color.ToBrush() : Color.Transparent.ToBrush();
                     selectedIcon.Fill = Color.ToSurfaceColor().ToBrush();
                     break;
@@ -341,9 +338,6 @@ namespace Plugin.InputKit.Shared.Controls
 
         void UpdateBorderColor()
         {
-            if (Type == CheckType.Material)
-                return;
-
             outlineBox.Stroke = BorderColor.ToBrush();
         }
 
