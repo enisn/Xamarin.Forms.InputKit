@@ -225,7 +225,11 @@ namespace Plugin.InputKit.Shared.Controls
                     if (DisabledSource?.Contains(item) ?? false)
                         _View.IsDisabled = true;
 
-                    this.Children.Add(_View as View, this.Children.Count % ColumnNumber, this.Children.Count / ColumnNumber);
+                    var addedView = _View as View;
+                    var column = Children.Count % ColumnNumber;
+                    var row = this.Children.Count <= column ? 0 : Children.Count / ColumnNumber;
+
+                    this.Children.Add(addedView, column, row);
 
                     _View.IsSelected = this.Children.Count == _selectedIndex; //to keep selected index when content is changed
                 }
