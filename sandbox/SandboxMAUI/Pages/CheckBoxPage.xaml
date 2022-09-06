@@ -17,12 +17,15 @@
             <input:CheckBox Text="Option 0 Plain Checkbox" />
             <input:CheckBox Text="Option 1 with Filled Type" Type="Filled" />
             <input:CheckBox Text="Option 2 with Material Type" Type="Material" />
-            <input:CheckBox Text="Option 2 with Square Shape" IconGeometry="{x:Static input:PredefinedShapes.Square}" />
-            <input:CheckBox Text="Option 3 with Line Shape" IconGeometry="{x:Static input:PredefinedShapes.Line}" />
-            <input:CheckBox Text="Option 3 with Line Shape with Material Type" Type="Material" IconGeometry="{x:Static input:PredefinedShapes.Line}" />
-            <input:CheckBox Text="Option 3 with Custom Type (X)" Type="Custom" IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
-            <input:CheckBox Text="Option 5 with Material Custom Type (X)" Type="Material" IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
-            <input:CheckBox Text="Option 6 (Position)" Type="Regular" LabelPosition="Before"/>          
+            <input:CheckBox Text="Option 3 with Square Shape" IconGeometry="{x:Static input:PredefinedShapes.Square}" />
+            <input:CheckBox Text="Option 4 with Line Shape" IconGeometry="{x:Static input:PredefinedShapes.Line}" />
+            <input:CheckBox Text="Option 5 with Line Shape with Material Type" Type="Material" IconGeometry="{x:Static input:PredefinedShapes.Line}" />
+            <input:CheckBox Text="Option 6 with Custom Type (X)" Type="Custom" IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
+            <input:CheckBox Text="Option 7 with Material Custom Type (X)" Type="Material" IconGeometry="M17.705 7.705l-1.41-1.41L12 10.59 7.705 6.295l-1.41 1.41L10.59 12l-4.295 4.295 1.41 1.41L12 13.41l4.295 4.295 1.41-1.41L13.41 12l4.295-4.295z"/>
+            <input:CheckBox Text="Option 8 (Position)" Type="Regular" LabelPosition="Before"/>          
+            <input:CheckBox Text="Option 9 (Position) Disabled" Type="Regular" LabelPosition="Before" IsDisabled="True"/>          
+            <input:CheckBox Text="Option 10 Material Disabled" Type="Material" LabelPosition="Before" IsChecked="True" IsDisabled="True"/>          
+            <input:CheckBox Text="Option 11 Material Selected Disabled" Type="Material" LabelPosition="Before" IsChecked="True" IsDisabled="True"/>          
 
         </StackLayout>
     </ScrollView>
