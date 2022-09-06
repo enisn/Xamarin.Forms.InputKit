@@ -63,7 +63,7 @@ namespace Plugin.InputKit.Shared.Controls
             FontFamily = GlobalSetting.FontFamily,
             IsVisible = false
         };
-        private CheckType _type = CheckType.Box;
+        
         private bool _isEnabled;
         #endregion
 
@@ -190,7 +190,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Which icon will be shown when checkbox is checked
         /// </summary>
-        public CheckType Type { get => _type; set { _type = value; UpdateType(); } }
+        public CheckType Type { get => (CheckType)GetValue(TypeProperty); set => SetValue(TypeProperty, value); }
 
         /// <summary>
         /// Size of Checkbox
@@ -255,6 +255,7 @@ namespace Plugin.InputKit.Shared.Controls
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+        public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType());
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
         public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), Color.Transparent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
         public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction(bo as CheckBox, (bool)nv));
