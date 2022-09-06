@@ -302,16 +302,11 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     void UpdateBoxBackground()
     {
-        if (Type == CheckType.Material)
-            return;
-
         outlineBox.Fill = BoxBackgroundColor;
     }
 
-    void UpdateColors()
+    protected virtual void UpdateColors()
     {
-        //selectedIcon.Fill = Color;
-
         switch (Type)
         {
             case CheckType.Regular:
@@ -324,7 +319,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                 selectedIcon.Fill = IsChecked ? Color : Colors.Transparent;
                 break;
             case CheckType.Material:
-                outlineBox.Stroke = Color;
+                outlineBox.Stroke = IsChecked ? Color : BorderColor;
                 outlineBox.Fill = IsChecked ? Color : Colors.Transparent;
                 selectedIcon.Fill = Color.ToSurfaceColor();
                 break;
@@ -338,9 +333,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     void UpdateBorderColor()
     {
-        if (Type == CheckType.Material)
-            return;
-
         outlineBox.Stroke = BorderColor;
     }
 
@@ -380,7 +372,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                         new VisualState
                         {
                             Name = "Pressed",
-                            TargetType = typeof(CheckBox),
                             Setters =
                             {
                                 new Setter { Property = IsPressedProperty, Value = true }
@@ -389,7 +380,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                         new VisualState
                         {
                             Name = "Normal",
-                            TargetType = typeof(RadioButton),
                             Setters =
                             {
                                 new Setter { Property = IsPressedProperty, Value = false }
