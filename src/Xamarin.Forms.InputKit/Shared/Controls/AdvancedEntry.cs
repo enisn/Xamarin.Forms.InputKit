@@ -62,7 +62,8 @@ namespace Plugin.InputKit.Shared.Controls
             var inputGrid = new Grid();
             inputGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
             inputGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Star });
-            inputGrid.Children.AddHorizontal(new View[] { imgIcon, txtInput });
+            inputGrid.Children.Add(imgIcon, 0, 0);
+            inputGrid.Children.Add(txtInput, 1, 0);
 
             ApplyValidationPosition(GlobalSetting.LabelPosition);
 
@@ -599,7 +600,7 @@ namespace Plugin.InputKit.Shared.Controls
 
         private protected virtual Entry GetInputEntry()
         {
-            return new Entry
+            return new EmptyEntry
             {
                 TextColor = GlobalSetting.TextColor,
                 PlaceholderColor = Color.LightGray,
