@@ -3,7 +3,9 @@ using Microsoft.Maui.Graphics;
 
 namespace InputKit.Shared.Controls;
 
-[Obsolete("IconView is deprecated. It won't be part of this library anymore. Please change your icons to FontImage or equivalent.")]
+/// <summary>
+/// Default Constructor
+/// </summary>
 public partial class IconView : View, IIconView
 {
     public IconView()

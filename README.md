@@ -58,17 +58,17 @@
 A checkbox control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)
-- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/CheckBox)
+- [Documentation](docs/controls/CheckBox.md)
 
 <br />
 <table>
 <tr>
 <td>
-<img src="docs/en/images/checkbox-dark-windows.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/images/checkbox-dark-windows.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 
 <td>
-<img src="docs/en/images/checkbox-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/images/checkbox-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 <td>
 <img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/checkboxes_ios.png" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
@@ -83,16 +83,16 @@ A checkbox control that is useful, customizable, full-featured, fully-bindable a
 A radio button control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/RadioButtonPage.xaml)
-- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/RadioButton)
+- [Documentation](docs/controls/RadioButton.md)
 
 <table>
 <tr>
 <td>
-<img src="docs/en/images/radiobutton-dark-windows.gif" alt="Xamarin Forms MAUI RadioButton Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/images/radiobutton-dark-windows.gif" alt="Xamarin Forms MAUI RadioButton Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 
 <td>
-<img src="docs/en/images/radiobutton-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/images/radiobutton-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 <td>
 <img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/radiobuttons_ios.png" alt="Xamarin Forms Radio Button Input Kit Enis Necipoğlu" width="270" class="aligncenter size-medium wp-image-1001" />
@@ -106,7 +106,7 @@ This entry has many features to develop your applications quickly. When this ent
 You can set validation message and AnnotatinColor. Entry will automatically display your message when it's not validated.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/AdvancedEntryPage.xaml)
-- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/AdvancedEntry)
+- [Documentation](docs/controls/AdvancedEntry.md)
 
 <a href="#"><img src="https://media.giphy.com/media/1zl0u7O2doNolIXnrT/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
 
@@ -134,8 +134,6 @@ You can set validation message and AnnotatinColor. Entry will automatically disp
 
 ## SelectionView
 Presents options to user to choose. This view didn't created to static usage. You should Bind a model List as ItemSource, or if you don't use MVVM you can set in page's cs file like below. (You can override ToString method to fix display value or I'll add displayMember property soon.)</p>
-
-- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/SelectionView)
 
 <h4>SAMPLE:</h4>
 

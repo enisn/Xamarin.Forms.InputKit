@@ -21,10 +21,12 @@ public class SampleItemsViewModel : INotifyPropertyChanged
 
     void FillData()
     {
-        for (int i = 0; i < 6; i++)
+        for (int i = 0; i < 4; i++)
         {
             Items.Add(new SampleItem { Id = i, Name = "Option " + (i + 1) });
         }
+
+        Items[2].IsDisabled = true;
     }
 
     #region INotifyPropertyChanged Implementation
