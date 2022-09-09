@@ -87,10 +87,6 @@
             {
                 "text": "Migrating to v4.0",
                 "path": "migration-guides/migrating-to-v4.0.md"
-            },
-            {
-                "text": "Migrating to v4.1",
-                "path": "migration-guides/migrating-to-v4.1.md"
             }
         ]
       }
