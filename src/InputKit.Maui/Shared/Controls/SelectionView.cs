@@ -225,7 +225,7 @@ public partial class SelectionView : Grid
 
                 var addedView = _View as View;
                 var column = Children.Count % ColumnNumber;
-                var row = Children.Count / ColumnNumber;
+                var row = this.Children.Count <= column ? 0 : Children.Count / ColumnNumber;
 
                 this.Add(addedView, column, row);
 
@@ -237,8 +237,7 @@ public partial class SelectionView : Grid
             }
         }
     }
-
-
+    
     protected void SetRowAndColumnDefinitions()
     {
         this.ColumnDefinitions.Clear();
@@ -248,7 +247,7 @@ public partial class SelectionView : Grid
         }
 
         this.RowDefinitions.Clear();
-        for (int i = 0; i < ItemsSource.Count / ColumnNumber; i++)
+        for (int i = 0; i < Math.Ceiling((decimal)ItemsSource.Count / ColumnNumber); i++)
         {
             this.RowDefinitions.Add(new RowDefinition(GridLength.Auto));
         }

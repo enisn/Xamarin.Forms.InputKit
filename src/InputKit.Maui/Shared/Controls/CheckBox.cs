@@ -61,7 +61,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         FontFamily = GlobalSetting.FontFamily,
         IsVisible = false
     };
-    private CheckType _type = CheckType.Box;
     private bool _isEnabled;
     #endregion
 
@@ -92,7 +91,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         UpdateShape();
         GestureRecognizers.Add(new TapGestureRecognizer
         {
-            Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
+            Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new CheckChangedEventArgs(IsChecked)); ValidationChanged?.Invoke(this, new EventArgs()); }),
         });
     }
 
@@ -112,7 +111,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Invoked when check changed
     /// </summary>
-    public event EventHandler CheckChanged;
+    public event EventHandler<CheckChangedEventArgs> CheckChanged;
     public event EventHandler ValidationChanged;
     #endregion
 
@@ -188,7 +187,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Which icon will be shown when checkbox is checked
     /// </summary>
-    public CheckType Type { get => _type; set { _type = value; UpdateType(); } }
+    public CheckType Type { get => (CheckType)GetValue(TypeProperty); set => SetValue(TypeProperty, value); }
 
     /// <summary>
     /// Size of Checkbox
@@ -253,6 +252,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color), typeof(Color), typeof(CheckBox), GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateType());
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(CheckBox), GlobalSetting.TextColor, propertyChanged: (bo, ov, nv) => (bo as CheckBox).TextColor = (Color)nv);
     public static readonly BindableProperty IconColorProperty = BindableProperty.Create(nameof(IconColor), typeof(Color), typeof(CheckBox), Colors.Transparent, propertyChanged: (bo, ov, nv) => (bo as CheckBox).UpdateColors());
     public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(CheckBox), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyIsCheckedAction(bo as CheckBox, (bool)nv));
@@ -302,16 +302,11 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     void UpdateBoxBackground()
     {
-        if (Type == CheckType.Material)
-            return;
-
         outlineBox.Fill = BoxBackgroundColor;
     }
 
-    void UpdateColors()
+    protected virtual void UpdateColors()
     {
-        //selectedIcon.Fill = Color;
-
         switch (Type)
         {
             case CheckType.Regular:
@@ -324,7 +319,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                 selectedIcon.Fill = IsChecked ? Color : Colors.Transparent;
                 break;
             case CheckType.Material:
-                outlineBox.Stroke = Color;
+                outlineBox.Stroke = IsChecked ? Color : BorderColor;
                 outlineBox.Fill = IsChecked ? Color : Colors.Transparent;
                 selectedIcon.Fill = Color.ToSurfaceColor();
                 break;
@@ -338,9 +333,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     void UpdateBorderColor()
     {
-        if (Type == CheckType.Material)
-            return;
-
         outlineBox.Stroke = BorderColor;
     }
 
@@ -380,7 +372,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                         new VisualState
                         {
                             Name = "Pressed",
-                            TargetType = typeof(CheckBox),
                             Setters =
                             {
                                 new Setter { Property = IsPressedProperty, Value = true }
@@ -389,7 +380,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                         new VisualState
                         {
                             Name = "Normal",
-                            TargetType = typeof(RadioButton),
                             Setters =
                             {
                                 new Setter { Property = IsPressedProperty, Value = false }
@@ -437,5 +427,15 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         Regular,
         Filled,
         Material,
+    }
+
+    public class CheckChangedEventArgs
+    {
+        public CheckChangedEventArgs(bool value)
+        {
+            Value = value;
+        }
+        
+        public bool Value { get; }
     }
 }
