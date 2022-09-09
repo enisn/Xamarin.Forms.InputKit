@@ -21,7 +21,7 @@
                         Title="Place your email below:"
                         Annotation="Email"
                         AnnotationColor="Accent"
-                        IconImage="ic_email_black_24dp.png"
+                        IconImage="circle_check.png"
                         IsRequired="True"
                         MaxLength="50"
                         MinLength="10"

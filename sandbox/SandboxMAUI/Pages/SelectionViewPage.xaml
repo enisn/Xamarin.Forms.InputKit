@@ -25,12 +25,13 @@
             </Picker>
 
             <input:SelectionView
-                 x:Name="selectionView"
-                 ColumnNumber="2"
-                 ColumnSpacing="10"
-                 ItemDisplayBinding="{Binding Name}"
-                 ItemsSource="{Binding Items}"
-                 RowSpacing="10"/>
+                x:Name="selectionView"
+                ColumnNumber="2"
+                ColumnSpacing="10"
+                ItemDisplayBinding="{Binding Name}"
+                ItemsSource="{Binding Items}"
+                RowSpacing="10"
+                SelectionType="Button" />
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
