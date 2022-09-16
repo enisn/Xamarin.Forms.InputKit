@@ -40,7 +40,7 @@ public partial class AdvancedEntry : IValidatable
 
     public List<IValidation> Validations { get; } = new();
 
-    public bool IsValid { get; }
+    public bool IsValid => ValidationResults().All(x => x.isValid);
 
     public LabelPosition ValidationPosition
     {
@@ -83,13 +83,12 @@ public partial class AdvancedEntry : IValidatable
             }
         });
 
-
     /// <summary>
     /// Triggers to display annotation message
     /// </summary>
     public void DisplayValidation()
     {
-
+        CheckAndDisplayValidations();
     }
 
     private bool lastValidationState = true;
@@ -108,6 +107,7 @@ public partial class AdvancedEntry : IValidatable
             if (isStateChanged)
             {
                 RemoveValidationWarning();
+                OnPropertyChanged(nameof(IsValid));
             }
         }
         else
@@ -118,6 +118,7 @@ public partial class AdvancedEntry : IValidatable
             if (isStateChanged)
             {
                 ShowValidationWarning();
+                OnPropertyChanged(nameof(IsValid));
             }
         }
     }

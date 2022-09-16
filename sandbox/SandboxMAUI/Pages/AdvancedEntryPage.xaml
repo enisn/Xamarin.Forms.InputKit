@@ -14,7 +14,11 @@
         <StackLayout Padding="30" MaximumWidthRequest="400">
             <Label Text="You can see FormView Below:" />
             <BoxView HeightRequest="1" Color="LightGray" />
-            <input:FormView IsValidated="{Binding IsValidated}" Spacing="15">
+            
+            <input:FormView 
+                IsValidated="{Binding IsValidated}"
+                SubmitCommand="{Binding SubmitCommand}"
+                Spacing="15">
 
                 <input:AdvancedEntry
                         Title="Place your email below:"                        
@@ -67,8 +71,8 @@
                         Type="Material" />
                 <Button
                         Margin="0,20"
+                        input:FormView.IsSubmitButton="True"
                         BackgroundColor="{StaticResource Primary}"
-                        Command="{Binding SubmitCommand}"
                         CornerRadius="20"
                         Text="Submit"
                         TextColor="White" />

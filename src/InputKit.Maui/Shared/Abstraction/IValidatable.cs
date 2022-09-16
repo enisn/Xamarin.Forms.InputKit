@@ -1,9 +1,10 @@
 ﻿using InputKit.Shared.Validations;
 using System;
+using System.ComponentModel;
 
 namespace InputKit.Shared.Abstraction;
 
-public interface IValidatable
+public interface IValidatable : INotifyPropertyChanged
 {
     public List<IValidation> Validations { get; }
 
