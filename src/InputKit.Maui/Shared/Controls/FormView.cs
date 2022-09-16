@@ -22,8 +22,9 @@ public partial class FormView : StackLayout
 
     private void FormView_ChildRemoved(object sender, ElementEventArgs e)
     {
-        if (e is IValidatable validatable)
-            validatable.ValidationChanged -= FormView_ValidationChanged;
+        // TODO: Find a way to check all validations.
+        //if (e is IValidatable validatable)
+        //    validatable.ValidationChanged -= FormView_ValidationChanged;
     }
 
     private void FormView_ChildAdded(object s, ElementEventArgs e)
@@ -52,13 +53,13 @@ public partial class FormView : StackLayout
     void SetEvent(IValidatable view)
     {
         if (view == null) return;
-        view.ValidationChanged -= FormView_ValidationChanged;
-        view.ValidationChanged += FormView_ValidationChanged;
+        //view.ValidationChanged -= FormView_ValidationChanged;
+        //view.ValidationChanged += FormView_ValidationChanged;
     }
     private void FormView_ValidationChanged(object sender, EventArgs e)
     {
-        if (!(sender as IValidatable).IsValidated) SetValue(IsValidatedProperty, false);
-        else SetValue(IsValidatedProperty, CheckValidation(this));
+        //if (!(sender as IValidatable).IsValidated) SetValue(IsValidatedProperty, false);
+        //else SetValue(IsValidatedProperty, CheckValidation(this));
     }
     /// <summary>
     /// Shows if all elements inside of this are validated or not
@@ -79,9 +80,9 @@ public partial class FormView : StackLayout
     /// <returns></returns>
     public static bool CheckValidation(Layout view)
     {
-        foreach (var item in GetChildIValidatables(view))
-            if (!item.IsValidated)
-                return false;
+        //foreach (var item in GetChildIValidatables(view))
+            //if (!item.IsValidated)
+                //return false;
         return true;
     }
 

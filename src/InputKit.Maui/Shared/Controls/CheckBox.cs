@@ -2,6 +2,7 @@
 using InputKit.Shared.Configuration;
 using InputKit.Shared.Helpers;
 using InputKit.Shared.Layouts;
+using InputKit.Shared.Validations;
 using Microsoft.Maui.Controls.Shapes;
 using System.ComponentModel;
 using System.Globalization;
@@ -248,6 +249,8 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         get => (LabelPosition)GetValue(LabelPositionProperty);
         set => SetValue(LabelPositionProperty, value);
     }
+    public List<IValidation> Validations { get; set; }
+    public bool IsValid { get; }
     #endregion
 
     #region BindableProperties

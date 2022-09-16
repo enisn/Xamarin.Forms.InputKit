@@ -3,7 +3,7 @@ using InputKit.Shared.Configuration;
 
 namespace InputKit.Shared.Controls;
 
-public class AdvancedSlider : StackLayout, IValidatable
+public class AdvancedSlider : StackLayout
 {
     public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
     {
@@ -22,9 +22,8 @@ public class AdvancedSlider : StackLayout, IValidatable
     public AdvancedSlider()
     {
         Children.Add(lblTitle);
-        Children.Add(new StackLayout
+        Children.Add(new HorizontalStackLayout
         {
-            Orientation = StackOrientation.Horizontal,
             Children =
                 {
                     lblMinValue,

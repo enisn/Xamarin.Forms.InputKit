@@ -57,6 +57,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.10.0" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <ProjectReference Include="..\..\src\InputKit.Maui\InputKit.Maui.csproj" />
 	</ItemGroup>
 

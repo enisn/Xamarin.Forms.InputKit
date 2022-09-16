@@ -1,5 +1,6 @@
 ﻿using InputKit.Shared.Abstraction;
 using InputKit.Shared.Layouts;
+using InputKit.Shared.Validations;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.Graphics;
 using System;
@@ -98,6 +99,8 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     /// It will be added later
     /// </summary>
     public string ValidationMessage { get; set; }
+    public List<IValidation> Validations { get; set; }
+    public bool IsValid { get; }
 
     #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member

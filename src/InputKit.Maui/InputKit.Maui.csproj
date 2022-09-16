@@ -37,6 +37,10 @@
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
 
+	<PropertyGroup>
+	  <NoWarn>1701;1702,CS1591</NoWarn>
+	</PropertyGroup>
+
 	<ItemGroup>
 	  <EmbeddedResource Include="Shared\Resources\**\*.*" />
 	</ItemGroup>
