@@ -42,7 +42,6 @@
                     <input:AdvancedEntry.Validations>
                         <validation:MinLengthValidation MinLength="3" Message="Your name should contain at least 3 characters." />
                         <validation:RequiredValidation />
-                        <validation:RegexValidation Pattern="sdfdsfds" Message="sdggdf" />
                     </input:AdvancedEntry.Validations>
                 </input:AdvancedEntry>
 
