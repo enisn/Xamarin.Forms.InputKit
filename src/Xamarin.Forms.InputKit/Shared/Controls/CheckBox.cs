@@ -16,10 +16,6 @@ namespace Plugin.InputKit.Shared.Controls
     /// <summary>
     /// A checkbox for boolean inputs. It Includes a text inside
     /// </summary>
-
-    /// <summary>
-    /// A checkbox for boolean inputs. It Includes a text inside
-    /// </summary>
     public partial class CheckBox : StatefulStackLayout, IValidatable
     {
         public static GlobalSetting GlobalSetting { get; } = new GlobalSetting
@@ -68,7 +64,6 @@ namespace Plugin.InputKit.Shared.Controls
         };
 
         protected Lazy<Path> iconValidation;
-        private CheckType _type = CheckType.Regular;
         private bool _isEnabled;
         #endregion
 
@@ -203,7 +198,7 @@ namespace Plugin.InputKit.Shared.Controls
         /// <summary>
         /// Which icon will be shown when checkbox is checked
         /// </summary>
-        public CheckType Type { get => _type; set { _type = value; UpdateType(); } }
+        public CheckType Type { get => (CheckType)GetValue(TypeProperty); set => SetValue(TypeProperty, value); }
 
         /// <summary>
         /// Size of Checkbox
@@ -329,7 +324,9 @@ namespace Plugin.InputKit.Shared.Controls
                {
                    checkBox.iconValidation.Value.Fill = ((Color)newValue).ToBrush();
                }
-       });
+           });
+        public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular,
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).UpdateType());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
