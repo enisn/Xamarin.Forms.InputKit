@@ -66,7 +66,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     protected Lazy<Path> iconValidation;
 
-    private CheckType _type = CheckType.Regular;
     private bool _isEnabled;
     #endregion
 
@@ -201,7 +200,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Which icon will be shown when checkbox is checked
     /// </summary>
-    public CheckType Type { get => _type; set { _type = value; UpdateType(); } }
+    public CheckType Type { get => (CheckType)GetValue(TypeProperty); set => SetValue(TypeProperty, value); }
 
     /// <summary>
     /// Size of Checkbox
@@ -330,6 +329,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                 checkBox.iconValidation.Value.Fill = (Color)newValue;
             }
         });
+
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular,
+        propertyChanged: (bindable, oldValue, newValue)=> (bindable as CheckBox).UpdateType());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 

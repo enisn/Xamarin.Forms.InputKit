@@ -151,6 +151,8 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
+        public Color ThumbColor { get => (Color)GetValue(ThumbColorProperty); set => SetValue(ThumbColorProperty, value); }
+
         #region BindableProperties
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).slider.Value = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
@@ -165,7 +167,8 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty ValuePrefixProperty = BindableProperty.Create(nameof(ValuePrefix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateValueText());
         public static readonly BindableProperty ValueSuffixProperty = BindableProperty.Create(nameof(ValueSuffix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateValueText());
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnTitleChanged((string)nv));
-
+        public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(AdvancedSlider), Slider.ThumbColorProperty.DefaultValue,
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as AdvancedSlider).slider.ThumbColor = (Color)newValue);
         #endregion
 
         protected void UpdateMinMaxValueText()

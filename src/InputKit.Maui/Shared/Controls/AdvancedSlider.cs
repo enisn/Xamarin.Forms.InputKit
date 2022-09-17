@@ -4,7 +4,7 @@ using InputKit.Shared.Validations;
 
 namespace InputKit.Shared.Controls;
 
-public class AdvancedSlider : StackLayout
+public class AdvancedSlider : StackLayout, IValidatable
 {
     public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
     {
@@ -143,26 +143,12 @@ public class AdvancedSlider : StackLayout
         }
     }
 
-    /// <summary>
-    /// This is not available for this control
-    /// </summary>
-    public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
-
-    /// <summary>
-    /// this always true, because this control value can not be null
-    /// </summary>
-    public bool IsValidated => true;
-
-    /// <summary>
-    /// It's not available for this control
-    /// </summary>
-    public string ValidationMessage { get; set; }
+    public Color ThumbColor { get => (Color)GetValue(ThumbColorProperty); set => SetValue(ThumbColorProperty, value); }
 
     #region BindableProperties
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).slider.Value = (double)nv);
     public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Colors.Gray, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
     public static readonly BindableProperty StepValueProperty = BindableProperty.Create(nameof(StepValue), typeof(double), typeof(AdvancedSlider), 1d, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnStepValueChanged((double)ov, (double)nv));
-    public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedSlider), false);
     public static readonly BindableProperty DisplayMinMaxValueProperty = BindableProperty.Create(nameof(StepValue), typeof(bool), typeof(AdvancedSlider), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnDisplayMinMaxValueChanged((bool)nv));
     public static readonly BindableProperty MaxValueProperty = BindableProperty.Create(nameof(MaxValue), typeof(double), typeof(AdvancedSlider), 1d, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnMaxValueChanged((double)nv));
     public static readonly BindableProperty MinValueProperty = BindableProperty.Create(nameof(MinValue), typeof(double), typeof(AdvancedSlider), 0d, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnMinValueChanged((double)nv));
@@ -173,7 +159,8 @@ public class AdvancedSlider : StackLayout
     public static readonly BindableProperty ValuePrefixProperty = BindableProperty.Create(nameof(ValuePrefix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateValueText());
     public static readonly BindableProperty ValueSuffixProperty = BindableProperty.Create(nameof(ValueSuffix), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).UpdateValueText());
     public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnTitleChanged((string)nv));
-
+    public static readonly BindableProperty ThumbColorProperty = BindableProperty.Create(nameof(ThumbColor), typeof(Color), typeof(AdvancedSlider), Slider.ThumbColorProperty.DefaultValue,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as AdvancedSlider).slider.ThumbColor = (Color)newValue);
     #endregion
 
     /// <summary>
