@@ -1,8 +1,12 @@
-﻿namespace InputKit.Shared.Validations;
+﻿using System.ComponentModel;
+
+namespace InputKit.Shared.Validations;
 public class MaxValueValidation : IValidation
 {
     private string message;
     public string Message { get => message ?? $"The field can't be greater than {MaxValue}."; set => message = value; }
+
+    [TypeConverter(typeof(ComparableTypeConverter))]
     public IComparable MaxValue { get; set; }
 
     public bool Validate(object value)
