@@ -52,14 +52,14 @@ public class ComparableTypeConverter : TypeConverter
                 return number;
             }
 
-            if (DateTime.TryParse(text, out var dateTime))
-            {
-                return dateTime;
-            }
-
             if (TimeSpan.TryParse(text, out var timeSpan))
             {
                 return timeSpan;
+            }
+
+            if (DateTime.TryParse(text, out var dateTime))
+            {
+                return dateTime;
             }
 
             if (string.IsNullOrEmpty(text))

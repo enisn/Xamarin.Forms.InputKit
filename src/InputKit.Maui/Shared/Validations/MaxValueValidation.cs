@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 
 namespace InputKit.Shared.Validations;
 public class MaxValueValidation : IValidation
@@ -11,15 +12,21 @@ public class MaxValueValidation : IValidation
 
     public bool Validate(object value)
     {
-        if (value is null)
+        if (value is null || (value is string text && string.IsNullOrEmpty(text)))
         {
             return true;
         }
 
-        var converted = ComparableTypeConverter.Instance.ConvertFrom(value);
-        if (converted is IComparable comparable && converted.GetType() == comparable.GetType())
+        var type = MaxValue.GetType();
+
+        if (value.GetType() != type)
         {
-            return comparable.CompareTo(MaxValue) <= 0;
+            value = Convert.ChangeType(value, type);
+        }
+
+        if (value is IComparable comparableValue)
+        {
+            return comparableValue.CompareTo(MaxValue) <= 0;
         }
 
         return false;
