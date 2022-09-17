@@ -96,7 +96,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         UpdateShape();
         GestureRecognizers.Add(new TapGestureRecognizer
         {
-            Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
+            Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; }),
         });
 
         iconValidation = new Lazy<Path>(() => new Path
@@ -125,7 +125,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// Invoked when check changed
     /// </summary>
     public event EventHandler CheckChanged;
-    public event EventHandler ValidationChanged;
     #endregion
 
     #region Properties
@@ -463,6 +462,10 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
 
         checkBox.UpdateColors();
+
+        checkBox.ExecuteCommand();
+
+        checkBox.CheckChanged?.Invoke(checkBox, new EventArgs());
 
         if (checkBox.iconValidation.IsValueCreated && isChecked)
         {

@@ -90,7 +90,15 @@ public class RadioButton : StatefulStackLayout
         ApplyLabelPosition(LabelPosition);
         UpdateShape();
 
-        GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(Tapped) });
+        GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() =>
+        {
+            if (IsDisabled)
+            {
+                return;
+            }
+
+            IsChecked = true;
+        })});
     }
     #endregion
 
@@ -205,7 +213,7 @@ public class RadioButton : StatefulStackLayout
 
     #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-    public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsCheckedAction((bool)nv));
+    public static readonly BindableProperty IsCheckedProperty = BindableProperty.Create(nameof(IsChecked), typeof(bool), typeof(RadioButton), false, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyIsCheckedAction((bool)nv));
     public static readonly BindableProperty IsDisabledProperty = BindableProperty.Create(nameof(IsDisabled), typeof(bool), typeof(RadioButton), false, propertyChanged: (bo, ov, nv) => (bo as RadioButton).IsDisabled = (bool)nv);
     public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(RadioButton), "", propertyChanged: (bo, ov, nv) => (bo as RadioButton).Text = (string)nv);
     public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(RadioButton), 20.0, propertyChanged: (bo, ov, nv) => (bo as RadioButton).TextFontSize = (double)nv);
@@ -248,21 +256,6 @@ public class RadioButton : StatefulStackLayout
         iconChecked.Data = SelectedIconGeomerty;
     }
 
-    /// <summary>
-    /// That handles tapps and triggers event, commands etc.
-    /// </summary>
-    void Tapped()
-    {
-        if (IsDisabled)
-        {
-            return;
-        }
-
-        IsChecked = true;
-        Clicked?.Invoke(this, new EventArgs());
-        ClickCommand?.Execute(CommandParameter ?? Value);
-    }
-
     void UpdateColors()
     {
         iconChecked.Fill = Color;
@@ -272,6 +265,9 @@ public class RadioButton : StatefulStackLayout
 
     public virtual void ApplyIsChecked(bool isChecked)
     {
+        Clicked?.Invoke(this, new EventArgs());
+        ClickCommand?.Execute(CommandParameter ?? Value);
+
         var isCheckedInLastState = iconChecked.Scale == 1;
 
         var changed = isCheckedInLastState != isChecked;

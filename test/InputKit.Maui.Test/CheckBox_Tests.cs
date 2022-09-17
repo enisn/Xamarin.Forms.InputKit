@@ -81,6 +81,7 @@ public class CheckBox_Tests
         });
 
         var control = AnimationReadyHandler.Prepare(new CheckBox());
+        control.BindingContext = viewModel;
         control.SetBinding(CheckBox.CheckChangedCommandProperty, new Binding(nameof(TestViewModel.Command)));
 
         // Act
@@ -103,8 +104,9 @@ public class CheckBox_Tests
         });
 
         var control = AnimationReadyHandler.Prepare(new CheckBox());
+        control.BindingContext = viewModel;
         control.SetBinding(CheckBox.CheckChangedCommandProperty, new Binding(nameof(TestViewModel.Command)));
-        control.SetBinding(CheckBox.CommandParameterProperty, new Binding(nameof(TestViewModel.Command)));
+        control.SetBinding(CheckBox.CommandParameterProperty, new Binding(nameof(TestViewModel.CommandParameter)));
 
         // Act
         control.IsChecked = true;
