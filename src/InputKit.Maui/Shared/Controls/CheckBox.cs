@@ -66,7 +66,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     protected Lazy<Path> iconValidation;
 
-    private CheckType _type = CheckType.Regular;
     private bool _isEnabled;
     #endregion
 
@@ -97,7 +96,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         UpdateShape();
         GestureRecognizers.Add(new TapGestureRecognizer
         {
-            Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
+            Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; }),
         });
 
         iconValidation = new Lazy<Path>(() => new Path
@@ -126,7 +125,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// Invoked when check changed
     /// </summary>
     public event EventHandler CheckChanged;
-    public event EventHandler ValidationChanged;
     #endregion
 
     #region Properties
@@ -201,7 +199,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Which icon will be shown when checkbox is checked
     /// </summary>
-    public CheckType Type { get => _type; set { _type = value; UpdateType(); } }
+    public CheckType Type { get => (CheckType)GetValue(TypeProperty); set => SetValue(TypeProperty, value); }
 
     /// <summary>
     /// Size of Checkbox
@@ -330,6 +328,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                 checkBox.iconValidation.Value.Fill = (Color)newValue;
             }
         });
+
+    public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular,
+        propertyChanged: (bindable, oldValue, newValue)=> (bindable as CheckBox).UpdateType());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
@@ -461,6 +462,10 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
 
         checkBox.UpdateColors();
+
+        checkBox.ExecuteCommand();
+
+        checkBox.CheckChanged?.Invoke(checkBox, new EventArgs());
 
         if (checkBox.iconValidation.IsValueCreated && isChecked)
         {

@@ -79,6 +79,7 @@ public class RadioButton_Tests
         });
 
         var control = AnimationReadyHandler.Prepare(new RadioButton());
+        control.BindingContext = viewModel;
         control.SetBinding(RadioButton.ClickCommandProperty, new Binding(nameof(TestViewModel.Command)));
 
         // Act
@@ -101,8 +102,9 @@ public class RadioButton_Tests
         });
 
         var control = AnimationReadyHandler.Prepare(new RadioButton());
+        control.BindingContext = viewModel;
         control.SetBinding(RadioButton.ClickCommandProperty, new Binding(nameof(TestViewModel.Command)));
-        control.SetBinding(RadioButton.CommandParameterProperty, new Binding(nameof(TestViewModel.Command)));
+        control.SetBinding(RadioButton.CommandParameterProperty, new Binding(nameof(TestViewModel.CommandParameter)));
 
         // Act
         control.IsChecked = true;
