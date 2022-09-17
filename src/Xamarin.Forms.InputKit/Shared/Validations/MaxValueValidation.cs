@@ -13,15 +13,21 @@ namespace Plugin.InputKit.Shared.Validations
 
         public bool Validate(object value)
         {
-            if (value is null)
+            if (value is null || (value is string text && string.IsNullOrEmpty(text)))
             {
                 return true;
             }
 
-            var converted = ComparableTypeConverter.Instance.ConvertFrom(value);
-            if (converted is IComparable comparable && converted.GetType() == comparable.GetType())
+            var type = MinValue.GetType();
+
+            if (value.GetType() != type)
             {
-                return comparable.CompareTo(MaxValue) <= 0;
+                value = Convert.ChangeType(value, type);
+            }
+
+            if (value is IComparable comparableValue)
+            {
+                return comparableValue.CompareTo(MinValue) >= 0;
             }
 
             return false;
