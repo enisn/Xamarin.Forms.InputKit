@@ -16,7 +16,7 @@ namespace Plugin.InputKit.Shared.Validations
             }
 
             var converted = ComparableTypeConverter.Instance.ConvertFrom(value);
-            if (converted is IComparable comparable)
+            if (converted is IComparable comparable && converted.GetType() == comparable.GetType())
             {
                 return comparable.CompareTo(MaxValue) <= 0;
             }
