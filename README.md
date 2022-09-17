@@ -64,11 +64,11 @@ A checkbox control that is useful, customizable, full-featured, fully-bindable a
 <table>
 <tr>
 <td>
-<img src="docs/images/checkbox-dark-windows.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/en/images/checkbox-dark-windows.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 
 <td>
-<img src="docs/images/checkbox-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/en/images/checkbox-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 <td>
 <img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/checkboxes_ios.png" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
@@ -88,11 +88,11 @@ A radio button control that is useful, customizable, full-featured, fully-bindab
 <table>
 <tr>
 <td>
-<img src="docs/images/radiobutton-dark-windows.gif" alt="Xamarin Forms MAUI RadioButton Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/en/images/radiobutton-dark-windows.gif" alt="Xamarin Forms MAUI RadioButton Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 
 <td>
-<img src="docs/images/radiobutton-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
+<img src="docs/en/images/radiobutton-light-android.gif" alt="Xamarin Forms CheckBox Input Kit Enis Necipoglu" width="270" class="aligncenter size-medium wp-image-996" />
 </td>
 <td>
 <img src="https://raw.githubusercontent.com/enisn/Xamarin.Forms.InputKit/develop/shreenshots/radiobuttons_ios.png" alt="Xamarin Forms Radio Button Input Kit Enis Necipoğlu" width="270" class="aligncenter size-medium wp-image-1001" />
