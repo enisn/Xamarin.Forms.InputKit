@@ -28,7 +28,6 @@ namespace Plugin.InputKit.Shared.Controls
 
         public AdvancedSlider()
         {
-            labelValidation.TextColor = ValidationColor;
             this.Children.Add(lblTitle);
             this.Children.Add(new StackLayout
             {
@@ -50,6 +49,7 @@ namespace Plugin.InputKit.Shared.Controls
                 }
             });
 
+            labelValidation.TextColor = ValidationColor;
             this.Children.Add(labelValidation);
 
             slider.ValueChanged += Slider_ValueChanged;
