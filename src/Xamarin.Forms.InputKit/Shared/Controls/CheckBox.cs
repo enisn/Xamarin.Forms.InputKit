@@ -283,6 +283,8 @@ namespace Plugin.InputKit.Shared.Controls
 
                 this.Children.Add(iconValidation.Value);
             }
+
+            OnPropertyChanged(nameof(IsValid));
         }
 
         #endregion
