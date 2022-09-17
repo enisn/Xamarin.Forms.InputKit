@@ -8,7 +8,7 @@
     <RootNamespace>Plugin.InputKit</RootNamespace>
     <PackageId>Xamarin.Forms.InputKit</PackageId>
     <Product>$(AssemblyName) ($(TargetFramework))</Product>
-    <Version>4.1.0</Version>
+    <Version>4.1.1</Version>
     <PackOnBuild>false</PackOnBuild>
     <NeutralLanguage>en-US</NeutralLanguage>
     <DefineConstants>$(DefineConstants);</DefineConstants>
