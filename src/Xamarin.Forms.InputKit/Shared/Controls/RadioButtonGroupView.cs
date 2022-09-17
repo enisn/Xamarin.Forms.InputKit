@@ -194,6 +194,7 @@ namespace Plugin.InputKit.Shared.Controls
 
                 SelectedItemChanged?.Invoke(this, new EventArgs());
                 SelectedItemChangedCommand?.Execute(CommandParameter);
+                OnPropertyChanged(nameof(IsValid));
             }
         }
         private IEnumerable<RadioButton> GetChildRadioButtons(Layout<View> layout)

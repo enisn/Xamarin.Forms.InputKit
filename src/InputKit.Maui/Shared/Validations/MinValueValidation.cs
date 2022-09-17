@@ -19,7 +19,7 @@ public class MinValueValidation : IValidation
 
         var converted = ComparableTypeConverter.Instance.ConvertFrom(value);
 
-        if (converted is IComparable comparable)
+        if (converted is IComparable comparable && converted.GetType() == comparable.GetType())
         {
             return comparable.CompareTo(MinValue) >= 0;
         }

@@ -286,6 +286,8 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
             this.Add(iconValidation.Value);
         }
+
+        OnPropertyChanged(nameof(IsValid));
     }
 
     #endregion
