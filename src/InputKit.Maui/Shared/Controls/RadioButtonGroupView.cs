@@ -56,17 +56,6 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
 
     //-----------------------------------------------------------------------------
     /// <summary>
-    /// this will be added later
-    /// </summary>
-    public async void DisplayValidation()
-    {
-        BackgroundColor = Colors.Red;
-        await Task.Delay(500);
-        BackgroundColor = Colors.Transparent;
-    }
-
-    //-----------------------------------------------------------------------------
-    /// <summary>
     /// Returns selected radio button's index from inside of this.
     /// </summary>
     public int SelectedIndex
@@ -84,23 +73,30 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         get => GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
-    //-----------------------------------------------------------------------------
+
+    public List<IValidation> Validations { get; } = new();
+    public bool IsValid => ValidationResults().All(x => x.isValid);
+    protected IEnumerable<(bool isValid, string message)> ValidationResults()
+    {
+        foreach (var validation in Validations)
+        {
+            var validated = validation.Validate(this.SelectedItem ?? (SelectedIndex == -1 ? null : SelectedIndex));
+            yield return new(validated, validation.Message);
+        }
+    }
+
     /// <summary>
-    /// It will be added later
+    /// this will be added later
     /// </summary>
-    public bool IsRequired { get; set; }
-    //-----------------------------------------------------------------------------
-    /// <summary>
-    /// It will be added later
-    /// </summary>
-    public bool IsValidated { get => !IsRequired || SelectedIndex >= 0; }
-    //-----------------------------------------------------------------------------
-    /// <summary>
-    /// It will be added later
-    /// </summary>
-    public string ValidationMessage { get; set; }
-    public List<IValidation> Validations { get; set; }
-    public bool IsValid { get; }
+    public async void DisplayValidation()
+    {
+        if (!IsValid)
+        {
+            BackgroundColor = ValidationColor.WithAlpha(.6f);
+            await Task.Delay(500);
+            BackgroundColor = Colors.Transparent;
+        }
+    }
 
     #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -222,4 +218,16 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         }
     }
     #endregion
+
+    public Color ValidationColor
+    {
+        get => (Color)GetValue(ValidationColorProperty);
+        set => SetValue(ValidationColorProperty, value);
+    }
+
+    public static readonly BindableProperty ValidationColorProperty = BindableProperty.Create(
+      nameof(ValidationColor),
+      typeof(Color),
+      typeof(RadioButton),
+      defaultValue: Colors.Red);
 }

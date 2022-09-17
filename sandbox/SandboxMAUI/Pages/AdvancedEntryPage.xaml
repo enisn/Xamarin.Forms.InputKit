@@ -11,10 +11,12 @@
         <vm:AdvancedEntryPageViewModel />
     </ContentPage.BindingContext>
     <ScrollView>
-        <StackLayout Padding="30" MaximumWidthRequest="400">
+        <StackLayout Padding="30" Spacing="10" MaximumWidthRequest="400">
             <Label Text="You can see FormView Below:" />
             <BoxView HeightRequest="1" Color="LightGray" />
-            
+
+
+
             <input:FormView 
                 IsValidated="{Binding IsValidated}"
                 SubmitCommand="{Binding SubmitCommand}"
@@ -53,12 +55,22 @@
                         Title="Place your phone number below:"
                         IconImage="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Phone}, Color={StaticResource Primary}}"
                         MaxLength="10"
+                        Keyboard="Numeric"
                         PlaceholderColor="LightGray"
                         Placeholder="5439998877"
                         Text="{Binding Phone}"
-                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+                    <input:AdvancedEntry.Validations>
+                        <validation:DigitsOnlyValidation />
+                    </input:AdvancedEntry.Validations>
+                </input:AdvancedEntry>
+                
                 <Label Text="Choose your subscription type:" />
-                <input:RadioButtonGroupView IsRequired="True">
+                
+                <input:RadioButtonGroupView>
+                    <input:RadioButtonGroupView.Validations>
+                        <validation:RequiredValidation />
+                    </input:RadioButtonGroupView.Validations>
                     <input:RadioButton Text="Free" />
                     <input:RadioButton Text="Bronze" />
                     <input:RadioButton Text="Gold" />
@@ -66,9 +78,12 @@
                 </input:RadioButtonGroupView>
 
                 <input:CheckBox
-                        IsRequired="True"
                         Text="I Accept User Agreement"
-                        Type="Material" />
+                        Type="Material">
+                    <input:CheckBox.Validations>
+                        <validation:RequiredValidation />
+                    </input:CheckBox.Validations>
+                </input:CheckBox>
                 <Button
                         Margin="0,20"
                         input:FormView.IsSubmitButton="True"
