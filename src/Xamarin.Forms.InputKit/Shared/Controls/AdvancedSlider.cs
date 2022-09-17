@@ -1,7 +1,11 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Configuration;
+using Plugin.InputKit.Shared.Helpers;
+using Plugin.InputKit.Shared.Validations;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
@@ -19,10 +23,12 @@ namespace Plugin.InputKit.Shared.Controls
         Label lblValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, InputTransparent = true, TextColor = GlobalSetting.TextColor, };
         Label lblMinValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
         Label lblMaxValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
+        protected Label labelValidation = new Label { HorizontalOptions = LayoutOptions.Start, IsVisible = false };
         private Color _textColor;
 
         public AdvancedSlider()
         {
+            labelValidation.TextColor = ValidationColor;
             this.Children.Add(lblTitle);
             this.Children.Add(new StackLayout
             {
@@ -43,6 +49,8 @@ namespace Plugin.InputKit.Shared.Controls
                     lblMaxValue,
                 }
             });
+
+            this.Children.Add(labelValidation);
 
             slider.ValueChanged += Slider_ValueChanged;
         }
@@ -143,26 +151,10 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
 
-        /// <summary>
-        /// This is not available for this control
-        /// </summary>
-        public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
-
-        /// <summary>
-        /// this always true, because this control value can not be null
-        /// </summary>
-        public bool IsValidated => true;
-
-        /// <summary>
-        /// It's not available for this control
-        /// </summary>
-        public string ValidationMessage { get; set; }
-
         #region BindableProperties
         public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(double), typeof(AdvancedSlider), 0.0, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).slider.Value = (double)nv);
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedSlider), Color.Gray, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).TextColor = (Color)nv);
         public static readonly BindableProperty StepValueProperty = BindableProperty.Create(nameof(StepValue), typeof(double), typeof(AdvancedSlider), 1d, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnStepValueChanged((double)ov, (double)nv));
-        public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedSlider), false);
         public static readonly BindableProperty DisplayMinMaxValueProperty = BindableProperty.Create(nameof(StepValue), typeof(bool), typeof(AdvancedSlider), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnDisplayMinMaxValueChanged((bool)nv));
         public static readonly BindableProperty MaxValueProperty = BindableProperty.Create(nameof(MaxValue), typeof(double), typeof(AdvancedSlider), 1d, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnMaxValueChanged((double)nv));
         public static readonly BindableProperty MinValueProperty = BindableProperty.Create(nameof(MinValue), typeof(double), typeof(AdvancedSlider), 0d, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnMinValueChanged((double)nv));
@@ -175,16 +167,6 @@ namespace Plugin.InputKit.Shared.Controls
         public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedSlider), string.Empty, propertyChanged: (bo, ov, nv) => (bo as AdvancedSlider).OnTitleChanged((string)nv));
 
         #endregion
-
-        /// <summary>
-        /// doesn't affect
-        /// </summary>
-        public event EventHandler ValidationChanged;
-
-        /// <summary>
-        /// It's not available for this control
-        /// </summary>
-        public void DisplayValidation() { }
 
         protected void UpdateMinMaxValueText()
         {
@@ -245,5 +227,40 @@ namespace Plugin.InputKit.Shared.Controls
             UpdateView();
             UpdateMinMaxValueText();
         }
+
+        public List<IValidation> Validations { get; } = new List<IValidation>();
+        public bool IsValid => ValidationResults().All(x => x.isValid);
+        protected IEnumerable<(bool isValid, string message)> ValidationResults()
+        {
+            foreach (var validation in Validations)
+            {
+                var validated = validation.Validate(this.Value);
+                yield return (validated, validation.Message);
+            }
+        }
+
+        /// <summary>
+        /// It's not available for this control
+        /// </summary>
+        public void DisplayValidation() 
+        {
+            labelValidation.Text = string.Join("\n", ValidationResults().Where(x => !x.isValid).Select(s => s.message));
+            labelValidation.IsVisible = !IsValid;
+        }
+
+        public Color ValidationColor
+        {
+            get => (Color)GetValue(ValidationColorProperty);
+            set => SetValue(ValidationColorProperty, value);
+        }
+
+        public static readonly BindableProperty ValidationColorProperty = BindableProperty.Create(
+          nameof(ValidationColor),
+          typeof(Color),
+          typeof(AdvancedSlider),
+          defaultValue: Color.Red,
+          propertyChanged: (bindable, oldValue, newValue) =>
+              (bindable as AdvancedSlider).labelValidation.TextColor = (Color)newValue
+          );
     }
 }

@@ -46,6 +46,7 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.8.0.1364" PrivateAssets="All" />
     <Compile Include="Shared\**\*.cs" />
+    <Compile Include="Shared\**\*.*.cs" />
   </ItemGroup>
 
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
@@ -138,10 +139,4 @@
 
   <Import Project="inputkit.targets" Condition="Exists('inputkit.targets')" />
   <Import Project="$(MSBuildSDKExtrasTargets)" Condition="Exists('$(MSBuildSDKExtrasTargets)')" />
-  <ItemGroup>
-    <None Remove="Shared\Controls\PredefinedShapes.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Remove="Shared\Helpers\GeometryConverter.cs" />
-  </ItemGroup>
 </Project>

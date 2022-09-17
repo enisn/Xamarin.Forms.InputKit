@@ -1,6 +1,4 @@
-﻿using InputKit.Shared.Abstraction;
-using InputKit.Shared.Configuration;
-using System.Text.RegularExpressions;
+﻿using InputKit.Shared.Configuration;
 using System.Windows.Input;
 
 namespace InputKit.Shared.Controls
@@ -8,7 +6,7 @@ namespace InputKit.Shared.Controls
     /// <summary>
     /// This Entry contains validation and some stuffs inside
     /// </summary>
-    public partial class AdvancedEntry : StackLayout, IValidatable
+    public partial class AdvancedEntry : StackLayout
     {
         #region Statics
         /// <summary>
@@ -39,11 +37,10 @@ namespace InputKit.Shared.Controls
 
         #region Fields
         readonly Label lblTitle = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, TextColor = GlobalSetting.TextColor, LineBreakMode = LineBreakMode.TailTruncation, FontFamily = GlobalSetting.FontFamily };
-        readonly Label lblAnnotation = new Label { Margin = new Thickness(6, 0, 0, 0), IsVisible = false, FontSize = Device.GetNamedSize(NamedSize.Micro, typeof(Label)), Opacity = 0.8, TextColor = GlobalSetting.TextColor, FontFamily = GlobalSetting.FontFamily };
         readonly Frame frmBackground = new Frame { BackgroundColor = GlobalSetting.BackgroundColor, CornerRadius = (float)GlobalSetting.CornerRadius, BorderColor = GlobalSetting.BorderColor, Padding = new Thickness(5, 0, 0, 0), HasShadow = false };
-        readonly Image imgWarning = new Image { Margin = 10, HorizontalOptions = LayoutOptions.End, VerticalOptions = LayoutOptions.Center, InputTransparent = true, Source = "alert.png" };
         readonly Image imgIcon = new Image { InputTransparent = true, Margin = 5, IsVisible = false, VerticalOptions = LayoutOptions.Center, HeightRequest = 30 };
         readonly Entry txtInput;
+        readonly Grid inputGrid;
         #endregion
 
         #region Ctor
@@ -56,13 +53,11 @@ namespace InputKit.Shared.Controls
             Children.Add(lblTitle);
             Children.Add(frmBackground);
 
-            var inputGrid = new Grid();
+            inputGrid = new Grid();
             inputGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = 30 });
             inputGrid.ColumnDefinitions.Add(new ColumnDefinition(GridLength.Star));
             inputGrid.Add(imgIcon, column: 0);
             inputGrid.Add(txtInput, column: 1);
-
-            ApplyValidationPosition(GlobalSetting.LabelPosition);
 
             frmBackground.Content = new Grid
             {
@@ -70,36 +65,27 @@ namespace InputKit.Shared.Controls
                 Children =
                 {
                     inputGrid,
-                    imgWarning
                 }
             };
 
-            txtInput.TextChanged += TxtInput_TextChanged;
+            InitializeValidation();
+            txtInput.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             txtInput.Focused += (s, args) => { var arg = new FocusEventArgs(this, true); FocusedCommand?.Execute(arg); Focused?.Invoke(this, arg); };
             txtInput.Unfocused += (s, args) => { var arg = new FocusEventArgs(this, false); UnfocusedCommand?.Execute(arg); Unfocused?.Invoke(this, arg); };
-            imgWarning.IsVisible = IsRequired;
-            Reset();
         }
         #endregion
 
         #region Not Implemented
         public bool IsSelected { get => false; set { } }
-        public object Value { get; set; }
-        public bool IsValidated => IsAnnotated;
+
         #endregion
         #region Fields
-        private Color _defaultAnnotationColor = Colors.Gray;
-        private AnnotationType _annotation;
         private bool _isDisabled;
-        private int _minLength;
-        private string _validationMessage;
         #endregion
         #region Events
         public event EventHandler Completed;
         public event EventHandler<TextChangedEventArgs> TextChanged;
-        public event EventHandler Clicked;
-        public event EventHandler ValidationChanged;
         public new event EventHandler<FocusEventArgs> Unfocused;
         public new event EventHandler<FocusEventArgs> Focused;
         #endregion
@@ -165,19 +151,14 @@ namespace InputKit.Shared.Controls
         /// </summary>
         public int MaxLength
         {
-            get => txtInput.MaxLength;
-            set => txtInput.MaxLength = value;
+            get => (int)GetValue(MaxLengthProperty);
+            set => SetValue(MaxLengthProperty, value);
         }
-
-        /// <summary>
-        /// Minimum length of this Entry
-        /// </summary>
-        public int MinLength { get => _minLength; set { _minLength = value; UpdateWarning(); /*DisplayValidation(); */} }
 
         /// <summary>
         /// Corner radius of Entry.
         /// </summary>
-        public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, Value); }
+        public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
 
         /// <summary>
         /// To be added.
@@ -188,37 +169,14 @@ namespace InputKit.Shared.Controls
             set
             {
                 lblTitle.FontFamily = value;
-                lblAnnotation.FontFamily = value;
                 txtInput.FontFamily = value;
+
+                if (labelValidation.IsValueCreated)
+                {
+                    labelValidation.Value.FontFamily = value;
+                }
             }
         }
-
-        /// <summary>
-        /// This will be shown below title. This automaticly updating. If you set this manually you must set true IgnoreValidationMessage !!! 
-        /// </summary>
-        public string AnnotationMessage
-        {
-            get => lblAnnotation.Text;
-            set
-            {
-                lblAnnotation.Text = value;
-                lblAnnotation.IsVisible = !string.IsNullOrEmpty(value);
-            }
-        }
-
-        /// <summary>
-        /// AnnotationMessage's color.
-        /// </summary>
-        public Color AnnotationColor
-        {
-            get => lblAnnotation.TextColor;
-            set { lblAnnotation.TextColor = value; _defaultAnnotationColor = value; }
-        }
-
-        /// <summary>
-        /// will be added
-        /// </summary>
-        public AnnotationType Annotation { get => _annotation; set { _annotation = value; UpdateKeyboard(value); } }
 
         /// <summary>
         /// Disabled this control
@@ -234,129 +192,9 @@ namespace InputKit.Shared.Controls
         }
 
         /// <summary>
-        /// Finds this entry if Annotated
-        /// </summary>
-        public bool IsAnnotated
-        {
-            get
-            {
-                if (!IsRequired)
-                    return true;
-
-                if (string.IsNullOrEmpty(Text))
-                {
-                    if (Nullable)
-                    {
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-
-                if (Text.Length < MinLength)
-                    return false;
-
-                switch (Annotation)
-                {
-                    case AnnotationType.None:
-                        /* something can be placed here*/
-                        break;
-                    case AnnotationType.LettersOnly:
-                        return Regex.Match(Text, REGEX_LETTERONLY).Success;
-
-                    case AnnotationType.DigitsOnly:
-                        return Regex.Match(Text, REGEX_DIGITSONLY).Success;
-
-                    case AnnotationType.NonDigitsOnly:
-                        return Regex.Match(Text, REGEX_NONDIGITS).Success;
-
-                    case AnnotationType.Decimal:
-                        return Regex.Match(Text, REGEX_DECIMAL).Success;
-
-                    case AnnotationType.Email:
-                        return Regex.Match(Text, REGEX_EMAIL).Success;
-
-                    case AnnotationType.Password:
-                        return Regex.Match(Text, REGEX_PASSWORD).Success;
-
-                    case AnnotationType.Phone:
-                        return Regex.Match(Text, REGEX_PHONE).Success;
-
-                    case AnnotationType.ShortType:
-                        return short.TryParse(Text, out _);
-
-                    case AnnotationType.IntType:
-                        return int.TryParse(Text, out _);
-
-                    case AnnotationType.LongType:
-                        return long.TryParse(Text, out _);
-
-                    case AnnotationType.FloatType:
-                        return float.TryParse(Text, out _);
-
-                    case AnnotationType.DoubleType:
-                        return double.TryParse(Text, out _);
-
-                    case AnnotationType.DecimalType:
-                        return decimal.TryParse(Text, out _);
-
-                    case AnnotationType.ByteType:
-                        return byte.TryParse(Text, out _);
-
-                    case AnnotationType.SByteType:
-                        return sbyte.TryParse(Text, out _);
-
-                    case AnnotationType.CharType:
-                        return char.TryParse(Text, out _);
-
-                    case AnnotationType.UIntType:
-                        return uint.TryParse(Text, out _);
-
-                    case AnnotationType.ULongType:
-                        return ulong.TryParse(Text, out _);
-
-                    case AnnotationType.UShortType:
-                        return ushort.TryParse(Text, out _);
-
-                    case AnnotationType.RegexPattern:
-                        return Regex.Match(Text, RegexPattern).Success;
-                }
-                return true;
-            }
-            set { /*to make visible in XAML pages*/ }
-        }
-
-        /// <summary>
         /// IsPassword situation of entry.
         /// </summary>
         public bool IsPassword { get => txtInput.IsPassword; set => txtInput.IsPassword = value; }
-
-        /// <summary>
-        /// Comes from IValidatable implementation. Shows this if Validated.
-        /// </summary>
-        public bool IsRequired { get => (bool)GetValue(IsRequiredProperty); set => SetValue(IsRequiredProperty, value); }
-
-        /// <summary>
-        /// Validation message to update automaticly. This will be shown when entry is not validated
-        /// </summary>
-        public string ValidationMessage
-        {
-            get => _validationMessage;
-            set
-            {
-                var oldValueIsNull = _validationMessage == null;
-                _validationMessage = value;
-                if (!oldValueIsNull)
-                    DisplayValidation();
-            }
-        }
-
-        /// <summary>
-        /// Ignores automaticly update annotationmessage
-        /// </summary>
-        public bool IgnoreValidationMessage { get => (bool)GetValue(IgnoreValidationMessageProperty); set => SetValue(IgnoreValidationMessageProperty, value); }
 
         /// <summary>
         /// Executed when entry completed.
@@ -379,35 +217,15 @@ namespace InputKit.Shared.Controls
         public object CommandParameter { get => GetValue(CommandParameterProperty); set => SetValue(CommandParameterProperty, value); }
 
         /// <summary>
-        /// You need to set Annotation="RegexPattern" to use this.
-        /// </summary>
-        public string RegexPattern { get => (string)GetValue(RegexPatternProperty); set => SetValue(RegexPatternProperty, value); }
-
-        /// <summary>
         /// Changes Font Size of Entry's Text
         /// </summary>
-        /// 
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double TextFontSize { get => (double)GetValue(TextFontSizeProperty); set => SetValue(TextFontSizeProperty, value); }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// Gets and sets keyboard type of this entry
         /// </summary>
         public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; }
-        //----------------------------------------- -------------------------------
-        /// <summary>
-        /// Position of Annotation Label for AdvancedEntry
-        /// </summary>
-        public LabelPosition ValidationPosition
-        {
-            get => (LabelPosition)GetValue(ValidationPositionProperty);
-            set => SetValue(ValidationPositionProperty, value);
-        }
-        //----------------------------------------- -------------------------------
-        /// <summary>
-        /// Sets if an Empty Entry is Valid
-        /// </summary>
-        public bool Nullable { get => (bool)GetValue(NullableProperty); set => SetValue(NullableProperty, value); }
 
         public int CursorPosition { get => (int)GetValue(CursorPositionProperty); set => SetValue(CursorPositionProperty, value); }
         #endregion
@@ -424,28 +242,23 @@ namespace InputKit.Shared.Controls
         public static readonly BindableProperty TextColorProperty = BindableProperty.Create(nameof(TextColor), typeof(Color), typeof(AdvancedEntry), Entry.TextColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.TextColor = (Color)nv);
         public static readonly BindableProperty PlaceholderColorProperty = BindableProperty.Create(nameof(PlaceholderColor), typeof(Color), typeof(AdvancedEntry), Colors.LightGray, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).PlaceholderColor = (Color)nv);
         public static readonly BindableProperty PlaceholderProperty = BindableProperty.Create(nameof(Placeholder), typeof(string), typeof(AdvancedEntry), default(string), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.Placeholder = (string)nv);
-        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(nameof(MaxLength), typeof(int), typeof(AdvancedEntry), int.MaxValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MaxLength = (int)nv);
-        public static readonly BindableProperty MinLengthProperty = BindableProperty.Create(nameof(MinLength), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).MinLength = (int)nv);
         public static readonly BindableProperty CornerRadiusProperty = BindableProperty.Create(nameof(CornerRadius), typeof(float), typeof(AdvancedEntry), (float)Microsoft.Maui.Controls.Frame.CornerRadiusProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).frmBackground.CornerRadius = (float)nv);
-        public static readonly BindableProperty IsAnnotatedProperty = BindableProperty.Create(nameof(IsAnnotated), typeof(bool), typeof(AdvancedEntry), false, BindingMode.OneWayToSource);
-        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(AnnotationColor), typeof(Color), typeof(AdvancedEntry), InputKitOptions.GetAccentColor(), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationColor = (Color)nv);
-        public static readonly BindableProperty AnnotationMessageProperty = BindableProperty.Create(nameof(AnnotationMessage), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).AnnotationMessage = (string)nv);
+        public static readonly BindableProperty AnnotationColorProperty = BindableProperty.Create(nameof(ValidationColor), typeof(Color), typeof(AdvancedEntry), InputKitOptions.GetAccentColor(), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ValidationColor = (Color)nv);
         public static readonly BindableProperty CompletedCommandProperty = BindableProperty.Create(nameof(CompletedCommand), typeof(ICommand), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CompletedCommand = (ICommand)nv);
-        public static readonly BindableProperty AnnotationProperty = BindableProperty.Create(nameof(Annotation), typeof(AnnotationType), typeof(AdvancedEntry), AnnotationType.None, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Annotation = (AnnotationType)nv);
-        public static readonly BindableProperty ValidationMessageProperty = BindableProperty.Create(nameof(ValidationMessage), typeof(string), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ValidationMessage = (string)nv);
-        public static readonly BindableProperty IgnoreValidationMessageProperty = BindableProperty.Create(nameof(IgnoreValidationMessage), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).DisplayValidation());
-        public static readonly BindableProperty IsRequiredProperty = BindableProperty.Create(nameof(IsRequired), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).UpdateWarning());
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
-        public static readonly BindableProperty RegexPatternProperty = BindableProperty.Create(nameof(RegexPattern), typeof(string), typeof(AdvancedEntry), "", propertyChanged: (bo, ov, nv) => { (bo as AdvancedEntry).DisplayValidation(); (bo as AdvancedEntry).UpdateWarning(); });
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
         public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(AdvancedEntry), TextAlignment.Start, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.HorizontalTextAlignment = (TextAlignment)nv);
-        public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
-        public static readonly BindableProperty ValidationPositionProperty = BindableProperty.Create(
-                                propertyName: nameof(ValidationPosition), declaringType: typeof(AdvancedEntry),
-                                returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
-                                defaultValue: GlobalSetting.LabelPosition,
-                                propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).ApplyValidationPosition((LabelPosition)nv));
         public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.CursorPosition = (int)nv);
+
+        public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
+            nameof(MaxLength),
+            typeof(int),
+            typeof(AdvancedEntry),
+            int.MaxValue,
+            propertyChanged: (bindable, oldValue, newValue) => (bindable as AdvancedEntry).txtInput.MaxLength = (int)newValue);
+
+
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
         #endregion
 
@@ -489,103 +302,6 @@ namespace InputKit.Shared.Controls
                         break;
                     }
                 }
-            }
-        }
-        /// <summary>
-        /// Resets of current annotation check and hides annotation message 
-        /// </summary>
-        public void Reset()
-        {
-            txtInput.Text = null;
-            AnnotationMessage = null;
-            imgWarning.IsVisible = false;
-        }
-        private void TxtInput_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            SetValue(TextProperty, txtInput.Text);
-            SetValue(IsAnnotatedProperty, IsAnnotated);
-
-            UpdateWarning();
-            if (!IgnoreValidationMessage)
-                DisplayValidation();
-            TextChanged?.Invoke(this, e);
-        }
-        [Obsolete("Keyboard won't be changed automaticly on newer versions. Try set Keyboard property", false)]
-        public void UpdateKeyboard(AnnotationType annotation)
-        {
-            switch (annotation)
-            {
-                case AnnotationType.None:
-                    txtInput.Keyboard = Keyboard.Default;
-                    break;
-                case AnnotationType.LettersOnly:
-                    txtInput.Keyboard = Keyboard.Plain;
-                    break;
-                case AnnotationType.DigitsOnly:
-                case AnnotationType.ShortType:
-                case AnnotationType.IntType:
-                case AnnotationType.LongType:
-                case AnnotationType.FloatType:
-                case AnnotationType.DoubleType:
-                case AnnotationType.DecimalType:
-                case AnnotationType.ByteType:
-                case AnnotationType.SByteType:
-                case AnnotationType.CharType:
-                case AnnotationType.UIntType:
-                case AnnotationType.ULongType:
-                case AnnotationType.UShortType:
-                case AnnotationType.Decimal:
-                    txtInput.Keyboard = Keyboard.Numeric;
-                    break;
-                case AnnotationType.NonDigitsOnly:
-                    txtInput.Keyboard = Keyboard.Text;
-                    break;
-                case AnnotationType.Email:
-                    txtInput.Keyboard = Keyboard.Email;
-                    break;
-                case AnnotationType.Password:
-                    txtInput.Keyboard = Keyboard.Chat;
-                    break;
-                case AnnotationType.Phone:
-                    txtInput.Keyboard = Keyboard.Telephone;
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Triggers to display annotation message
-        /// </summary>
-        public void DisplayValidation()
-        {
-            if (!IsValidated)
-            {
-                AnnotationMessage = ValidationMessage;
-                //AnnotationColor = Color.Red;
-            }
-            else
-            {
-                AnnotationMessage = null;
-                //AnnotationColor = _defaultAnnotationColor;
-            }
-        }
-
-        private void UpdateWarning()
-        {
-            ValidationChanged?.Invoke(this, new EventArgs());
-            imgWarning.IsVisible = IsRequired && !IsAnnotated;
-        }
-
-        private void ApplyValidationPosition(LabelPosition position)
-        {
-            Children.Remove(lblAnnotation);
-            switch (position)
-            {
-                case LabelPosition.Before:
-                    Children.Insert(1, lblAnnotation);
-                    break;
-                case LabelPosition.After:
-                    Children.Add(lblAnnotation);
-                    break;
             }
         }
 

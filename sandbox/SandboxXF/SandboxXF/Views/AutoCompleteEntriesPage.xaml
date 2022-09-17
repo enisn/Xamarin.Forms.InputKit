@@ -3,7 +3,7 @@
     x:Class="SandboxXF.Views.AutoCompleteEntriesPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+    xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit" xmlns:validations="clr-namespace:Plugin.InputKit.Shared.Validations;assembly=Plugin.InputKit"
     Title="AutoCompleteEntries">
     <ContentPage.Content>
         <StackLayout
@@ -14,12 +14,13 @@
             <input:AutoCompleteEntry
                 x:Name="autoCompleteEntry"
                 Title="Type something"
-                Annotation="Email"
                 IconImage="ic_account_balance_black"
-                IsRequired="True"
                 Placeholder="Start writing xamarin"
-                TextColor="Black"
-                ValidationMessage="Is not valid" />
+                TextColor="Black">
+                <input:AutoCompleteEntry.Validations>
+                    <validations:RequiredValidation />
+                </input:AutoCompleteEntry.Validations>
+            </input:AutoCompleteEntry>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
