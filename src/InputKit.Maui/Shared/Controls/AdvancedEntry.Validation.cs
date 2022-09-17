@@ -27,9 +27,10 @@ public partial class AdvancedEntry : IValidatable
 
         iconValidation = new Lazy<ContentView>(() => new ContentView
         {
-            Padding = new Thickness(10, 0),
             VerticalOptions = LayoutOptions.Center,
             HorizontalOptions = LayoutOptions.End,
+            WidthRequest = 25,
+            HeightRequest = 25,
             Content = new Path
             {
                 Fill = ValidationColor,
