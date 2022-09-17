@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Validations
 {
@@ -6,6 +7,8 @@ namespace Plugin.InputKit.Shared.Validations
     {
         private string message;
         public string Message { get => message ?? $"The field can't be greater than {MaxValue}."; set => message = value; }
+
+        [TypeConverter(typeof(ComparableTypeConverter))]
         public IComparable MaxValue { get; set; }
 
         public bool Validate(object value)
