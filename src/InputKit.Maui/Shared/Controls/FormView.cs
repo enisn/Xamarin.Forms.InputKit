@@ -1,7 +1,4 @@
 ﻿using InputKit.Shared.Abstraction;
-using Microsoft.Maui.Controls;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Windows.Input;
 
@@ -194,23 +191,7 @@ public partial class FormView : StackLayout
         BindableProperty.Create(nameof(SubmitCommand), typeof(ICommand), typeof(FormView));
 
     public static readonly BindableProperty IsSubmitButtonProperty =
-        BindableProperty.CreateAttached("IsSubmitButton", typeof(bool), typeof(Button), false,
-            propertyChanged: (bindable, oldValue, newValue) =>
-            {
-                if ((bindable as Button).Parent is not FormView formView)
-                {
-                    return;
-                }
-
-                if ((bool)newValue)
-                {
-                    formView.RegisterEvent(bindable);
-                }
-                else
-                {
-                    formView.UnregisterEvent(bindable);
-                }
-            });
+        BindableProperty.CreateAttached("IsSubmitButton", typeof(bool), typeof(Button), false);
 
     public static bool GetIsSubmitButton(BindableObject view)
     {

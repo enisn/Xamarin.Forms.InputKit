@@ -10,6 +10,7 @@ namespace Plugin.InputKit.Shared.Controls
         public static Geometry Line = GeometryConverter.FromPath(Paths.LineHorizontal);
         public static Geometry Square = GeometryConverter.FromPath(Paths.Square);
         public static Geometry Dot = GeometryConverter.FromPath(Paths.Dot);
+        public static Geometry ExclamationCircle = GeometryConverter.FromPath(Paths.ExclamationCircle);
 
         public static class Paths
         {
@@ -18,6 +19,7 @@ namespace Plugin.InputKit.Shared.Controls
             public const string Square = "M12 12H0V0h12v12z";
             public const string LineHorizontal = "M 17.2026 6.7911 H 0.9875 C 0.4422 6.7911 0 7.2332 0 7.7784 v 2.6331 c 0 0.5453 0.442 0.9873 0.9875 0.9873 h 16.2151 c 0.5453 0 0.9873 -0.442 0.9873 -0.9873 v -2.6331 C 18.1901 7.2332 17.7481 6.7911 17.2026 6.7911 z";
             public const string Dot = "M12 18a6 6 0 100-12 6 6 0 000 12z";
+            public const string ExclamationCircle = "M 2.7835 16.2165 A 9.5 9.5 90 1 1 16.2165 2.7835 A 9.5 9.5 90 0 1 2.7835 16.2165 z M 8.55 4.75 v 5.7 h 1.9 V 4.75 H 8.55 z m 0 7.6 v 1.9 h 1.9 v -1.9 H 8.55 z";
         }
     }
 }

@@ -31,10 +31,6 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     /// Invokes when tapped on RadioButon
     /// </summary>
     public event EventHandler SelectedItemChanged;
-    /// <summary>
-    /// Implementation of IValidatable, Triggered when value changed.
-    /// </summary>
-    public event EventHandler ValidationChanged;
 
     //-----------------------------------------------------------------------------
     /// <summary>
@@ -200,8 +196,8 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
             SelectedItemChanged?.Invoke(this, new EventArgs());
             SelectedItemChangedCommand?.Execute(CommandParameter);
         }
-        ValidationChanged?.Invoke(this, new EventArgs());
     }
+
     private IEnumerable<RadioButton> GetChildRadioButtons(Layout layout)
     {
         foreach (var view in layout.Children)

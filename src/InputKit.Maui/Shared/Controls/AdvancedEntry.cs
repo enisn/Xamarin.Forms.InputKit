@@ -69,6 +69,7 @@ namespace InputKit.Shared.Controls
             };
 
             InitializeValidation();
+            txtInput.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
             txtInput.Completed += (s, args) => { ExecuteCommand(); Completed?.Invoke(this, new EventArgs()); FocusNext(); };
             txtInput.Focused += (s, args) => { var arg = new FocusEventArgs(this, true); FocusedCommand?.Execute(arg); Focused?.Invoke(this, arg); };
             txtInput.Unfocused += (s, args) => { var arg = new FocusEventArgs(this, false); UnfocusedCommand?.Execute(arg); Unfocused?.Invoke(this, arg); };
@@ -168,8 +169,12 @@ namespace InputKit.Shared.Controls
             set
             {
                 lblTitle.FontFamily = value;
-                labelValidation.Value.FontFamily = value;
                 txtInput.FontFamily = value;
+
+                if (labelValidation.IsValueCreated)
+                {
+                    labelValidation.Value.FontFamily = value;
+                }
             }
         }
 
@@ -214,19 +219,13 @@ namespace InputKit.Shared.Controls
         /// <summary>
         /// Changes Font Size of Entry's Text
         /// </summary>
-        /// 
         [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
         public double TextFontSize { get => (double)GetValue(TextFontSizeProperty); set => SetValue(TextFontSizeProperty, value); }
-        ///----------------------------------------- -------------------------------
+
         /// <summary>
         /// Gets and sets keyboard type of this entry
         /// </summary>
         public Keyboard Keyboard { get => txtInput.Keyboard; set => txtInput.Keyboard = value; }
-
-        /// <summary>
-        /// Sets if an Empty Entry is Valid
-        /// </summary>
-        public bool Nullable { get => (bool)GetValue(NullableProperty); set => SetValue(NullableProperty, value); }
 
         public int CursorPosition { get => (int)GetValue(CursorPositionProperty); set => SetValue(CursorPositionProperty, value); }
         #endregion
@@ -249,7 +248,6 @@ namespace InputKit.Shared.Controls
         public static readonly BindableProperty CommandParameterProperty = BindableProperty.Create(nameof(CommandParameter), typeof(object), typeof(AdvancedEntry), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).CommandParameter = nv);
         public static readonly BindableProperty TextFontSizeProperty = BindableProperty.Create(nameof(TextFontSize), typeof(double), typeof(AdvancedEntry), Device.GetNamedSize(NamedSize.Default, typeof(Label)), propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.FontSize = (double)nv);
         public static readonly BindableProperty HorizontalTextAlignmentProperty = BindableProperty.Create(nameof(HorizontalTextAlignment), typeof(TextAlignment), typeof(AdvancedEntry), TextAlignment.Start, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.HorizontalTextAlignment = (TextAlignment)nv);
-        public static readonly BindableProperty NullableProperty = BindableProperty.Create(nameof(Nullable), typeof(bool), typeof(AdvancedEntry), false, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Nullable = (bool)nv);
         public static readonly BindableProperty CursorPositionProperty = BindableProperty.Create(nameof(CursorPosition), typeof(int), typeof(AdvancedEntry), 0, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).txtInput.CursorPosition = (int)nv);
 
         public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(

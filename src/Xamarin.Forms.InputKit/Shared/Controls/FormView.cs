@@ -1,7 +1,9 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Plugin.InputKit.Shared.Controls
@@ -16,51 +18,117 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public FormView()
         {
-            DeclareEvents();
-            this.ChildAdded += FormView_ChildAdded;
-            this.ChildRemoved += FormView_ChildRemoved; ;
+            RegisterEvents();
+            ChildAdded += FormView_ChildAdded;
+            ChildRemoved += FormView_ChildRemoved;
         }
 
         private void FormView_ChildRemoved(object sender, ElementEventArgs e)
         {
             if (e is IValidatable validatable)
-                validatable.ValidationChanged -= FormView_ValidationChanged;
+            {
+                validatable.PropertyChanged -= OnValidatablePropertyChanged;
+            }
         }
 
         private void FormView_ChildAdded(object s, ElementEventArgs e)
         {
-            if (e.Element is IValidatable validatable)
+            if (e.Element is IValidatable || e.Element is Button)
             {
-                SetEvent(validatable);
+                RegisterEvent(e.Element);
             }
-            else if (e.Element is Layout<View> la)
+            else if (e.Element is Layout layout)
             {
-                la.ChildAdded -= FormView_ChildAdded;
-                la.ChildAdded += FormView_ChildAdded;
-                la.ChildRemoved -= FormView_ChildRemoved;
-                la.ChildRemoved += FormView_ChildRemoved;
-                foreach (var child in GetChildIValidatables(la))
-                    SetEvent(child);
+                layout.ChildAdded -= FormView_ChildAdded;
+                layout.ChildAdded += FormView_ChildAdded;
+                layout.ChildRemoved -= FormView_ChildRemoved;
+                layout.ChildRemoved += FormView_ChildRemoved;
+
+                foreach (var child in GetChildValitablesAndButtons(layout))
+                {
+                    RegisterEvent(child);
+                }
             }
         }
 
-        void DeclareEvents()
+        void RegisterEvents()
         {
-            foreach (var item in GetChildIValidatables(this))
-                SetEvent(item);
+            foreach (var item in GetChildValitablesAndButtons(this))
+            {
+                RegisterEvent(item);
+            }
         }
 
-        void SetEvent(IValidatable view)
+        void RegisterEvent(BindableObject view)
         {
-            if (view == null) return;
-            view.ValidationChanged -= FormView_ValidationChanged;
-            view.ValidationChanged += FormView_ValidationChanged;
+            if (view == null)
+            {
+                return;
+            }
+
+            view.PropertyChanged -= OnValidatablePropertyChanged;
+            view.PropertyChanged += OnValidatablePropertyChanged;
+
+            if (GetIsSubmitButton(view) && view is Button submitButton)
+            {
+                submitButton.Clicked -= SubmitButtonClicked;
+                submitButton.Clicked += SubmitButtonClicked;
+            }
         }
-        private void FormView_ValidationChanged(object sender, EventArgs e)
+        void UnregisterEvent(BindableObject view)
         {
-            if (!(sender as IValidatable).IsValidated) SetValue(IsValidatedProperty, false);
-            else SetValue(IsValidatedProperty, CheckValidation(this));
+            if (view == null)
+            {
+                return;
+            }
+
+            view.PropertyChanged -= OnValidatablePropertyChanged;
+
+            if (GetIsSubmitButton(view) && view is Button submitButton)
+            {
+                submitButton.Clicked -= SubmitButtonClicked;
+            }
         }
+
+        private void SubmitButtonClicked(object sender, EventArgs e)
+        {
+            if (IsValidated)
+            {
+                SubmitCommand?.Execute(IsValidated);
+            }
+
+            if (!IsValidated)
+            {
+                foreach (var child in GetChildValitablesAndButtons(this))
+                {
+                    if (child is IValidatable validatable)
+                    {
+                        validatable.DisplayValidation();
+                    }
+                }
+            }
+        }
+
+        private void OnValidatablePropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(IValidatable.IsValid))
+            {
+                FormView_ValidationChanged(sender as IValidatable);
+            }
+        }
+
+        private void FormView_ValidationChanged(IValidatable validatable)
+        {
+            if (validatable.IsValid)
+            {
+                SetValue(IsValidatedProperty, CheckValidation(this));
+            }
+            else
+            {
+                SetValue(IsValidatedProperty, false);
+            }
+        }
+
         /// <summary>
         /// Shows if all elements inside of this are validated or not
         /// </summary>
@@ -73,35 +141,70 @@ namespace Plugin.InputKit.Shared.Controls
 
             set { /* To make visible in XAML pages */ }
         }
+
         /// <summary>
         /// Checks and element is validated or not
         /// </summary>
         /// <param name="view">A view which IValidated implemented</param>
         /// <returns></returns>
-        public static bool CheckValidation(Layout<View> view)
+        public static bool CheckValidation(Layout view)
         {
-            foreach (var item in GetChildIValidatables(view))
-                if (!item.IsValidated)
+            foreach (var item in GetChildValitablesAndButtons(view))
+            {
+                if (item is IValidatable validatable && !validatable.IsValid)
+                {
                     return false;
+                }
+            }
+
             return true;
         }
 
-        static IEnumerable<IValidatable> GetChildIValidatables(Layout<View> layout)
+        static IEnumerable<BindableObject> GetChildValitablesAndButtons(Layout layout)
         {
-            foreach (var item in layout.Children)
+            foreach (View item in layout.Children)
             {
-                if (item is IValidatable validatable)
-                    yield return validatable;
-
-                else if (item is Layout<View> la)
-                    foreach (var child in GetChildIValidatables(la))
+                if (item is IValidatable)
+                {
+                    yield return item;
+                }
+                else if (item is Button button)
+                {
+                    yield return button;
+                }
+                else if (item is Layout la)
+                {
+                    foreach (var child in GetChildValitablesAndButtons(la))
+                    {
                         yield return child;
+                    }
+                }
             }
         }
 
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-        public static readonly BindableProperty IsValidatedProperty = BindableProperty.Create(nameof(IsValidated), typeof(bool), typeof(FormView), false, BindingMode.OneWayToSource);
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
+        public static readonly BindableProperty IsValidatedProperty = BindableProperty.Create(
+            nameof(IsValidated),
+            typeof(bool),
+            typeof(FormView),
+            false,
+            BindingMode.OneWayToSource);
 
+        public ICommand SubmitCommand { get => (ICommand)GetValue(SubmitCommandProperty); set => SetValue(SubmitCommandProperty, value); }
+
+        public static readonly BindableProperty SubmitCommandProperty =
+            BindableProperty.Create(nameof(SubmitCommand), typeof(ICommand), typeof(FormView));
+
+        public static readonly BindableProperty IsSubmitButtonProperty =
+            BindableProperty.CreateAttached("IsSubmitButton", typeof(bool), typeof(Button), false);
+
+        public static bool GetIsSubmitButton(BindableObject view)
+        {
+            return (bool)view.GetValue(IsSubmitButtonProperty);
+        }
+
+        public static void SetIsSubmitButton(BindableObject view, bool value)
+        {
+            view.SetValue(IsSubmitButtonProperty, value);
+        }
     }
 }

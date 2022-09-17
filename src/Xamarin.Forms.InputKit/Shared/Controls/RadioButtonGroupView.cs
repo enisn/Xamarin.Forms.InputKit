@@ -1,5 +1,6 @@
 ﻿using Plugin.InputKit.Shared.Abstraction;
 using Plugin.InputKit.Shared.Layouts;
+using Plugin.InputKit.Shared.Validations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// Invokes when tapped on RadioButon
         /// </summary>
         public event EventHandler SelectedItemChanged;
-        /// <summary>
-        /// Implementation of IValidatable, Triggered when value changed.
-        /// </summary>
-        public event EventHandler ValidationChanged;
 
         //-----------------------------------------------------------------------------
         /// <summary>
@@ -54,17 +51,6 @@ namespace Plugin.InputKit.Shared.Controls
 
         //-----------------------------------------------------------------------------
         /// <summary>
-        /// this will be added later
-        /// </summary>
-        public async void DisplayValidation()
-        {
-            this.BackgroundColor = Color.Red;
-            await Task.Delay(500);
-            this.BackgroundColor = Color.Transparent;
-        }
-
-        //-----------------------------------------------------------------------------
-        /// <summary>
         /// Returns selected radio button's index from inside of this.
         /// </summary>
         public int SelectedIndex
@@ -82,21 +68,30 @@ namespace Plugin.InputKit.Shared.Controls
             get => GetValue(RadioButtonGroupView.SelectedItemProperty);
             set => SetValue(RadioButtonGroupView.SelectedItemProperty, value);
         }
-        //-----------------------------------------------------------------------------
+
+        public List<IValidation> Validations { get; } = new List<IValidation>();
+        public bool IsValid => ValidationResults().All(x => x.isValid);
+        protected IEnumerable<(bool isValid, string message)> ValidationResults()
+        {
+            foreach (var validation in Validations)
+            {
+                var validated = validation.Validate(this.SelectedItem ?? (SelectedIndex == -1 ? (object)null : SelectedIndex));
+                yield return (validated, validation.Message);
+            }
+        }
+
         /// <summary>
-        /// It will be added later
+        /// this will be added later
         /// </summary>
-        public bool IsRequired { get; set; }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// It will be added later
-        /// </summary>
-        public bool IsValidated { get => !this.IsRequired || this.SelectedIndex >= 0; }
-        //-----------------------------------------------------------------------------
-        /// <summary>
-        /// It will be added later
-        /// </summary>
-        public string ValidationMessage { get; set; }
+        public async void DisplayValidation()
+        {
+            if (!IsValid)
+            {
+                BackgroundColor = ValidationColor.MultiplyAlpha(.6f);
+                await Task.Delay(500);
+                BackgroundColor = Color.Transparent;
+            }
+        }
 
         #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
@@ -200,7 +195,6 @@ namespace Plugin.InputKit.Shared.Controls
                 SelectedItemChanged?.Invoke(this, new EventArgs());
                 SelectedItemChangedCommand?.Execute(CommandParameter);
             }
-            ValidationChanged?.Invoke(this, new EventArgs());
         }
         private IEnumerable<RadioButton> GetChildRadioButtons(Layout<View> layout)
         {
@@ -218,5 +212,17 @@ namespace Plugin.InputKit.Shared.Controls
             }
         }
         #endregion
+
+        public Color ValidationColor
+        {
+            get => (Color)GetValue(ValidationColorProperty);
+            set => SetValue(ValidationColorProperty, value);
+        }
+
+        public static readonly BindableProperty ValidationColorProperty = BindableProperty.Create(
+          nameof(ValidationColor),
+          typeof(Color),
+          typeof(RadioButton),
+          defaultValue: Color.Red);
     }
 }

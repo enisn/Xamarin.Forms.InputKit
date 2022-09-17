@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:SandboxXF"
              xmlns:input="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
+             xmlns:validations="clr-namespace:Plugin.InputKit.Shared.Validations;assembly=Plugin.InputKit"
              x:Class="SandboxXF.Views.DropdownsPage"
              Title="Dropdowns">
     <ContentPage.BindingContext>
@@ -14,9 +15,7 @@
             <input:Dropdown Title="Chosse an option below:"                            
                             TitleColor="Black"
                             Color="Green"
-                            ValidationMessage="This field is required" 
-                            AnnotationColor="Accent" 
-                            IsRequired="True" 
+                            AnnotationColor="Accent"
                             CornerRadius="10"
                             BorderColor="Black" 
                             IconImage="ic_account_balance_black"
@@ -24,8 +23,11 @@
                             Placeholder="Choose one" 
                             ItemsSource="{Binding MyList}" 
                             SelectedItem="{Binding SelectedItem}"
-                            FontSize="15"
-                            />
+                            FontSize="15">
+                <input:Dropdown.Validations>
+                    <validations:RequiredValidation />
+                </input:Dropdown.Validations>
+            </input:Dropdown>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

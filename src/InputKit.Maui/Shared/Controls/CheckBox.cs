@@ -64,7 +64,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         IsVisible = false
     };
 
-    Lazy<Path> iconValidation;
+    protected Lazy<Path> iconValidation;
 
     private CheckType _type = CheckType.Regular;
     private bool _isEnabled;
@@ -228,17 +228,19 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// </summary>
     public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-    [Obsolete("This option is removed. Use CustomIconGeometry")]
+    [Obsolete("This option is removed. Use CustomIconGeometry", error: true)]
     public ImageSource CustomIcon { get => default; set { } }
 
     [TypeConverter(typeof(PathGeometryConverter))]
     public Geometry IconGeometry { get => (Geometry)GetValue(IconGeometryProperty); set => SetValue(IconGeometryProperty, value); }
 
     public bool IsPressed { get; set; }
+
     /// <summary>
     /// Corner radius of Box of CheckBox.
     /// </summary>
     public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+
     /// <summary>
     /// Gets or sets the label position.
     /// </summary>
