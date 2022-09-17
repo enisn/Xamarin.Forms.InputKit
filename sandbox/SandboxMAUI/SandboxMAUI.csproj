@@ -61,10 +61,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <AndroidResource Include="Resources\Fonts\MaterialIconsTwoTone-Regular.otf" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.10.0" />
 	</ItemGroup>
 

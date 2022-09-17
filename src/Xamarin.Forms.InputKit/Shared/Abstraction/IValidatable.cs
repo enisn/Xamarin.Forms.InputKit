@@ -1,13 +1,15 @@
-﻿using System;
+﻿using Plugin.InputKit.Shared.Validations;
+using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace Plugin.InputKit.Shared.Abstraction
 {
-    public interface IValidatable
+    public interface IValidatable : INotifyPropertyChanged
     {
-        bool IsRequired { get; set; }
-        bool IsValidated { get; }
-        string ValidationMessage { get; set; }
+        List<IValidation> Validations { get; }
+
+        bool IsValid { get; }
+
         void DisplayValidation();
-        event EventHandler ValidationChanged;
     }
 }

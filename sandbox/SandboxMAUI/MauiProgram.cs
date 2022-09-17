@@ -1,5 +1,6 @@
 ﻿using InputKit.Handlers;
 using InputKit.Shared.Controls;
+using UraniumUI;
 
 namespace SandboxMAUI;
 
@@ -14,7 +15,7 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
-				fonts.AddFont("MaterialIconsTwoTone-Regular.otf", "MaterialIcon");
+				fonts.AddMaterialIconFonts();
 			});
 
 		builder.ConfigureMauiHandlers(handlers =>

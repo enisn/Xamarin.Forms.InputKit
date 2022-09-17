@@ -1,9 +1,10 @@
 ﻿using InputKit.Shared.Abstraction;
 using InputKit.Shared.Configuration;
+using InputKit.Shared.Validations;
 
 namespace InputKit.Shared.Controls;
 
-public class AdvancedSlider : StackLayout, IValidatable
+public class AdvancedSlider : StackLayout
 {
     public static GlobalSetting GlobalSetting { get; private set; } = new GlobalSetting
     {
@@ -17,14 +18,14 @@ public class AdvancedSlider : StackLayout, IValidatable
     Label lblValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, InputTransparent = true, TextColor = GlobalSetting.TextColor, };
     Label lblMinValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
     Label lblMaxValue = new Label { FontSize = GlobalSetting.FontSize, FontFamily = GlobalSetting.FontFamily, TextColor = GlobalSetting.TextColor, };
+    protected Label labelValidation = new Label { HorizontalOptions = LayoutOptions.Start, IsVisible = false };
     private Color _textColor;
 
     public AdvancedSlider()
     {
         Children.Add(lblTitle);
-        Children.Add(new StackLayout
+        Children.Add(new HorizontalStackLayout
         {
-            Orientation = StackOrientation.Horizontal,
             Children =
                 {
                     lblMinValue,
@@ -41,6 +42,8 @@ public class AdvancedSlider : StackLayout, IValidatable
                     lblMaxValue,
                 }
         });
+        labelValidation.TextColor = ValidationColor;
+        this.Children.Add(labelValidation);
 
         slider.ValueChanged += Slider_ValueChanged;
 
@@ -178,11 +181,6 @@ public class AdvancedSlider : StackLayout, IValidatable
     /// </summary>
     public event EventHandler ValidationChanged;
 
-    /// <summary>
-    /// It's not available for this control
-    /// </summary>
-    public void DisplayValidation() { }
-
     protected void UpdateMinMaxValueText()
     {
         lblMinValue.Text = $"{MinValuePrefix}{MinValue}{MinValueSuffix}";
@@ -246,4 +244,38 @@ public class AdvancedSlider : StackLayout, IValidatable
         UpdateValueText();
         UpdateMinMaxValueText();
     }
+    public List<IValidation> Validations { get; } = new List<IValidation>();
+    public bool IsValid => ValidationResults().All(x => x.isValid);
+    protected IEnumerable<(bool isValid, string message)> ValidationResults()
+    {
+        foreach (var validation in Validations)
+        {
+            var validated = validation.Validate(this.Value);
+            yield return (validated, validation.Message);
+        }
+    }
+
+    /// <summary>
+    /// It's not available for this control
+    /// </summary>
+    public void DisplayValidation()
+    {
+        labelValidation.Text = string.Join("\n", ValidationResults().Where(x => !x.isValid).Select(s => s.message));
+        labelValidation.IsVisible = !IsValid;
+    }
+
+    public Color ValidationColor
+    {
+        get => (Color)GetValue(ValidationColorProperty);
+        set => SetValue(ValidationColorProperty, value);
+    }
+
+    public static readonly BindableProperty ValidationColorProperty = BindableProperty.Create(
+      nameof(ValidationColor),
+      typeof(Color),
+      typeof(AdvancedSlider),
+      defaultValue: Colors.Red,
+      propertyChanged: (bindable, oldValue, newValue) =>
+          (bindable as AdvancedSlider).labelValidation.TextColor = (Color)newValue
+      );
 }

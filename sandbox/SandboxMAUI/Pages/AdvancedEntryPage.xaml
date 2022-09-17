@@ -3,78 +3,95 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
              xmlns:vm="clr-namespace:SandboxMAUI.ViewModels"
+             xmlns:m="clr-namespace:UraniumUI.Icons.MaterialIcons;assembly=UraniumUI.Icons.MaterialIcons"
+             xmlns:validation="clr-namespace:InputKit.Shared.Validations;assembly=InputKit.Maui"
              x:Class="SandboxMAUI.Pages.AdvancedEntryPage"
-             Title="AdvancedEntryPage"
-             BackgroundColor="White">
-<ContentPage.BindingContext>
-    <vm:AdvancedEntryPageViewModel />
-</ContentPage.BindingContext>
-        <ScrollView>
-        <StackLayout Padding="30" MaximumWidthRequest="400">
-                <Label Text="You can see FormView Below:" />
-                <BoxView HeightRequest="1" Color="LightGray" />
-                <input:FormView IsValidated="{Binding IsValidated}" Spacing="15">
+             Title="AdvancedEntryPage">
+    <ContentPage.BindingContext>
+        <vm:AdvancedEntryPageViewModel />
+    </ContentPage.BindingContext>
+    <ScrollView>
+        <StackLayout Padding="30" Spacing="10" MaximumWidthRequest="400">
+            <Label Text="You can see FormView Below:" />
+            <BoxView HeightRequest="1" Color="LightGray" />
 
-                    <input:AdvancedEntry
-                        Title="Place your email below:"
-                        Annotation="Email"
-                        AnnotationColor="{StaticResource Primary}"
-                        IconImage="{FontImageSource FontFamily=MaterialIcon, Glyph='\ue0be', Color={StaticResource Primary}}"
-                        IsRequired="True"
+
+
+            <input:FormView 
+                IsValidated="{Binding IsValidated}"
+                SubmitCommand="{Binding SubmitCommand}"
+                Spacing="15">
+
+                <input:AdvancedEntry
+                        Title="Place your email below:"                        
+                        IconImage="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Email}, Color={StaticResource Primary}}"                      
                         MaxLength="50"
-                        MinLength="10"
                         Placeholder="sample@domain.com"
+                        PlaceholderColor="LightGray"
                         Text="{Binding Email}"
-                        TextColor="Black"
-                        ValidationMessage="Please type a valid email address"
-                        ValidationPosition="Before" />
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                        ValidationPosition="Before">
+                    <input:AdvancedEntry.Validations>
+                        <validation:RequiredValidation />
+                    </input:AdvancedEntry.Validations>
+                </input:AdvancedEntry>
 
-                    <input:AdvancedEntry
+                <input:AdvancedEntry
                         Title="Place your name below:"
-                        Annotation="NonDigitsOnly"
-                        AnnotationColor="{StaticResource Primary}"
-                        IconImage="{FontImageSource FontFamily=MaterialIcon, Glyph='\ue7fd', Color={StaticResource Primary}}"
-                        IsRequired="True"
+                        IconImage="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Person}, Color={StaticResource Primary}}"
                         MaxLength="30"
-                        MinLength="5"
+                        PlaceholderColor="LightGray" 
                         Placeholder="John Doe"
                         Text="{Binding NameSurname}"
-                        TextColor="Black"
-                        ValidationMessage="Please type your name correctly"
-                        ValidationPosition="After" />
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"
+                        ValidationPosition="After">
+                    <input:AdvancedEntry.Validations>
+                        <validation:MinLengthValidation MinLength="3" Message="Your name should contain at least 3 characters." />
+                        <validation:RequiredValidation />
+                    </input:AdvancedEntry.Validations>
+                </input:AdvancedEntry>
 
-                    <input:AdvancedEntry
+                <input:AdvancedEntry
                         Title="Place your phone number below:"
-                        Annotation="Phone"
-                        AnnotationColor="{StaticResource Primary}"
-                        IconImage="{FontImageSource FontFamily=MaterialIcon, Glyph='\ue0cf', Color={StaticResource Primary}}"
-                        IsRequired="True"
+                        IconImage="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Phone}, Color={StaticResource Primary}}"
                         MaxLength="10"
-                        MinLength="8"
+                        Keyboard="Numeric"
+                        PlaceholderColor="LightGray"
                         Placeholder="5439998877"
                         Text="{Binding Phone}"
-                        TextColor="Black"
-                        ValidationMessage="Please type your phone number correctly" />
-                    <Label Text="Choose your subscription type:" />
-                    <input:RadioButtonGroupView IsRequired="True">
-                        <input:RadioButton Text="Free" />
-                        <input:RadioButton Text="Bronze" />
-                        <input:RadioButton Text="Gold" />
-                        <input:RadioButton Text="Platinium" />
-                    </input:RadioButtonGroupView>
+                        TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}">
+                    <input:AdvancedEntry.Validations>
+                        <validation:DigitsOnlyValidation />
+                    </input:AdvancedEntry.Validations>
+                </input:AdvancedEntry>
+                
+                <Label Text="Choose your subscription type:" />
+                
+                <input:RadioButtonGroupView>
+                    <input:RadioButtonGroupView.Validations>
+                        <validation:RequiredValidation />
+                    </input:RadioButtonGroupView.Validations>
+                    <input:RadioButton Text="Free" />
+                    <input:RadioButton Text="Bronze" />
+                    <input:RadioButton Text="Gold" />
+                    <input:RadioButton Text="Platinium" />
+                </input:RadioButtonGroupView>
 
-                    <input:CheckBox
-                        IsRequired="True"
+                <input:CheckBox
                         Text="I Accept User Agreement"
-                        Type="Material" />
-                    <Button
+                        Type="Material">
+                    <input:CheckBox.Validations>
+                        <validation:RequiredValidation />
+                    </input:CheckBox.Validations>
+                </input:CheckBox>
+                <Button
                         Margin="0,20"
+                        input:FormView.IsSubmitButton="True"
                         BackgroundColor="{StaticResource Primary}"
-                        Command="{Binding SubmitCommand}"
                         CornerRadius="20"
                         Text="Submit"
                         TextColor="White" />
-                </input:FormView>
-            </StackLayout>
-        </ScrollView>
+            </input:FormView>
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

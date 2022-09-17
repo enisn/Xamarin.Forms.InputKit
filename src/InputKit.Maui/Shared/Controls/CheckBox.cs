@@ -2,6 +2,8 @@
 using InputKit.Shared.Configuration;
 using InputKit.Shared.Helpers;
 using InputKit.Shared.Layouts;
+using InputKit.Shared.Validations;
+using Microsoft.Maui;
 using Microsoft.Maui.Controls.Shapes;
 using System.ComponentModel;
 using System.Globalization;
@@ -61,7 +63,10 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         FontFamily = GlobalSetting.FontFamily,
         IsVisible = false
     };
-    private CheckType _type = CheckType.Box;
+
+    protected Lazy<Path> iconValidation;
+
+    private CheckType _type = CheckType.Regular;
     private bool _isEnabled;
     #endregion
 
@@ -93,6 +98,14 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         GestureRecognizers.Add(new TapGestureRecognizer
         {
             Command = new Command(() => { if (IsDisabled) return; IsChecked = !IsChecked; ExecuteCommand(); CheckChanged?.Invoke(this, new EventArgs()); ValidationChanged?.Invoke(this, new EventArgs()); }),
+        });
+
+        iconValidation = new Lazy<Path>(() => new Path
+        {
+            WidthRequest = 25,
+            HeightRequest = 25,
+            Fill = ValidationColor,
+            Data = PredefinedShapes.ExclamationCircle
         });
     }
 
@@ -211,35 +224,23 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     public Color BorderColor { get => (Color)GetValue(BorderColorProperty); set => SetValue(BorderColorProperty, value); }
 
     /// <summary>
-    /// WARNING! : If you set this as required, user must set checked this control to be validated!
-    /// </summary>
-    public bool IsRequired { get; set; }
-
-    /// <summary>
-    /// Checks if entry required and checked
-    /// </summary>
-    public bool IsValidated => !IsRequired || IsChecked;
-    /// <summary>
-    /// Not available for this control
-    /// </summary>
-    public string ValidationMessage { get; set; }
-
-    /// <summary>
     /// Fontfamily of CheckBox Text
     /// </summary>
     public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-    [Obsolete("This option is removed. Use CustomIconGeometry")]
+    [Obsolete("This option is removed. Use CustomIconGeometry", error: true)]
     public ImageSource CustomIcon { get => default; set { } }
 
     [TypeConverter(typeof(PathGeometryConverter))]
     public Geometry IconGeometry { get => (Geometry)GetValue(IconGeometryProperty); set => SetValue(IconGeometryProperty, value); }
 
     public bool IsPressed { get; set; }
+
     /// <summary>
     /// Corner radius of Box of CheckBox.
     /// </summary>
     public float CornerRadius { get => (float)GetValue(CornerRadiusProperty); set => SetValue(CornerRadiusProperty, value); }
+
     /// <summary>
     /// Gets or sets the label position.
     /// </summary>
@@ -248,6 +249,47 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         get => (LabelPosition)GetValue(LabelPositionProperty);
         set => SetValue(LabelPositionProperty, value);
     }
+
+    public Color ValidationColor
+    {
+        get => (Color)GetValue(ValidationColorProperty);
+        set => SetValue(ValidationColorProperty, value);
+    }
+
+    #endregion
+
+    #region Validation
+    public List<IValidation> Validations { get; } = new();
+    public bool IsValid => ValidationResults().All(x => x.isValid);
+    protected IEnumerable<(bool isValid, string message)> ValidationResults()
+    {
+        foreach (var validation in Validations)
+        {
+            var validated = validation.Validate(this.IsChecked ? true : null);
+            yield return new(validated, validation.Message);
+        }
+    }
+
+    /// <summary>
+    /// Not available for this control
+    /// </summary>
+    public void DisplayValidation()
+    {
+        if (IsValid)
+        {
+            this.Remove(iconValidation.Value);
+        }
+        else
+        {
+            if (this.Children.Contains(iconValidation.Value))
+            {
+                return;
+            }
+
+            this.Add(iconValidation.Value);
+        }
+    }
+
     #endregion
 
     #region BindableProperties
@@ -273,6 +315,21 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
         defaultValue: GlobalSetting.LabelPosition,
         propertyChanged: (bo, ov, nv) => (bo as CheckBox).ApplyLabelPosition((LabelPosition)nv));
+
+    public static readonly BindableProperty ValidationColorProperty = BindableProperty.Create(
+        nameof(ValidationColor),
+        typeof(Color),
+        typeof(CheckBox),
+        defaultValue: Colors.Red,
+        propertyChanged: (bindable, oldValue, newValue) =>
+        {
+            var checkBox = (bindable as CheckBox);
+
+            if (checkBox.iconValidation.IsValueCreated)
+            {
+                checkBox.iconValidation.Value.Fill = (Color)newValue;
+            }
+        });
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
@@ -399,19 +456,16 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
                 }
             });
     }
-    /// <summary>
-    /// Not available for this control
-    /// </summary>
-    public void DisplayValidation()
-    {
-
-    }
-
     public static void ApplyIsChecked(CheckBox checkBox, bool isChecked)
     {
         checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
 
         checkBox.UpdateColors();
+
+        if (checkBox.iconValidation.IsValueCreated && isChecked)
+        {
+            checkBox.DisplayValidation();
+        }
     }
 
     public static async void ApplyIsPressed(CheckBox checkBox, bool isPressed)

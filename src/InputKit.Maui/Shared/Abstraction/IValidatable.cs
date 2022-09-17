@@ -1,16 +1,14 @@
-﻿using System;
+﻿using InputKit.Shared.Validations;
+using System;
+using System.ComponentModel;
 
 namespace InputKit.Shared.Abstraction;
 
-public interface IValidatable
+public interface IValidatable : INotifyPropertyChanged
 {
-    bool IsRequired { get; set; }
+    public List<IValidation> Validations { get; }
 
-    bool IsValidated { get; }
-
-    string ValidationMessage { get; set; }
+    bool IsValid { get; }
 
     void DisplayValidation();
-
-    event EventHandler ValidationChanged;
 }
