@@ -195,6 +195,7 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
 
             SelectedItemChanged?.Invoke(this, new EventArgs());
             SelectedItemChangedCommand?.Execute(CommandParameter);
+            OnPropertyChanged(nameof(IsValid));
         }
     }
 

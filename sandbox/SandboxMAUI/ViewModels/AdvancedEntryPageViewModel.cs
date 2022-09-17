@@ -23,10 +23,9 @@ public class AdvancedEntryPageViewModel : BindableObject
     {
         if (!IsValidated)
         {
-            await Application.Current.MainPage.DisplayAlert("", "You must fill all areas correctly!", "OK");
+            await Application.Current.MainPage.DisplayAlert("", "You successfully submitted the form", "OK");
         }
 
         //DO SOME STUFFS HERE
     }
 }
-
