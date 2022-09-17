@@ -18,7 +18,7 @@ namespace Plugin.InputKit.Shared.Validations
                 return true;
             }
 
-            var type = MinValue.GetType();
+            var type = MaxValue.GetType();
 
             if (value.GetType() != type)
             {
@@ -27,7 +27,7 @@ namespace Plugin.InputKit.Shared.Validations
 
             if (value is IComparable comparableValue)
             {
-                return comparableValue.CompareTo(MinValue) >= 0;
+                return comparableValue.CompareTo(MaxValue) <= 0;
             }
 
             return false;
