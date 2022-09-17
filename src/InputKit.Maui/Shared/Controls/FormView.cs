@@ -91,7 +91,10 @@ public partial class FormView : StackLayout
 
     private void SubmitButtonClicked(object sender, EventArgs e)
     {
-        SubmitCommand?.Execute(IsValidated);
+        if (IsValidated)
+        {
+            SubmitCommand?.Execute(IsValidated);
+        }
 
         if (!IsValidated)
         {
