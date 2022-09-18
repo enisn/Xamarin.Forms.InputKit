@@ -58,7 +58,7 @@
 A checkbox control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml)
-- [Documentation](docs/controls/CheckBox.md)
+- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/CheckBox)
 
 <br />
 <table>
@@ -83,7 +83,7 @@ A checkbox control that is useful, customizable, full-featured, fully-bindable a
 A radio button control that is useful, customizable, full-featured, fully-bindable and easy to use.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/RadioButtonPage.xaml)
-- [Documentation](docs/controls/RadioButton.md)
+- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/RadioButton)
 
 <table>
 <tr>
@@ -106,7 +106,7 @@ This entry has many features to develop your applications quickly. When this ent
 You can set validation message and AnnotatinColor. Entry will automatically display your message when it's not validated.
 
 - [Sample Code](sandbox/SandboxMAUI/Pages/AdvancedEntryPage.xaml)
-- [Documentation](docs/controls/AdvancedEntry.md)
+- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/AdvancedEntry)
 
 <a href="#"><img src="https://media.giphy.com/media/1zl0u7O2doNolIXnrT/giphy.gif" width="270" height="480" alt="Xamarin Forms Slider Sticky Label" class="aligncenter size-medium" /></a>
 
@@ -134,6 +134,9 @@ You can set validation message and AnnotatinColor. Entry will automatically disp
 
 ## SelectionView
 Presents options to user to choose. This view didn't created to static usage. You should Bind a model List as ItemSource, or if you don't use MVVM you can set in page's cs file like below. (You can override ToString method to fix display value or I'll add displayMember property soon.)</p>
+
+- [Sample Code](sandbox/SandboxMAUI/Pages/AdvancedEntryPage.xaml)
+- [Documentation](https://enisn-projects.io/docs/en/inputkit/latest/components/controls/SelectionView)
 
 <h4>SAMPLE:</h4>
 
