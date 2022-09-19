@@ -12,19 +12,23 @@ public class MinValueValidation : IValidation
 
     public bool Validate(object value)
     {
-        if (value is null)
+        if (value is null || (value is string text && string.IsNullOrEmpty(text)))
         {
             return true;
         }
 
-        var converted = ComparableTypeConverter.Instance.ConvertFrom(value);
+        var type = MinValue.GetType();
 
-        if (converted is IComparable comparable && converted.GetType() == comparable.GetType())
+        if (value.GetType() != type)
         {
-            return comparable.CompareTo(MinValue) >= 0;
+            value = Convert.ChangeType(value, type);
+        }
+
+        if (value is IComparable comparableValue)
+        {
+            return comparableValue.CompareTo(MinValue) >= 0;
         }
 
         return false;
     }
 }
-
