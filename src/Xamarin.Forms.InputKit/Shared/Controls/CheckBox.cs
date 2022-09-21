@@ -322,7 +322,7 @@ namespace Plugin.InputKit.Shared.Controls
            {
                var checkBox = (bindable as CheckBox);
 
-               if (checkBox.iconValidation.IsValueCreated)
+               if (checkBox.iconValidation?.IsValueCreated ?? false)
                {
                    checkBox.iconValidation.Value.Fill = ((Color)newValue).ToBrush();
                }
