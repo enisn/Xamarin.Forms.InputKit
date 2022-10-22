@@ -1,56 +1,63 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-	<PropertyGroup>
+  <PropertyGroup>
     <TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst;net6.0-windows10.0.19041</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
-		<RootNamespace>InputKit</RootNamespace>
+    <RootNamespace>InputKit</RootNamespace>
     <UseMaui>true</UseMaui>
-		<SingleProject>true</SingleProject>
-		<MauiVersion>6.0.486</MauiVersion>
-		<PackageId>InputKit.Maui</PackageId>
-		<Version>4.1.5</Version>
+    <SingleProject>true</SingleProject>
+    <MauiVersion>6.0.486</MauiVersion>
+    <PackageId>InputKit.Maui</PackageId>
+    <Version>4.1.6</Version>
     <DefineConstants Condition="$(TargetFramework.Contains('-windows'))">$(DefineConstants);UWP</DefineConstants>
 
     <!-- NuGet Package Info -->
-		 <PackageLicenseUrl></PackageLicenseUrl>
-		<PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
-		<RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
-		<PackageReleaseNotes>Android Target Framework issue resolved.</PackageReleaseNotes>
-		<PackageTags>xamarin, maui, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider</PackageTags>
-		<Title>Common controls mostly required</Title>
-		<Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
-		<Description>Ready to use Input componenets such as Checkbox,  RadioButton, AdvancedEntry, Advanced Slider etc.</Description>
-		<Owners>enisn</Owners>
-		<Authors>enisn</Authors>
-		<Copyright>Copyright 2018</Copyright>
-		<PackageLicenseExpression>MIT</PackageLicenseExpression>
-		<PackageIcon>icon512.png</PackageIcon>
-		<!-- NuGet Package Info End-->
+    <PackageLicenseUrl></PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/enisn/Xamarin.Forms.InputKit</RepositoryUrl>
+    <PackageReleaseNotes>Android Target Framework issue resolved.</PackageReleaseNotes>
+    <PackageTags>xamarin, maui, windows, ios, android, xamarin.forms, plugin, InputKit, checkbox, radiobutton,radio button, slider</PackageTags>
+    <Title>Common controls mostly required</Title>
+    <Summary>Checkbox, Radio Button, Advanced Slider included this package </Summary>
+    <Description>Ready to use Input componenets such as Checkbox,  RadioButton, AdvancedEntry, Advanced Slider etc.</Description>
+    <Owners>enisn</Owners>
+    <Authors>enisn</Authors>
+    <Copyright>Copyright 2018</Copyright>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon512.png</PackageIcon>
+    <!-- NuGet Package Info End-->
 
-		<NeutralLanguage>en-US</NeutralLanguage>
-		<GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
 
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
-		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
-		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
+    <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
-	</PropertyGroup>
+  </PropertyGroup>
 
-	<PropertyGroup>
-	  <NoWarn>1701;1702,CS1591</NoWarn>
-	</PropertyGroup>
-
-	<ItemGroup>
-	  <EmbeddedResource Include="Shared\Resources\**\*.*" />
-	</ItemGroup>
+  <PropertyGroup>
+    <NoWarn>1701;1702,CS1591</NoWarn>
+  </PropertyGroup>
 
   <ItemGroup>
-      <None Include="icon512.png" Pack="true" PackagePath="" />
+    <EmbeddedResource Include="Shared\Resources\**\*.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\art\icon512.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon512.png" Pack="true" />
   </ItemGroup>
 
   <ItemGroup>
