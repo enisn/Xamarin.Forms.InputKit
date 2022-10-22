@@ -82,6 +82,9 @@ namespace Plugin.InputKit.Shared.Controls
 
             IconLayout = new Grid
             {
+                MinimumWidthRequest = GlobalSetting.Size,
+                HeightRequest = GlobalSetting.Size,
+                VerticalOptions = LayoutOptions.Center,
                 Children =
                 {
                     outlineBox,
