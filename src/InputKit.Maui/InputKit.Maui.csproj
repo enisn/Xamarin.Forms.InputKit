@@ -10,7 +10,7 @@
     <PackageId>InputKit.Maui</PackageId>
     <Version>4.1.6</Version>
     <DefineConstants Condition="$(TargetFramework.Contains('-windows'))">$(DefineConstants);UWP</DefineConstants>
-  
+
     <!-- NuGet Package Info -->
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/enisn/Xamarin.Forms.InputKit</PackageProjectUrl>
@@ -26,31 +26,38 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon512.png</PackageIcon>
     <!-- NuGet Package Info End-->
-  
+
     <NeutralLanguage>en-US</NeutralLanguage>
     <GenerateDocumentationFile Condition=" '$(Configuration)' == 'Release' ">true</GenerateDocumentationFile>
-  
+
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
     <SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
     <TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
-  
+
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <IncludeSymbols>true</IncludeSymbols>
   </PropertyGroup>
 
   <PropertyGroup>
-  	<NoWarn>1701;1702,CS1591</NoWarn>
+    <NoWarn>1701;1702,CS1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
-  	<EmbeddedResource Include="Shared\Resources\**\*.*" />
+    <EmbeddedResource Include="Shared\Resources\**\*.*" />
   </ItemGroup>
 
   <ItemGroup>
-      <None Include="icon512.png" Pack="true" />
+    <None Include="..\..\art\icon512.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="icon512.png" Pack="true" />
   </ItemGroup>
 
   <ItemGroup>
