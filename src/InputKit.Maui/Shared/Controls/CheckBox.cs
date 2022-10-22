@@ -84,6 +84,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
         IconLayout = new Grid
         {
+            MinimumWidthRequest = GlobalSetting.Size,
+            HeightRequest = GlobalSetting.Size,
+            VerticalOptions = LayoutOptions.Center,
             Children =
             {
                 outlineBox,
@@ -332,7 +335,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         });
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular,
-        propertyChanged: (bindable, oldValue, newValue)=> (bindable as CheckBox).UpdateType());
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).UpdateType());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
@@ -340,6 +343,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     void ApplyLabelPosition(LabelPosition position)
     {
         Children.Clear();
+
         if (position == LabelPosition.After)
         {
             lblOption.HorizontalOptions = LayoutOptions.Start;
@@ -352,6 +356,14 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
             Children.Add(lblOption);
             Children.Add(IconLayout);
         }
+    }
+
+    protected override void OnSizeAllocated(double width, double height)
+    {
+        // TODO: Remove this logic after resolution of https://github.com/dotnet/maui/issues/8873
+        // This is a workaround.
+        lblOption.MaximumWidthRequest = this.Width - IconLayout.Width;
+        base.OnSizeAllocated(width, height);
     }
 
     void ExecuteCommand()
@@ -370,8 +382,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     void UpdateColors()
     {
-        //selectedIcon.Fill = Color;
-
         switch (Type)
         {
             case CheckType.Regular:
