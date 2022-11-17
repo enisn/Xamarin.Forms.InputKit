@@ -78,8 +78,17 @@
         ]
       },
       {
-        "text": "Options",
-        "path": "Options.md"
+        "text": "Extras",
+        "items":[
+            {
+              "text": "Options",
+              "path": "Options.md"
+            },
+            {
+                "text" : "Shapes",
+                "path": "PredefinedShapes.md"
+            }
+        ]
       },
       {
         "text": "Migration Guides",
