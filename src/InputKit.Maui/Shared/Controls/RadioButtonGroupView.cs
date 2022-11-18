@@ -1,12 +1,6 @@
 ﻿using InputKit.Shared.Abstraction;
 using InputKit.Shared.Layouts;
 using InputKit.Shared.Validations;
-using Microsoft.Maui.Controls;
-using Microsoft.Maui.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace InputKit.Shared.Controls;
@@ -23,14 +17,35 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     public RadioButtonGroupView()
     {
         Spacing = 10;
-        ChildAdded += OnChildAdded;
-        ChildrenReordered += RadioButtonGroupView_ChildrenReordered;
     }
-    //-----------------------------------------------------------------------------
-    /// <summary>
-    /// Invokes when tapped on RadioButon
-    /// </summary>
-    public event EventHandler SelectedItemChanged;
+
+	protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+	{
+		UnregisterEvents();
+
+		if (args.NewHandler is not null)
+		{
+			RegisterEvents();
+		}
+	}
+
+	private void RegisterEvents()
+	{
+		ChildAdded += OnChildAdded;
+		ChildrenReordered += RadioButtonGroupView_ChildrenReordered;
+	}
+
+	private void UnregisterEvents()
+	{
+		ChildAdded -= OnChildAdded;
+		ChildrenReordered -= RadioButtonGroupView_ChildrenReordered;
+	}
+
+	//-----------------------------------------------------------------------------
+	/// <summary>
+	/// Invokes when tapped on RadioButon
+	/// </summary>
+	public event EventHandler SelectedItemChanged;
 
     //-----------------------------------------------------------------------------
     /// <summary>

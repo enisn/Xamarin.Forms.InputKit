@@ -44,16 +44,31 @@ public class AdvancedSlider : StackLayout, IValidatable
         });
         labelValidation.TextColor = ValidationColor;
         this.Children.Add(labelValidation);
-
-        slider.ValueChanged += Slider_ValueChanged;
-
-        lblValue.SizeChanged += (s, e) =>
-        {
-            UpdateView();
-        };
     }
 
-    private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+	protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+	{
+		UnregisterEvents();
+
+		if (args.NewHandler is not null)
+		{
+		    RegisterEvents();
+		}
+	}
+	
+	private void RegisterEvents()
+	{
+        slider.ValueChanged += Slider_ValueChanged;
+		lblValue.SizeChanged += LabelSizeChanged;
+	}
+
+	private void UnregisterEvents()
+	{
+		slider.ValueChanged -= Slider_ValueChanged;
+		lblValue.SizeChanged -= LabelSizeChanged;
+	}
+
+	private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
     {
         var mod = e.NewValue - (int)(e.NewValue / StepValue) * StepValue;
         if (mod != 0)
@@ -66,6 +81,11 @@ public class AdvancedSlider : StackLayout, IValidatable
         UpdateValueText();
         UpdateView();
     }
+
+    protected void LabelSizeChanged(object sender, EventArgs e)
+    {
+		UpdateView();
+	}
 
     /// <summary>
     /// Value of slider which user selected
