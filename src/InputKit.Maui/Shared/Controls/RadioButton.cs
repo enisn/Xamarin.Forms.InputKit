@@ -38,7 +38,7 @@ public class RadioButton : StatefulStackLayout
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Center,
         HeightRequest = GlobalSetting.Size,
-        WidthRequest = GlobalSetting.Size
+        WidthRequest = GlobalSetting.Size,
     };
     protected internal Path iconChecked = new Path
     {
@@ -74,7 +74,8 @@ public class RadioButton : StatefulStackLayout
         InitVisualStates();
 
         Orientation = StackOrientation.Horizontal;
-
+        Spacing = 10;
+        
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
 
@@ -86,7 +87,7 @@ public class RadioButton : StatefulStackLayout
                 iconCircle,
                 iconChecked
             },
-            MinimumWidthRequest = GlobalSetting.Size * 1.66,
+            MinimumWidthRequest = GlobalSetting.Size,
         };
 
         ApplyLabelPosition(LabelPosition);
