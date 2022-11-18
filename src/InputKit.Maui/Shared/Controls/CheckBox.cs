@@ -78,7 +78,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         InitVisualStates();
         Orientation = StackOrientation.Horizontal;
         Spacing = 10;
-        Padding = new Thickness(0, 10);
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
 
@@ -418,8 +417,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     {
         outlineBox.HeightRequest = size;
         outlineBox.WidthRequest = size;
-        //selectedIcon.MaximumHeightRequest = size * CHECK_SIZE_RATIO;
-        //selectedIcon.MaximumWidthRequest = size * CHECK_SIZE_RATIO;
     }
 
     void UpdateShape()
