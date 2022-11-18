@@ -48,10 +48,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <MauiFont Remove="Resources\Fonts\MaterialIconsTwoTone-Regular.otf" />
+    <MauiAsset Remove="Resources\Raw\AboutAssets.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Fonts\*.ttf" />
+    <None Remove="Resources\Fonts\*.otf" />
     <None Remove="Resources\Images\account.png" />
     <None Remove="Resources\Images\circle_check.png" />
     <None Remove="Resources\Images\email.png" />
@@ -60,7 +62,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="0.10.0" />
+    <PackageReference Include="UraniumUI.Icons.MaterialIcons" Version="1.1.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
   </ItemGroup>
 
