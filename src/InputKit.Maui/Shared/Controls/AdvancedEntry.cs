@@ -67,7 +67,6 @@ namespace InputKit.Shared.Controls
 					inputGrid,
 				}
 			};
-
 			InitializeValidation();
 			txtInput.SetBinding(Entry.TextProperty, new Binding(nameof(Text), source: this));
 		}
@@ -75,13 +74,11 @@ namespace InputKit.Shared.Controls
 
 		protected override void OnHandlerChanging(HandlerChangingEventArgs args)
 		{
-			RegisterEvents();
-			//ApplyBindings();
+			UnregisterEvents();
 
 			if (args.NewHandler is not null)
 			{
-				UnregisterEvents();
-				//UnapplyBindings();
+				RegisterEvents();
 			}
 		}
 
