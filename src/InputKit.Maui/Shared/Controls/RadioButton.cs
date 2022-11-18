@@ -44,10 +44,11 @@ public class RadioButton : StatefulStackLayout
     {
         Fill = GlobalSetting.Color,
         Scale = 0,
+        Aspect = Stretch.Uniform,
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Center,
         HeightRequest = GlobalSetting.Size,
-        WidthRequest = GlobalSetting.Size
+        WidthRequest = GlobalSetting.Size,
     };
     protected internal Label lblText = new Label
     {
@@ -61,6 +62,7 @@ public class RadioButton : StatefulStackLayout
         LineBreakMode = LineBreakMode.WordWrap
     };
     private bool _isDisabled;
+    const double DOT_FULL_SCALE = .65;
     #endregion
 
     #region Ctor
@@ -90,15 +92,18 @@ public class RadioButton : StatefulStackLayout
         ApplyLabelPosition(LabelPosition);
         UpdateShape();
 
-        GestureRecognizers.Add(new TapGestureRecognizer { Command = new Command(() =>
+        GestureRecognizers.Add(new TapGestureRecognizer
         {
-            if (IsDisabled)
+            Command = new Command(() =>
             {
-                return;
-            }
+                if (IsDisabled)
+                {
+                    return;
+                }
 
-            IsChecked = true;
-        })});
+                IsChecked = true;
+            })
+        });
     }
     #endregion
 
@@ -268,13 +273,13 @@ public class RadioButton : StatefulStackLayout
         Clicked?.Invoke(this, new EventArgs());
         ClickCommand?.Execute(CommandParameter ?? Value);
 
-        var isCheckedInLastState = iconChecked.Scale == 1;
+        var isCheckedInLastState = iconChecked.Scale == DOT_FULL_SCALE;
 
         var changed = isCheckedInLastState != isChecked;
 
         if (changed)
         {
-            iconChecked.ScaleTo(Convert.ToDouble(isChecked), 180);
+            iconChecked.ScaleTo(isChecked ? DOT_FULL_SCALE : 0, 180);
             UpdateColors();
             Checked?.Invoke(this, null);
         }
