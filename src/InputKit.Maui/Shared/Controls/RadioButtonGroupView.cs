@@ -17,17 +17,18 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
     public RadioButtonGroupView()
     {
         Spacing = 10;
+        RegisterEvents();
     }
 
 	protected override void OnHandlerChanging(HandlerChangingEventArgs args)
 	{
-		UnregisterEvents();
+        UnregisterEvents();
 
-		if (args.NewHandler is not null)
-		{
-			RegisterEvents();
-		}
-	}
+        if (args.NewHandler is not null)
+        {
+            RegisterEvents();
+        }
+    }
 
 	private void RegisterEvents()
 	{
@@ -153,7 +154,8 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
             }
         }
     }
-    private void OnChildAdded(object sender, ElementEventArgs e)
+
+	private void OnChildAdded(object sender, ElementEventArgs e)
     {
         if (e.Element is RadioButton rb)
         {
