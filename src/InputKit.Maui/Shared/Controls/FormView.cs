@@ -14,12 +14,34 @@ public partial class FormView : StackLayout
     /// </summary>
     public FormView()
     {
-        RegisterEvents();
-        ChildAdded += FormView_ChildAdded;
-        ChildRemoved += FormView_ChildRemoved;
     }
 
-    private void FormView_ChildRemoved(object sender, ElementEventArgs e)
+	protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+	{
+		UnregisterEvents();
+
+		if (args.NewHandler is not null)
+		{
+			RegisterEvents();
+		}
+	}
+	private void RegisterEvents()
+	{
+		RegisterChildrenEvents();
+		ChildAdded += FormView_ChildAdded;
+		ChildRemoved += FormView_ChildRemoved;
+	}
+	
+	private void UnregisterEvents()
+	{
+        UnregisterChildrenEvents();
+		ChildAdded -= FormView_ChildAdded;
+		ChildRemoved -= FormView_ChildRemoved;
+	}
+
+
+
+	private void FormView_ChildRemoved(object sender, ElementEventArgs e)
     {
         if (e is IValidatable validatable)
         {
@@ -31,7 +53,7 @@ public partial class FormView : StackLayout
     {
         if (e.Element is IValidatable || e.Element is Button)
         {
-            RegisterEvent(e.Element);
+            RegisterChildEvent(e.Element);
         }
         else if (e.Element is Layout layout)
         {
@@ -42,20 +64,28 @@ public partial class FormView : StackLayout
 
             foreach (var child in GetChildValitablesAndButtons(layout))
             {
-                RegisterEvent(child);
+                RegisterChildEvent(child);
             }
         }
     }
 
-    void RegisterEvents()
+    void RegisterChildrenEvents()
     {
         foreach (var item in GetChildValitablesAndButtons(this))
         {
-            RegisterEvent(item);
+            RegisterChildEvent(item);
+        }
+    }
+	
+    void UnregisterChildrenEvents()
+    {
+        foreach (var item in GetChildValitablesAndButtons(this))
+        {
+            UnregisterChildEvent(item);
         }
     }
 
-    void RegisterEvent(BindableObject view)
+    void RegisterChildEvent(BindableObject view)
     {
         if (view == null)
         {
@@ -71,7 +101,7 @@ public partial class FormView : StackLayout
             submitButton.Clicked += SubmitButtonClicked;
         }
     }
-    void UnregisterEvent(BindableObject view)
+    void UnregisterChildEvent(BindableObject view)
     {
         if (view == null)
         {
