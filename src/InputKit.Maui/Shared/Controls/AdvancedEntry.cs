@@ -100,7 +100,7 @@ namespace InputKit.Shared.Controls
 		/// <summary>
 		/// Text of this input
 		/// </summary>
-		public string Text { get => txtInput.Text; set { txtInput.Text = value; OnPropertyChanged(); } }
+		public string Text { get => (string)GetValue(TextProperty); set => SetValue(TextProperty, value); }
 
 		/// <summary>
 		/// Title will be shown top of this control
@@ -239,7 +239,7 @@ namespace InputKit.Shared.Controls
 		//--------------------------------------------------------------------------------------------------------------------------------------------------
 		#region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
-		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(AdvancedEntry), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Text = (string)nv);
+		public static readonly BindableProperty TextProperty = BindableProperty.Create(nameof(Text), typeof(string), typeof(AdvancedEntry), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).OnPropertyChanged(nameof(Text)));
 		public static readonly BindableProperty TitleProperty = BindableProperty.Create(nameof(Title), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).Title = (string)nv);
 		public static readonly BindableProperty TitleColorProperty = BindableProperty.Create(nameof(TitleColor), typeof(Color), typeof(AdvancedEntry), (Color)Label.TextColorProperty.DefaultValue, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).lblTitle.TextColor = (Color)nv);
 		public static readonly BindableProperty IconImageProperty = BindableProperty.Create(nameof(IconImage), typeof(string), typeof(AdvancedEntry), null, propertyChanged: (bo, ov, nv) => (bo as AdvancedEntry).IconImage = (string)nv);
