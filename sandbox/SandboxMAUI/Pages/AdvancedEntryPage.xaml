@@ -79,7 +79,8 @@
 
                 <input:CheckBox
                         Text="I Accept User Agreement"
-                        Type="Material">
+                        Type="Material"
+                        IsChecked="{Binding IsUserAgreementApproved}">
                     <input:CheckBox.Validations>
                         <validation:RequiredValidation />
                     </input:CheckBox.Validations>
