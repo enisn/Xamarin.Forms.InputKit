@@ -205,16 +205,16 @@ public partial class FormView : StackLayout
             {
                 yield return item;
             }
-            else if (item is Button button)
-            {
-                yield return button;
-            }
             else if (item is Layout la)
             {
                 foreach (var child in GetChildValitablesAndButtons(la))
                 {
                     yield return child;
                 }
+            }
+            else if (item is View view && GetIsSubmitButton(view))
+            {
+                yield return view;
             }
         }
     }
