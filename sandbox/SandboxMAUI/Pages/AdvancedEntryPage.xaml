@@ -85,7 +85,6 @@
                         <validation:RequiredValidation />
                     </input:CheckBox.Validations>
                 </input:CheckBox>
-                <ImageButton input:FormView.IsSubmitButton="True" Source="{FontImageSource FontFamily=MaterialRegular, Glyph={x:Static m:MaterialRegular.Save}, Color={StaticResource Primary}}" />
                 <Button
                         Margin="0,20"
                         input:FormView.IsSubmitButton="True"
