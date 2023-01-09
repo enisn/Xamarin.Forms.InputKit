@@ -38,9 +38,7 @@ public partial class FormView : StackLayout
 		ChildAdded -= FormView_ChildAdded;
 		ChildRemoved -= FormView_ChildRemoved;
 	}
-
-
-
+    
 	private void FormView_ChildRemoved(object sender, ElementEventArgs e)
     {
         if (e is IValidatable validatable)
@@ -85,34 +83,47 @@ public partial class FormView : StackLayout
         }
     }
 
-    void RegisterChildEvent(BindableObject view)
+    void RegisterChildEvent(BindableObject bindable)
     {
-        if (view == null)
+        if (bindable == null)
         {
             return;
         }
 
-        view.PropertyChanged -= OnValidatablePropertyChanged;
-        view.PropertyChanged += OnValidatablePropertyChanged;
+        bindable.PropertyChanged -= OnValidatablePropertyChanged;
+        bindable.PropertyChanged += OnValidatablePropertyChanged;
 
-        if (GetIsSubmitButton(view) && view is Button submitButton)
+        if (GetIsSubmitButton(bindable) && bindable is View view)
         {
-            submitButton.Clicked -= SubmitButtonClicked;
-            submitButton.Clicked += SubmitButtonClicked;
+            var tapGestureRecognizer = view.GestureRecognizers.FirstOrDefault(x => x is TapGestureRecognizer) as TapGestureRecognizer;
+
+            if (tapGestureRecognizer == null)
+            {
+                tapGestureRecognizer = new TapGestureRecognizer();
+                view.GestureRecognizers.Add(tapGestureRecognizer);
+            }
+
+            tapGestureRecognizer.Tapped -= SubmitButtonClicked;
+            tapGestureRecognizer.Tapped += SubmitButtonClicked;
         }
     }
-    void UnregisterChildEvent(BindableObject view)
+    void UnregisterChildEvent(BindableObject bindable)
     {
-        if (view == null)
+        if (bindable == null)
         {
             return;
         }
 
-        view.PropertyChanged -= OnValidatablePropertyChanged;
+        bindable.PropertyChanged -= OnValidatablePropertyChanged;
 
-        if (GetIsSubmitButton(view) && view is Button submitButton)
+        if (GetIsSubmitButton(bindable) && bindable is View view)
         {
-            submitButton.Clicked -= SubmitButtonClicked;
+            var tapGestureRecognizer = view.GestureRecognizers.FirstOrDefault(x => x is TapGestureRecognizer) as TapGestureRecognizer;
+
+            if (tapGestureRecognizer is not null)
+            {
+                tapGestureRecognizer.Tapped -= SubmitButtonClicked;
+            }
         }
     }
 
@@ -194,16 +205,16 @@ public partial class FormView : StackLayout
             {
                 yield return item;
             }
-            else if (item is Button button)
-            {
-                yield return button;
-            }
             else if (item is Layout la)
             {
                 foreach (var child in GetChildValitablesAndButtons(la))
                 {
                     yield return child;
                 }
+            }
+            else if (item is View view && GetIsSubmitButton(view))
+            {
+                yield return view;
             }
         }
     }
