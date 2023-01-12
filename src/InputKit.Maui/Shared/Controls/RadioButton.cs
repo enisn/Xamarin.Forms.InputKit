@@ -62,7 +62,7 @@ public class RadioButton : StatefulStackLayout
         LineBreakMode = LineBreakMode.WordWrap
     };
     private bool _isDisabled;
-    const double DOT_FULL_SCALE = .65;
+    protected const double DOT_FULL_SCALE = .65;
     #endregion
 
     #region Ctor
@@ -262,7 +262,7 @@ public class RadioButton : StatefulStackLayout
         iconChecked.Data = SelectedIconGeomerty;
     }
 
-    void UpdateColors()
+    protected void UpdateColors()
     {
         iconChecked.Fill = Color;
         iconCircle.Stroke = IsChecked ? Color : CircleColor;
