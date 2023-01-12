@@ -95,6 +95,20 @@ public partial class FormView : StackLayout
 
         if (GetIsSubmitButton(bindable) && bindable is View view)
         {
+            if(view is Button btn)
+            {
+                btn.Clicked -= SubmitButtonClicked;
+                btn.Clicked += SubmitButtonClicked;
+                return;
+            }
+
+            if (view is ImageButton imgBtn)
+            {
+                imgBtn.Clicked -= SubmitButtonClicked;
+                imgBtn.Clicked += SubmitButtonClicked;
+                return;
+            }
+
             var tapGestureRecognizer = view.GestureRecognizers.FirstOrDefault(x => x is TapGestureRecognizer) as TapGestureRecognizer;
 
             if (tapGestureRecognizer == null)
