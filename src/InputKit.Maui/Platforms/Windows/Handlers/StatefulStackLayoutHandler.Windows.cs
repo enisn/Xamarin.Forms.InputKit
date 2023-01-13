@@ -1,19 +1,35 @@
 ﻿#if UWP
+using Microsoft.Maui.Controls;
 using Microsoft.Maui.Platform;
 
 namespace InputKit.Handlers
 {
     public partial class StatefulStackLayoutHandler
     {
-        protected override LayoutPanel CreatePlatformView()
+        protected override void ConnectHandler(LayoutPanel platformView)
         {
-            var nativeView = base.CreatePlatformView();
+            PlatformView.PointerPressed += NativeView_PointerPressed;
+            PlatformView.PointerReleased += NativeView_PointerReleased;
+            PlatformView.PointerEntered += NativeView_PointerEntered;
+            PlatformView.PointerExited += NativeView_PointerExited;
+        }
 
-            nativeView.PointerPressed += NativeView_PointerPressed;
+        protected override void DisconnectHandler(LayoutPanel platformView)
+        {
+            PlatformView.PointerPressed -= NativeView_PointerPressed;
+            PlatformView.PointerReleased -= NativeView_PointerReleased;
+            PlatformView.PointerEntered -= NativeView_PointerEntered;
+            PlatformView.PointerExited -= NativeView_PointerExited;
+        }
 
-            nativeView.PointerReleased += NativeView_PointerReleased;
+        private void NativeView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(VirtualView as View, VisualStateManager.CommonStates.Normal);
+        }
 
-            return nativeView;
+        private void NativeView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(VirtualView as View, VisualStateManager.CommonStates.PointerOver);
         }
 
         private void NativeView_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -27,7 +43,7 @@ namespace InputKit.Handlers
         {
             var element = VirtualView as View;
 
-            VisualStateManager.GoToState(element, "Normal");
+            VisualStateManager.GoToState(element, VisualStateManager.CommonStates.Normal);
         }
     }
 }

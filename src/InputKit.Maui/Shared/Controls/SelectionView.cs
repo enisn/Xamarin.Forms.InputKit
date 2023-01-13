@@ -176,7 +176,8 @@ public partial class SelectionView : Grid
                 (bo as SelectionView).SetSelectedItem(nv);
             }
         });
-    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay, propertyChanged: (bo, ov, nv) => (bo as SelectionView).SetSelectedItems((IList)nv));
+    public static readonly BindableProperty SelectedItemsProperty = BindableProperty.Create(nameof(SelectedItems), typeof(IList), typeof(SelectionView), null, BindingMode.TwoWay,
+        propertyChanged: (bo, ov, nv) => (bo as SelectionView).SetSelectedItems((IList)nv));
     public static readonly BindableProperty SelectedIndexProperty = BindableProperty.Create(nameof(SelectedIndex), typeof(int), typeof(SelectionView), -1, BindingMode.TwoWay,
         propertyChanged: (bo, ov, nv) =>
         {
@@ -637,7 +638,16 @@ public partial class SelectionView : Grid
         /// <summary>
         /// Capsulated IsChecked
         /// </summary>
-        public bool IsSelected { get => IsChecked; set => IsChecked = value; }
+        public bool IsSelected
+        {
+            get => IsChecked; set
+            {
+                if (IsChecked != value)
+                {
+                    IsChecked = value;
+                }
+            }
+        }
 
         /// <summary>
         /// Parameter to keep
