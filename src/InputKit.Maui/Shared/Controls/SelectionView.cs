@@ -253,7 +253,6 @@ public partial class SelectionView : Grid
         }
     }
 
-
     protected void SetRowAndColumnDefinitions()
     {
         this.ColumnDefinitions.Clear();
@@ -514,7 +513,17 @@ public partial class SelectionView : Grid
         public bool IsSelected
         {
             get => _isSelected;
-            set { _isSelected = value; UpdateColors(); }
+            set
+            {
+
+                if (IsDisabled)
+                {
+                    return;
+                }
+                
+                _isSelected = value;
+                UpdateColors();
+            }
         }
 
         /// <summary>
@@ -552,8 +561,7 @@ public partial class SelectionView : Grid
 
         private void UpdateSelection()
         {
-            if (CanChangeSelectedState)
-                IsSelected = !IsSelected;
+            IsSelected = !IsSelected;
         }
     }
 
@@ -592,6 +600,11 @@ public partial class SelectionView : Grid
         {
             get => IsChecked; set
             {
+                if (IsDisabled)
+                {
+                    return;
+                }
+
                 if (IsChecked != value)
                 {
                     IsChecked = value;
@@ -642,6 +655,11 @@ public partial class SelectionView : Grid
         {
             get => IsChecked; set
             {
+                if (IsDisabled)
+                {
+                    return;
+                }
+
                 if (IsChecked != value)
                 {
                     IsChecked = value;
