@@ -143,11 +143,16 @@ public partial class FormView : StackLayout
 
     private void SubmitButtonClicked(object sender, EventArgs e)
     {
+        Submit();
+    }
+
+    public void Submit()
+    {
         if (CheckValidation(this))
         {
             SubmitCommand?.Execute(IsValidated);
         }
-
+        
         if (!IsValidated)
         {
             foreach (var child in GetChildValitablesAndButtons(this))
