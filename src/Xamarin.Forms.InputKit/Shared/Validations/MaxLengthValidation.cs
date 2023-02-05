@@ -13,7 +13,7 @@
                 return text.Length <= MaxLength;
             }
 
-            return false;
+            return true;
         }
     }
 }

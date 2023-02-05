@@ -16,7 +16,7 @@ namespace Plugin.InputKit.Shared.Validations
                 return result.Success;
             }
 
-            return false;
+            return true;
         }
     }
 }

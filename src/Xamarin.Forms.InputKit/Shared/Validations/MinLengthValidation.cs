@@ -14,7 +14,7 @@
                 return text.Length >= MinLength;
             }
 
-            return false;
+            return true;
         }
     }
 }
