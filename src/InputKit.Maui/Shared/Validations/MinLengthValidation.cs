@@ -13,6 +13,6 @@ public class MinLengthValidation : IValidation
             return text.Length >= MinLength;
         }
 
-        return false;
+        return true;
     }
 }
