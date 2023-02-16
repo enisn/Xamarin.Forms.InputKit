@@ -92,16 +92,16 @@ public partial class AdvancedEntry : IValidatable
         CheckAndDisplayValidations();
     }
 
-    private bool lastValidationState = true;
+    private bool? _lastValidationState;
 
     protected virtual void CheckAndDisplayValidations()
     {
         var results = ValidationResults().ToArray();
         var isValidationPassed = results.All(a => a.isValid);
 
-        var isStateChanged = isValidationPassed != lastValidationState;
+        var isStateChanged = isValidationPassed != _lastValidationState;
 
-        lastValidationState = isValidationPassed;
+        _lastValidationState = isValidationPassed;
 
         if (isValidationPassed)
         {
