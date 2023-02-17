@@ -15,6 +15,6 @@ public class RegexValidation : IValidation
             return result.Success;
         }
 
-        return false;
+        return true;
     }
 }
