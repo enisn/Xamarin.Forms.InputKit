@@ -1,10 +1,29 @@
 ﻿namespace InputKit.Shared.Validations;
-public class MinLengthValidation : IValidation
+public class MinLengthValidation : BindableObject, IValidation
 {
-    private string message;
+    public string Message
+    {
+        get => string.Format((string)GetValue(MessageProperty), MinLength);
+        set => SetValue(MessageProperty, value);
+    }
 
-    public string Message { get => message ?? $"The field should contain at least {MinLength} character."; set => message = value; }
-    public int MinLength { get; set; }
+    public int MinLength
+    {
+        get => (int)GetValue(MinLengthProperty);
+        set => SetValue(MinLengthProperty, value);
+    }
+
+    public static readonly BindableProperty MessageProperty = BindableProperty.Create(
+        nameof(Message),
+        typeof(string),
+        typeof(MinLengthValidation),
+        "The field should contain at least {0} character.");
+
+    public static readonly BindableProperty MinLengthProperty = BindableProperty.Create(
+        nameof(MinLength),
+        typeof(int),
+        typeof(MinLengthValidation),
+        0);
 
     public bool Validate(object value)
     {

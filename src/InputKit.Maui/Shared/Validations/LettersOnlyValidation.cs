@@ -1,9 +1,28 @@
 ﻿namespace InputKit.Shared.Validations;
-public class LettersOnlyValidation : IValidation
+public class LettersOnlyValidation : BindableObject, IValidation
 {
-    public string Message { get; set; } = "The field should contain only letters.";
+    public static readonly BindableProperty MessageProperty = BindableProperty.Create(
+        nameof(Message),
+        typeof(string),
+        typeof(LettersOnlyValidation),
+        "The field should contain only letters.");
+    public string Message
+    {
+        get => (string)GetValue(MessageProperty);
+        set => SetValue(MessageProperty, value);
+    }
 
-    public bool AllowSpaces { get; set; } = true;
+    public static readonly BindableProperty AllowSpacesProperty = BindableProperty.Create(
+        nameof(AllowSpaces),
+        typeof(bool),
+        typeof(LettersOnlyValidation),
+        true);
+
+    public bool AllowSpaces
+    {
+        get => (bool)GetValue(AllowSpacesProperty);
+        set => SetValue(AllowSpacesProperty, value);
+    }
 
     public bool Validate(object value)
     {
