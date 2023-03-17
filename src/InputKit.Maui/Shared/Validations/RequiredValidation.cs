@@ -1,7 +1,17 @@
 ﻿namespace InputKit.Shared.Validations;
-public class RequiredValidation : IValidation
+public class RequiredValidation : BindableObject, IValidation
 {
-    public string Message { get; set; } = "This field is required";
+    public string Message
+    {
+        get => (string)GetValue(MessageProperty);
+        set => SetValue(MessageProperty, value);
+    }
+
+    public static readonly BindableProperty MessageProperty = BindableProperty.Create(
+        nameof(Message),
+        typeof(string),
+        typeof(RequiredValidation),
+        "This field is required");
 
     public bool Validate(object value)
     {

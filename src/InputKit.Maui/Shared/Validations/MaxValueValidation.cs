@@ -2,13 +2,32 @@
 using System.ComponentModel;
 
 namespace InputKit.Shared.Validations;
-public class MaxValueValidation : IValidation
+public class MaxValueValidation : BindableObject, IValidation
 {
-    private string message;
-    public string Message { get => message ?? $"The field can't be greater than {MaxValue}."; set => message = value; }
+    public string Message
+    {
+        get => string.Format((string)GetValue(MessageProperty), MaxValue);
+        set => SetValue(MessageProperty, value);
+    }
 
     [TypeConverter(typeof(ComparableTypeConverter))]
-    public IComparable MaxValue { get; set; }
+    public IComparable MaxValue
+    {
+        get => (IComparable) GetValue(MaxValueProperty);
+        set => SetValue(MaxValueProperty, value);
+    }
+
+    public static readonly BindableProperty MessageProperty = BindableProperty.Create(
+        nameof(Message),
+        typeof(string),
+        typeof(MaxValueValidation),
+        "The field can't be greater than {0}.");
+
+    public static readonly BindableProperty MaxValueProperty = BindableProperty.Create(
+        nameof(MaxValue),
+        typeof(IComparable),
+        typeof(MaxValueValidation),
+        null);
 
     public bool Validate(object value)
     {

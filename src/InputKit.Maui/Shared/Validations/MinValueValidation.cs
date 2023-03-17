@@ -1,14 +1,32 @@
 ﻿using System.ComponentModel;
 
 namespace InputKit.Shared.Validations;
-public class MinValueValidation : IValidation
+public class MinValueValidation : BindableObject, IValidation
 {
-    private string message;
-
-    public string Message { get => message ?? $"The field can't be less than {MinValue}."; set => message = value; }
+    public string Message
+    {
+        get => string.Format((string)GetValue(MessageProperty), MinValue);
+        set => SetValue(MessageProperty, value);
+    }
 
     [TypeConverter(typeof(ComparableTypeConverter))]
-    public IComparable MinValue { get; set; }
+    public IComparable MinValue
+    {
+        get => (IComparable)GetValue(MinValueProperty);
+        set => SetValue(MinValueProperty, value);
+    }
+
+    public static readonly BindableProperty MessageProperty = BindableProperty.Create(
+        nameof(Message),
+        typeof(string),
+        typeof(MinValueValidation),
+        "The field can't be less than {0}.");
+
+    public static readonly BindableProperty MinValueProperty = BindableProperty.Create(
+        nameof(MinValue),
+        typeof(IComparable),
+        typeof(MinValueValidation),
+        null);
 
     public bool Validate(object value)
     {
