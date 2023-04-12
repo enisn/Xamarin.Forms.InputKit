@@ -357,12 +357,20 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         }
     }
 
-    protected override void OnSizeAllocated(double width, double height)
+    protected override async void OnSizeAllocated(double width, double height)
     {
+        base.OnSizeAllocated(width, height);
+
         // TODO: Remove this logic after resolution of https://github.com/dotnet/maui/issues/8873
         // This is a workaround.
-        lblOption.MaximumWidthRequest = this.Width - IconLayout.Width;
-        base.OnSizeAllocated(width, height);
+
+#if ANDROID
+        await Task.Delay(1);
+#endif
+        if (IconLayout.Width != -1 && lblOption.Width > this.Width)
+        {
+            lblOption.MaximumWidthRequest = this.Width - IconLayout.Width;
+        }
     }
 
     void ExecuteCommand()
