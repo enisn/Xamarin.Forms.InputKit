@@ -26,7 +26,8 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         Size = 25,
         CornerRadius = 2,
         FontSize = 14,
-        LabelPosition = LabelPosition.After
+        LabelPosition = LabelPosition.After,
+        LineBreakMode = LineBreakMode.WordWrap
     };
 
     #region Constants
@@ -56,6 +57,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     };
     protected internal Label lblOption = new Label
     {
+        LineBreakMode = GlobalSetting.LineBreakMode,
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
         FontSize = GlobalSetting.FontSize,
@@ -256,6 +258,11 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         set => SetValue(ValidationColorProperty, value);
     }
 
+    /// <summary>
+    /// Gets or sets the line break mode for the label.
+    /// </summary>
+    public LineBreakMode LineBreakMode { get => (LineBreakMode)GetValue(LineBreakModeProperty); set => SetValue(LineBreakModeProperty, value); }
+
     #endregion
 
     #region Validation
@@ -335,6 +342,9 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     public static readonly BindableProperty TypeProperty = BindableProperty.Create(nameof(Type), typeof(CheckType), typeof(CheckBox), defaultValue: CheckType.Regular,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).UpdateType());
+
+    public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(CheckBox), defaultValue: GlobalSetting.LineBreakMode,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).lblOption.LineBreakMode = (LineBreakMode)newValue);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 

@@ -25,7 +25,8 @@ public class RadioButton : StatefulStackLayout
         Size = 25,
         CornerRadius = -1,
         FontSize = 14,
-        LabelPosition = LabelPosition.After
+        LabelPosition = LabelPosition.After,
+        LineBreakMode = LineBreakMode.WordWrap
     };
     #endregion
 
@@ -52,13 +53,13 @@ public class RadioButton : StatefulStackLayout
     };
     protected internal Label lblText = new Label
     {
+        LineBreakMode = GlobalSetting.LineBreakMode,
         VerticalTextAlignment = TextAlignment.Center,
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
         TextColor = GlobalSetting.TextColor,
         FontSize = GlobalSetting.FontSize,
         FontFamily = GlobalSetting.FontFamily,
-        LineBreakMode = LineBreakMode.WordWrap
     };
     private bool _isDisabled;
     protected const double DOT_FULL_SCALE = .65;
@@ -214,6 +215,12 @@ public class RadioButton : StatefulStackLayout
         get => (LabelPosition)GetValue(LabelPositionProperty);
         set => SetValue(LabelPositionProperty, value);
     }
+
+    /// <summary>
+    /// Gets or sets the line break mode for the label.
+    /// </summary>
+    public LineBreakMode LineBreakMode { get => (LineBreakMode)GetValue(LineBreakModeProperty); set => SetValue(LineBreakModeProperty, value); }
+
     #endregion
 
     #region BindableProperties
@@ -235,6 +242,11 @@ public class RadioButton : StatefulStackLayout
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
         defaultValue: GlobalSetting.LabelPosition,
         propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyLabelPosition((LabelPosition)nv));
+
+
+    public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(RadioButton), defaultValue: GlobalSetting.LineBreakMode,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).lblText.LineBreakMode = (LineBreakMode)newValue);
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
