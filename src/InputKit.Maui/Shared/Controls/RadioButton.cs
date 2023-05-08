@@ -58,7 +58,6 @@ public class RadioButton : StatefulStackLayout
         TextColor = GlobalSetting.TextColor,
         FontSize = GlobalSetting.FontSize,
         FontFamily = GlobalSetting.FontFamily,
-        MaxLines = 3,
         LineBreakMode = LineBreakMode.WordWrap
     };
     private bool _isDisabled;
