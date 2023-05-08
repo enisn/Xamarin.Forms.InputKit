@@ -369,7 +369,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 #endif
         if (IconLayout.Width != -1 && lblOption.Width > this.Width)
         {
-            lblOption.MaximumWidthRequest = this.Width - IconLayout.Width;
+            lblOption.MaximumWidthRequest = this.Width - this.Spacing - IconLayout.Width;
         }
     }
 
