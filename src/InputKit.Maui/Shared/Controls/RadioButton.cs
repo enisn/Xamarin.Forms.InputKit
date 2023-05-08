@@ -257,6 +257,22 @@ public class RadioButton : StatefulStackLayout
         }
     }
 
+    protected override async void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+        // TODO: Remove this logic after resolution of https://github.com/dotnet/maui/issues/8873
+        // This is a workaround.
+
+#if ANDROID
+        await Task.Delay(1);
+#endif
+        if (IconLayout.Width != -1 && lblText.Width > this.Width)
+        {
+            lblText.MaximumWidthRequest = this.Width - this.Spacing - IconLayout.Width;
+        }
+    }
+
     private protected virtual void UpdateShape()
     {
         iconChecked.Data = SelectedIconGeomerty;
