@@ -144,7 +144,7 @@ public class RadioButton : StatefulStackLayout
     /// <summary>
     /// Value to keep inside of Radio Button
     /// </summary>
-    public object Value { get; set; }
+    public object Value { get => GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
 
     /// <summary>
     /// Gets or Sets, is that Radio Button selected/choosed/Checked
@@ -264,6 +264,7 @@ public class RadioButton : StatefulStackLayout
     public static readonly BindableProperty IconHorizontalOptionsProperty = BindableProperty.Create(nameof(IconHorizontalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
         propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
 
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(RadioButton), defaultBindingMode: BindingMode.OneTime);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
