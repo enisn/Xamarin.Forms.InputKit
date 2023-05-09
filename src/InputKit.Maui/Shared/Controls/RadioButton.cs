@@ -54,12 +54,12 @@ public class RadioButton : StatefulStackLayout
     protected internal Label lblText = new Label
     {
         LineBreakMode = GlobalSetting.LineBreakMode,
-        VerticalTextAlignment = TextAlignment.Center,
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
-        TextColor = GlobalSetting.TextColor,
         FontSize = GlobalSetting.FontSize,
+        TextColor = GlobalSetting.TextColor,
         FontFamily = GlobalSetting.FontFamily,
+        IsVisible = false
     };
     private bool _isDisabled;
     protected const double DOT_FULL_SCALE = .65;
