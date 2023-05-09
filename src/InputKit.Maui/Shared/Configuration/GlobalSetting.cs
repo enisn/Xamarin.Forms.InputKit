@@ -51,4 +51,9 @@ public class GlobalSetting
     /// Label position of control.
     /// </summary>
     public LabelPosition LabelPosition { get; set; }
+
+    /// <summary>
+    /// The line break mode for the text displayed by the control.
+    /// </summary>
+    public LineBreakMode LineBreakMode { get; set; }
 }

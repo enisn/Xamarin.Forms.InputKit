@@ -25,7 +25,8 @@ public class RadioButton : StatefulStackLayout
         Size = 25,
         CornerRadius = -1,
         FontSize = 14,
-        LabelPosition = LabelPosition.After
+        LabelPosition = LabelPosition.After,
+        LineBreakMode = LineBreakMode.WordWrap
     };
     #endregion
 
@@ -52,14 +53,13 @@ public class RadioButton : StatefulStackLayout
     };
     protected internal Label lblText = new Label
     {
-        VerticalTextAlignment = TextAlignment.Center,
+        LineBreakMode = GlobalSetting.LineBreakMode,
         VerticalOptions = LayoutOptions.Center,
         HorizontalOptions = LayoutOptions.Start,
-        TextColor = GlobalSetting.TextColor,
         FontSize = GlobalSetting.FontSize,
+        TextColor = GlobalSetting.TextColor,
         FontFamily = GlobalSetting.FontFamily,
-        MaxLines = 3,
-        LineBreakMode = LineBreakMode.WordWrap
+        IsVisible = false
     };
     private bool _isDisabled;
     protected const double DOT_FULL_SCALE = .65;
@@ -82,6 +82,7 @@ public class RadioButton : StatefulStackLayout
         IconLayout = new Grid
         {
             VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center,
             Children =
             {
                 iconCircle,
@@ -143,7 +144,7 @@ public class RadioButton : StatefulStackLayout
     /// <summary>
     /// Value to keep inside of Radio Button
     /// </summary>
-    public object Value { get; set; }
+    public object Value { get => GetValue(ValueProperty); set => SetValue(ValueProperty, value); }
 
     /// <summary>
     /// Gets or Sets, is that Radio Button selected/choosed/Checked
@@ -215,6 +216,22 @@ public class RadioButton : StatefulStackLayout
         get => (LabelPosition)GetValue(LabelPositionProperty);
         set => SetValue(LabelPositionProperty, value);
     }
+
+    /// <summary>
+    /// Gets or sets the line break mode for the label.
+    /// </summary>
+    public LineBreakMode LineBreakMode { get => (LineBreakMode)GetValue(LineBreakModeProperty); set => SetValue(LineBreakModeProperty, value); }
+
+    /// <summary>
+    /// Gets or sets the vertical options for the icon.
+    /// </summary>
+    public LayoutOptions IconVerticalOptions { get => (LayoutOptions)GetValue(IconVerticalOptionsProperty); set => SetValue(IconVerticalOptionsProperty, value); }
+
+    /// <summary>
+    /// Gets or sets the horizontal options for the icon.
+    /// </summary>
+    public LayoutOptions IconHorizontalOptions { get => (LayoutOptions)GetValue(IconHorizontalOptionsProperty); set => SetValue(IconHorizontalOptionsProperty, value); }
+
     #endregion
 
     #region BindableProperties
@@ -236,6 +253,18 @@ public class RadioButton : StatefulStackLayout
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
         defaultValue: GlobalSetting.LabelPosition,
         propertyChanged: (bo, ov, nv) => (bo as RadioButton).ApplyLabelPosition((LabelPosition)nv));
+
+
+    public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(RadioButton), defaultValue: GlobalSetting.LineBreakMode,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).lblText.LineBreakMode = (LineBreakMode)newValue);
+    
+    public static readonly BindableProperty IconVerticalOptionsProperty = BindableProperty.Create(nameof(IconVerticalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.VerticalOptions = (LayoutOptions)newValue);
+
+    public static readonly BindableProperty IconHorizontalOptionsProperty = BindableProperty.Create(nameof(IconHorizontalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
+
+    public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(RadioButton), defaultBindingMode: BindingMode.OneTime);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
@@ -254,6 +283,22 @@ public class RadioButton : StatefulStackLayout
             lblText.HorizontalOptions = LayoutOptions.FillAndExpand;
             Children.Add(lblText);
             Children.Add(IconLayout);
+        }
+    }
+
+    protected override async void OnSizeAllocated(double width, double height)
+    {
+        base.OnSizeAllocated(width, height);
+
+        // TODO: Remove this logic after resolution of https://github.com/dotnet/maui/issues/8873
+        // This is a workaround.
+
+#if ANDROID
+        await Task.Delay(1);
+#endif
+        if (IconLayout.Width != -1 && lblText.Width > this.Width)
+        {
+            lblText.MaximumWidthRequest = this.Width - this.Spacing - IconLayout.Width;
         }
     }
 
