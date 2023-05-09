@@ -88,6 +88,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
             MinimumWidthRequest = GlobalSetting.Size,
             HeightRequest = GlobalSetting.Size,
             VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center,
             Children =
             {
                 outlineBox,
@@ -263,6 +264,15 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// </summary>
     public LineBreakMode LineBreakMode { get => (LineBreakMode)GetValue(LineBreakModeProperty); set => SetValue(LineBreakModeProperty, value); }
 
+    /// <summary>
+    /// Gets or sets the vertical options for the icon.
+    /// </summary>
+    public LayoutOptions IconVerticalOptions { get => (LayoutOptions)GetValue(IconVerticalOptionsProperty); set => SetValue(IconVerticalOptionsProperty, value); }
+
+    /// <summary>
+    /// Gets or sets the horizontal options for the icon.
+    /// </summary>
+    public LayoutOptions IconHorizontalOptions { get => (LayoutOptions)GetValue(IconHorizontalOptionsProperty); set => SetValue(IconHorizontalOptionsProperty, value); }
     #endregion
 
     #region Validation
@@ -345,6 +355,13 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(CheckBox), defaultValue: GlobalSetting.LineBreakMode,
         propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).lblOption.LineBreakMode = (LineBreakMode)newValue);
+
+    public static readonly BindableProperty IconVerticalOptionsProperty = BindableProperty.Create(nameof(IconVerticalOptions), typeof(LayoutOptions), typeof(CheckBox), defaultValue: LayoutOptions.Center,
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).IconLayout.VerticalOptions = (LayoutOptions)newValue);
+
+    public static readonly BindableProperty IconHorizontalOptionsProperty = BindableProperty.Create(nameof(IconHorizontalOptions), typeof(LayoutOptions), typeof(CheckBox), defaultValue: LayoutOptions.Center,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as CheckBox).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
+
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 

@@ -82,6 +82,7 @@ public class RadioButton : StatefulStackLayout
         IconLayout = new Grid
         {
             VerticalOptions = LayoutOptions.Center,
+            HorizontalOptions = LayoutOptions.Center,
             Children =
             {
                 iconCircle,
@@ -221,6 +222,16 @@ public class RadioButton : StatefulStackLayout
     /// </summary>
     public LineBreakMode LineBreakMode { get => (LineBreakMode)GetValue(LineBreakModeProperty); set => SetValue(LineBreakModeProperty, value); }
 
+    /// <summary>
+    /// Gets or sets the vertical options for the icon.
+    /// </summary>
+    public LayoutOptions IconVerticalOptions { get => (LayoutOptions)GetValue(IconVerticalOptionsProperty); set => SetValue(IconVerticalOptionsProperty, value); }
+
+    /// <summary>
+    /// Gets or sets the horizontal options for the icon.
+    /// </summary>
+    public LayoutOptions IconHorizontalOptions { get => (LayoutOptions)GetValue(IconHorizontalOptionsProperty); set => SetValue(IconHorizontalOptionsProperty, value); }
+
     #endregion
 
     #region BindableProperties
@@ -246,6 +257,12 @@ public class RadioButton : StatefulStackLayout
 
     public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(RadioButton), defaultValue: GlobalSetting.LineBreakMode,
         propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).lblText.LineBreakMode = (LineBreakMode)newValue);
+    
+    public static readonly BindableProperty IconVerticalOptionsProperty = BindableProperty.Create(nameof(IconVerticalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.VerticalOptions = (LayoutOptions)newValue);
+
+    public static readonly BindableProperty IconHorizontalOptionsProperty = BindableProperty.Create(nameof(IconHorizontalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
+        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
 
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
