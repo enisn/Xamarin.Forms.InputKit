@@ -282,7 +282,7 @@ public partial class SelectionView : Grid
     {
         if ((int)SelectionType % 2 == 0)
         {
-            if (sender is ISelection selection && selection.IsSelected)
+            if (sender is ISelection selection)
             {
                 if (selection.IsSelected)
                 {
