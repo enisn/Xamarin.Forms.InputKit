@@ -46,29 +46,29 @@ public class AdvancedSlider : StackLayout, IValidatable
         this.Children.Add(labelValidation);
     }
 
-	protected override void OnHandlerChanging(HandlerChangingEventArgs args)
-	{
-		UnregisterEvents();
+    protected override void OnHandlerChanging(HandlerChangingEventArgs args)
+    {
+        UnregisterEvents();
 
-		if (args.NewHandler is not null)
-		{
-		    RegisterEvents();
-		}
-	}
-	
-	private void RegisterEvents()
-	{
+        if (args.NewHandler is not null)
+        {
+            RegisterEvents();
+        }
+    }
+
+    private void RegisterEvents()
+    {
         slider.ValueChanged += Slider_ValueChanged;
-		lblValue.SizeChanged += LabelSizeChanged;
-	}
+        lblValue.SizeChanged += LabelSizeChanged;
+    }
 
-	private void UnregisterEvents()
-	{
-		slider.ValueChanged -= Slider_ValueChanged;
-		lblValue.SizeChanged -= LabelSizeChanged;
-	}
+    private void UnregisterEvents()
+    {
+        slider.ValueChanged -= Slider_ValueChanged;
+        lblValue.SizeChanged -= LabelSizeChanged;
+    }
 
-	private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
+    private void Slider_ValueChanged(object sender, ValueChangedEventArgs e)
     {
         var mod = e.NewValue - (int)(e.NewValue / StepValue) * StepValue;
         if (mod != 0)
@@ -84,8 +84,8 @@ public class AdvancedSlider : StackLayout, IValidatable
 
     protected void LabelSizeChanged(object sender, EventArgs e)
     {
-		UpdateView();
-	}
+        UpdateView();
+    }
 
     /// <summary>
     /// Value of slider which user selected
@@ -269,6 +269,12 @@ public class AdvancedSlider : StackLayout, IValidatable
     {
         labelValidation.Text = string.Join("\n", ValidationResults().Where(x => !x.isValid).Select(s => s.message));
         labelValidation.IsVisible = !IsValid;
+    }
+
+    public void ResetValidation()
+    {
+        labelValidation.Text = string.Empty;
+        labelValidation.IsVisible = false;
     }
 
     public Color ValidationColor

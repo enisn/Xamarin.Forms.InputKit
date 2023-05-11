@@ -11,4 +11,6 @@ public interface IValidatable : INotifyPropertyChanged
     bool IsValid { get; }
 
     void DisplayValidation();
+
+    void ResetValidation();
 }
