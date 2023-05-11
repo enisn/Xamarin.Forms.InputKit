@@ -110,6 +110,12 @@ public partial class RadioButtonGroupView : StatefulStackLayout, IValidatable
         }
     }
 
+
+    public void ResetValidation()
+    {
+        BackgroundColor = Colors.Transparent;
+    }
+
     #region BindableProperties
 #pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
     public static readonly BindableProperty SelectedItemProperty = BindableProperty.Create(nameof(SelectedItem), typeof(object), typeof(RadioButtonGroupView), null, propertyChanged: (bo, ov, nv) => (bo as RadioButtonGroupView).UpdateToSelectedItem());

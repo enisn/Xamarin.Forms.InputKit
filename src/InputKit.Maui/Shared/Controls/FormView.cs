@@ -9,11 +9,15 @@ namespace InputKit.Shared.Controls;
 /// </summary>
 public partial class FormView : StackLayout
 {
+    private readonly Command buttonSubmitCommand;
+    private readonly Command buttonResetCommand;
     /// <summary>
     /// Default constructor
     /// </summary>
     public FormView()
     {
+        buttonSubmitCommand = new Command(Submit);
+        buttonResetCommand = new Command(Reset);
     }
 
 	protected override void OnHandlerChanging(HandlerChangingEventArgs args)
@@ -95,30 +99,52 @@ public partial class FormView : StackLayout
 
         if (GetIsSubmitButton(bindable) && bindable is View view)
         {
-            if(view is Button btn)
+            if(view is Button btn && btn.Command != buttonSubmitCommand)
             {
-                btn.Clicked -= SubmitButtonClicked;
-                btn.Clicked += SubmitButtonClicked;
-                return;
+                btn.Command = buttonSubmitCommand;
             }
-
-            if (view is ImageButton imgBtn)
+            else if (view is ImageButton imgBtn && imgBtn.Command != buttonSubmitCommand)
             {
-                imgBtn.Clicked -= SubmitButtonClicked;
-                imgBtn.Clicked += SubmitButtonClicked;
-                return;
+                imgBtn.Command = buttonSubmitCommand;
             }
-
-            var tapGestureRecognizer = view.GestureRecognizers.FirstOrDefault(x => x is TapGestureRecognizer) as TapGestureRecognizer;
-
-            if (tapGestureRecognizer == null)
+            else
             {
-                tapGestureRecognizer = new TapGestureRecognizer();
-                view.GestureRecognizers.Add(tapGestureRecognizer);
-            }
+                var tapGestureRecognizer = view.GestureRecognizers.FirstOrDefault(x => x is TapGestureRecognizer) as TapGestureRecognizer;
 
-            tapGestureRecognizer.Tapped -= SubmitButtonClicked;
-            tapGestureRecognizer.Tapped += SubmitButtonClicked;
+                if (tapGestureRecognizer == null)
+                {
+                    tapGestureRecognizer = new TapGestureRecognizer
+                    {
+                        Command = buttonSubmitCommand
+                    };
+                    view.GestureRecognizers.Add(tapGestureRecognizer);
+                }
+            }
+        }
+
+        if (GetIsResetButton(bindable) && bindable is View resetView)
+        {
+            if (resetView is Button btn && btn.Command != buttonResetCommand)
+            {
+                btn.Command = buttonResetCommand;
+            }
+            else if (resetView is ImageButton imgBtn && imgBtn.Command != buttonResetCommand)
+            {
+                imgBtn.Command = buttonSubmitCommand;
+            }
+            else
+            {
+                var tapGestureRecognizer = resetView.GestureRecognizers.FirstOrDefault(x => x is TapGestureRecognizer) as TapGestureRecognizer;
+
+                if (tapGestureRecognizer == null)
+                {
+                    tapGestureRecognizer = new TapGestureRecognizer
+                    {
+                        Command = buttonResetCommand
+                    };
+                    resetView.GestureRecognizers.Add(tapGestureRecognizer);
+                }
+            }
         }
     }
     void UnregisterChildEvent(BindableObject bindable)
@@ -136,17 +162,12 @@ public partial class FormView : StackLayout
 
             if (tapGestureRecognizer is not null)
             {
-                tapGestureRecognizer.Tapped -= SubmitButtonClicked;
+                view.GestureRecognizers.Remove(tapGestureRecognizer);
             }
         }
     }
 
-    private void SubmitButtonClicked(object sender, EventArgs e)
-    {
-        Submit();
-    }
-
-    public void Submit()
+    public virtual void Submit()
     {
         if (CheckValidation(this))
         {
@@ -161,6 +182,17 @@ public partial class FormView : StackLayout
                 {
                     validatable.DisplayValidation();
                 }
+            }
+        }
+    }
+
+    public virtual void Reset()
+    {
+        foreach (var child in GetChildValitablesAndButtons(this))
+        {
+            if (child is IValidatable validatable)
+            {
+                validatable.ResetValidation();
             }
         }
     }
@@ -231,7 +263,7 @@ public partial class FormView : StackLayout
                     yield return child;
                 }
             }
-            else if (item is View view && GetIsSubmitButton(view))
+            else if (item is View view && (GetIsSubmitButton(view) || GetIsResetButton(view)))
             {
                 yield return view;
             }
@@ -253,6 +285,9 @@ public partial class FormView : StackLayout
     public static readonly BindableProperty IsSubmitButtonProperty =
         BindableProperty.CreateAttached("IsSubmitButton", typeof(bool), typeof(Button), false);
 
+    public static readonly BindableProperty IsResetButtonProperty =
+        BindableProperty.CreateAttached("IsResetButton", typeof(bool), typeof(Button), false);
+
     public static bool GetIsSubmitButton(BindableObject view)
     {
         return (bool)view.GetValue(IsSubmitButtonProperty);
@@ -261,5 +296,15 @@ public partial class FormView : StackLayout
     public static void SetIsSubmitButton(BindableObject view, bool value)
     {
         view.SetValue(IsSubmitButtonProperty, value);
+    }
+
+    public static bool GetIsResetButton(BindableObject view)
+    {
+        return (bool)view.GetValue(IsResetButtonProperty);
+    }
+
+    public static void SetIsResetButton(BindableObject view, bool value)
+    {
+        view.SetValue(IsResetButtonProperty, value);
     }
 }

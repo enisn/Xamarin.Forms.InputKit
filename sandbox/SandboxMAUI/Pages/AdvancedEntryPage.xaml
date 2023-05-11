@@ -85,13 +85,23 @@
                         <validation:RequiredValidation />
                     </input:CheckBox.Validations>
                 </input:CheckBox>
-                <Button
-                        Margin="0,20"
-                        input:FormView.IsSubmitButton="True"
-                        BackgroundColor="{StaticResource Primary}"
-                        CornerRadius="20"
-                        Text="Submit"
-                        TextColor="White" />
+
+                <Grid ColumnDefinitions="*,*">
+                    <Button
+                            Margin="0,20"
+                            input:FormView.IsSubmitButton="True"
+                            BackgroundColor="{StaticResource Primary}"
+                            CornerRadius="20"
+                            Text="Submit"
+                            TextColor="White" />
+                    <Button Grid.Column="1"
+                            Margin="0,20"
+                            input:FormView.IsResetButton="True"
+                            BackgroundColor="White"
+                            CornerRadius="20"
+                            Text="Reset"
+                            TextColor="{StaticResource Primary}" />
+                </Grid>
             </input:FormView>
         </StackLayout>
     </ScrollView>

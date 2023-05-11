@@ -290,7 +290,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Not available for this control
     /// </summary>
-    public void DisplayValidation()
+    public virtual void DisplayValidation()
     {
         if (IsValid)
         {
@@ -307,6 +307,11 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         }
 
         OnPropertyChanged(nameof(IsValid));
+    }
+
+    public virtual void ResetValidation()
+    {
+        this.Remove(iconValidation.Value);
     }
 
     #endregion
