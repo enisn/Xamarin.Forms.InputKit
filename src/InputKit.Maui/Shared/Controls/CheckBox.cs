@@ -231,9 +231,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// </summary>
     public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-    [Obsolete("This option is removed. Use CustomIconGeometry", error: true)]
-    public ImageSource CustomIcon { get => default; set { } }
-
     [TypeConverter(typeof(PathGeometryConverter))]
     public Geometry IconGeometry { get => (Geometry)GetValue(IconGeometryProperty); set => SetValue(IconGeometryProperty, value); }
 
@@ -532,16 +529,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
 
     public enum CheckType
     {
-        [Obsolete("This option is removed. Use IconGeometry instead.")]
-        Box,
-        [Obsolete("This option is removed. Use IconGeometry instead")]
-        Check,
-        [Obsolete("This option is removed. Use IconGeometry instead")]
-        Cross,
-        [Obsolete("This option is removed. Use IconGeometry instead")]
-        Star,
-        [Obsolete("This option is removed. Use IconGeometry instead")]
-        Custom = 90,
         Regular,
         Filled,
         Material,

@@ -624,7 +624,7 @@ public partial class SelectionView : Grid
         /// </summary>
         public SelectableCheckBox()
         {
-            Type = CheckType.Check;
+            Type = CheckType.Regular;
             CheckChanged += (s, e) => Clicked?.Invoke(s, e);
         }
 
