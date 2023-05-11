@@ -180,6 +180,21 @@ Color property will be applied when you set `Type` to `Material`.
 
 ![inputkit checkbox color customization](../../images/checkbox-customization-colors-material.gif)
 
+## Custom Content
+You can use your custom content as CheckBox content. You can use any `View` as content of CheckBox.
+
+```xml
+<input:CheckBox>
+    <Image Source="xamarin.png" HeightRequest="50" WidthRequest="50" />
+</input:CheckBox>
+
+<input:CheckBox>
+    <Image Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" />
+</input:CheckBox>
+```
+
+![inputkit checkbox custom content](../../images/checkbox-custom-content.gif)
+
 ## Behaviors
 
 ** *Work in progess...* **:

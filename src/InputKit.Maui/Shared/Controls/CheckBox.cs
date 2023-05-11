@@ -15,6 +15,7 @@ namespace InputKit.Shared.Controls;
 /// <summary>
 /// A checkbox for boolean inputs. It Includes a text inside
 /// </summary>
+[ContentProperty(nameof(ContentProxy))]
 public partial class CheckBox : StatefulStackLayout, IValidatable
 {
     public static GlobalSetting GlobalSetting { get; } = new GlobalSetting
@@ -55,6 +56,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         MaximumWidthRequest = GlobalSetting.Size,
         Scale = 0,
     };
+    protected internal ContentView contentHolder = new ContentView();
     protected internal Label lblOption = new Label
     {
         LineBreakMode = GlobalSetting.LineBreakMode,
@@ -65,6 +67,8 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         FontFamily = GlobalSetting.FontFamily,
         IsVisible = false
     };
+
+    public View ContentProxy { get => contentHolder.Content; set => contentHolder.Content = value; }
 
     protected Lazy<Path> iconValidation;
 
@@ -82,7 +86,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         Spacing = 10;
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
-
+        contentHolder.Content = lblOption;
         IconLayout = new Grid
         {
             MinimumWidthRequest = GlobalSetting.Size,
@@ -161,7 +165,14 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// <summary>
     /// Text to display right of CheckBox
     /// </summary>
-    public string Text { get => lblOption.Text; set { lblOption.Text = value; lblOption.IsVisible = !string.IsNullOrEmpty(value); } }
+    public string Text
+    {
+        get => lblOption.Text; set
+        {
+            lblOption.Text = value; lblOption.IsVisible = !string.IsNullOrEmpty(value);
+            contentHolder.Content = lblOption;
+        }
+    }
 
     /// <summary>
     /// IsChecked Property
@@ -362,7 +373,7 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).IconLayout.VerticalOptions = (LayoutOptions)newValue);
 
     public static readonly BindableProperty IconHorizontalOptionsProperty = BindableProperty.Create(nameof(IconHorizontalOptions), typeof(LayoutOptions), typeof(CheckBox), defaultValue: LayoutOptions.Center,
-        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as CheckBox).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as CheckBox).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
 
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
@@ -376,12 +387,12 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         {
             lblOption.HorizontalOptions = LayoutOptions.Start;
             Children.Add(IconLayout);
-            Children.Add(lblOption);
+            Children.Add(contentHolder);
         }
         else
         {
             lblOption.HorizontalOptions = LayoutOptions.FillAndExpand;
-            Children.Add(lblOption);
+            Children.Add(contentHolder);
             Children.Add(IconLayout);
         }
     }

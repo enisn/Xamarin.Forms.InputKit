@@ -135,6 +135,25 @@ RadioButton supports two label positions:
 ![inputkit maui radiobutton label position](../../images/radiobutton-customization-labelposition.gif)
 
 
+
+## Custom Content
+You can use your custom content as RadioButton content. You can use any `View` as content of CheckBox.
+
+```xml
+<input:RadioButtonGroupView x:Name="groupView">
+    <input:RadioButton>
+        <Image Source="https://seeklogo.com/images/X/xamarin-logo-F85620A85D-seeklogo.com.png" WidthRequest="50" HeightRequest="50" />
+    </input:RadioButton>
+
+    <input:RadioButton>
+        <Image Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" />
+    </input:RadioButton>
+</input:RadioButtonGroupView>
+```
+
+![inputkit checkbox custom content](../../images/radiobutton-custom-content.gif)
+
+
 ## Behaviors
 
 ** *Work in progess...* **:
