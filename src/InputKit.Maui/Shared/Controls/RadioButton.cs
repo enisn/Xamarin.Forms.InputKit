@@ -11,6 +11,7 @@ namespace InputKit.Shared.Controls;
 /// <summary>
 /// Radio Button with Text
 /// </summary>
+[ContentProperty(nameof(ContentProxy))]
 public class RadioButton : StatefulStackLayout
 {
     #region Statics
@@ -51,6 +52,7 @@ public class RadioButton : StatefulStackLayout
         HeightRequest = GlobalSetting.Size,
         WidthRequest = GlobalSetting.Size,
     };
+    protected internal ContentView contentHolder = new ContentView();
     protected internal Label lblText = new Label
     {
         LineBreakMode = GlobalSetting.LineBreakMode,
@@ -61,6 +63,9 @@ public class RadioButton : StatefulStackLayout
         FontFamily = GlobalSetting.FontFamily,
         IsVisible = false
     };
+
+    public View ContentProxy { get => contentHolder.Content; set => contentHolder.Content = value; }
+
     private bool _isDisabled;
     protected const double DOT_FULL_SCALE = .65;
     #endregion
@@ -75,10 +80,10 @@ public class RadioButton : StatefulStackLayout
 
         Orientation = StackOrientation.Horizontal;
         Spacing = 10;
-        
+
         ApplyIsCheckedAction = ApplyIsChecked;
         ApplyIsPressedAction = ApplyIsPressed;
-
+        contentHolder.Content = lblText;
         IconLayout = new Grid
         {
             VerticalOptions = LayoutOptions.Center,
@@ -163,7 +168,14 @@ public class RadioButton : StatefulStackLayout
     /// <summary>
     /// Text Description of Radio Button. It will be displayed right of Radio Button
     /// </summary>
-    public string Text { get => lblText.Text; set { lblText.Text = value; lblText.IsVisible = !string.IsNullOrEmpty(value); } }
+    public string Text
+    {
+        get => lblText.Text; set
+        {
+            lblText.Text = value; lblText.IsVisible = !string.IsNullOrEmpty(value);
+            contentHolder.Content = lblText;
+        }
+    }
     /// <summary>
     /// Fontsize of Description Text
     /// </summary>
@@ -248,13 +260,13 @@ public class RadioButton : StatefulStackLayout
 
 
     public static readonly BindableProperty LineBreakModeProperty = BindableProperty.Create(nameof(LineBreakMode), typeof(LineBreakMode), typeof(RadioButton), defaultValue: GlobalSetting.LineBreakMode,
-        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).lblText.LineBreakMode = (LineBreakMode)newValue);
-    
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as RadioButton).lblText.LineBreakMode = (LineBreakMode)newValue);
+
     public static readonly BindableProperty IconVerticalOptionsProperty = BindableProperty.Create(nameof(IconVerticalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
-        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.VerticalOptions = (LayoutOptions)newValue);
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as RadioButton).IconLayout.VerticalOptions = (LayoutOptions)newValue);
 
     public static readonly BindableProperty IconHorizontalOptionsProperty = BindableProperty.Create(nameof(IconHorizontalOptions), typeof(LayoutOptions), typeof(RadioButton), defaultValue: LayoutOptions.Center,
-        propertyChanged: ( bindable, oldValue, newValue ) => (bindable as RadioButton).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
+        propertyChanged: (bindable, oldValue, newValue) => (bindable as RadioButton).IconLayout.HorizontalOptions = (LayoutOptions)newValue);
 
     public static readonly BindableProperty ValueProperty = BindableProperty.Create(nameof(Value), typeof(object), typeof(RadioButton), defaultBindingMode: BindingMode.OneTime);
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
@@ -268,12 +280,12 @@ public class RadioButton : StatefulStackLayout
         {
             lblText.HorizontalOptions = LayoutOptions.Start;
             Children.Add(IconLayout);
-            Children.Add(lblText);
+            Children.Add(contentHolder);
         }
         else
         {
             lblText.HorizontalOptions = LayoutOptions.FillAndExpand;
-            Children.Add(lblText);
+            Children.Add(contentHolder);
             Children.Add(IconLayout);
         }
     }
