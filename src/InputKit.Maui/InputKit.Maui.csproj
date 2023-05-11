@@ -8,7 +8,7 @@
     <SingleProject>true</SingleProject>
     <MauiVersion>7.0.86</MauiVersion>
     <PackageId>InputKit.Maui</PackageId>
-    <Version>4.2.11</Version>
+    <Version>4.2.12</Version>
     <DefineConstants Condition="$(TargetFramework.Contains('-windows'))">$(DefineConstants);UWP</DefineConstants>
 
     <!-- NuGet Package Info -->
