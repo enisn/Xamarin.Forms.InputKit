@@ -15,11 +15,11 @@
             <BoxView Color="{AppThemeBinding Dark=White, Light=Black}" HeightRequest="1" HorizontalOptions="Fill" Margin="5,10" />
 
             <input:CheckBox>
-                <BoxView Color="Red" HeightRequest="25" WidthRequest="125" />
+                <Image Source="https://seeklogo.com/images/X/xamarin-logo-F85620A85D-seeklogo.com.png" WidthRequest="50" HeightRequest="50" />
             </input:CheckBox>
             
             <input:CheckBox>
-                <BoxView Color="Blue" HeightRequest="25" WidthRequest="125" />
+                <Image Source="dotnet_bot.png" WidthRequest="50" HeightRequest="50" />
             </input:CheckBox>
             
             <input:CheckBox Text="Option 0 Plain Checkbox" />
