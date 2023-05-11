@@ -171,14 +171,6 @@ public class RadioButton : StatefulStackLayout
     [System.ComponentModel.TypeConverter(typeof(FontSizeConverter))]
     public double TextFontSize { get => lblText.FontSize; set => lblText.FontSize = value; }
 
-    /// <summary>
-    /// Set your own background image instead of default circle.
-    /// </summary>
-    [Obsolete("This option is removed.")]
-    public ImageSource CircleImage { get => default; set { } }
-
-    [Obsolete("This option is removed.")]
-    public ImageSource CheckedImage { get => default; set { } }
 
     [TypeConverter(typeof(PathGeometryConverter))]
     public Geometry SelectedIconGeomerty { get => (Geometry)GetValue(SelectedIconGeomertyProperty); set => SetValue(SelectedIconGeomertyProperty, value); }

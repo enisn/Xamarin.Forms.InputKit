@@ -228,8 +228,6 @@ namespace Plugin.InputKit.Shared.Controls
         /// </summary>
         public string FontFamily { get => (string)GetValue(FontFamilyProperty); set => SetValue(FontFamilyProperty, value); }
 
-        [Obsolete("This option is removed. Use CustomIconGeometry", error: true)]
-        public ImageSource CustomIcon { get => default; set { } }
 
         [TypeConverter(typeof(PathGeometryConverter))]
         public Geometry IconGeometry { get => (Geometry)GetValue(IconGeometryProperty); set => SetValue(IconGeometryProperty, value); }
