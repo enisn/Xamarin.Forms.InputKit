@@ -207,7 +207,7 @@ CheckBox has 5 different visual states:
 You can define your styles on top of these states.
 
 ```xml
-<Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
+<Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
     <Setter Property="VisualStateManager.VisualStateGroups">
         <VisualStateGroupList>
             <VisualStateGroup x:Name="CommonStates">
