@@ -7,6 +7,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Controls.Shapes;
 using System.ComponentModel;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Path = Microsoft.Maui.Controls.Shapes.Path;
 
@@ -81,7 +82,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// </summary>
     public CheckBox()
     {
-        InitVisualStates();
         Orientation = StackOrientation.Horizontal;
         Spacing = 10;
         ApplyIsCheckedAction = ApplyIsChecked;
@@ -141,11 +141,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
     /// Method to run when check changed. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/> It's not recommended to change this field. But you can set your custom <see cref="void"/> if you really need.
     /// </summary>
     public Action<CheckBox, bool> ApplyIsCheckedAction { get; set; }
-
-    /// <summary>
-    /// Applies pressed effect. Default value is <see cref="ApplyIsChecked(CheckBox, bool)"/>. You can set another <see cref="void"/> to make custom pressed effects.
-    /// </summary>
-    public Action<CheckBox, bool> ApplyIsPressedAction { get; set; }
 
     /// <summary>
     /// Executed when check changed
@@ -482,38 +477,6 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         lblOption.FontFamily = value;
     }
 
-    protected virtual void InitVisualStates()
-    {
-        VisualStateManager.SetVisualStateGroups(this, new VisualStateGroupList
-            {
-                new VisualStateGroup
-                {
-                    Name = "InputKitStates",
-                    TargetType = typeof(CheckBox),
-                    States =
-                    {
-                        new VisualState
-                        {
-                            Name = "Pressed",
-                            TargetType = typeof(CheckBox),
-                            Setters =
-                            {
-                                new Setter { Property = IsPressedProperty, Value = true }
-                            }
-                        },
-                        new VisualState
-                        {
-                            Name = "Normal",
-                            TargetType = typeof(RadioButton),
-                            Setters =
-                            {
-                                new Setter { Property = IsPressedProperty, Value = false }
-                            }
-                        }
-                    }
-                }
-            });
-    }
     public static void ApplyIsChecked(CheckBox checkBox, bool isChecked)
     {
         checkBox.selectedIcon.ScaleTo(isChecked ? CHECK_SIZE_RATIO : 0, 160);
@@ -528,13 +491,20 @@ public partial class CheckBox : StatefulStackLayout, IValidatable
         {
             checkBox.DisplayValidation();
         }
+
+        var state = checkBox.IsChecked ? VisualStateManager.CommonStates.Selected : VisualStateManager.CommonStates.Normal;
+        VisualStateManager.GoToState(checkBox, state);
+        checkBox.DefaultVisualState = state;
     }
 
-    public static async void ApplyIsPressed(CheckBox checkBox, bool isPressed)
+    public static async void ApplyIsPressed(StatefulStackLayout statefulLayout, bool isPressed)
     {
-        await checkBox.outlineBox.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
-        var radiusVal = isPressed ? checkBox.outlineBox.RadiusX * 2f : checkBox.CornerRadius;
-        checkBox.outlineBox.RadiusX = radiusVal;
+        if (statefulLayout is CheckBox checkBox)
+        {
+            await checkBox.outlineBox.ScaleTo(isPressed ? .8 : 1, 50, Easing.BounceIn);
+            var radiusVal = isPressed ? checkBox.outlineBox.RadiusX * 2f : checkBox.CornerRadius;
+            checkBox.outlineBox.RadiusX = radiusVal;
+        }
     }
     #endregion
 

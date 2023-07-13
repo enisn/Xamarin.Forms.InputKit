@@ -1,10 +1,7 @@
 ﻿#if ANDROID
 using Android.Views;
-using Java.Interop;
-using Microsoft.Maui;
-using Microsoft.Maui.Handlers;
+using InputKit.Shared.Layouts;
 using Microsoft.Maui.Platform;
-using System;
 using View = Android.Views.View;
 
 namespace InputKit.Handlers
@@ -22,15 +19,18 @@ namespace InputKit.Handlers
 
         private void NativeView_Touch(object sender, View.TouchEventArgs e)
         {
-            var element = VirtualView as Microsoft.Maui.Controls.View;
-
-            if (e.Event.Action == MotionEventActions.Down)
+            if (VirtualView is StatefulStackLayout stateful)
             {
-                Microsoft.Maui.Controls.VisualStateManager.GoToState(element, "Pressed");
-            }
-            else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
-            {
-                Microsoft.Maui.Controls.VisualStateManager.GoToState(element, "Normal");
+                if (e.Event.Action == MotionEventActions.Down)
+                {
+                    VisualStateManager.GoToState(stateful, "Pressed");
+                    stateful.ApplyIsPressedAction?.Invoke(stateful, true);
+                }
+                else if (e.Event.Action == MotionEventActions.Up || e.Event.Action == MotionEventActions.Cancel)
+                {
+                    stateful.GoDefaultVisualState();
+                    stateful.ApplyIsPressedAction?.Invoke(stateful, false);
+                }
             }
         }
     }

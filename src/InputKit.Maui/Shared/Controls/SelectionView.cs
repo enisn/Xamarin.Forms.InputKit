@@ -31,7 +31,6 @@ public partial class SelectionView : Grid
     private SelectionType _selectionType = SelectionType.Button;
     private CheckBox.CheckType _checkType = CheckBox.CheckType.Material;
     private int _columnNumber = 2;
-    private Color _color = GlobalSetting.Color;
     private BindingBase _itemDisplayBinding;
     private int _selectedIndex = 0;
     #endregion
@@ -75,7 +74,7 @@ public partial class SelectionView : Grid
     /// <summary>
     /// Color of selections
     /// </summary>
-    public Color Color { get => _color; set { _color = value; UpdateColor(); OnPropertyChanged(); } }
+    public Color Color { get => (Color)GetValue(ColorProperty); set { SetValue(ColorProperty, value); OnPropertyChanged(); } }
 
     /// <summary>
     /// Items Source of selections
@@ -199,6 +198,9 @@ public partial class SelectionView : Grid
         returnType: typeof(LabelPosition), defaultBindingMode: BindingMode.TwoWay,
         defaultValue: GlobalSetting.LabelPosition,
         propertyChanged: (bo, ov, nv) => (bo as SelectionView).UpdateView());
+
+    public static readonly BindableProperty ColorProperty = BindableProperty.Create(nameof(Color),
+        typeof(Color), typeof(SelectionView), defaultValue: GlobalSetting.Color, propertyChanged: (bo, ov, nv) => (bo as SelectionView).UpdateColor());
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     #endregion
 
@@ -537,7 +539,7 @@ public partial class SelectionView : Grid
                 {
                     return;
                 }
-                
+
                 _isSelected = value;
                 UpdateColors();
             }

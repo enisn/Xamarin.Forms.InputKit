@@ -1,15 +1,8 @@
 ﻿#if MACCATALYST
 using Foundation;
-using Microsoft.Maui;
-using Microsoft.Maui.Controls;
+using InputKit.Shared.Layouts;
 using Microsoft.Maui.Platform;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using UIKit;
 
 namespace InputKit.Handlers
@@ -25,27 +18,31 @@ namespace InputKit.Handlers
 
         private void Tapped(UIGestureRecognizer recognizer)
         {
-            var element = VirtualView as View;
-            switch (recognizer.State)
+            if (VirtualView is StatefulStackLayout stateful)
             {
-                case UIGestureRecognizerState.Began:
-                    VisualStateManager.GoToState(element, "Pressed");
-                    
-                    break;
-                case UIGestureRecognizerState.Ended:
-                    VisualStateManager.GoToState(element, "Normal");
+                switch (recognizer.State)
+                {
+                    case UIGestureRecognizerState.Began:
+                        VisualStateManager.GoToState(stateful, "Pressed");
 
-                    //// TODO: Fix working of native gesture recognizers of MAUI
-                    foreach (var item in element.GestureRecognizers)
-                    {
-                        Debug.WriteLine(item.GetType().Name);
-                        if (item is TapGestureRecognizer tgr)
+                        stateful.ApplyIsPressedAction?.Invoke(stateful, true);
+                        break;
+                    case UIGestureRecognizerState.Ended:
+                        stateful.GoDefaultVisualState();
+                        stateful.ApplyIsPressedAction?.Invoke(stateful, false);
+
+                        //// TODO: Fix working of native gesture recognizers of MAUI
+                        foreach (var item in stateful.GestureRecognizers)
                         {
-                            tgr.Command.Execute(element);
+                            Debug.WriteLine(item.GetType().Name);
+                            if (item is TapGestureRecognizer tgr)
+                            {
+                                tgr.Command.Execute(stateful);
+                            }
                         }
-                    }
 
-                    break;
+                        break;
+                }
             }
         }
     }

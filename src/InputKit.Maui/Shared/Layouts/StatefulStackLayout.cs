@@ -8,6 +8,16 @@ namespace InputKit.Shared.Layouts
     /// </summary>
     public class StatefulStackLayout : StackLayout
     {
+        public string DefaultVisualState { get; set; } = VisualStateManager.CommonStates.Normal;
 
+        /// <summary>
+        /// Applies pressed effect. You can set another <see cref="void"/> to make custom pressed effects.
+        /// </summary>
+        public Action<StatefulStackLayout, bool> ApplyIsPressedAction { get; set; }
+
+        public void GoDefaultVisualState()
+        {
+            VisualStateManager.GoToState(this, DefaultVisualState);
+        }
     }
 }

@@ -154,9 +154,43 @@ You can use your custom content as RadioButton content. You can use any `View` a
 ![inputkit checkbox custom content](../../images/radiobutton-custom-content.gif)
 
 
+## Visual States
+checkbox has 5 different visual states:
+- `Normal` : Default state.
+- `Selected` : When `IsChecked` is `true`.
+- `Disabled` : When `IsEnabled` is `false`.
+- `PointerOver` : When pointer is over the control. _(Desktop devices)_
+- `Pressed` : When control is pressed.
+
+You can define your styles on top of these states.
+
+```xml
+<Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
+    <Setter Property="VisualStateManager.VisualStateGroups">
+        <VisualStateGroupList>
+            <VisualStateGroup x:Name="CommonStates">
+                <VisualState x:Name="Normal">
+                    <VisualState.Setters>
+                        <Setter Property="Color" Value="Red" />
+                        <Setter Property="TextColor" Value="Black" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="Selected">
+                    <VisualState.Setters>
+                        <Setter Property="TextColor" Value="Red" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateGroupList>
+    </Setter>
+</Style>
+```
+
+![inputkit checkbox visual states](../../images/checkbox-visual-states.gif)
+![inputkit checkbox visual states](../../images/checkbox-visual-states.gif)
+
 ## Behaviors
 
 ** *Work in progess...* **:
 -  _Actions to override_ 
--  _VisualStates_
 -  _Make your own animation (?)_
