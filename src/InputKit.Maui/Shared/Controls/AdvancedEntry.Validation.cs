@@ -96,6 +96,7 @@ public partial class AdvancedEntry : IValidatable
     {
         RemoveValidationWarning();
         _lastValidationState = null;
+        Text = string.Empty;
     }
 
     private bool? _lastValidationState;
