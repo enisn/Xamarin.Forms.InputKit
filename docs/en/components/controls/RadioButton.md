@@ -155,7 +155,7 @@ You can use your custom content as RadioButton content. You can use any `View` a
 
 
 ## Visual States
-checkbox has 5 different visual states:
+RadioButton has 5 different visual states:
 - `Normal` : Default state.
 - `Selected` : When `IsChecked` is `true`.
 - `Disabled` : When `IsEnabled` is `false`.
@@ -165,7 +165,7 @@ checkbox has 5 different visual states:
 You can define your styles on top of these states.
 
 ```xml
-<Style TargetType="input:CheckBox" ApplyToDerivedTypes="True">
+<Style TargetType="input:RadioButton" ApplyToDerivedTypes="True">
     <Setter Property="VisualStateManager.VisualStateGroups">
         <VisualStateGroupList>
             <VisualStateGroup x:Name="CommonStates">
@@ -185,9 +185,6 @@ You can define your styles on top of these states.
     </Setter>
 </Style>
 ```
-
-![inputkit checkbox visual states](../../images/checkbox-visual-states.gif)
-![inputkit checkbox visual states](../../images/checkbox-visual-states.gif)
 
 ## Behaviors
 
