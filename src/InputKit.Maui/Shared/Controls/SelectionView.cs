@@ -29,7 +29,6 @@ public partial class SelectionView : Grid
 
     #region Fields
     private SelectionType _selectionType = SelectionType.Button;
-    private CheckBox.CheckType _checkType = CheckBox.CheckType.Material;
     private int _columnNumber = 2;
     private BindingBase _itemDisplayBinding;
     private int _selectedIndex = 0;
@@ -50,11 +49,6 @@ public partial class SelectionView : Grid
     /// Selection Type, More types will be added later
     /// </summary>
     public SelectionType SelectionType { get => _selectionType; set { _selectionType = value; UpdateView(); } }
-
-    /// <summary>
-    /// Selection Type, More types will be added later
-    /// </summary>
-    public CheckBox.CheckType CheckBoxType { get => _checkType; set { _checkType = value; UpdateCheckBoxType(); } }
 
     /// <summary>
     /// Added later
@@ -261,17 +255,6 @@ public partial class SelectionView : Grid
         }
     }
 
-    private void UpdateCheckBoxType()
-    {
-        foreach (var child in Children)
-        {
-            if (child is SelectableCheckBox checkBox)
-            {
-                checkBox.Type = CheckBoxType;
-            }
-        }
-    }
-
     protected void SetRowAndColumnDefinitions()
     {
         this.ColumnDefinitions.Clear();
@@ -348,14 +331,14 @@ public partial class SelectionView : Grid
                 return btn;
             case SelectionType.MultipleRadioButton:
             case SelectionType.RadioButton:
-                var rb = new SelectableRadioButton(obj, this)
+                var rb = new SelectableRadioButton(obj)
                 {
                     LabelPosition = LabelPosition
                 };
                 return rb;
             case SelectionType.CheckBox:
             case SelectionType.SingleCheckBox:
-                var cb = new SelectableCheckBox(obj, this)
+                var cb = new SelectableCheckBox(obj)
                 {
                     LabelPosition = LabelPosition
                 };
@@ -643,7 +626,6 @@ public partial class SelectionView : Grid
         /// </summary>
         public SelectableCheckBox()
         {
-            Type = CheckType.Regular;
             CheckChanged += (s, e) => Clicked?.Invoke(s, e);
         }
 
@@ -655,17 +637,6 @@ public partial class SelectionView : Grid
         {
             Value = value;
             Text = value?.ToString();
-        }
-
-        /// <summary>
-        /// Constructor with Value
-        /// </summary>
-        /// <param name="value">Parameter too keep</param>
-        /// <param name="color">Color of control</param>
-        public SelectableCheckBox(object value, SelectionView parent) : this(value)
-        {
-            Color = parent.Color;
-            Type = parent.CheckBoxType;
         }
 
         /// <summary>
