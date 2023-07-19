@@ -588,14 +588,6 @@ public partial class SelectionView : Grid
         }
 
         /// <summary>
-        /// Colored Constructor
-        /// </summary>
-        public SelectableRadioButton(object value, SelectionView parent) : this(value)
-        {
-            Color = parent.Color;
-        }
-
-        /// <summary>
         /// ISelection interface property
         /// </summary>
         public bool IsSelected
