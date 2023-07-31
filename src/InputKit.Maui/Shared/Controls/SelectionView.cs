@@ -291,6 +291,7 @@ public partial class SelectionView : Grid
                     if (SelectedItems == null)
                         SelectedItems = Activator.CreateInstance(typeof(ObservableCollection<>).MakeGenericType(selection.Value.GetType())) as IList;
 
+                    SelectedItems.Remove(selection.Value);
                     SelectedItems.Add(selection.Value);
                 }
                 else
@@ -417,7 +418,6 @@ public partial class SelectionView : Grid
         {
             if (item is ISelection selection && value != null)
             {
-
                 selection.IsSelected = value.Contains(selection.Value);
             }
         }
