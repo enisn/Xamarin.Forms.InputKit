@@ -29,7 +29,7 @@
     ```xml
     xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
     ```
-    > [See how it's done at sample.](https://github.com/enisn/Xamarin.Forms.InputKit/blob/develop/sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml#L3)
+    > [See how it's done at sample ↗️](https://github.com/enisn/Xamarin.Forms.InputKit/blob/develop/sandbox/SandboxMAUI/Pages/CheckBoxPage.xaml#L3)
 - Then use it at wherever you want in your page with defined prefix `input` like following code:
 
 
