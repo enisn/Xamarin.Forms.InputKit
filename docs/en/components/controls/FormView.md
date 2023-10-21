@@ -9,6 +9,13 @@ FormView is a control that contains other validatable controls. Making validatio
 
 FormView is a control that can be placed anywhere in a layout in your application. It defines an attached property named `IsSubmitButton` that can be set to true for any button inside the form. When the button is clicked, the form will be validated and if it is valid, the form will be submitted. If the form is not valid, the validation messages will be shown. `SubmitCommand` will be executed when form is valid and submitted.
 
+FormView can be accessed with the following namespace:
+```xml
+xmlns:input="clr-namespace:InputKit.Shared.Controls;assembly=InputKit.Maui"
+```
+
+Then it can be used with the following structure:
+
 ```xml
 <input:FormView SubmitCommand="{Binding SubmitCommand}">
     
