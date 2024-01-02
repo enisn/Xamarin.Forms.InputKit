@@ -313,13 +313,13 @@ public class RadioButton : StatefulStackLayout
         var isCheckedInLastState = iconChecked.Scale == DOT_FULL_SCALE;
 
         var changed = isCheckedInLastState != isChecked;
-
         if (changed)
         {
-            iconChecked.ScaleTo(isChecked ? DOT_FULL_SCALE : 0, 180);
-            UpdateColors();
             Checked?.Invoke(this, null);
         }
+
+        iconChecked.ScaleTo(isChecked ? DOT_FULL_SCALE : 0, 180);
+        UpdateColors();
 
         var state = isChecked ? VisualStateManager.CommonStates.Selected : VisualStateManager.CommonStates.Normal;
         VisualStateManager.GoToState(this, state);
