@@ -9,15 +9,15 @@ public class MaxLengthValidation : BindableObject, IValidation
 
     public int MaxLength
     {
-        get => (int)GetValue(MessageProperty);
-        set => SetValue(MessageProperty, value);
+        get => (int)GetValue(MaxLengthProperty);
+        set => SetValue(MaxLengthProperty, value);
     }
 
     public static readonly BindableProperty MessageProperty = BindableProperty.Create(
         nameof(Message),
         typeof(string),
         typeof(MaxLengthValidation),
-        "The field should contain maxium {0} character.");
+        "The field should contain maximum {0} character.");
 
     public static readonly BindableProperty MaxLengthProperty = BindableProperty.Create(
         nameof(MaxLength),
