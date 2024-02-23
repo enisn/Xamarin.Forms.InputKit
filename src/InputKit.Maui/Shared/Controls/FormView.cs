@@ -9,8 +9,8 @@ namespace InputKit.Shared.Controls;
 /// </summary>
 public partial class FormView : StackLayout
 {
-    private readonly Command buttonSubmitCommand;
-    private readonly Command buttonResetCommand;
+    protected readonly Command buttonSubmitCommand;
+    protected readonly Command buttonResetCommand;
     /// <summary>
     /// Default constructor
     /// </summary>
