@@ -172,6 +172,7 @@ public partial class FormView : StackLayout
         if (CheckValidation(this))
         {
             SubmitCommand?.Execute(IsValidated);
+            SetValue(IsValidatedProperty, true);
         }
         
         if (!IsValidated)
