@@ -385,22 +385,30 @@ public partial class SelectionView : Grid
             case SelectionType.Button:
             case SelectionType.MultipleButton:
                 {
-                    if (view is Button)
+                    if (view is SelectableButton sb)
                     {
-                        (view as Button).BackgroundColor = color;
+                        sb.SelectedColor = color;
+                    }
+                    else if (view is Button button)
+                    {
+                        button.BackgroundColor = color;
                     }
                 }
                 break;
             case SelectionType.RadioButton:
                 {
-                    if (view is SelectableRadioButton)
-                        (view as SelectableRadioButton).Color = color;
+                    if (view is SelectableRadioButton srb)
+                    {
+                        srb.Color = color;
+                    }
                 }
                 break;
             case SelectionType.CheckBox:
                 {
-                    if (view is SelectableCheckBox)
-                        (view as SelectableCheckBox).Color = color;
+                    if (view is SelectableCheckBox scb)
+                    {
+                        scb.Color = color;
+                    }
                 }
                 break;
         }
@@ -459,7 +467,6 @@ public partial class SelectionView : Grid
         private bool _isSelected = false;
         private object _value;
         private Color _selectionColor = InputKitOptions.GetAccentColor();
-        private Color _unselectedColor;
 
         /// <summary>
         /// Default constructor
@@ -482,7 +489,6 @@ public partial class SelectionView : Grid
             FontSize = GlobalSetting.FontSize;
             CornerRadius = (int)GlobalSetting.CornerRadius;
             BorderColor = GlobalSetting.BorderColor;
-            UnselectedColor = GlobalSetting.BackgroundColor;
             BorderWidth = 2;
             Clicked += (s, args) => UpdateSelection();
         }
@@ -497,7 +503,10 @@ public partial class SelectionView : Grid
             SelectedColor = parent.Color;
         }
 
-        public Color UnselectedColor { get => _unselectedColor; set { _unselectedColor = value; UpdateColors(); } }
+        public static readonly BindableProperty UnSelectedColorProperty = BindableProperty.Create(nameof(UnselectedColor), typeof(Color), typeof(SelectableButton),
+            defaultValue: GlobalSetting.BackgroundColor, propertyChanged: (bo, ov, nv) => (bo as SelectableButton).UpdateColors());
+
+        public Color UnselectedColor { get => (Color)GetValue(UnSelectedColorProperty); set => SetValue(UnSelectedColorProperty, value); }
 
         public Color SelectedColor
         {
