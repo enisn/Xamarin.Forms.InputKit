@@ -1,4 +1,4 @@
-# Migrating to v4.0
+# Migrating to v4.1
 
 InputKit version 4.1 is a major release. It has many new features and improvements. Some of them makes breaking-changes.
 
