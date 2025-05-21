@@ -12,20 +12,20 @@ namespace InputKit.Handlers
     {
         protected override void ConnectHandler(LayoutPanel platformView)
         {
-            PlatformView.PointerPressed += NativeView_PointerPressed;
-            PlatformView.PointerReleased += NativeView_PointerReleased;
-            PlatformView.PointerEntered += NativeView_PointerEntered;
-            PlatformView.PointerExited += NativeView_PointerExited;
+            platformView.PointerPressed += NativeView_PointerPressed;
+            platformView.PointerReleased += NativeView_PointerReleased;
+            platformView.PointerEntered += NativeView_PointerEntered;
+            platformView.PointerExited += NativeView_PointerExited;
         }
 
         protected override void DisconnectHandler(LayoutPanel platformView)
         {
-            PlatformView.PointerPressed -= NativeView_PointerPressed;
-            PlatformView.PointerReleased -= NativeView_PointerReleased;
-            PlatformView.PointerEntered -= NativeView_PointerEntered;
-            PlatformView.PointerExited -= NativeView_PointerExited;
+            platformView.PointerPressed -= NativeView_PointerPressed;
+            platformView.PointerReleased -= NativeView_PointerReleased;
+            platformView.PointerEntered -= NativeView_PointerEntered;
+            platformView.PointerExited -= NativeView_PointerExited;
         }
-
+            
         private void NativeView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             if (VirtualView is StatefulGrid stateful)
