@@ -11,11 +11,21 @@ namespace InputKit.Handlers
     {
         protected override LayoutViewGroup CreatePlatformView()
         {
-            var nativeView = base.CreatePlatformView();
+            return base.CreatePlatformView();
+        }
 
-            nativeView.Touch += NativeView_Touch;
+        protected override void ConnectHandler(LayoutPanel platformView)
+        {
+            base.ConnectHandler(platformView);
+            
+            platformView.Touch += NativeView_Touch;
+        }
 
-            return nativeView;
+        protected override void DisconnectHandler(LayoutPanel platformView)
+        {
+            platformView.Touch -= NativeView_Touch;
+            
+            base.DisconnectHandler(platformView);
         }
 
         private void NativeView_Touch(object sender, View.TouchEventArgs e)
