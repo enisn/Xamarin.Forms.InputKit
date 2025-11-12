@@ -14,14 +14,14 @@ namespace InputKit.Handlers
             return base.CreatePlatformView();
         }
 
-        protected override void ConnectHandler(LayoutPanel platformView)
+        protected override void ConnectHandler(LayoutViewGroup platformView)
         {
             base.ConnectHandler(platformView);
             
             platformView.Touch += NativeView_Touch;
         }
 
-        protected override void DisconnectHandler(LayoutPanel platformView)
+        protected override void DisconnectHandler(LayoutViewGroup platformView)
         {
             platformView.Touch -= NativeView_Touch;
             
