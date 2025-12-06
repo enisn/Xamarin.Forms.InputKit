@@ -13,8 +13,9 @@ class ApplicationStub : IApplication
 	public IReadOnlyList<IWindow> Windows => _windows.AsReadOnly();
 
 	public string Property { get; set; } = "Default";
+    public AppTheme UserAppTheme { get; }
 
-	public IWindow CreateWindow(IActivationState activationState)
+    public IWindow CreateWindow(IActivationState activationState)
 	{
 		throw new NotImplementedException();
 	}
